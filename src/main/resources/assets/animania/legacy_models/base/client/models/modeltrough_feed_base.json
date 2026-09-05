@@ -1,0 +1,14 @@
+{
+  "source": "base/client/models/modeltrough#feed-base",
+  "textureWidth": 128,
+  "textureHeight": 64,
+  "roots": ["Feed"],
+  "nodes": [
+    {
+      "name": "Feed", "u": 56, "v": 1, "mirror": false,
+      "pivot": [8, 16, 0], "offset": [0, 0, 0], "rotation": [0, 0, 0], "parent": null,
+      "boxes": [{"from": [-14, -0.5, -4], "size": [28, 1, 8], "deformation": 0}]
+    }
+  ],
+  "audit": {"nodeCount": 1, "boxCount": 1, "edgeCount": 0, "parentlessCount": 1, "renderedRootCount": 1, "staticRotations": 0}
+}

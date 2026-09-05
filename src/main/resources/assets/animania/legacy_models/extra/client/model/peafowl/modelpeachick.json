@@ -1,0 +1,993 @@
+{
+  "source": "extra/client/model/peafowl/modelpeachick",
+  "textureWidth": 64,
+  "textureHeight": 64,
+  "roots": [
+    "Neck",
+    "Body1",
+    "leg1Top",
+    "leg2Top",
+    "Tail1",
+    "Wing1",
+    "Wing2"
+  ],
+  "nodes": [
+    {
+      "name": "RootNode",
+      "u": 16,
+      "v": 16,
+      "mirror": false,
+      "pivot": [
+        0,
+        11.5,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0,
+            0,
+            0
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Neck",
+      "u": 3,
+      "v": 19,
+      "mirror": false,
+      "pivot": [
+        0,
+        13.3998,
+        -1
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.539251,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2.5,
+            -2.5,
+            -2
+          ],
+          "size": [
+            5,
+            5,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Neck2",
+      "u": 21,
+      "v": 21,
+      "mirror": false,
+      "pivot": [
+        0,
+        -1.4982600000000001,
+        -2.01686
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.9490896,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2,
+            -2,
+            -1.5
+          ],
+          "size": [
+            4,
+            4,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "Neck"
+    },
+    {
+      "name": "Neck3",
+      "u": 5,
+      "v": 30,
+      "mirror": false,
+      "pivot": [
+        0,
+        -1.2070500000000006,
+        -2.423303
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.376694,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            -1.5,
+            -5
+          ],
+          "size": [
+            3,
+            3,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "Neck"
+    },
+    {
+      "name": "Head",
+      "u": 0,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        0,
+        -6.099652000000001,
+        -3.456411
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.07594994,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.51,
+            -2.5,
+            -2
+          ],
+          "size": [
+            3,
+            3,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "Neck"
+    },
+    {
+      "name": "BeakBottom",
+      "u": 19,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        0,
+        -6.737326000000001,
+        -6.51361
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.07594992,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -1
+          ],
+          "size": [
+            1,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "Neck"
+    },
+    {
+      "name": "BeakTop",
+      "u": 19,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        0,
+        -7.039004000000001,
+        -6.418793
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.3341772,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -1
+          ],
+          "size": [
+            1,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "Neck"
+    },
+    {
+      "name": "Body1",
+      "u": 0,
+      "v": 7,
+      "mirror": false,
+      "pivot": [
+        0,
+        14.5,
+        2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        1.5707963267948966,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3,
+            -3,
+            -3
+          ],
+          "size": [
+            6,
+            6,
+            6
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "leg1Top",
+      "u": 39,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        -1.5,
+        17.79997,
+        1.75
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.2792527,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -1,
+            -1
+          ],
+          "size": [
+            2,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "leg1top2",
+      "u": 35,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        0,
+        2.9526400000000024,
+        0.8522509999999999
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.2792527,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -2.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            3,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "leg1Top"
+    },
+    {
+      "name": "leg1bottom",
+      "u": 35,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        0,
+        5.700030000000002,
+        0.5
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.1745331,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -2.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            3,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "leg1Top"
+    },
+    {
+      "name": "Foot1",
+      "u": 25,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        -0.75,
+        6.153760000000002,
+        -0.5548139999999999
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.588343e-7,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -1.5
+          ],
+          "size": [
+            1,
+            1,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "leg1Top"
+    },
+    {
+      "name": "Foot1b",
+      "u": 25,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        0.75,
+        6.153760000000002,
+        -0.5548139999999999
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.692242e-7,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -1.5
+          ],
+          "size": [
+            1,
+            1,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "leg1Top"
+    },
+    {
+      "name": "leg2Top",
+      "u": 39,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        1.5,
+        17.79997,
+        1.75
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.2792527,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -1,
+            -1
+          ],
+          "size": [
+            2,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "leg2top2",
+      "u": 35,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        0,
+        3.4332700000000003,
+        0.9900699999999998
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.2792527,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -3,
+            -0.5
+          ],
+          "size": [
+            1,
+            3,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "leg2Top"
+    },
+    {
+      "name": "leg2bottom",
+      "u": 35,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        0,
+        5.700030000000002,
+        0.5
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.1745331,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -2.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            3,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "leg2Top"
+    },
+    {
+      "name": "Foot2",
+      "u": 25,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        -0.75,
+        6.194890000000001,
+        -0.551912
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.588343e-7,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -1.5
+          ],
+          "size": [
+            1,
+            1,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "leg2Top"
+    },
+    {
+      "name": "Foot2b",
+      "u": 25,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        0.75,
+        6.194890000000001,
+        -0.551912
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.692242e-7,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -1.5
+          ],
+          "size": [
+            1,
+            1,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "leg2Top"
+    },
+    {
+      "name": "Tail1",
+      "u": 36,
+      "v": 20,
+      "mirror": false,
+      "pivot": [
+        0,
+        15.10777,
+        5.446827
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.4363323,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2.5,
+            -2,
+            -2
+          ],
+          "size": [
+            5,
+            4,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Tail2",
+      "u": 25,
+      "v": 14,
+      "mirror": false,
+      "pivot": [
+        0,
+        0.15024000000000015,
+        2.6883880000000007
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.121238,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2,
+            -1,
+            -1.5
+          ],
+          "size": [
+            4,
+            2,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "Tail1"
+    },
+    {
+      "name": "Wing1",
+      "u": 1,
+      "v": 41,
+      "mirror": false,
+      "pivot": [
+        -3.5,
+        12.860299999999999,
+        0.1172086
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2947292,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -1.5,
+            -1.5
+          ],
+          "size": [
+            1,
+            3,
+            7
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Wing1a",
+      "u": 4,
+      "v": 41,
+      "mirror": false,
+      "pivot": [
+        0,
+        0.0071600000000013875,
+        4.3059634
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -1,
+            1
+          ],
+          "size": [
+            1,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "Wing1"
+    },
+    {
+      "name": "Wing1b",
+      "u": 2,
+      "v": 41,
+      "mirror": false,
+      "pivot": [
+        0,
+        1.91376,
+        -0.5809618
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -1
+          ],
+          "size": [
+            1,
+            1,
+            6
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "Wing1"
+    },
+    {
+      "name": "Wing2",
+      "u": 1,
+      "v": 41,
+      "mirror": false,
+      "pivot": [
+        3.5,
+        12.860299999999999,
+        0.1172086
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2947292,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -1.5,
+            -1.5
+          ],
+          "size": [
+            1,
+            3,
+            7
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Wing2a",
+      "u": 4,
+      "v": 41,
+      "mirror": false,
+      "pivot": [
+        0,
+        0.0071600000000013875,
+        4.3059634
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -1,
+            1
+          ],
+          "size": [
+            1,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "Wing2"
+    },
+    {
+      "name": "Wing2b",
+      "u": 2,
+      "v": 41,
+      "mirror": false,
+      "pivot": [
+        0,
+        1.91376,
+        -0.5809618
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -1
+          ],
+          "size": [
+            1,
+            1,
+            6
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "Wing2"
+    }
+  ],
+  "audit": {
+    "nodeCount": 26,
+    "boxCount": 26,
+    "edgeCount": 18,
+    "parentlessCount": 8,
+    "renderedRootCount": 7,
+    "staticRotations": 22
+  }
+}

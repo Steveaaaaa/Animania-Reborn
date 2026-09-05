@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["GGG", "GDG", "GGG"],
+  "key": {
+    "G": { "item": "minecraft:glass_pane" },
+    "D": { "item": "minecraft:white_dye" }
+  },
+  "result": { "id": "animania:hamster_ball_white" }
+}

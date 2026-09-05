@@ -1,0 +1,13 @@
+{
+  "textures": {
+    "particle": "animania:block/pet_bowl",
+    "all": "animania:block/pet_bowl"
+  },
+  "elements": [
+    {"from":[4,1,4],"to":[12,2,12],"faces":{"up":{"texture":"#all"},"down":{"texture":"#all"}}},
+    {"from":[3,2,3],"to":[13,4,5],"faces":{"north":{"texture":"#all"},"south":{"texture":"#all"},"up":{"texture":"#all"}}},
+    {"from":[3,2,11],"to":[13,4,13],"faces":{"north":{"texture":"#all"},"south":{"texture":"#all"},"up":{"texture":"#all"}}},
+    {"from":[3,2,5],"to":[5,4,11],"faces":{"west":{"texture":"#all"},"east":{"texture":"#all"},"up":{"texture":"#all"}}},
+    {"from":[11,2,5],"to":[13,4,11],"faces":{"west":{"texture":"#all"},"east":{"texture":"#all"},"up":{"texture":"#all"}}}
+  ]
+}

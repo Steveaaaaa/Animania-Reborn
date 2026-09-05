@@ -1,0 +1,68 @@
+{
+  "source": "catsdogs/client/models/dogs/modelcorgi",
+  "parts": {
+    "body": {
+      "rotation": [
+        -0.07355690132530102,
+        null,
+        null
+      ]
+    },
+    "leg_r1": {
+      "rotation": [
+        -0.39865763576503277,
+        null,
+        null
+      ]
+    },
+    "leg_r11": {
+      "rotation": [
+        -0.40206975445268167,
+        null,
+        null
+      ]
+    },
+    "lower_body": {
+      "rotation": [
+        -0.06664190682889948,
+        null,
+        null
+      ]
+    },
+    "tail": {
+      "rotation": [
+        -0.0519846317706511,
+        null,
+        null
+      ]
+    },
+    "tail2": {
+      "rotation": [
+        0.3797661919414462,
+        null,
+        null
+      ]
+    },
+    "tail3": {
+      "rotation": [
+        0.3947725328500934,
+        null,
+        null
+      ]
+    },
+    "leg_r2": {
+      "rotation": [
+        -0.6804916580478251,
+        null,
+        null
+      ]
+    },
+    "leg_r21": {
+      "rotation": [
+        -0.7049157956002338,
+        null,
+        null
+      ]
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "source": "farm/client/model/sheep/modelfriesiansheep",
+  "timerEndpoint": -0.55,
+  "parts": {
+    "LeftFrontLeg": {
+      "rotation": [
+        0.9900000000000001,
+        null,
+        null
+      ]
+    },
+    "LeftFrontLegWool": {
+      "rotation": [
+        0.9900000000000001,
+        null,
+        null
+      ]
+    },
+    "RightFrontLeg": {
+      "rotation": [
+        0.9900000000000001,
+        null,
+        null
+      ]
+    },
+    "RightFrontLegWool": {
+      "rotation": [
+        0.9900000000000001,
+        null,
+        null
+      ]
+    },
+    "LeftBackLeg": {
+      "rotation": [
+        -0.935,
+        null,
+        null
+      ]
+    },
+    "LeftBackLegWool": {
+      "rotation": [
+        -0.9900000000000001,
+        null,
+        null
+      ]
+    },
+    "RightBackLeg": {
+      "rotation": [
+        -0.9625000000000001,
+        null,
+        null
+      ]
+    },
+    "RightBackLegWool": {
+      "rotation": [
+        -0.9900000000000001,
+        null,
+        null
+      ]
+    },
+    "HeadNode": {
+      "rotation": [
+        null,
+        2.475,
+        null
+      ]
+    },
+    "Body": {
+      "rotation": [
+        -0.18333333333333335,
+        null,
+        null
+      ]
+    }
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "textures":{"food":"animania:item/hamster_food"},
+  "elements":[{"from":[5,2,5],"to":[11,3,11],"faces":{"up":{"texture":"#food"}}}]
+}

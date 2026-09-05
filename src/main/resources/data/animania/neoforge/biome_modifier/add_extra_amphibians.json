@@ -1,0 +1,11 @@
+{
+  "type": "animania:legacy_add_spawns",
+  "biomes": "#animania:amphibian_habitats",
+  "probability_group": "amphibians",
+  "default_probability": 8,
+  "spawners": [
+    { "type": "animania:frog", "weight": 18, "minCount": 2, "maxCount": 2 },
+    { "type": "animania:dartfrog", "weight": 18, "minCount": 2, "maxCount": 2 },
+    { "type": "animania:toad", "weight": 18, "minCount": 2, "maxCount": 2 }
+  ]
+}

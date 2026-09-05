@@ -1,0 +1,17 @@
+{
+  "source": "base/client/models/modeltrough#feed-back",
+  "textureWidth": 16,
+  "textureHeight": 16,
+  "roots": ["FeedA1", "FeedB1", "FeedC1", "FeedD1", "FeedE1", "FeedF1", "FeedG1", "FeedH1"],
+  "nodes": [
+    {"name":"FeedA1","u":0,"v":0,"mirror":false,"pivot":[-1,17,2.5],"offset":[0,0,0],"rotation":[0.5566564,0.6934777,0.418777],"parent":null,"boxes":[{"from":[-4.5,0,-5],"size":[16,0,16],"deformation":0}]},
+    {"name":"FeedB1","u":0,"v":0,"mirror":false,"pivot":[8,17,1.000001],"offset":[0,0,0],"rotation":[0.3321232,1.126472,0.4568707],"parent":null,"boxes":[{"from":[-4.5,0,-5],"size":[16,0,16],"deformation":0}]},
+    {"name":"FeedC1","u":0,"v":0,"mirror":false,"pivot":[17,17,2.500001],"offset":[0,0,0],"rotation":[0.5561382,0.6948478,0.4195006],"parent":null,"boxes":[{"from":[-4.5,0,-5],"size":[16,0,16],"deformation":0}]},
+    {"name":"FeedD1","u":0,"v":0,"mirror":false,"pivot":[14,17,-1.999999],"offset":[0,0,0],"rotation":[0.329293,-2.02634,0.4998787],"parent":null,"boxes":[{"from":[-4.5,0,-5],"size":[16,0,16],"deformation":0}]},
+    {"name":"FeedE1","u":0,"v":0,"mirror":false,"pivot":[2,17,-0.9999991],"offset":[0,0,0],"rotation":[0.329293,-2.02634,0.3414953],"parent":null,"boxes":[{"from":[-4.5,0,-5],"size":[16,0,16],"deformation":0}]},
+    {"name":"FeedF1","u":0,"v":0,"mirror":false,"pivot":[9.000001,16,-1.999999],"offset":[0,0,0],"rotation":[0.223693,-1.865655,0.009323301],"parent":null,"boxes":[{"from":[-4.5,0,-5],"size":[16,0,16],"deformation":0}]},
+    {"name":"FeedG1","u":0,"v":0,"mirror":false,"pivot":[0.000000156835,16,-0.9999991],"offset":[0,0,0],"rotation":[0.2029555,-1.465355,0.09517268],"parent":null,"boxes":[{"from":[-4.5,0,-5],"size":[16,0,16],"deformation":0}]},
+    {"name":"FeedH1","u":0,"v":0,"mirror":false,"pivot":[17,16,-0.9999986],"offset":[0,0,0],"rotation":[0.286131,2.831252,0.4113167],"parent":null,"boxes":[{"from":[-4.5,0,-5],"size":[16,0,16],"deformation":0}]}
+  ],
+  "audit": {"nodeCount": 8, "boxCount": 8, "edgeCount": 0, "parentlessCount": 8, "renderedRootCount": 8, "staticRotations": 24}
+}

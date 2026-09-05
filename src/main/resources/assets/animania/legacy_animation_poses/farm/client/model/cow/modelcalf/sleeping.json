@@ -1,0 +1,48 @@
+{
+  "source": "farm/client/model/cow/modelcalf",
+  "timerEndpoint": -0.55,
+  "parts": {
+    "Leg0": {
+      "rotation": [
+        0.9900000000000001,
+        null,
+        null
+      ]
+    },
+    "Leg1": {
+      "rotation": [
+        0.9900000000000001,
+        null,
+        null
+      ]
+    },
+    "Leg2": {
+      "rotation": [
+        -0.935,
+        null,
+        null
+      ]
+    },
+    "Leg3": {
+      "rotation": [
+        -0.9625000000000001,
+        null,
+        null
+      ]
+    },
+    "Head": {
+      "rotation": [
+        null,
+        -1.54,
+        null
+      ]
+    },
+    "Body": {
+      "rotation": [
+        1.3874629934615632,
+        null,
+        null
+      ]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "textures": { "particle": "#cheese" },
+  "elements": [{
+    "from": [1, 0, 1], "to": [15, 8, 15],
+    "faces": {
+      "down": { "texture": "#cheese" }, "up": { "texture": "#cheese" },
+      "north": { "texture": "#cheese" }, "south": { "texture": "#cheese" },
+      "west": { "texture": "#cheese" }, "east": { "texture": "#cheese" }
+    }
+  }]
+}

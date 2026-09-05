@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "animania:wild_hive"
+        }
+      ]
+    }
+  ],
+  "random_sequence": "animania:blocks/block_wild_hive"
+}

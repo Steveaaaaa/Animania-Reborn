@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["SPP", "PIP", "W W"],
+  "key": {
+    "S": { "item": "minecraft:stick" },
+    "P": { "tag": "minecraft:planks" },
+    "I": { "item": "minecraft:iron_ingot" },
+    "W": { "item": "animania:wheel" }
+  },
+  "result": { "id": "animania:item_cart", "count": 1 }
+}

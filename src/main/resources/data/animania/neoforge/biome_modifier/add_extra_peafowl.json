@@ -1,0 +1,27 @@
+{
+  "type": "animania:legacy_add_spawns", "biomes": "#animania:peafowl_habitats",
+  "probability_group": "peacocks", "default_probability": 8,
+  "spawners": [
+    { "type": "animania:peacock_charcoal", "weight": 8, "minCount": 1, "maxCount": 3 },
+    { "type": "animania:peahen_charcoal", "weight": 8, "minCount": 1, "maxCount": 3 },
+    { "type": "animania:peachick_charcoal", "weight": 4, "minCount": 1, "maxCount": 3 },
+    { "type": "animania:peacock_opal", "weight": 8, "minCount": 1, "maxCount": 3 },
+    { "type": "animania:peahen_opal", "weight": 8, "minCount": 1, "maxCount": 3 },
+    { "type": "animania:peachick_opal", "weight": 4, "minCount": 1, "maxCount": 3 },
+    { "type": "animania:peacock_peach", "weight": 8, "minCount": 1, "maxCount": 3 },
+    { "type": "animania:peahen_peach", "weight": 8, "minCount": 1, "maxCount": 3 },
+    { "type": "animania:peachick_peach", "weight": 4, "minCount": 1, "maxCount": 3 },
+    { "type": "animania:peacock_purple", "weight": 8, "minCount": 1, "maxCount": 3 },
+    { "type": "animania:peahen_purple", "weight": 8, "minCount": 1, "maxCount": 3 },
+    { "type": "animania:peachick_purple", "weight": 4, "minCount": 1, "maxCount": 3 },
+    { "type": "animania:peacock_taupe", "weight": 8, "minCount": 1, "maxCount": 3 },
+    { "type": "animania:peahen_taupe", "weight": 8, "minCount": 1, "maxCount": 3 },
+    { "type": "animania:peachick_taupe", "weight": 4, "minCount": 1, "maxCount": 3 },
+    { "type": "animania:peacock_blue", "weight": 8, "minCount": 2, "maxCount": 3 },
+    { "type": "animania:peahen_blue", "weight": 8, "minCount": 2, "maxCount": 3 },
+    { "type": "animania:peachick_blue", "weight": 4, "minCount": 2, "maxCount": 3 },
+    { "type": "animania:peacock_white", "weight": 8, "minCount": 2, "maxCount": 3 },
+    { "type": "animania:peahen_white", "weight": 8, "minCount": 2, "maxCount": 3 },
+    { "type": "animania:peachick_white", "weight": 4, "minCount": 2, "maxCount": 3 }
+  ]
+}

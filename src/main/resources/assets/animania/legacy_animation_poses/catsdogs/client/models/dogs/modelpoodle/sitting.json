@@ -1,0 +1,73 @@
+{
+  "source": "catsdogs/client/models/dogs/modelpoodle",
+  "parts": {
+    "body": {
+      "rotation": [
+        -0.10049954898833749,
+        null,
+        null
+      ],
+      "pivot": [
+        0,
+        13,
+        -5
+      ]
+    },
+    "leg_l1": {
+      "rotation": [
+        -0.4374388517443468,
+        null,
+        null
+      ]
+    },
+    "lower_body": {
+      "rotation": [
+        -0.68513423385813,
+        null,
+        null
+      ]
+    },
+    "tail": {
+      "rotation": [
+        0.7665852593902014,
+        null,
+        null
+      ]
+    },
+    "tail2": {
+      "rotation": [
+        0.458307753610443,
+        null,
+        null
+      ]
+    },
+    "back_leg_l1": {
+      "rotation": [
+        -0.43039993887105366,
+        null,
+        null
+      ]
+    },
+    "back_leg_r1": {
+      "rotation": [
+        -0.4596010425861708,
+        null,
+        null
+      ]
+    },
+    "head_base": {
+      "rotation": [
+        1.1523920358728,
+        null,
+        null
+      ]
+    },
+    "leg_r1": {
+      "rotation": [
+        -0.4434654736514832,
+        null,
+        null
+      ]
+    }
+  }
+}

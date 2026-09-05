@@ -1,0 +1,17 @@
+{
+  "source": "base/client/models/modeltrough#feed-front",
+  "textureWidth": 16,
+  "textureHeight": 16,
+  "roots": ["FeedA", "FeedB", "FeedC", "FeedD", "FeedE", "FeedF", "FeedG", "FeedH"],
+  "nodes": [
+    {"name":"FeedA","u":0,"v":0,"mirror":false,"pivot":[-1,15,2.5],"offset":[0,0,0],"rotation":[0.5566564,0.6934777,0.418777],"parent":null,"boxes":[{"from":[-4.5,0,-5],"size":[16,0,16],"deformation":0}]},
+    {"name":"FeedB","u":0,"v":0,"mirror":false,"pivot":[8,15,1.000001],"offset":[0,0,0],"rotation":[0.3321232,1.126472,0.4568707],"parent":null,"boxes":[{"from":[-4.5,0,-5],"size":[16,0,16],"deformation":0}]},
+    {"name":"FeedC","u":0,"v":0,"mirror":false,"pivot":[17,15,2.500001],"offset":[0,0,0],"rotation":[0.5561382,0.6948478,0.4195006],"parent":null,"boxes":[{"from":[-4.5,0,-5],"size":[16,0,16],"deformation":0}]},
+    {"name":"FeedD","u":0,"v":0,"mirror":false,"pivot":[14,15,-1.999999],"offset":[0,0,0],"rotation":[0.329293,-2.02634,0.4998787],"parent":null,"boxes":[{"from":[-4.5,0,-5],"size":[16,0,16],"deformation":0}]},
+    {"name":"FeedE","u":0,"v":0,"mirror":false,"pivot":[2,15,-0.9999991],"offset":[0,0,0],"rotation":[0.329293,-2.02634,0.3414953],"parent":null,"boxes":[{"from":[-4.5,0,-5],"size":[16,0,16],"deformation":0}]},
+    {"name":"FeedF","u":0,"v":0,"mirror":false,"pivot":[9.000001,14,-1.999999],"offset":[0,0,0],"rotation":[0.223693,-1.865655,0.009323301],"parent":null,"boxes":[{"from":[-4.5,0,-5],"size":[16,0,16],"deformation":0}]},
+    {"name":"FeedG","u":0,"v":0,"mirror":false,"pivot":[0.000000156835,14,-0.9999991],"offset":[0,0,0],"rotation":[0.2029555,-1.465355,0.09517268],"parent":null,"boxes":[{"from":[-4.5,0,-5],"size":[16,0,16],"deformation":0}]},
+    {"name":"FeedH","u":0,"v":0,"mirror":false,"pivot":[17,14,-0.9999986],"offset":[0,0,0],"rotation":[0.286131,2.831252,0.4113167],"parent":null,"boxes":[{"from":[-4.5,0,-5],"size":[16,0,16],"deformation":0}]}
+  ],
+  "audit": {"nodeCount": 8, "boxCount": 8, "edgeCount": 0, "parentlessCount": 8, "renderedRootCount": 8, "staticRotations": 24}
+}

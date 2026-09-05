@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:entity",
+  "pools": [{
+    "rolls": 1,
+    "entries": [{
+      "type": "minecraft:item",
+      "name": "animania:raw_frog_legs",
+      "functions": [{ "function": "minecraft:set_count", "count": 1 }]
+    }]
+  }],
+  "random_sequence": "animania:entities/frog"
+}

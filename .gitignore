@@ -1,0 +1,28 @@
+.gradle/
+build/
+run/
+run-data/
+out/
+.idea/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+.vscode/
+logs/
+*.log
+.tmp/
+.env
+.env.*
+!.env.example
+src/generated/resources/.cache/
+
+# Local publishing drafts and generated branding variants.
+/release/
+
+# Local upstream/template checkouts used during the port.
+.upstream-animania/
+.mdk-1.21.1/
+.tools/

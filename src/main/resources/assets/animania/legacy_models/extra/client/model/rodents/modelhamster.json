@@ -1,0 +1,777 @@
+{
+  "source": "extra/client/model/rodents/modelhamster",
+  "textureWidth": 64,
+  "textureHeight": 32,
+  "roots": [
+    "hamsterHead",
+    "hamsterNose",
+    "hamsterEarRight",
+    "hamsterEarLeft",
+    "hamsterBody",
+    "hamsterTail",
+    "hamsterLegBackRight",
+    "hamsterLegBackLeft",
+    "hamsterLegFrontRight",
+    "hamsterLegFrontLeft"
+  ],
+  "nodes": [
+    {
+      "name": "hamsterHead",
+      "u": 0,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        0,
+        16,
+        -2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2.51,
+            -1.5,
+            -5
+          ],
+          "size": [
+            5,
+            5,
+            5
+          ],
+          "deformation": 0.5
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "hamsterNose",
+      "u": 0,
+      "v": 25,
+      "mirror": false,
+      "pivot": [
+        0,
+        16,
+        -2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            1.5,
+            -6
+          ],
+          "size": [
+            3,
+            2,
+            1
+          ],
+          "deformation": 0.5
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "hamsterEarRight",
+      "u": 10,
+      "v": 15,
+      "mirror": false,
+      "pivot": [
+        0,
+        16,
+        -2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2.5,
+            -3,
+            -4.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0.5
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "hamsterEarLeft",
+      "u": 10,
+      "v": 18,
+      "mirror": false,
+      "pivot": [
+        0,
+        16,
+        -2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            1.5,
+            -3,
+            -4.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0.5
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "hamsterBody",
+      "u": 28,
+      "v": 8,
+      "mirror": false,
+      "pivot": [
+        0,
+        19,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        1.570796,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -4.02,
+            -3,
+            -2
+          ],
+          "size": [
+            5,
+            8,
+            5
+          ],
+          "deformation": 0.5
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "hamsterTail",
+      "u": 10,
+      "v": 15,
+      "mirror": false,
+      "pivot": [
+        0,
+        15,
+        2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        1.570796,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2,
+            4,
+            -4
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0.5
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "hamsterLegBackRight",
+      "u": 0,
+      "v": 16,
+      "mirror": false,
+      "pivot": [
+        -2,
+        21,
+        6
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.570796,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2,
+            0,
+            -2.01
+          ],
+          "size": [
+            1,
+            2,
+            1
+          ],
+          "deformation": 0.5
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "hamsterLegBackLeft",
+      "u": 0,
+      "v": 16,
+      "mirror": false,
+      "pivot": [
+        2,
+        21,
+        6
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.570796,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2,
+            0,
+            -2.01
+          ],
+          "size": [
+            1,
+            2,
+            1
+          ],
+          "deformation": 0.5
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "hamsterLegFrontRight",
+      "u": 0,
+      "v": 16,
+      "mirror": false,
+      "pivot": [
+        -2,
+        21,
+        -0.5
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2,
+            0,
+            -2
+          ],
+          "size": [
+            1,
+            2,
+            1
+          ],
+          "deformation": 0.5
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "hamsterLegFrontLeft",
+      "u": 0,
+      "v": 16,
+      "mirror": false,
+      "pivot": [
+        2,
+        21,
+        -0.5
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2,
+            0,
+            -2
+          ],
+          "size": [
+            1,
+            2,
+            1
+          ],
+          "deformation": 0.5
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "hamsterCheekRight0",
+      "u": 10,
+      "v": 21,
+      "mirror": false,
+      "pivot": [
+        0,
+        16,
+        -2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3.5,
+            1.5,
+            -2.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "hamsterCheekRight1",
+      "u": 10,
+      "v": 21,
+      "mirror": false,
+      "pivot": [
+        0,
+        16,
+        -2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3.5,
+            1.5,
+            -2.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0.4
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "hamsterCheekRight2",
+      "u": 10,
+      "v": 21,
+      "mirror": false,
+      "pivot": [
+        0,
+        16,
+        -2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3.5,
+            1.5,
+            -2.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0.8
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "hamsterCheekRight3",
+      "u": 10,
+      "v": 21,
+      "mirror": false,
+      "pivot": [
+        0,
+        16,
+        -2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3.5,
+            1.5,
+            -2.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 1.2000000000000002
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "hamsterCheekRight4",
+      "u": 10,
+      "v": 21,
+      "mirror": false,
+      "pivot": [
+        0,
+        16,
+        -2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3.5,
+            1.5,
+            -2.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 1.6
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "hamsterCheekLeft0",
+      "u": 10,
+      "v": 24,
+      "mirror": false,
+      "pivot": [
+        0,
+        16,
+        -2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            2.5,
+            1.5,
+            -2.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "hamsterCheekLeft1",
+      "u": 10,
+      "v": 24,
+      "mirror": false,
+      "pivot": [
+        0,
+        16,
+        -2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            2.5,
+            1.5,
+            -2.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0.4
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "hamsterCheekLeft2",
+      "u": 10,
+      "v": 24,
+      "mirror": false,
+      "pivot": [
+        0,
+        16,
+        -2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            2.5,
+            1.5,
+            -2.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0.8
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "hamsterCheekLeft3",
+      "u": 10,
+      "v": 24,
+      "mirror": false,
+      "pivot": [
+        0,
+        16,
+        -2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            2.5,
+            1.5,
+            -2.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 1.2000000000000002
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "hamsterCheekLeft4",
+      "u": 10,
+      "v": 24,
+      "mirror": false,
+      "pivot": [
+        0,
+        16,
+        -2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            2.5,
+            1.5,
+            -2.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 1.6
+        }
+      ],
+      "parent": null
+    }
+  ],
+  "audit": {
+    "nodeCount": 20,
+    "boxCount": 20,
+    "edgeCount": 0,
+    "parentlessCount": 20,
+    "renderedRootCount": 10,
+    "staticRotations": 15
+  }
+}

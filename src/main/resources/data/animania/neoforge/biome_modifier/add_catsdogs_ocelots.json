@@ -1,0 +1,10 @@
+{
+  "type": "animania:legacy_add_spawns",
+  "biomes": "#animania:ocelot_cat_habitats",
+  "probability_group": "cats",
+  "default_probability": 4,
+  "family_group": "cats",
+  "spawners": [
+    { "type": "animania:queen_ocelot", "weight": 4, "minCount": 2, "maxCount": 2 }
+  ]
+}

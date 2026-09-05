@@ -1,0 +1,54 @@
+{
+  "source": "catsdogs/client/models/cats/modelcatasiatic",
+  "parts": {
+    "body": {
+      "rotation": [
+        -0.12601277199399058,
+        null,
+        null
+      ]
+    },
+    "lower_body": {
+      "rotation": [
+        -0.6898780387650506,
+        null,
+        null
+      ]
+    },
+    "tail": {
+      "rotation": [
+        0.5878635439859821,
+        null,
+        null
+      ]
+    },
+    "back_leg_r1": {
+      "rotation": [
+        -0.41790512675602626,
+        null,
+        null
+      ]
+    },
+    "back_leg_l1": {
+      "rotation": [
+        -0.4277452930787703,
+        null,
+        null
+      ]
+    },
+    "leg_r1": {
+      "rotation": [
+        -0.050714032075199235,
+        null,
+        null
+      ]
+    },
+    "leg_l1": {
+      "rotation": [
+        -0.04352676621548658,
+        null,
+        null
+      ]
+    }
+  }
+}

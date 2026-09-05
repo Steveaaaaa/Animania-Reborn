@@ -1,0 +1,52 @@
+{
+  "source": "catsdogs/client/models/dogs/modelchihuahua",
+  "parts": {
+    "body": {
+      "rotation": [
+        -0.5040528333052143,
+        null,
+        null
+      ],
+      "pivot": [
+        0,
+        18,
+        10
+      ]
+    },
+    "neck": {
+      "rotation": [
+        -0.9206419818052369,
+        null,
+        null
+      ]
+    },
+    "pug_head": {
+      "rotation": [
+        1.2854227767890596,
+        null,
+        null
+      ]
+    },
+    "front_left": {
+      "rotation": [
+        -0.04153534553896105,
+        null,
+        null
+      ]
+    },
+    "back_left": {
+      "rotation": [
+        5.323938387649487,
+        null,
+        null
+      ]
+    },
+    "back_right": {
+      "rotation": [
+        -0.9943507267754614,
+        null,
+        null
+      ]
+    }
+  }
+}

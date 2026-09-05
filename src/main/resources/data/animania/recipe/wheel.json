@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" S ", "SNS", " S "],
+  "key": {
+    "S": { "item": "minecraft:stick" },
+    "N": { "item": "minecraft:iron_nugget" }
+  },
+  "result": { "id": "animania:wheel", "count": 1 }
+}

@@ -1,0 +1,717 @@
+{
+  "source": "extra/client/model/tileentity/modelhamsterwheel",
+  "textureWidth": 64,
+  "textureHeight": 32,
+  "roots": [
+    "Base1",
+    "Base2",
+    "axel1",
+    "Base3",
+    "Base4",
+    "axel12",
+    "Wheel1",
+    "Wheel2",
+    "Wheel3",
+    "Wheel4",
+    "Wheel5",
+    "Wheel6",
+    "Wheel7",
+    "Wheel8",
+    "Stick",
+    "Stick2",
+    "axel1b"
+  ],
+  "nodes": [
+    {
+      "name": "Base1",
+      "u": 12,
+      "v": 1,
+      "mirror": false,
+      "pivot": [
+        6,
+        24,
+        6
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        1.570796
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            0,
+            -0.5
+          ],
+          "size": [
+            1,
+            13,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Base2",
+      "u": 12,
+      "v": 1,
+      "mirror": false,
+      "pivot": [
+        -2.99795e-7,
+        13,
+        6
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        -0.5235988
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            13,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "axel1",
+      "u": 12,
+      "v": 1,
+      "mirror": false,
+      "pivot": [
+        -2.99795e-7,
+        13,
+        5
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        -0.5235988
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Base3",
+      "u": 12,
+      "v": 1,
+      "mirror": false,
+      "pivot": [
+        5.999999,
+        24,
+        -6
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        1.570796
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            0,
+            -0.5
+          ],
+          "size": [
+            1,
+            13,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Base4",
+      "u": 12,
+      "v": 1,
+      "mirror": false,
+      "pivot": [
+        -0.000003023637,
+        13,
+        -6
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        -0.523599
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            13,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "axel12",
+      "u": 12,
+      "v": 1,
+      "mirror": false,
+      "pivot": [
+        -0.00000487138,
+        13,
+        -5
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        -0.523599
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Base5",
+      "u": 4,
+      "v": 13,
+      "mirror": false,
+      "pivot": [
+        -6.5,
+        23.5,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -6
+          ],
+          "size": [
+            1,
+            1,
+            12
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Wheel1",
+      "u": 19,
+      "v": 2,
+      "mirror": false,
+      "pivot": [
+        -0.000003234292,
+        6.500002,
+        4.768372e-7
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        -1.685874e-7
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3,
+            -0.5,
+            -5
+          ],
+          "size": [
+            6,
+            1,
+            10
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Wheel2",
+      "u": 19,
+      "v": 2,
+      "mirror": false,
+      "pivot": [
+        2.999997,
+        6,
+        4.768372e-7
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0.7853982
+      ],
+      "boxes": [
+        {
+          "from": [
+            0,
+            0,
+            -5
+          ],
+          "size": [
+            6,
+            1,
+            10
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Wheel3",
+      "u": 19,
+      "v": 2,
+      "mirror": false,
+      "pivot": [
+        7.242638,
+        10.24264,
+        4.768372e-7
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        1.570797
+      ],
+      "boxes": [
+        {
+          "from": [
+            0,
+            0,
+            -5
+          ],
+          "size": [
+            6,
+            1,
+            10
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Wheel4",
+      "u": 19,
+      "v": 2,
+      "mirror": false,
+      "pivot": [
+        7.242639,
+        16.24264,
+        4.768372e-7
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        2.356194
+      ],
+      "boxes": [
+        {
+          "from": [
+            0,
+            0,
+            -5
+          ],
+          "size": [
+            6,
+            1,
+            10
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Wheel5",
+      "u": 19,
+      "v": 2,
+      "mirror": false,
+      "pivot": [
+        2.999999,
+        20.48528,
+        4.768372e-7
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.236345e-7,
+        1.236345e-7,
+        -3.141593
+      ],
+      "boxes": [
+        {
+          "from": [
+            0,
+            0,
+            -5
+          ],
+          "size": [
+            6,
+            1,
+            10
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Wheel6",
+      "u": 19,
+      "v": 2,
+      "mirror": false,
+      "pivot": [
+        -3.000001,
+        20.48528,
+        0.000001218644
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.236345e-7,
+        1.236345e-7,
+        -2.356194
+      ],
+      "boxes": [
+        {
+          "from": [
+            0,
+            0,
+            -5
+          ],
+          "size": [
+            6,
+            1,
+            10
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Wheel7",
+      "u": 19,
+      "v": 2,
+      "mirror": false,
+      "pivot": [
+        -7.242642,
+        16.24264,
+        0.000002267717
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.236345e-7,
+        1.236344e-7,
+        -1.570796
+      ],
+      "boxes": [
+        {
+          "from": [
+            0,
+            0,
+            -5
+          ],
+          "size": [
+            6,
+            1,
+            10
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Wheel8",
+      "u": 19,
+      "v": 2,
+      "mirror": false,
+      "pivot": [
+        -7.242642,
+        10.24264,
+        0.000003009524
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.236345e-7,
+        1.236344e-7,
+        -0.7853976
+      ],
+      "boxes": [
+        {
+          "from": [
+            0,
+            0,
+            -5
+          ],
+          "size": [
+            6,
+            1,
+            10
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Stick",
+      "u": 13,
+      "v": 2,
+      "mirror": false,
+      "pivot": [
+        -0.000001748819,
+        13,
+        4.75
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        -1.685874e-7
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -6.5,
+            0
+          ],
+          "size": [
+            1,
+            13,
+            0
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Stick2",
+      "u": 13,
+      "v": 2,
+      "mirror": false,
+      "pivot": [
+        -0.000002454983,
+        13,
+        -4.75
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        -1.685874e-7
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -6.5,
+            0
+          ],
+          "size": [
+            1,
+            13,
+            0
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "axel1b",
+      "u": 0,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        -2.99795e-7,
+        13,
+        7
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        -0.5235988
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -1
+          ],
+          "size": [
+            1,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    }
+  ],
+  "audit": {
+    "nodeCount": 18,
+    "boxCount": 18,
+    "edgeCount": 0,
+    "parentlessCount": 18,
+    "renderedRootCount": 17,
+    "staticRotations": 25
+  }
+}

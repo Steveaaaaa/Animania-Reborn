@@ -1,0 +1,1 @@
+{ "type": "minecraft:entity", "pools": [{ "rolls": 1, "entries": [{ "type": "minecraft:item", "name": "animania:raw_peacock" }] }], "random_sequence": "animania:entities/peacock_charcoal" }

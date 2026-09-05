@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "animania:wool_suffolk_brown"
+    }
+  ],
+  "result": {
+    "id": "minecraft:brown_wool"
+  }
+}

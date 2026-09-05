@@ -1,0 +1,5 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [{ "tag": "c:seeds" }, { "tag": "c:seeds" }, { "tag": "c:seeds" }],
+  "result": { "id": "animania:hamster_food", "count": 3 }
+}

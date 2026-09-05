@@ -1,0 +1,14 @@
+{
+  "ambientocclusion": false,
+  "render_type": "minecraft:cutout",
+  "textures": { "particle": "animania:block/straw", "cover": "animania:block/straw" },
+  "elements": [{
+    "from": [0, 0.01, 0], "to": [16, 0.5, 16],
+    "faces": {
+      "up": { "texture": "#cover", "cullface": "up" },
+      "down": { "texture": "#cover", "cullface": "down" },
+      "north": { "texture": "#cover" }, "south": { "texture": "#cover" },
+      "west": { "texture": "#cover" }, "east": { "texture": "#cover" }
+    }
+  }]
+}

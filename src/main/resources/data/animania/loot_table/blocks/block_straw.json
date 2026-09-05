@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "animania:block_straw"
+        }
+      ]
+    }
+  ],
+  "random_sequence": "animania:blocks/block_straw"
+}

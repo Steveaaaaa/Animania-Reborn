@@ -1,0 +1,524 @@
+{
+  "source": "catsdogs/client/models/blocks/modelpetbowl",
+  "textureWidth": 64,
+  "textureHeight": 32,
+  "roots": [
+    "Root_Node",
+    "Side1",
+    "Side2",
+    "Side3",
+    "Side4",
+    "Side5",
+    "Side6",
+    "Side7",
+    "Side8",
+    "Bottom_",
+    "Bottom_2",
+    "Bottom_3",
+    "Bottom_4"
+  ],
+  "nodes": [
+    {
+      "name": "Root_Node",
+      "u": 16,
+      "v": 16,
+      "mirror": false,
+      "pivot": [
+        0,
+        24,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0,
+            0,
+            0
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Side1",
+      "u": 12,
+      "v": 12,
+      "mirror": false,
+      "pivot": [
+        0,
+        21.5,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        -1.570796,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            4,
+            -2,
+            -2
+          ],
+          "size": [
+            1,
+            4,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Side2",
+      "u": 12,
+      "v": 12,
+      "mirror": false,
+      "pivot": [
+        -1.999999,
+        21.5,
+        5
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        -2.356194,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -2,
+            0
+          ],
+          "size": [
+            1,
+            4,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Side3",
+      "u": 12,
+      "v": 12,
+      "mirror": false,
+      "pivot": [
+        -4.828425,
+        21.5,
+        2.171573
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        -3.141593,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -2,
+            0
+          ],
+          "size": [
+            1,
+            4,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Side4",
+      "u": 12,
+      "v": 12,
+      "mirror": false,
+      "pivot": [
+        -4.828426,
+        21.5,
+        -1.828427
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        2.356194,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -2,
+            0
+          ],
+          "size": [
+            1,
+            4,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Side5",
+      "u": 12,
+      "v": 12,
+      "mirror": false,
+      "pivot": [
+        -1.999998,
+        21.5,
+        -4.656853
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -6.283185,
+        1.570796,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -2,
+            0
+          ],
+          "size": [
+            1,
+            4,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Side6",
+      "u": 12,
+      "v": 12,
+      "mirror": false,
+      "pivot": [
+        2.000001,
+        21.5,
+        -4.656853
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0.7853978,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -2,
+            0
+          ],
+          "size": [
+            1,
+            4,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Side7",
+      "u": 12,
+      "v": 12,
+      "mirror": false,
+      "pivot": [
+        4.828427,
+        21.5,
+        -1.828425
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        -2.753375e-7,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -2,
+            0
+          ],
+          "size": [
+            1,
+            4,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Side8",
+      "u": 12,
+      "v": 12,
+      "mirror": false,
+      "pivot": [
+        4.828425,
+        21.5,
+        2.171574
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        -0.7853984,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -2,
+            0
+          ],
+          "size": [
+            1,
+            4,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Bottom_",
+      "u": 12,
+      "v": 6,
+      "mirror": false,
+      "pivot": [
+        0,
+        23,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -4,
+            -0.5,
+            -2
+          ],
+          "size": [
+            8,
+            1,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Bottom_2",
+      "u": 12,
+      "v": 6,
+      "mirror": false,
+      "pivot": [
+        0,
+        23,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        -1.570796,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -4,
+            -0.5,
+            -2
+          ],
+          "size": [
+            8,
+            1,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Bottom_3",
+      "u": 12,
+      "v": 6,
+      "mirror": false,
+      "pivot": [
+        0,
+        23,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        -0.7853982,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -4,
+            -0.5,
+            -2
+          ],
+          "size": [
+            8,
+            1,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Bottom_4",
+      "u": 12,
+      "v": 6,
+      "mirror": false,
+      "pivot": [
+        0,
+        23,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0.7853982,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -4,
+            -0.5,
+            -2
+          ],
+          "size": [
+            8,
+            1,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    }
+  ],
+  "audit": {
+    "nodeCount": 13,
+    "boxCount": 13,
+    "edgeCount": 0,
+    "parentlessCount": 13,
+    "renderedRootCount": 13,
+    "staticRotations": 39
+  }
+}

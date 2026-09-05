@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "wear=0": {
+      "model": "animania:block/salt_lick"
+    },
+    "wear=1": {
+      "model": "animania:block/salt_lick"
+    },
+    "wear=2": {
+      "model": "animania:block/salt_lick"
+    },
+    "wear=3": {
+      "model": "animania:block/salt_lick"
+    },
+    "wear=4": {
+      "model": "animania:block/salt_lick"
+    },
+    "wear=5": {
+      "model": "animania:block/salt_lick"
+    },
+    "wear=6": {
+      "model": "animania:block/salt_lick"
+    },
+    "wear=7": {
+      "model": "animania:block/salt_lick"
+    }
+  }
+}

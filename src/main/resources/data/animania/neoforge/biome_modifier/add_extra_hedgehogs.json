@@ -1,0 +1,7 @@
+{
+  "type": "animania:legacy_add_spawns",
+  "biomes": "#animania:hedgehog_habitats",
+  "probability_group": "hedgehogs",
+  "default_probability": 8,
+  "spawners": [{ "type": "animania:hedgehog", "weight": 8, "minCount": 1, "maxCount": 3 }]
+}

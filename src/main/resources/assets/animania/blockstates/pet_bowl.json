@@ -1,0 +1,7 @@
+{
+  "multipart":[
+    {"apply":{"model":"animania:block/pet_bowl"}},
+    {"when":{"content":"food"},"apply":{"model":"animania:block/pet_bowl_food"}},
+    {"when":{"content":"water"},"apply":{"model":"animania:block/pet_bowl_water"}}
+  ]
+}

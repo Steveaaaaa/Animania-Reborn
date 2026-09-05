@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "animania:carving_knife"
+    },
+    {
+      "item": "animania:raw_prime_beef"
+    }
+  ],
+  "result": {
+    "id": "animania:raw_prime_steak",
+    "count": 4
+  }
+}

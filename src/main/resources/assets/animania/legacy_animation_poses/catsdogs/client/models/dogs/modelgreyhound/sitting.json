@@ -1,0 +1,64 @@
+{
+  "source": "catsdogs/client/models/dogs/modelgreyhound",
+  "parts": {
+    "body": {
+      "rotation": [
+        0.0498343861321941,
+        null,
+        null
+      ],
+      "pivot": [
+        0,
+        13,
+        -5
+      ]
+    },
+    "leg_l1": {
+      "rotation": [
+        -1.2861313804653693,
+        null,
+        null
+      ]
+    },
+    "leg_r1": {
+      "rotation": [
+        -1.3041327063704389,
+        null,
+        null
+      ]
+    },
+    "lower_body": {
+      "rotation": [
+        -0.2823750743509106,
+        null,
+        null
+      ]
+    },
+    "back_leg_l1": {
+      "rotation": [
+        -0.9602522291792482,
+        null,
+        null
+      ]
+    },
+    "back_leg_r1": {
+      "rotation": [
+        -0.9624426173905011,
+        null,
+        null
+      ]
+    },
+    "tail": {
+      "rotation": [
+        -0.26909660940173774,
+        null,
+        null
+      ],
+      "pivot": [
+        0,
+        -2.2,
+        17.5
+      ]
+    }
+  }
+}

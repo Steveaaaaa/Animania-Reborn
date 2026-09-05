@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model":"animania:block/wild_hive_empty"},
+    "facing=east": {"model":"animania:block/wild_hive_empty"},
+    "facing=south": {"model":"animania:block/wild_hive_empty"},
+    "facing=west": {"model":"animania:block/wild_hive_empty"}
+  }
+}

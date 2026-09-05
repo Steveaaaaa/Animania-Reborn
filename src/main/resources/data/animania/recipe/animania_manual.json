@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "tag": "c:seeds"
+    },
+    {
+      "item": "animania:block_straw"
+    }
+  ],
+  "result": {
+    "id": "animania:animania_manual"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "source": "farm/client/model/goats/modelkidkinder",
+  "timerEndpoint": -0.55,
+  "parts": {
+    "FrontLeg_L": {
+      "rotation": [
+        0.9900000000000001,
+        null,
+        null
+      ]
+    },
+    "FrontLeg_R": {
+      "rotation": [
+        0.9900000000000001,
+        null,
+        null
+      ]
+    },
+    "BackLeg_L": {
+      "rotation": [
+        -0.935,
+        null,
+        null
+      ]
+    },
+    "BackLeg_R": {
+      "rotation": [
+        -0.9625000000000001,
+        null,
+        null
+      ]
+    },
+    "HeadNode": {
+      "rotation": [
+        null,
+        1.54,
+        null
+      ]
+    },
+    "Body": {
+      "rotation": [
+        1.3874629934615632,
+        null,
+        null
+      ]
+    }
+  }
+}

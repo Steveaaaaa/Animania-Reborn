@@ -1,0 +1,47 @@
+{
+  "title": "HamsterWheelTest",
+  "duration": 80,
+  "holdLastKeyframe": false,
+  "nodeAnimations": {
+    "Wheel1": {
+      "position": {
+        "0": [
+          6.5,
+          0.000003099442,
+          4.768372e-7
+        ]
+      },
+      "offsetFromPivot": {
+        "0": [
+          0,
+          6.5,
+          0
+        ]
+      },
+      "size": {},
+      "rotation": {
+        "0": [
+          0,
+          0,
+          -0.000009659345
+        ],
+        "20": [
+          0,
+          0,
+          -89.99999
+        ],
+        "40": [
+          0,
+          0,
+          180
+        ],
+        "60": [
+          0,
+          0,
+          89.99997
+        ]
+      },
+      "stretch": {}
+    }
+  }
+}

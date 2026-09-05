@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "animania:milk_holstein",
+    "animania:flowing_milk_holstein",
+    "animania:milk_friesian",
+    "animania:flowing_milk_friesian",
+    "animania:milk_jersey",
+    "animania:flowing_milk_jersey",
+    "animania:milk_goat",
+    "animania:flowing_milk_goat"
+  ]
+}

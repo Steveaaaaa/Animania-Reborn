@@ -1,0 +1,736 @@
+{
+  "source": "farm/client/model/sheep/modeldorsetewe",
+  "textureWidth": 128,
+  "textureHeight": 128,
+  "roots": [
+    "HeadNode",
+    "Body",
+    "RightFrontLeg",
+    "Hips",
+    "RightBackLeg",
+    "Tail",
+    "LeftBackLeg",
+    "LeftFrontLeg"
+  ],
+  "nodes": [
+    {
+      "name": "HeadNode",
+      "u": 0,
+      "v": 19,
+      "mirror": false,
+      "pivot": [
+        0,
+        5.110041,
+        -4.140829999999999
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            0,
+            0,
+            0
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Body",
+      "u": 0,
+      "v": 39,
+      "mirror": false,
+      "pivot": [
+        0,
+        7,
+        7
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3.5,
+            -5.5,
+            -13.5
+          ],
+          "size": [
+            7,
+            13,
+            17
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "RightFrontLeg",
+      "u": 107,
+      "v": 4,
+      "mirror": false,
+      "pivot": [
+        -4,
+        9.149483,
+        -3.0811600000000006
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.009773841,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            0,
+            -1.5
+          ],
+          "size": [
+            3,
+            16,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Hips",
+      "u": 56,
+      "v": 25,
+      "mirror": false,
+      "pivot": [
+        0,
+        2.675018,
+        8.651946
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.0174533,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -4,
+            -1,
+            0
+          ],
+          "size": [
+            8,
+            12,
+            11
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "RightBackLeg",
+      "u": 107,
+      "v": 26,
+      "mirror": false,
+      "pivot": [
+        -4.5,
+        7.543364,
+        16.238067
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.01396263,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            -0.5,
+            -1.5
+          ],
+          "size": [
+            3,
+            18,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Tail",
+      "u": 0,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        0,
+        3.352909,
+        19.66545
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.6251218,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            -1,
+            -2
+          ],
+          "size": [
+            3,
+            7,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "LeftBackLeg",
+      "u": 107,
+      "v": 26,
+      "mirror": false,
+      "pivot": [
+        4.5,
+        7.543364,
+        16.238067
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.01396263,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            -0.5,
+            -1.5
+          ],
+          "size": [
+            3,
+            18,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "LeftFrontLeg",
+      "u": 107,
+      "v": 4,
+      "mirror": false,
+      "pivot": [
+        4,
+        9.149483,
+        -3.0811600000000006
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.009773842,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            0,
+            -1.5
+          ],
+          "size": [
+            3,
+            16,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Neck",
+      "u": 0,
+      "v": 18,
+      "mirror": false,
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.6684765,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2.5,
+            -1.5,
+            -10.5
+          ],
+          "size": [
+            5,
+            7,
+            11
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "Head",
+      "u": 32,
+      "v": 25,
+      "mirror": false,
+      "pivot": [
+        0,
+        -5.132233,
+        -8.43446
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.2822346,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3,
+            -2,
+            -4
+          ],
+          "size": [
+            6,
+            7,
+            5
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "UpperJaw",
+      "u": 32,
+      "v": 39,
+      "mirror": false,
+      "pivot": [
+        0,
+        -3.057787,
+        -11.9977
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.3557643,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2,
+            0,
+            -5
+          ],
+          "size": [
+            4,
+            3,
+            5
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "Nose",
+      "u": 0,
+      "v": 36,
+      "mirror": false,
+      "pivot": [
+        -1,
+        -1.3295749999999997,
+        -17.222949999999997
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.4814279,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "size": [
+            2,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "UpperJawDetail1",
+      "u": 0,
+      "v": 10,
+      "mirror": false,
+      "pivot": [
+        0,
+        -5.7470077,
+        -12.777510000000001
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.8936448,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            0,
+            -5
+          ],
+          "size": [
+            3,
+            2,
+            5
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "UpperJawDetail2",
+      "u": 14,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        0,
+        -4.7458919,
+        -12.761180000000001
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.6360343,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            0,
+            -5
+          ],
+          "size": [
+            3,
+            2,
+            5
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "LowerJaw",
+      "u": 12,
+      "v": 8,
+      "mirror": false,
+      "pivot": [
+        0,
+        -0.43962699999999977,
+        -10.61378
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.3450664,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            0,
+            -5
+          ],
+          "size": [
+            3,
+            1,
+            5
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "LeftEar1",
+      "u": 20,
+      "v": 15,
+      "mirror": false,
+      "pivot": [
+        2.5,
+        -5.3243202,
+        -8.490160000000001
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.2500451,
+        0.2031327,
+        -0.1289499
+      ],
+      "boxes": [
+        {
+          "from": [
+            0,
+            -1,
+            -1
+          ],
+          "size": [
+            4,
+            2,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "LeftEar2",
+      "u": 0,
+      "v": 26,
+      "mirror": false,
+      "pivot": [
+        6.166575,
+        -5.7977775,
+        -9.36884
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.2696677,
+        0.3971406,
+        -0.07895216
+      ],
+      "boxes": [
+        {
+          "from": [
+            0,
+            -0.5,
+            -1
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "RightEar1",
+      "u": 20,
+      "v": 15,
+      "mirror": false,
+      "pivot": [
+        -2.5,
+        -5.3243202,
+        -8.490160000000001
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.2500452,
+        -0.2031327,
+        0.1289499
+      ],
+      "boxes": [
+        {
+          "from": [
+            -4,
+            -1,
+            -1
+          ],
+          "size": [
+            4,
+            2,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "RightEar2",
+      "u": 0,
+      "v": 26,
+      "mirror": false,
+      "pivot": [
+        -6.166575,
+        -5.7977756,
+        -9.36883
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.2696678,
+        -0.3971407,
+        0.07895218
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    }
+  ],
+  "audit": {
+    "nodeCount": 19,
+    "boxCount": 19,
+    "edgeCount": 11,
+    "parentlessCount": 8,
+    "renderedRootCount": 8,
+    "staticRotations": 32
+  }
+}

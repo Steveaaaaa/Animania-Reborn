@@ -1,0 +1,442 @@
+{
+  "source": "extra/client/model/rodents/modelferret",
+  "textureWidth": 64,
+  "textureHeight": 32,
+  "roots": [
+    "Head",
+    "Body",
+    "PawRF",
+    "PawLF",
+    "Neck",
+    "Body2",
+    "PawLB",
+    "PawRB",
+    "Tail"
+  ],
+  "nodes": [
+    {
+      "name": "Head",
+      "u": 0,
+      "v": 10,
+      "mirror": false,
+      "pivot": [
+        0,
+        14.35004,
+        -16
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -3.584692e-8,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2.5,
+            -2,
+            -3
+          ],
+          "size": [
+            5,
+            4,
+            6
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Body",
+      "u": 12,
+      "v": 10,
+      "mirror": false,
+      "pivot": [
+        0,
+        18,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2.01,
+            -2.01,
+            -10
+          ],
+          "size": [
+            4,
+            4,
+            10
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "PawRF",
+      "u": 0,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        -1,
+        19.99997,
+        -9
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            0,
+            -1
+          ],
+          "size": [
+            2,
+            4,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "PawLF",
+      "u": 0,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        1,
+        19.99997,
+        -9
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            0,
+            -1
+          ],
+          "size": [
+            2,
+            4,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "EarR",
+      "u": 12,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        -2.5,
+        -2,
+        2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -3.584692e-8,
+        -6.726944e-16,
+        -0.7853982
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -1,
+            -0.5
+          ],
+          "size": [
+            2,
+            2,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "Head"
+    },
+    {
+      "name": "EarL",
+      "u": 12,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        2.5,
+        -2,
+        2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -3.584692e-8,
+        6.726944e-16,
+        0.7853982
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -1,
+            -0.5
+          ],
+          "size": [
+            2,
+            2,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "Head"
+    },
+    {
+      "name": "Neck",
+      "u": 30,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        0,
+        19.99997,
+        -10
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.6108652,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2,
+            -4,
+            -7
+          ],
+          "size": [
+            4,
+            4,
+            7
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Body2",
+      "u": 36,
+      "v": 15,
+      "mirror": false,
+      "pivot": [
+        0,
+        18,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2,
+            -2,
+            0
+          ],
+          "size": [
+            4,
+            4,
+            10
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "PawLB",
+      "u": 0,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        1,
+        19.99997,
+        9
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            0,
+            -1
+          ],
+          "size": [
+            2,
+            4,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "PawRB",
+      "u": 0,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        -1,
+        19.99997,
+        9
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            0,
+            -1
+          ],
+          "size": [
+            2,
+            4,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Tail",
+      "u": 44,
+      "v": 3,
+      "mirror": false,
+      "pivot": [
+        0,
+        17.5,
+        9.5
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.526944,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -1,
+            0
+          ],
+          "size": [
+            2,
+            2,
+            8
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    }
+  ],
+  "audit": {
+    "nodeCount": 11,
+    "boxCount": 11,
+    "edgeCount": 2,
+    "parentlessCount": 9,
+    "renderedRootCount": 9,
+    "staticRotations": 13
+  }
+}

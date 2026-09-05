@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "animania:wool_friesian_black"
+    }
+  ],
+  "result": {
+    "id": "minecraft:black_wool"
+  }
+}

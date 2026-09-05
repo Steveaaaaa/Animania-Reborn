@@ -1,0 +1,44 @@
+{
+  "source": "base/client/models/modeltrough",
+  "textureWidth": 128,
+  "textureHeight": 64,
+  "roots": ["Block1", "Base2", "Base1", "Block2", "Block3", "Block4", "Block5"],
+  "nodes": [
+    {
+      "name": "Block1", "u": 2, "v": 2, "mirror": false,
+      "pivot": [-7, 17, 0], "offset": [0, 0, 0], "rotation": [0, 0, 0], "parent": null,
+      "boxes": [{"from": [-1, -5, -6], "size": [2, 10, 12], "deformation": 0}]
+    },
+    {
+      "name": "Base2", "u": 4, "v": 4, "mirror": false,
+      "pivot": [22, 23, 0], "offset": [0, 0, 0], "rotation": [0, 0, 0], "parent": null,
+      "boxes": [{"from": [-1, -1, -5], "size": [2, 2, 10], "deformation": 0}]
+    },
+    {
+      "name": "Base1", "u": 4, "v": 4, "mirror": false,
+      "pivot": [-6, 23, 0], "offset": [0, 0, 0], "rotation": [0, 0, 0], "parent": null,
+      "boxes": [{"from": [-1, -1, -5], "size": [2, 2, 10], "deformation": 0}]
+    },
+    {
+      "name": "Block2", "u": 2, "v": 2, "mirror": false,
+      "pivot": [23, 17, 0], "offset": [0, 0, 0], "rotation": [0, 0, 0], "parent": null,
+      "boxes": [{"from": [-1, -5, -6], "size": [2, 10, 12], "deformation": 0}]
+    },
+    {
+      "name": "Block3", "u": 1, "v": 26, "mirror": false,
+      "pivot": [8, 18, -5], "offset": [0, 0, 0], "rotation": [0, 0, 0], "parent": null,
+      "boxes": [{"from": [-14, -4, -1], "size": [28, 8, 2], "deformation": 0}]
+    },
+    {
+      "name": "Block4", "u": 1, "v": 26, "mirror": false,
+      "pivot": [8, 18, 5], "offset": [0, 0, 0], "rotation": [0, 0, 0], "parent": null,
+      "boxes": [{"from": [-14, -4, -1], "size": [28, 8, 2], "deformation": 0}]
+    },
+    {
+      "name": "Block5", "u": 3, "v": 42, "mirror": false,
+      "pivot": [8, 21.5, 0], "offset": [0, 0, 0], "rotation": [0, 0, 0], "parent": null,
+      "boxes": [{"from": [-14, -0.5, -4], "size": [28, 1, 8], "deformation": 0}]
+    }
+  ],
+  "audit": {"nodeCount": 7, "boxCount": 7, "edgeCount": 0, "parentlessCount": 7, "renderedRootCount": 7, "staticRotations": 0}
+}

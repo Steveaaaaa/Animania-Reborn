@@ -1,0 +1,10 @@
+{
+  "type": "animania:legacy_add_spawns",
+  "biomes": "minecraft:mushroom_fields",
+  "probability_group": "cows",
+  "default_probability": 9,
+  "family_group": "cows",
+  "spawners": [
+    { "type": "animania:cow_mooshroom", "weight": 9, "minCount": 2, "maxCount": 2 }
+  ]
+}

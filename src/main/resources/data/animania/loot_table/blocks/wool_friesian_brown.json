@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "animania:wool_friesian_brown"
+        }
+      ]
+    }
+  ],
+  "random_sequence": "animania:blocks/wool_friesian_brown"
+}

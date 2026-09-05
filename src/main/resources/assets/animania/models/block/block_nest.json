@@ -1,0 +1,33 @@
+{
+  "textures": {
+    "particle": "minecraft:block/hay_block_side",
+    "wood": "minecraft:block/oak_planks",
+    "hay": "minecraft:block/hay_block_side"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0], "to": [16, 3, 16],
+      "faces": {
+        "down": { "texture": "#wood" }, "up": { "texture": "#hay" },
+        "north": { "texture": "#hay" }, "south": { "texture": "#hay" },
+        "west": { "texture": "#hay" }, "east": { "texture": "#hay" }
+      }
+    },
+    {
+      "from": [0, 3, 0], "to": [16, 5, 2],
+      "faces": { "up": { "texture": "#hay" }, "north": { "texture": "#hay" }, "south": { "texture": "#hay" } }
+    },
+    {
+      "from": [0, 3, 14], "to": [16, 5, 16],
+      "faces": { "up": { "texture": "#hay" }, "north": { "texture": "#hay" }, "south": { "texture": "#hay" } }
+    },
+    {
+      "from": [0, 3, 2], "to": [2, 5, 14],
+      "faces": { "up": { "texture": "#hay" }, "west": { "texture": "#hay" }, "east": { "texture": "#hay" } }
+    },
+    {
+      "from": [14, 3, 2], "to": [16, 5, 14],
+      "faces": { "up": { "texture": "#hay" }, "west": { "texture": "#hay" }, "east": { "texture": "#hay" } }
+    }
+  ]
+}
