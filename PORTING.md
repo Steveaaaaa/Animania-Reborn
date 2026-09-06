@@ -69,21 +69,6 @@ The original settings are grouped into `animania-server.toml`,
   with UV associations preserved. This addresses dark wagon canopy panels under
   shaders. Thin slabs replace zero-thickness feather planes to reduce depth flicker.
 
-## Building and checking changes
-
-Use Java 21 and the Gradle wrapper. The build toolchain uses NeoForge 21.1.249;
-`META-INF/neoforge.mods.toml` declares `[21.1.200,)` independently of that toolchain.
-Keep this declaration when updating the build dependency.
-
-```powershell
-$env:JAVA_TOOL_OPTIONS='-Djdk.net.unixdomain.tmpdir=C:\jtmp'
-.\gradlew.bat build -x test --no-daemon
-```
-
-The Windows command assumes `C:\jtmp` already exists and does not change system
-TEMP/TMP settings. EMI is compiled against the jar in `libs/` because the remote
-Maven endpoint was unreliable.
-
 For a version-range-only metadata edit, no Java changes or verification are
 required. Normal development builds skip tests. Game behaviour and shader
 compatibility are checked manually. The optional `tools/verify-port.ps1` script
