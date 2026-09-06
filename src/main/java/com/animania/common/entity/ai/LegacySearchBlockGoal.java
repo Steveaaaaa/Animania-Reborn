@@ -178,4 +178,6 @@ abstract class LegacySearchBlockGoal extends Goal {
         HORIZONTAL,
         UP
     }
+    @Override
+    public boolean requiresUpdateEveryTick() { return true; }
 }

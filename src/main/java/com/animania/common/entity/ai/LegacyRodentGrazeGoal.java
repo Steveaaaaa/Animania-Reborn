@@ -20,7 +20,7 @@ public final class LegacyRodentGrazeGoal extends Goal {
     public LegacyRodentGrazeGoal(PathfinderMob mover, Animal animal) {
         this.mover = mover;
         this.animal = animal;
-        setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+        setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK, Flag.JUMP));
     }
 
     @Override
@@ -28,11 +28,9 @@ public final class LegacyRodentGrazeGoal extends Goal {
         if (LegacyAnimalNeeds.isFed(animal) || animal.getData(ModAttachments.SLEEPING)) return false;
         if (animal.getRandom().nextInt(animal.isBaby() ? 50 : 150) != 0) return false;
         BlockPos pos = animal.blockPosition();
-        return animal.level().getBlockState(pos).getBlock() instanceof TallGrassBlock
+        return animal.level().getBlockState(pos).is(Blocks.SHORT_GRASS)
                 || animal.level().getBlockState(pos.below()).is(Blocks.GRASS_BLOCK)
-                || animal.level().getBlockState(pos.below()).is(Blocks.DIRT)
-                || animal.level().getBlockState(pos.below()).is(Blocks.MYCELIUM)
-                || animal.level().getBlockState(pos.below()).is(Blocks.SAND);
+                || animal.level().getBlockState(pos.below()).is(Blocks.DIRT);
     }
 
     @Override
@@ -52,7 +50,7 @@ public final class LegacyRodentGrazeGoal extends Goal {
         eatingTimer = Math.max(0, eatingTimer - 1);
         if (eatingTimer != 4) return;
         BlockPos pos = animal.blockPosition();
-        if (animal.level().getBlockState(pos).getBlock() instanceof TallGrassBlock) {
+        if (animal.level().getBlockState(pos).is(Blocks.SHORT_GRASS)) {
             animal.level().destroyBlock(pos, false);
         }
         LegacyAnimalNeeds.setFed(animal, true);
@@ -62,4 +60,7 @@ public final class LegacyRodentGrazeGoal extends Goal {
     public void stop() {
         eatingTimer = 0;
     }
+
+    @Override
+    public boolean requiresUpdateEveryTick() { return true; }
 }

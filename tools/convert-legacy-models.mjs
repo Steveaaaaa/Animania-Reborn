@@ -42,7 +42,7 @@ function convert(file) {
     try { variables[match[1]] = number(match[2], variables); } catch { /* runtime-only value */ }
   }
   const nodes = new Map();
-  const constructor = /(?:this\.)?(\w+)\s*=\s*new\s+ModelRenderer(?:Animania)?\s*\(\s*this\s*,\s*([^,]+),\s*([^\)]+)\s*\)\s*;/g;
+  const constructor = /(?:this\.)?(\w+)\s*=\s*new\s+ModelRenderer(?:Animania|Colored)?\s*\(\s*this\s*,\s*([^,]+),\s*([^\)]+)\s*\)\s*;/g;
   for (const match of geometry.matchAll(constructor)) {
     nodes.set(match[1], {
       name: match[1], u: number(match[2], variables), v: number(match[3], variables), mirror: false,
@@ -166,6 +166,18 @@ function convert(file) {
   };
   const target = path.join(outputRoot, `${relative}.json`);
   fs.mkdirSync(path.dirname(target), { recursive: true });
+  if (process.argv.includes('--add-missing-nodes') && fs.existsSync(target)) {
+    const existing = JSON.parse(fs.readFileSync(target, 'utf8'));
+    const names = new Set(existing.nodes.map(node => node.name));
+    existing.nodes.push(...data.nodes.filter(node => !names.has(node.name)));
+    existing.roots.push(...data.roots.filter(name => !names.has(name)));
+    existing.audit = {...existing.audit, nodeCount: existing.nodes.length,
+      boxCount: existing.nodes.reduce((sum, node) => sum + node.boxes.length, 0),
+      edgeCount: existing.nodes.filter(node => node.parent !== null).length,
+      parentlessCount: existing.nodes.filter(node => node.parent === null).length,
+      renderedRootCount: existing.roots.length};
+    Object.assign(data, existing);
+  }
   fs.writeFileSync(target, JSON.stringify(data, null, 2) + '\n');
   return data;
 }
@@ -181,6 +193,7 @@ function walk(directory) {
 walk(sourceRoot);
 let converted = 0, nodes = 0, boxes = 0, edges = 0;
 for (const file of files) {
+  if (process.argv.includes('--sheep-only') && !file.includes(`${path.sep}sheep${path.sep}`)) continue;
   const data = convert(file);
   if (!data) continue;
   converted++;

@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 
-/** Exact CraftStudio hive geometry and continuously looping bee animations. */
+/** Renders the CraftStudio hive and looping bee animations. */
 public final class HiveRenderer implements BlockEntityRenderer<HiveBlockEntity> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
             Animania.MOD_ID, "textures/entity/props/bee_hive.png");

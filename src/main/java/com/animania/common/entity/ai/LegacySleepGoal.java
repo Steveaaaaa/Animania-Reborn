@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Blocks;
 
 /** Bed-searching sleep AI corresponding to GenericAISleep in Animania 1.12. */
 public final class LegacySleepGoal extends LegacySearchBlockGoal {
+    private static final java.util.Map<Animal, java.lang.ref.WeakReference<LegacySleepGoal>> INSTANCES = new java.util.WeakHashMap<>();
     private final Animal sleeper;
     private final Block preferred;
     private final Block backup;
@@ -22,6 +23,7 @@ public final class LegacySleepGoal extends LegacySearchBlockGoal {
     public LegacySleepGoal(PathfinderMob mob, Animal sleeper) {
         super(mob, 0.8D, DestinationOffsets.UP);
         this.sleeper = sleeper;
+        INSTANCES.put(sleeper, new java.lang.ref.WeakReference<>(this));
         String key = bedKey(sleeper);
         this.preferred = resolve(LegacyConfig.PREFERRED_BEDS.get(key).get());
         this.backup = resolve(LegacyConfig.BACKUP_BEDS.get(key).get());
@@ -29,15 +31,29 @@ public final class LegacySleepGoal extends LegacySearchBlockGoal {
 
     @Override
     public boolean canUse() {
-        if (!LegacyConfig.ANIMALS_SLEEP.get() || sleeper.isPassenger()
+        if (!LegacyConfig.ANIMALS_SLEEP.get() || sleeper.isPassenger() || sleeper.isVehicle() || sleeper.isLeashed()
                 || sleeper instanceof TamableAnimal tame && tame.isInSittingPose()) return false;
         if (++delay <= LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get() + sleeper.getRandom().nextInt(100)) {
             return false;
         }
-        delay = 0;
         if (sleeper.getData(ModAttachments.SLEEPING)) return false;
         return shouldSleepNow(sleeper) && !sleeper.level().isRainingAt(sleeper.blockPosition())
                 && sleeper.getRandom().nextInt(3) == 0 && searchForDestination();
+    }
+
+    /** StayAsleep owns MOVE/LOOK, so the sleeping goal cannot be polled by
+     * GoalSelector. Preserve its original three-tick candidate-check cadence here. */
+    public static void checkSleepingWake(Animal animal) {
+        var reference = INSTANCES.get(animal);
+        LegacySleepGoal goal = reference == null ? null : reference.get();
+        if (goal == null || animal.tickCount % 3 != 0) return;
+        if (++goal.delay <= LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get() + animal.getRandom().nextInt(100)) return;
+        goal.delay = 0;
+        if (!shouldSleepNow(animal) || animal.isOnFire()
+                || animal.level().isRainingAt(animal.blockPosition())
+                && animal.level().canSeeSky(animal.blockPosition())) {
+            animal.setData(ModAttachments.SLEEPING, false);
+        }
     }
 
     @Override

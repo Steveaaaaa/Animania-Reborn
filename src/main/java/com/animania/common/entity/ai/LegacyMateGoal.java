@@ -113,4 +113,6 @@ public final class LegacyMateGoal extends Goal {
                                 && male.canMate(female))
                 .stream().min(Comparator.comparingDouble(male::distanceToSqr)).orElse(null);
     }
+    @Override
+    public boolean requiresUpdateEveryTick() { return true; }
 }

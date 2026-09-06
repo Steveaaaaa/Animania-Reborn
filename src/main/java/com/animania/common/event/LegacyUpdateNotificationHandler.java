@@ -12,12 +12,11 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
 /**
- * Safe replacement for the defunct 1.12 gist checker. It exposes the installed
- * version and a clickable project page without blocking login on an HTTP call.
+ * Shows the installed version and project link at login without an HTTP request.
  */
 @EventBusSubscriber(modid = Animania.MOD_ID)
 public final class LegacyUpdateNotificationHandler {
-    private static final String PROJECT_URL = "https://github.com/capnkirok/animaniamod";
+    private static final String PROJECT_URL = "https://github.com/Steveaaaaa/Animania-Reborn";
 
     private LegacyUpdateNotificationHandler() {
     }

@@ -44,7 +44,7 @@ public final class AnimaniaRodentRenderer extends MobRenderer<AnimaniaRodent, Le
             if (rodent.kind() == AnimaniaRodent.Kind.HAMSTER) {
                 poseStack.mulPose(Axis.ZP.rotationDegrees(20.0F));
             } else if (rodent.kind().isFerret()) {
-                poseStack.mulPose(Axis.ZP.rotationDegrees(10.0F));
+                poseStack.mulPose(Axis.ZP.rotationDegrees(rodent.kind() == AnimaniaRodent.Kind.FERRET_WHITE ? -10.0F : 10.0F));
             }
         }
     }

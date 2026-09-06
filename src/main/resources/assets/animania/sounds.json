@@ -1,4 +1,7 @@
 {
+  "chicken_crow_1": { "sounds": ["animania:chickens/crow1"] },
+  "chicken_crow_2": { "sounds": ["animania:chickens/crow2"] },
+  "chicken_crow_3": { "sounds": ["animania:chickens/crow3"] },
   "chicken_ambient": { "sounds": ["animania:chickens/cluck1", "animania:chickens/cluck2", "animania:chickens/cluck3", "animania:chickens/cluck4", "animania:chickens/cluck5", "animania:chickens/cluck6"] },
   "rooster_ambient": { "sounds": ["animania:chickens/crow1", "animania:chickens/crow2", "animania:chickens/crow3"] },
   "chicken_hurt": { "sounds": ["animania:chickens/hurt1", "animania:chickens/hurt2"] },

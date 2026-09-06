@@ -82,7 +82,7 @@ public final class AnimaniaCat extends TamableAnimal {
         goalSelector.addGoal(0, new FloatGoal(this));
         goalSelector.addGoal(1, new SitWhenOrderedToGoal(this));
         goalSelector.addGoal(2, new LeapAtTargetGoal(this, 0.4F));
-        goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.2D, true));
+        goalSelector.addGoal(3, new com.animania.common.entity.ai.LegacyCatAttackGoal(this));
         goalSelector.addGoal(6, new TemptGoal(this, 0.8D,
                 Ingredient.of(Items.COD, Items.SALMON), true));
         goalSelector.addGoal(7, new PanicGoal(this, 1.4D));
@@ -92,9 +92,9 @@ public final class AnimaniaCat extends TamableAnimal {
         targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new HurtByTargetGoal(this));
-        targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Silverfish.class, true,
+        targetSelector.addGoal(4, new com.animania.common.entity.ai.LegacyNearestAttackableTargetGoal<>(this, Silverfish.class, true,
                 entity -> !isTame()));
-        targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Animal.class, true,
+        targetSelector.addGoal(5, new com.animania.common.entity.ai.LegacyNearestAttackableTargetGoal<>(this, Animal.class, true,
                 entity -> !isTame() && isLegacyPrey(entity)));
     }
 

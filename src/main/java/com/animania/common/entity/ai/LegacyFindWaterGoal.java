@@ -28,7 +28,7 @@ public final class LegacyFindWaterGoal extends LegacySearchBlockGoal {
     @Override
     public boolean canUse() {
         if (++waterFindTimer <= LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get()) return false;
-        if (LegacyAnimalNeeds.isWatered(waterAnimal) || waterAnimal.isPassenger()
+        if (LegacyAnimalNeeds.isWatered(waterAnimal) || waterAnimal.isVehicle()
                 || waterAnimal.getData(ModAttachments.SLEEPING)
                 || LegacyConfig.REQUIRE_ANIMAL_INTERACTION_FOR_AI.get()
                 && !LegacyAnimalNeeds.isInteracted(waterAnimal)) {

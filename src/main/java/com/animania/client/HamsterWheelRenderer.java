@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
-/** Exact CraftStudio wheel/hamster renderer, including both original animations. */
+/** Renders the CraftStudio wheel and hamster with their original animations. */
 public final class HamsterWheelRenderer implements BlockEntityRenderer<HamsterWheelBlockEntity> {
     private static final ResourceLocation WHEEL_TEXTURE = ResourceLocation.fromNamespaceAndPath(
             Animania.MOD_ID, "textures/entity/tileentities/hamster_wheel.png");

@@ -26,13 +26,13 @@ public final class LegacyPigSnuffleGoal extends Goal {
 
     public LegacyPigSnuffleGoal(AnimaniaPig pig) {
         this.pig = pig;
-        setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+        setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK, Flag.JUMP));
     }
 
     @Override
     public boolean canUse() {
         BlockPos below = pig.blockPosition().below();
-        return !pig.level().getBlockState(below).is(ModBlocks.MUD.get())
+        return !AnimaniaPig.isMud(pig.level(), below)
                 && !pig.getData(ModAttachments.SLEEPING)
                 && !LegacyAnimalNeeds.isFed(pig)
                 && pig.getRandom().nextInt(120) == 50;
@@ -61,9 +61,10 @@ public final class LegacyPigSnuffleGoal extends Goal {
         var biome = pig.level().getBiome(below);
         boolean forest = biome.is(BiomeTags.IS_FOREST) || biome.is(Tags.Biomes.IS_FOREST);
         if (eatingTimer > 80 && forest && pig.role() != FarmAnimalRole.YOUNG
-                && pig.getLeashHolder() instanceof Player && !spawned) {
+                && pig.getLeashHolder() instanceof Player) {
             pig.level().levelEvent(2001, below, Block.getId(pig.level().getBlockState(below)));
-            pig.spawnAtLocation(ModItems.TRUFFLE.get(), 1 + pig.getRandom().nextInt(2));
+            if (!spawned) pig.level().addFreshEntity(new ItemEntity(pig.level(), below.getX() + 0.5D, below.getY() + 1.0D,
+                    below.getZ() + 0.5D, new net.minecraft.world.item.ItemStack(ModItems.TRUFFLE.get(), 1 + pig.getRandom().nextInt(2))));
             spawned = true;
         }
         if (eatingTimer < 100 && !eaten) {
@@ -84,4 +85,6 @@ public final class LegacyPigSnuffleGoal extends Goal {
         spawned = false;
         eaten = false;
     }
+    @Override
+    public boolean requiresUpdateEveryTick() { return true; }
 }

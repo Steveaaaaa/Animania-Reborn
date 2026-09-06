@@ -65,6 +65,21 @@ public final class AnimaniaGoat extends Goat {
     }
 
     @Override
+    protected void registerGoals() {
+        goalSelector.addGoal(0, new net.minecraft.world.entity.ai.goal.FloatGoal(this));
+        goalSelector.addGoal(2, new net.minecraft.world.entity.ai.goal.PanicGoal(this, 1.5D));
+        goalSelector.addGoal(9, new net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal(this, 1.0D));
+        goalSelector.addGoal(10, new net.minecraft.world.entity.ai.goal.LookAtPlayerGoal(this, Player.class, 6.0F));
+        goalSelector.addGoal(11, new com.animania.common.entity.ai.LegacyIdleLookGoal(this));
+    }
+
+    @Override
+    protected void customServerAiStep() {
+        // The modern Goat brain installs unrelated long-jump/ram activities and
+        // overwrites navigation. Animania 1.12 uses the goal selector exclusively.
+    }
+
+    @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(ANGORA_SHEARED, false);
@@ -120,12 +135,14 @@ public final class AnimaniaGoat extends Goat {
     public void aiStep() {
         super.aiStep();
         if (!level().isClientSide() && isSpooked()) {
+            boolean initialJump = spookedTimer() == 1.0F;
+            setNoAi(true);
             float timer = Math.max(0.0F, spookedTimer() - 0.01F);
             entityData.set(SPOOKED_TIMER, timer);
             getNavigation().stop();
             setDeltaMovement(0.0D, getDeltaMovement().y, 0.0D);
-            setJumping(timer > 0.90F || timer > 0.10F && timer <= 0.20F);
-            if (timer == 0.0F) setJumping(false);
+            setJumping(initialJump || timer > 0.10F && timer <= 0.20F);
+            if (timer == 0.0F) { setJumping(false); setNoAi(false); }
         }
         if (!level().isClientSide() && woolRegrowth > 0 && --woolRegrowth == 0) {
             entityData.set(ANGORA_SHEARED, false);

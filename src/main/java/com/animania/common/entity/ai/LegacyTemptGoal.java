@@ -23,6 +23,8 @@ public final class LegacyTemptGoal extends Goal {
     private double lastXRot;
     private double lastYRot;
     private int cooldown;
+    private java.util.function.Predicate<net.minecraft.world.item.ItemStack> itemPredicate;
+    private boolean stackTempt;
 
     public LegacyTemptGoal(PathfinderMob mob, double speed, boolean scaredByMovement) {
         this.mob = mob;
@@ -30,6 +32,11 @@ public final class LegacyTemptGoal extends Goal {
         this.speed = speed;
         this.scaredByMovement = scaredByMovement;
         setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+    }
+
+    public LegacyTemptGoal(PathfinderMob mob, double speed,
+                           java.util.function.Predicate<net.minecraft.world.item.ItemStack> items, boolean stackTempt) {
+        this(mob, speed, false); this.itemPredicate = items; this.stackTempt = stackTempt;
     }
 
     @Override
@@ -57,7 +64,9 @@ public final class LegacyTemptGoal extends Goal {
         lastZ = player.getZ();
         lastXRot = player.getXRot();
         lastYRot = player.getYRot();
-        return !animal.getData(ModAttachments.SLEEPING);
+        player = nearestTemptingPlayer();
+        return player != null && !animal.getData(ModAttachments.SLEEPING)
+                && (!(animal instanceof TamableAnimal tame) || !tame.isInSittingPose());
     }
 
     @Override
@@ -75,13 +84,13 @@ public final class LegacyTemptGoal extends Goal {
     public void stop() {
         player = null;
         mob.getNavigation().stop();
-        cooldown = 100;
+        cooldown = stackTempt ? com.animania.common.config.LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get() : 100;
     }
 
     @Override
     public void tick() {
         if (player == null) return;
-        if (!LegacyAnimalNeeds.isInteracted(animal)) LegacyAnimalNeeds.setInteracted(animal, true);
+        if (!stackTempt && !LegacyAnimalNeeds.isInteracted(animal)) LegacyAnimalNeeds.setInteracted(animal, true);
         mob.getLookControl().setLookAt(player, mob.getMaxHeadYRot() + 20.0F, mob.getMaxHeadXRot());
         if (mob.distanceToSqr(player) < 6.25D) mob.getNavigation().stop();
         else mob.getNavigation().moveTo(player, speed);
@@ -91,17 +100,19 @@ public final class LegacyTemptGoal extends Goal {
         Player nearest = null;
         double nearestDistance = 100.0D;
         for (Player candidate : mob.level().players()) {
-            if (!candidate.isAlive() || candidate.isSpectator() || !isTempting(candidate)) continue;
+            if (!candidate.isAlive() || candidate.isSpectator()) continue;
             double distance = mob.distanceToSqr(candidate);
             if (distance < nearestDistance) {
                 nearest = candidate;
                 nearestDistance = distance;
             }
         }
-        return nearest;
+        return nearest != null && isTempting(nearest) ? nearest : null;
     }
 
     private boolean isTempting(Player candidate) {
+        if (itemPredicate != null) return itemPredicate.test(candidate.getMainHandItem())
+                || itemPredicate.test(candidate.getOffhandItem());
         return animal.isFood(candidate.getMainHandItem()) || animal.isFood(candidate.getOffhandItem());
     }
 
@@ -126,4 +137,6 @@ public final class LegacyTemptGoal extends Goal {
             return new Settings(10, 1.2D, false);
         }
     }
+    @Override
+    public boolean requiresUpdateEveryTick() { return true; }
 }

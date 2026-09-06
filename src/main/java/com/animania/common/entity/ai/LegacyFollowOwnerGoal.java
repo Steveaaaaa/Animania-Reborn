@@ -18,6 +18,7 @@ public final class LegacyFollowOwnerGoal extends Goal {
     private final float stopDistance;
     private LivingEntity owner;
     private int recalc;
+    private float oldWaterCost;
 
     public LegacyFollowOwnerGoal(TamableAnimal pet, double speed, float startDistance, float stopDistance) {
         this.pet = pet;
@@ -30,14 +31,14 @@ public final class LegacyFollowOwnerGoal extends Goal {
     @Override
     public boolean canUse() {
         owner = pet.getOwner();
-        return owner != null && !pet.isInSittingPose() && !pet.isPassenger()
+        return owner != null && !owner.isSpectator() && !pet.isInSittingPose() && !pet.isPassenger()
                 && !pet.getData(ModAttachments.SLEEPING)
                 && pet.distanceToSqr(owner) >= startDistance * startDistance;
     }
 
     @Override
     public boolean canContinueToUse() {
-        return owner != null && owner.isAlive() && !pet.isInSittingPose()
+        return owner != null && owner.isAlive() && !pet.getNavigation().isDone() && !pet.isInSittingPose()
                 && !pet.getData(ModAttachments.SLEEPING)
                 && pet.distanceToSqr(owner) > stopDistance * stopDistance;
     }
@@ -45,6 +46,8 @@ public final class LegacyFollowOwnerGoal extends Goal {
     @Override
     public void start() {
         recalc = 0;
+        oldWaterCost = pet.getPathfindingMalus(net.minecraft.world.level.pathfinder.PathType.WATER);
+        pet.setPathfindingMalus(net.minecraft.world.level.pathfinder.PathType.WATER, 0);
     }
 
     @Override
@@ -53,22 +56,22 @@ public final class LegacyFollowOwnerGoal extends Goal {
         pet.getLookControl().setLookAt(owner, 10.0F, pet.getMaxHeadXRot());
         if (--recalc > 0) return;
         recalc = 10;
-        if (LegacyConfig.TAMED_ANIMALS_TELEPORT.get() && pet.distanceToSqr(owner) >= 144.0D
-                && tryTeleportNearOwner()) return;
-        pet.getNavigation().moveTo(owner, speed);
+        if (!pet.getNavigation().moveTo(owner, speed) && !pet.isLeashed() && !pet.isPassenger()
+                && LegacyConfig.TAMED_ANIMALS_TELEPORT.get() && pet.distanceToSqr(owner) >= 144.0D)
+            tryTeleportNearOwner();
     }
 
     @Override
     public void stop() {
+        pet.setPathfindingMalus(net.minecraft.world.level.pathfinder.PathType.WATER, oldWaterCost);
         owner = null;
         pet.getNavigation().stop();
     }
 
     private boolean tryTeleportNearOwner() {
         BlockPos center = owner.blockPosition();
-        for (int attempt = 0; attempt < 10; attempt++) {
-            BlockPos pos = center.offset(pet.getRandom().nextInt(7) - 3,
-                    pet.getRandom().nextInt(3) - 1, pet.getRandom().nextInt(7) - 3);
+        for (int x = -2; x <= 2; x++) for (int z = -2; z <= 2; z++) {
+            BlockPos pos = center.offset(x, 0, z);
             if (Math.abs(pos.getX() - center.getX()) < 2 && Math.abs(pos.getZ() - center.getZ()) < 2
                     || !pet.level().hasChunkAt(pos)) continue;
             BlockState floor = pet.level().getBlockState(pos.below());
@@ -83,4 +86,6 @@ public final class LegacyFollowOwnerGoal extends Goal {
         }
         return false;
     }
+    @Override
+    public boolean requiresUpdateEveryTick() { return true; }
 }

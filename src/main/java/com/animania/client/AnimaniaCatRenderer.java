@@ -46,6 +46,7 @@ public final class AnimaniaCatRenderer extends MobRenderer<AnimaniaCat, LegacyAn
             };
         };
         poseStack.scale(scale, scale, scale);
+        LegacySleepAnimation.transform(cat, poseStack, partialTick);
     }
 
     @Override

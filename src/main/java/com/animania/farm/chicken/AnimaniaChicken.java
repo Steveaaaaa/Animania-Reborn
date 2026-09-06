@@ -36,7 +36,15 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import javax.annotation.Nullable;
 
 public final class AnimaniaChicken extends Chicken {
+    private static final net.minecraft.network.syncher.EntityDataAccessor<Integer> CROW_DURATION =
+            net.minecraft.network.syncher.SynchedEntityData.defineId(AnimaniaChicken.class,
+                    net.minecraft.network.syncher.EntityDataSerializers.INT);
     private int crowTimer;
+    public int getCrowDuration() { return entityData.get(CROW_DURATION); }
+    @Override protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(CROW_DURATION, 0);
+    }
     private boolean lookingForNest;
     private int nestLayTimer;
 
@@ -124,11 +132,24 @@ public final class AnimaniaChicken extends Chicken {
     }
 
     private void tickCrow() {
-        long time = level().getDayTime() % 24000L;
-        if (--crowTimer <= 0 && (time >= 23000L || time <= 500L)) {
-            playSound(ModSounds.ROOSTER_AMBIENT.get(), 0.8F, 0.9F + random.nextFloat() * 0.1F);
+        long time = level().getDayTime() % 23999L;
+        if (crowTimer > 0) crowTimer--;
+        if (crowTimer == 0 && (time > 23250L || time < 500L)) {
+            entityData.set(CROW_DURATION, 50);
+            float modular = random.nextFloat() * random.nextInt(3) / 10;
+            if (!random.nextBoolean()) modular = -modular;
+            int choice = random.nextInt(3);
+            var sound = switch (choice) {
+                case 0 -> ModSounds.CHICKEN_CROW_1.get();
+                case 1 -> ModSounds.CHICKEN_CROW_2.get();
+                default -> ModSounds.CHICKEN_CROW_3.get();
+            };
+            level().playSound(null, getX(), getY(), getZ(), sound, net.minecraft.sounds.SoundSource.PLAYERS,
+                    choice == 0 ? 0.7F : choice == 1 ? 0.65F : 0.6F,
+                    (choice == 0 ? 0.95F : choice == 1 ? 0.9F : 1.05F) + modular);
             crowTimer = 200 + random.nextInt(200);
         }
+        if (getCrowDuration() > 0) entityData.set(CROW_DURATION, getCrowDuration() - 1);
     }
 
     @Override
@@ -208,6 +229,7 @@ public final class AnimaniaChicken extends Chicken {
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        tag.putInt("CrowDuration", getCrowDuration());
         tag.putInt("CrowTime", crowTimer);
         tag.putBoolean("LookingForNest", lookingForNest);
         tag.putInt("NestLayTimer", nestLayTimer);
@@ -216,6 +238,7 @@ public final class AnimaniaChicken extends Chicken {
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        entityData.set(CROW_DURATION, Math.max(0, Math.min(50, tag.getInt("CrowDuration"))));
         if (tag.contains("CrowTime")) {
             crowTimer = tag.getInt("CrowTime");
         }

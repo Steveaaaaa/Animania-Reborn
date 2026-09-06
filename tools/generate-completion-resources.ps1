@@ -35,10 +35,10 @@ function Shapeless([string]$Name, [array]$Ingredients, [string]$Result, [int]$Co
     })
 }
 
-function Smelting([string]$Name, [string]$Input, [string]$Result, [double]$Experience = 0.35) {
+function Smelting([string]$Name, [string]$IngredientId, [string]$Result, [double]$Experience = 0.35) {
     Write-JsonFile (Join-Path $data "recipe/$Name.json") ([ordered]@{
         type = 'minecraft:smelting'; category = 'food'; cookingtime = 200; experience = $Experience
-        ingredient = [ordered]@{ item = $Input }; result = [ordered]@{ id = $Result }
+        ingredient = [ordered]@{ item = $IngredientId }; result = [ordered]@{ id = $Result }
     })
 }
 
@@ -188,18 +188,18 @@ $names = [ordered]@{
     'item.animania.super_omelette'='Ultimate Omelette'; 'item.animania.truffle_soup'='Truffle Soup'
     'item.animania.chocolate_truffle'='Chocolate Truffle'; 'message.animania.salt_lick_uses'='Salt lick: %s uses remaining'
     'message.animania.hive_status'='Honey: %1$s/%2$s mB; next production in %3$s ticks'
-    'manual.animania.page.welcome'='Welcome to Animania. This guide summarizes the care, breeding, products and utilities restored in the NeoForge port.'
+    'manual.animania.page.welcome'='Welcome to Animania Reborn. Learn how to care for your animals, breed them, make cheese and use farm equipment.'
     'manual.animania.page.needs'='Animal care\n\nAnimals need food and water. Fill troughs or pet bowls and inspect an animal with an empty hand.'
     'manual.animania.page.farm'='Farm animals\n\nBreed compatible adult males and females. Well-cared-for animals reproduce and provide their breed-specific products.'
     'manual.animania.page.dairy'='Dairy\n\nMilk cows, goats and sheep with a bucket. Put a milk bucket into a cheese mold and wait for the wheel to mature.'
     'manual.animania.page.hives'='Hives\n\nHives produce up to 5000 mB of honey. Use a bottle or empty fluid container to extract it. Wild hives sting nearby players.'
-    'manual.animania.page.extra'='Extra animals\n\nRabbits, peafowl, amphibians, hamsters, hedgehogs and ferrets retain their species products and utilities.'
+    'manual.animania.page.extra'='Extra animals\n\nKeep rabbits, peafowl, hamsters, hedgehogs and ferrets, or look for frogs and toads in the wild. Hamsters can use exercise balls and wheels.'
     'manual.animania.page.pets'='Cats & Dogs\n\nTame pets, feed them from bowls, command them to sit and use beds, towers, houses, pillows and litter boxes.'
-    'manual.animania.page.vehicles'='Vehicles\n\nPull vehicles by hand, hitch an eligible ridden or leashed animal, or shift-use to ride/open storage. Carts accept a chest; pigs pull carts and cattle pull tillers.'
+    'manual.animania.page.vehicles'='Vehicles\n\nHitch a suitable ridden or leashed animal to a vehicle. Horses pull carts and wagons, pigs pull carts, and cattle pull tillers. Carts can be fitted with a chest.'
 }
 $zhNames = [ordered]@{
     'block.animania.block_straw'='稻草'; 'block.animania.block_seeds'='散落的种子'; 'block.animania.salt_lick'='盐砖'
-    'item.animania.animania_manual'='动物谷手册'; 'item.animania.salt'='盐'; 'item.animania.bucket_slop'='泔水桶'
+    'item.animania.animania_manual'='动物谷重生手册'; 'item.animania.salt'='盐'; 'item.animania.bucket_slop'='泔水桶'
     'item.animania.bucket_honey'='蜂蜜桶'; 'item.animania.honey_bottle'='蜂蜜瓶'; 'item.animania.milk_bottle'='牛奶瓶'
     'item.animania.carving_knife'='雕肉刀'; 'item.animania.riding_crop'='马鞭'
     'item.animania.raw_prime_bacon'='生精品培根'; 'item.animania.cooked_prime_bacon'='熟精品培根'
@@ -210,14 +210,14 @@ $zhNames = [ordered]@{
     'item.animania.super_omelette'='终极煎蛋卷'; 'item.animania.truffle_soup'='松露汤'
     'item.animania.chocolate_truffle'='巧克力松露'; 'message.animania.salt_lick_uses'='盐砖剩余 %s 次'
     'message.animania.hive_status'='蜂蜜：%1$s/%2$s mB；距离下次产蜜还有 %3$s tick'
-    'manual.animania.page.welcome'='欢迎来到动物谷。本手册概述 NeoForge 移植版中的照料、繁殖、产物和工具。'
+    'manual.animania.page.welcome'='欢迎来到动物谷重生！从喂养和繁殖动物开始，学习制作奶酪、照顾宠物和使用农场工具。'
     'manual.animania.page.needs'='动物照料\n\n动物需要食物和水。填充食槽或宠物碗，空手与动物互动可检查状态。'
     'manual.animania.page.farm'='农场动物\n\n让兼容品种的成年雌雄动物繁殖。照料良好的动物会繁殖并提供品种产物。'
     'manual.animania.page.dairy'='乳制品\n\n用桶给牛、山羊和绵羊挤奶。将奶桶放入奶酪模具并等待奶酪成熟。'
     'manual.animania.page.hives'='蜂巢\n\n蜂巢最多储存 5000 mB 蜂蜜。用瓶子或空流体容器提取。野生蜂巢会蜇伤附近玩家。'
-    'manual.animania.page.extra'='额外动物\n\n兔子、孔雀、两栖类、仓鼠、刺猬和雪貂保留各自的产物与工具。'
+    'manual.animania.page.extra'='其他动物\n\n你可以饲养兔子、孔雀、仓鼠、刺猬和雪貂，也可以在野外寻找青蛙和蟾蜍。仓鼠还能使用滚轮和仓鼠球。'
     'manual.animania.page.pets'='猫与狗\n\n驯服宠物、使用宠物碗喂食、命令坐下，并使用床、猫爬架、狗屋、软垫和猫砂盆。'
-    'manual.animania.page.vehicles'='载具\n\n可以空手拉车，或连接正在骑乘/附近拴绳的合适牲畜；潜行使用可乘坐或打开储物。货车可加装箱子，猪可拉货车，牛可拉耕作机。'
+    'manual.animania.page.vehicles'='载具\n\n将正在骑乘或拴着绳的合适牲畜连接到载具。马可以拉货车和篷车，猪可以拉货车，牛可以拉耕具。货车可以加装箱子。'
     'block.animania.block_invisiblock'='隐形方块'; 'block.animania.animania_honey'='蜂蜜'; 'block.animania.slop'='泔水'
     'block.animania.milk_holstein'='荷斯坦牛奶'; 'block.animania.milk_friesian'='弗里斯兰牛奶'
     'block.animania.milk_jersey'='娟姗牛奶'; 'block.animania.milk_goat'='山羊奶'; 'block.animania.milk_sheep'='绵羊奶'

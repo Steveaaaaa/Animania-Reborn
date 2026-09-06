@@ -17,17 +17,34 @@ public final class LegacyGrazeGoal extends LegacySearchBlockGoal {
     private final Animal grazer;
     private int firingTimer;
     private int eatingTimer;
+    private final boolean consumesGrass;
 
     public LegacyGrazeGoal(PathfinderMob animal) {
+        this(animal, true);
+    }
+
+    public LegacyGrazeGoal(PathfinderMob animal, boolean consumesGrass) {
         super(animal, 1.0D, DestinationOffsets.UP, 8);
+        this.consumesGrass = consumesGrass;
         this.grazer = (Animal) animal;
+        setFlags(java.util.EnumSet.of(Flag.MOVE, Flag.LOOK, Flag.JUMP));
+    }
+
+    @Override
+    public void start() {
+        if (consumesGrass) super.start();
+        else {
+            eatingTimer = 160;
+            grazer.setData(ModAttachments.EATING_TICKS, 80);
+            animal.getNavigation().stop();
+        }
     }
 
     @Override
     public boolean canUse() {
         if (++firingTimer <= LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get()) return false;
         if (grazer.getData(ModAttachments.SLEEPING) || LegacyAnimalNeeds.isFed(grazer)
-                || grazer instanceof AnimaniaHorse horse && (horse.isPassenger() || horse.isPullingVehicle())) {
+                || grazer instanceof AnimaniaHorse horse && (horse.isVehicle() || horse.isPassenger() || horse.isPullingVehicle())) {
             firingTimer = 0;
             return false;
         }
@@ -50,7 +67,7 @@ public final class LegacyGrazeGoal extends LegacySearchBlockGoal {
         }
         animal.getNavigation().stop();
         eatingTimer--;
-        if (eatingTimer == 4 && seekingBlockPos != null && shouldMoveTo(seekingBlockPos)) {
+        if (consumesGrass && eatingTimer == 4 && seekingBlockPos != null && shouldMoveTo(seekingBlockPos)) {
             var oldState = level.getBlockState(seekingBlockPos);
             level.levelEvent(2001, seekingBlockPos, Block.getId(oldState));
             if (LegacyConfig.PLANTS_REMOVED_AFTER_EATING.get()) {

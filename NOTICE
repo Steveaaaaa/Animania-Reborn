@@ -14,10 +14,9 @@ This is an unofficial NeoForge 1.21.1 adaptation, not an official release
 by the original Animania team. The port rewrites the platform integration,
 registries, entities, AI and rendering for modern Minecraft while deriving
 gameplay and converted model/animation resources from the original project.
-See PORTING.md for the changes and client QA corrections.
+See PORTING.md for the implementation notes and differences from 1.12.
 
 Port source and maintenance: https://github.com/Steveaaaaa/Animania-Reborn
-Port publication checkpoint: 2026-09-06, version 0.1.0.
 
 This port preserves the original `animania` resource namespace for world and
 resource-pack compatibility where practical. New implementation code is also

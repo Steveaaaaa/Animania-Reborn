@@ -112,17 +112,17 @@ public final class AnimaniaDog extends TamableAnimal {
         targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new HurtByTargetGoal(this));
-        targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, AbstractSkeleton.class, true));
-        targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this, Sheep.class, true,
+        targetSelector.addGoal(4, new com.animania.common.entity.ai.LegacyNearestAttackableTargetGoal<>(this, AbstractSkeleton.class, true));
+        targetSelector.addGoal(5, new com.animania.common.entity.ai.LegacyNearestAttackableTargetGoal<>(this, Sheep.class, true,
                 entity -> !isTame()));
-        targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, Rabbit.class, true,
+        targetSelector.addGoal(6, new com.animania.common.entity.ai.LegacyNearestAttackableTargetGoal<>(this, Rabbit.class, true,
                 entity -> !isTame()));
         if (breed() == DogBreed.FOX || breed() == DogBreed.WOLF) {
-            targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(this,
+            targetSelector.addGoal(5, new com.animania.common.entity.ai.LegacyNearestAttackableTargetGoal<>(this,
                     com.animania.extra.peafowl.AnimaniaPeafowl.class, true,
                     entity -> !isTame() && entity instanceof com.animania.extra.peafowl.AnimaniaPeafowl bird
                             && bird.role() == com.animania.extra.peafowl.PeafowlRole.PEACHICK));
-            targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, AnimaniaRodent.class, true,
+            targetSelector.addGoal(6, new com.animania.common.entity.ai.LegacyNearestAttackableTargetGoal<>(this, AnimaniaRodent.class, true,
                     entity -> !isTame()));
         }
     }

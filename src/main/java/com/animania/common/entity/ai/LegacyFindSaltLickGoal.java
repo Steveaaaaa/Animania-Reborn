@@ -22,7 +22,7 @@ public final class LegacyFindSaltLickGoal extends LegacySearchBlockGoal {
     @Override
     public boolean canUse() {
         if (++delay <= LegacyConfig.SALT_LICK_TICK.get()) return false;
-        if (consumer.getHealth() >= consumer.getMaxHealth() || consumer.isPassenger()
+        if (consumer.getHealth() >= consumer.getMaxHealth() || consumer.isVehicle()
                 || consumer.getData(ModAttachments.SLEEPING)
                 || consumer instanceof AnimaniaPig pig && pig.isMuddy()) {
             delay = 0;

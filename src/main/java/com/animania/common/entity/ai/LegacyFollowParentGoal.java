@@ -103,4 +103,6 @@ public final class LegacyFollowParentGoal extends Goal {
         if (child instanceof AnimaniaDog a && parent instanceof AnimaniaDog b) return a.breed() == b.breed();
         return child instanceof AnimaniaHorse && parent instanceof AnimaniaHorse;
     }
+    @Override
+    public boolean requiresUpdateEveryTick() { return true; }
 }

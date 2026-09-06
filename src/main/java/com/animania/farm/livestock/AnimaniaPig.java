@@ -48,6 +48,13 @@ public final class AnimaniaPig extends Pig {
     private static final int MUD_DURATION = 12_000;
     private static final EntityDataAccessor<Boolean> MUDDY =
             SynchedEntityData.defineId(AnimaniaPig.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IN_MUD =
+            SynchedEntityData.defineId(AnimaniaPig.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Float> MUD_AMOUNT =
+            SynchedEntityData.defineId(AnimaniaPig.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> SPLASH_TIMER =
+            SynchedEntityData.defineId(AnimaniaPig.class, EntityDataSerializers.FLOAT);
+    private float splashTimer;
     private boolean pregnant;
     private int gestation;
     private PigBreed mateBreed;
@@ -58,6 +65,7 @@ public final class AnimaniaPig extends Pig {
     public AnimaniaPig(EntityType<? extends Pig> type, Level level) {
         super(type, level);
         if (role() == FarmAnimalRole.YOUNG) setBaby(true);
+        playedTicks = com.animania.common.config.LegacyConfig.PLAY_TIMER.get() + random.nextInt(100);
     }
 
     private String entityPath() {
@@ -81,16 +89,32 @@ public final class AnimaniaPig extends Pig {
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(MUDDY, false);
+        builder.define(IN_MUD, false);
+        builder.define(MUD_AMOUNT, 0.0F);
+        builder.define(SPLASH_TIMER, 0.0F);
     }
 
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(4, new FindMudGoal(this));
+        goalSelector.addGoal(4, new com.animania.common.entity.ai.LegacyFindMudGoal(this));
     }
 
     public boolean isMuddy() {
         return entityData.get(MUDDY);
+    }
+
+    public boolean isInMud() { return entityData.get(IN_MUD); }
+    public float splashTimer() { return entityData.get(SPLASH_TIMER); }
+    public float mudAmount() { return entityData.get(MUD_AMOUNT); }
+    public boolean hasPlayed() { return played; }
+    public void refreshPlay() {
+        played = true;
+        playedTicks = com.animania.common.config.LegacyConfig.PLAY_TIMER.get() + random.nextInt(100);
+    }
+    public static boolean isMud(Level level, BlockPos pos) {
+        var block = level.getBlockState(pos).getBlock();
+        return block == ModBlocks.MUD.get() || BuiltInRegistries.BLOCK.getKey(block).getPath().equals("mud");
     }
 
     private boolean wellCaredFor() {
@@ -123,20 +147,30 @@ public final class AnimaniaPig extends Pig {
     }
 
     private void tickMudAndTruffles() {
-        boolean inMud = level().getBlockState(blockPosition()).is(ModBlocks.MUD.get())
-                || level().getBlockState(blockPosition().below()).is(ModBlocks.MUD.get());
+        boolean inMud = isMud(level(), blockPosition());
+        boolean wasInMud = isInMud();
+        entityData.set(IN_MUD, inMud);
         if (inMud) {
             entityData.set(MUDDY, true);
-            mudTicks = MUD_DURATION;
-            played = true;
-            playedTicks = com.animania.common.config.LegacyConfig.PLAY_TIMER.get();
+            if (!wasInMud) splashTimer = 1.0F;
+            splashTimer = Math.max(0.0F, splashTimer - 0.045F);
+            if (splashTimer <= 0.0F) entityData.set(MUD_AMOUNT, 1.0F);
+            refreshPlay();
+            addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                    net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN, 2, 4, false, false));
         } else if (isInWaterOrRain()) {
             entityData.set(MUDDY, false);
-            mudTicks = 0;
-        } else if (mudTicks > 0 && --mudTicks == 0) {
+            entityData.set(MUD_AMOUNT, 0.0F);
+            splashTimer = 0.0F;
+        } else {
             entityData.set(MUDDY, false);
+            if (mudAmount() > 0.0F && random.nextInt(3) == 0)
+                entityData.set(MUD_AMOUNT, Math.max(0.0F, mudAmount() - 0.0025F));
         }
-        if (!inMud && playedTicks > 0 && --playedTicks == 0) played = false;
+        entityData.set(SPLASH_TIMER, splashTimer);
+        if (mudAmount() > 0.0F) refreshPlay();
+        if (!com.animania.common.config.LegacyConfig.AMBIANCE_MODE.get()
+                && playedTicks > -1 && --playedTicks == 0) played = false;
 
     }
 
@@ -253,6 +287,8 @@ public final class AnimaniaPig extends Pig {
         tag.putInt("Gestation", gestation);
         tag.putBoolean("Muddy", isMuddy());
         tag.putInt("MudTicks", mudTicks);
+        tag.putFloat("MudAmount", mudAmount());
+        tag.putFloat("SplashTimer", splashTimer);
         tag.putBoolean("Played", played);
         tag.putInt("PlayedTicks", playedTicks);
         if (mateBreed != null) tag.putString("MateBreed", mateBreed.getSerializedName());
@@ -265,47 +301,14 @@ public final class AnimaniaPig extends Pig {
         gestation = tag.getInt("Gestation");
         entityData.set(MUDDY, tag.getBoolean("Muddy"));
         mudTicks = tag.getInt("MudTicks");
+        entityData.set(MUD_AMOUNT, tag.contains("MudAmount")
+                ? net.minecraft.util.Mth.clamp(tag.getFloat("MudAmount"), 0, 1) : mudTicks > 0 ? 1.0F : 0.0F);
+        splashTimer = tag.getFloat("SplashTimer");
+        entityData.set(SPLASH_TIMER, splashTimer);
         played = !tag.contains("Played") || tag.getBoolean("Played");
         playedTicks = tag.contains("PlayedTicks") ? Math.max(0, tag.getInt("PlayedTicks"))
                 : played ? MUD_DURATION : 0;
         if (tag.contains("MateBreed")) mateBreed = PigBreed.fromPath(tag.getString("MateBreed"));
     }
 
-    private static final class FindMudGoal extends Goal {
-        private final AnimaniaPig pig;
-        private BlockPos target;
-
-        private FindMudGoal(AnimaniaPig pig) {
-            this.pig = pig;
-            setFlags(EnumSet.of(Flag.MOVE));
-        }
-
-        @Override
-        public boolean canUse() {
-            if (pig.isMuddy() || !pig.level().isDay() || pig.random.nextInt(80) != 0) return false;
-            BlockPos origin = pig.blockPosition();
-            double best = Double.MAX_VALUE;
-            target = null;
-            for (BlockPos pos : BlockPos.betweenClosed(origin.offset(-10, -2, -10), origin.offset(10, 2, 10))) {
-                if (pig.level().getBlockState(pos).is(ModBlocks.MUD.get())) {
-                    double distance = pos.distSqr(origin);
-                    if (distance < best) {
-                        best = distance;
-                        target = pos.immutable();
-                    }
-                }
-            }
-            return target != null;
-        }
-
-        @Override
-        public void start() {
-            pig.getNavigation().moveTo(target.getX() + 0.5, target.getY(), target.getZ() + 0.5, 1.1);
-        }
-
-        @Override
-        public boolean canContinueToUse() {
-            return target != null && !pig.isMuddy() && !pig.getNavigation().isDone();
-        }
-    }
 }

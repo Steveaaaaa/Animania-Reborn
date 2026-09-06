@@ -16,7 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/** Exact replacement for the original TileEntityPropRenderer. */
+/** Renders the pet furniture models used by TileEntityPropRenderer in 1.12. */
 public final class PetPropRenderer implements BlockEntityRenderer<PetPropBlockEntity> {
     private static final Map<String, CraftStudioModel> MODELS = new ConcurrentHashMap<>();
     private static final Map<String, ResourceLocation> TEXTURES = new ConcurrentHashMap<>();

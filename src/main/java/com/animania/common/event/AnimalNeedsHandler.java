@@ -84,16 +84,7 @@ public final class AnimalNeedsHandler {
         if (event.getLevel().isClientSide() || !(event.getEntity() instanceof Animal animal)
                 || !(animal instanceof PathfinderMob pathfinder) || !GOALS_INSTALLED.add(animal)) return;
         LegacyAnimalNeeds.Profile profile = LegacyAnimalNeeds.profile(animal);
-        if (profile == null) {
-            if (animal instanceof com.animania.extra.amphibian.AnimaniaAmphibian) {
-                pathfinder.goalSelector.addGoal(2, new net.minecraft.world.entity.ai.goal.AvoidEntityGoal<>(
-                        pathfinder, net.minecraft.world.entity.player.Player.class, 6.0F, 1.5D, 1.5D,
-                        player -> !animal.hasCustomName() || !animal.getName().getString().equals("Pepe")));
-                pathfinder.goalSelector.addGoal(2, new net.minecraft.world.entity.ai.goal.AvoidEntityGoal<>(
-                        pathfinder, com.animania.farm.chicken.AnimaniaChicken.class, 6.0F, 1.5D, 1.5D));
-            }
-            return;
-        }
+        if (profile == null) return;
         pathfinder.goalSelector.removeAllGoals(goal -> goal instanceof net.minecraft.world.entity.ai.goal.TemptGoal);
         pathfinder.goalSelector.removeAllGoals(goal -> goal instanceof net.minecraft.world.entity.ai.goal.BreedGoal);
         if (LegacyFollowParentGoal.supports(animal)
@@ -174,7 +165,7 @@ public final class AnimalNeedsHandler {
                     new net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal(pathfinder));
             if (LegacyConfig.ANIMALS_CAN_ATTACK_OTHERS.get()) {
                 pathfinder.goalSelector.addGoal(0,
-                        new net.minecraft.world.entity.ai.goal.MeleeAttackGoal(pathfinder, 1.8D, false));
+                        new com.animania.common.entity.ai.LegacyBullAttackGoal(pathfinder));
             }
         }
         if (LegacyConfig.ANIMALS_CAN_ATTACK_OTHERS.get()
@@ -185,7 +176,7 @@ public final class AnimalNeedsHandler {
             pathfinder.goalSelector.addGoal(10,
                     new net.minecraft.world.entity.ai.goal.MeleeAttackGoal(pathfinder, 1.0D, true));
             pathfinder.targetSelector.addGoal(2,
-                    new net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal<>(pathfinder,
+                    new com.animania.common.entity.ai.LegacyNearestAttackableTargetGoal<>(pathfinder,
                             com.animania.extra.amphibian.AnimaniaAmphibian.class, true,
                             target -> target instanceof com.animania.extra.amphibian.AnimaniaAmphibian amphibian
                                     && amphibian.kind() != com.animania.extra.amphibian.AnimaniaAmphibian.Kind.DART_FROG));
@@ -198,7 +189,7 @@ public final class AnimalNeedsHandler {
             }
             if (rodent.kind().isFerret()) {
                 pathfinder.targetSelector.addGoal(2,
-                        new net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal<>(pathfinder,
+                        new com.animania.common.entity.ai.LegacyNearestAttackableTargetGoal<>(pathfinder,
                                 com.animania.farm.chicken.AnimaniaChicken.class, true,
                                 target -> target instanceof com.animania.farm.chicken.AnimaniaChicken chick
                                         && chick.role() == com.animania.farm.chicken.ChickenRole.CHICK));
@@ -209,7 +200,7 @@ public final class AnimalNeedsHandler {
                             new net.minecraft.world.entity.ai.goal.MeleeAttackGoal(pathfinder, 1.0D, true));
                 }
                 pathfinder.targetSelector.addGoal(3,
-                        new net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal<>(pathfinder,
+                        new com.animania.common.entity.ai.LegacyNearestAttackableTargetGoal<>(pathfinder,
                                 com.animania.extra.amphibian.AnimaniaAmphibian.class, true,
                                 target -> target instanceof com.animania.extra.amphibian.AnimaniaAmphibian amphibian
                                         && amphibian.kind() != com.animania.extra.amphibian.AnimaniaAmphibian.Kind.DART_FROG));
@@ -225,7 +216,7 @@ public final class AnimalNeedsHandler {
                 && animal instanceof com.animania.farm.livestock.AnimaniaGoat goat
                 && goat.role() == com.animania.farm.livestock.FarmAnimalRole.MALE) {
             pathfinder.goalSelector.addGoal(3,
-                    new net.minecraft.world.entity.ai.goal.LeapAtTargetGoal(pathfinder, 0.25F));
+                    new com.animania.common.entity.ai.LegacyGoatLeapGoal(goat));
             pathfinder.targetSelector.addGoal(14,
                     new net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal(pathfinder));
         }
@@ -238,16 +229,15 @@ public final class AnimalNeedsHandler {
         } else if (animal instanceof com.animania.farm.livestock.AnimaniaPig pig) {
             pathfinder.goalSelector.addGoal(11, new LegacyPigSnuffleGoal(pig));
         }
+        com.animania.common.entity.ai.LegacyGoalRegistration.restore(animal);
     }
 
     private static void maintainSleeping(Animal animal) {
+        if (animal.getData(ModAttachments.SLEEPING)) LegacySleepGoal.checkSleepingWake(animal);
         boolean sleeping = animal.getData(ModAttachments.SLEEPING);
-        if (sleeping && (!LegacyConfig.ANIMALS_SLEEP.get() || !LegacySleepGoal.shouldSleepNow(animal)
-                || animal.isOnFire() || animal.isPassenger() || animal.hurtTime > 0
+        if (sleeping && (!LegacyConfig.ANIMALS_SLEEP.get() || animal.isPassenger() || animal.isVehicle() || animal.isLeashed() || animal.hurtTime > 0
                 || animal.getTarget() != null
-                || animal instanceof TamableAnimal tame && tame.isInSittingPose()
-                || animal.level().isRainingAt(animal.blockPosition())
-                && animal.level().canSeeSky(animal.blockPosition()))) {
+                || animal instanceof TamableAnimal tame && tame.isInSittingPose())) {
             animal.setData(ModAttachments.SLEEPING, false);
             sleeping = false;
         }

@@ -53,6 +53,31 @@ final class LegacyPose {
         });
     }
 
+    void blend(Map<String, ModelPart> modelParts, float slide) {
+        if (slide <= 0) return;
+        parts.forEach((name, data) -> {
+            ModelPart part = modelParts.get(name);
+            if (part == null) return;
+            if (data.pivot != null) {
+                part.x = net.minecraft.util.Mth.lerp(slide, part.x, data.pivot[0]);
+                part.y = net.minecraft.util.Mth.lerp(slide, part.y, data.pivot[1]);
+                part.z = net.minecraft.util.Mth.lerp(slide, part.z, data.pivot[2]);
+            }
+            if (data.rotation != null) {
+                if (data.rotation[0] != null) part.xRot = blendRotation(part.xRot, data.rotation[0], slide);
+                if (data.rotation[1] != null) part.yRot = blendRotation(part.yRot, data.rotation[1], slide);
+                if (data.rotation[2] != null) part.zRot = blendRotation(part.zRot, data.rotation[2], slide);
+            }
+        });
+    }
+
+    // ModelPose.lerpRotation uses modulo 180 degrees, rather than shortest-path interpolation.
+    private static float blendRotation(float from, float to, float slide) {
+        double mul = 180 / Math.PI;
+        double a = (from * mul) % 180 + 180, b = (to * mul) % 180 + 180;
+        return (float) ((a + (b - a) * slide - 180) / mul);
+    }
+
     int partCount() {
         return parts.size();
     }

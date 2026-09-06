@@ -52,6 +52,7 @@ public final class AnimaniaCowRenderer extends MobRenderer<AnimaniaCow, LegacyAn
             };
         }
         poseStack.scale(scale, scale, scale);
+        LegacySleepAnimation.transform(cow, poseStack, partialTick);
     }
 
     @Override

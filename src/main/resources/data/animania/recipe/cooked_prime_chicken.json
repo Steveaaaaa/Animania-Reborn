@@ -4,7 +4,7 @@
   "cookingtime": 200,
   "experience": 0.35,
   "ingredient": {
-    "item": ""
+    "item": "animania:raw_prime_chicken"
   },
   "result": {
     "id": "animania:cooked_prime_chicken"

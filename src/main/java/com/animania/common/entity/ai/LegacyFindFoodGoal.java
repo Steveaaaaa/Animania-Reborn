@@ -33,7 +33,7 @@ public final class LegacyFindFoodGoal extends LegacySearchBlockGoal {
     @Override
     public boolean canUse() {
         if (++foodDelay <= LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get()) return false;
-        if (LegacyAnimalNeeds.isFed(foodAnimal) || foodAnimal.isPassenger()
+        if (LegacyAnimalNeeds.isFed(foodAnimal) || foodAnimal.isVehicle()
                 || foodAnimal.getData(ModAttachments.SLEEPING)
                 || LegacyConfig.REQUIRE_ANIMAL_INTERACTION_FOR_AI.get()
                 && !LegacyAnimalNeeds.isInteracted(foodAnimal)) {

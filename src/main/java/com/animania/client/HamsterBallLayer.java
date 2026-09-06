@@ -70,7 +70,7 @@ public final class HamsterBallLayer extends RenderLayer<AnimaniaRodent, LegacyAn
         VertexConsumer consumer = buffers.getBuffer(RenderType.entityTranslucent(TEXTURE));
         poseStack.pushPose();
         poseStack.translate(0.0D, 1.0D, 0.0D);
-        poseStack.mulPose(Axis.XP.rotation(limbSwing * 0.35F));
+        poseStack.mulPose(Axis.XP.rotationDegrees((int) limbSwing * 20.0F));
         poseStack.translate(-0.1D, -1.9D, 0.0D);
         poseStack.scale(1.7F, 1.7F, 1.7F);
         ball.render(poseStack, consumer, light, OverlayTexture.NO_OVERLAY, color);

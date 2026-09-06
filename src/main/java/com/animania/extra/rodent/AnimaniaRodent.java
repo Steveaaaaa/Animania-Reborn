@@ -46,6 +46,14 @@ public final class AnimaniaRodent extends TamableAnimal {
             SynchedEntityData.defineId(AnimaniaRodent.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> BALL_COLOR =
             SynchedEntityData.defineId(AnimaniaRodent.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> FOOD_STACK =
+            SynchedEntityData.defineId(AnimaniaRodent.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> STANDING =
+            SynchedEntityData.defineId(AnimaniaRodent.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> INTERESTED =
+            SynchedEntityData.defineId(AnimaniaRodent.class, EntityDataSerializers.BOOLEAN);
+    private int standCount = 30, eatCount = 5000;
+    private float interest, previousInterest;
     public static final int NO_BALL = -2;
     private final Kind kind;
 
@@ -53,6 +61,10 @@ public final class AnimaniaRodent extends TamableAnimal {
         super(type, level);
         this.kind = kind;
         registerKindGoals();
+        if (kind == Kind.HAMSTER) {
+            getAttribute(Attributes.MAX_HEALTH).setBaseValue(10);
+            setHealth(10);
+        }
         setPersistenceRequired();
     }
 
@@ -105,6 +117,63 @@ public final class AnimaniaRodent extends TamableAnimal {
         super.defineSynchedData(builder);
         builder.define(COLOR, 0);
         builder.define(BALL_COLOR, NO_BALL);
+        builder.define(FOOD_STACK, 0);
+        builder.define(STANDING, false);
+        builder.define(INTERESTED, false);
+    }
+
+    public int getFoodStackCount() { return entityData.get(FOOD_STACK); }
+    public boolean isHamsterStanding() { return entityData.get(STANDING); }
+    public float getInterestedAngle(float partial) {
+        return net.minecraft.util.Mth.lerp(partial, previousInterest, interest) * 0.15F * 3.141593F;
+    }
+
+    /** The original hand-feeding action fills up to five cheek sections. */
+    public void storeHamsterFood() {
+        if (kind != Kind.HAMSTER || getData(ModAttachments.SLEEPING)) return;
+        entityData.set(STANDING, true);
+        standCount = 100;
+        if (getFoodStackCount() < 5) entityData.set(FOOD_STACK, getFoodStackCount() + 1);
+        else heal(1);
+    }
+
+    private void eatStoredFood() {
+        if (getFoodStackCount() > 0) {
+            entityData.set(FOOD_STACK, getFoodStackCount() - 1);
+            heal(1);
+        }
+    }
+
+    @Override public void aiStep() {
+        super.aiStep();
+        if (kind != Kind.HAMSTER || level().isClientSide()) return;
+        if (getHealth() < 10) { eatStoredFood(); eatCount = 5000; }
+        if (!isHamsterStanding() && !isInSittingPose() && !getData(ModAttachments.SLEEPING)) {
+            if (random.nextInt(20) == 0 && random.nextInt(20) == 0) {
+                entityData.set(STANDING, true);
+                standCount = 30;
+                navigation.stop();
+                setJumping(false);
+            }
+        } else if (isHamsterStanding() && standCount-- <= 0 && random.nextInt(10) == 0) {
+            entityData.set(STANDING, false);
+        }
+        if (getFoodStackCount() > 0) {
+            if (eatCount == 0) {
+                if (random.nextInt(30) == 0 && random.nextInt(30) == 0) {
+                    eatStoredFood(); eatCount = 5000;
+                }
+            } else eatCount--;
+        }
+        entityData.set(INTERESTED, navigation.isDone() && getTarget() instanceof Player player
+                && player.getMainHandItem().is(Items.WHEAT_SEEDS));
+        if (isInSittingPose() || isHamsterStanding()) navigation.stop();
+    }
+
+    @Override public void tick() {
+        super.tick();
+        previousInterest = interest;
+        interest += ((entityData.get(INTERESTED) ? 1 : 0) - interest) * 0.4F;
     }
 
     @Override
@@ -126,7 +195,7 @@ public final class AnimaniaRodent extends TamableAnimal {
         goalSelector.addGoal(4, new TemptGoal(this, 1.2D, Ingredient.of(kind.food), false));
         if (kind.isFerret()) goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.1D, true));
         if (kind.isFerret()) targetSelector.addGoal(5,
-                new NearestAttackableTargetGoal<>(this, Silverfish.class, true));
+                new com.animania.common.entity.ai.LegacyNearestAttackableTargetGoal<>(this, Silverfish.class, true));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -199,6 +268,7 @@ public final class AnimaniaRodent extends TamableAnimal {
                     setOrderedToSit(false);
                     level().broadcastEntityEvent(this, (byte) 7);
                 }
+                storeHamsterFood();
                 setData(ModAttachments.HUNGER, ModAttachments.MAX_NEED);
                 heal(2.0F);
                 if (!player.isCreative()) held.shrink(1);
@@ -231,6 +301,7 @@ public final class AnimaniaRodent extends TamableAnimal {
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        tag.putInt("foodStackCount", getFoodStackCount());
         tag.putInt("ColorNumber", color());
         tag.putInt("BallColor", ballColor());
     }
@@ -238,6 +309,7 @@ public final class AnimaniaRodent extends TamableAnimal {
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        entityData.set(FOOD_STACK, Math.max(0, Math.min(5, tag.getInt("foodStackCount"))));
         entityData.set(COLOR, kind == Kind.HAMSTER
                 ? Math.floorMod(tag.getInt("ColorNumber"), Kind.HAMSTER_COLORS.length) : 0);
         entityData.set(BALL_COLOR, kind == Kind.HAMSTER && tag.contains("BallColor")

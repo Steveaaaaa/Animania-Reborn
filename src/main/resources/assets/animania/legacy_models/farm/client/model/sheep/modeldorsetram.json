@@ -10,7 +10,14 @@
     "RightBackLeg",
     "Tail",
     "LeftBackLeg",
-    "LeftFrontLeg"
+    "LeftFrontLeg",
+    "RightFrontLegWool",
+    "RightBackLegWool",
+    "WoolBody1",
+    "WoolBody2",
+    "WoolHips",
+    "LeftBackLegWool",
+    "LeftFrontLegWool"
   ],
   "nodes": [
     {
@@ -945,14 +952,391 @@
         }
       ],
       "parent": "HeadNode"
+    },
+    {
+      "name": "RightFrontLegWool",
+      "u": 98,
+      "v": 65,
+      "mirror": false,
+      "pivot": [
+        -4,
+        9.149483,
+        -3.0811600000000006
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.009773839,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2,
+            -2,
+            -2.5
+          ],
+          "size": [
+            4,
+            10,
+            5
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "RightBackLegWool",
+      "u": 99,
+      "v": 83,
+      "mirror": false,
+      "pivot": [
+        -4.5,
+        7.043413,
+        16.245048
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.01396263,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2,
+            -1,
+            -2.5
+          ],
+          "size": [
+            4,
+            12,
+            5
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "WoolBody1",
+      "u": 40,
+      "v": 100,
+      "mirror": false,
+      "pivot": [
+        0,
+        7.704449,
+        7.009471932
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.01443809,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -5,
+            -6.5,
+            -6
+          ],
+          "size": [
+            10,
+            15,
+            12
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "WoolBody2",
+      "u": 1,
+      "v": 104,
+      "mirror": false,
+      "pivot": [
+        0,
+        7.153107,
+        -1.7714879999999997
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.03490658,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -5.5,
+            -6.5,
+            -5
+          ],
+          "size": [
+            11,
+            15,
+            8
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "WoolHips",
+      "u": 85,
+      "v": 104,
+      "mirror": false,
+      "pivot": [
+        0,
+        7.308489,
+        18.234270000000002
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.03490658,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -6,
+            -6,
+            -6
+          ],
+          "size": [
+            12,
+            14,
+            8
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "LeftBackLegWool",
+      "u": 99,
+      "v": 83,
+      "mirror": false,
+      "pivot": [
+        4.5,
+        7.043413,
+        16.245048
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.01396263,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2,
+            -1,
+            -2.5
+          ],
+          "size": [
+            4,
+            12,
+            5
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "LeftFrontLegWool",
+      "u": 98,
+      "v": 65,
+      "mirror": false,
+      "pivot": [
+        4,
+        9.149483,
+        -3.0811600000000006
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.009773841,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2,
+            -2,
+            -2.5
+          ],
+          "size": [
+            4,
+            10,
+            5
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "HeadWool",
+      "u": 30,
+      "v": 75,
+      "mirror": false,
+      "pivot": [
+        0,
+        -6.7121379999999995,
+        -8.372000000000002
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -4,
+            -1,
+            -2
+          ],
+          "size": [
+            8,
+            2,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "NeckWool",
+      "u": 59,
+      "v": 69,
+      "mirror": false,
+      "pivot": [
+        0,
+        -2.251757,
+        -2.0444000000000013
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.5530767,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3.5,
+            -2.5,
+            -5
+          ],
+          "size": [
+            7,
+            10,
+            10
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "NeckWool2",
+      "u": 30,
+      "v": 75,
+      "mirror": false,
+      "pivot": [
+        0,
+        -5.04271159,
+        -5.987170000000001
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.3974314,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -4,
+            -2.5,
+            -2
+          ],
+          "size": [
+            8,
+            11,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
     }
   ],
   "audit": {
-    "nodeCount": 25,
-    "boxCount": 25,
-    "edgeCount": 17,
-    "parentlessCount": 8,
-    "renderedRootCount": 8,
+    "nodeCount": 35,
+    "boxCount": 35,
+    "edgeCount": 20,
+    "parentlessCount": 15,
+    "renderedRootCount": 15,
     "staticRotations": 51
   }
 }

@@ -50,6 +50,7 @@ public final class AnimaniaSheepRenderer extends MobRenderer<AnimaniaSheep, Lega
             };
         };
         poseStack.scale(scale, scale, scale);
+        LegacySleepAnimation.transform(sheep, poseStack, partialTick);
     }
 
     @Override

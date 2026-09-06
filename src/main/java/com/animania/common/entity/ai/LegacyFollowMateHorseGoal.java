@@ -52,7 +52,7 @@ public final class LegacyFollowMateHorseGoal extends Goal {
     public void tick() {
         if (--delay <= 0) {
             delay = 60;
-            stallion.getNavigation().moveTo(mate, 1.0D);
+            stallion.getNavigation().moveTo(mate, 1.1D);
         }
     }
 
@@ -60,4 +60,6 @@ public final class LegacyFollowMateHorseGoal extends Goal {
     public void stop() {
         mate = null;
     }
+    @Override
+    public boolean requiresUpdateEveryTick() { return true; }
 }

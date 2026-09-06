@@ -35,6 +35,8 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
     private static final float LEGACY_PLANE_HALF_THICKNESS = 0.01F;
 
     private final String key;
+    private final GeneratedLegacyMotion.Motion motion;
+    private float partialTick;
     private final ModelPart root;
     private final Map<String, ModelPart> parts = new HashMap<>();
     private final Map<String, Float> rootScales = new HashMap<>();
@@ -45,14 +47,20 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
         MeshDefinition mesh = new MeshDefinition();
         Map<String, NodeData> nodes = new HashMap<>();
         for (NodeData node : data.nodes) nodes.put(node.name, node);
-        for (String rootName : data.roots) {
+        // Original models can animate detached parts that they never draw (for
+        // example ModelPeacock.FeatherD1). Bake those too, while keeping the
+        // original render-root list separate from the animation part map.
+        List<String> animationRoots = data.nodes.stream().filter(node -> node.parent == null)
+                .map(node -> node.name).toList();
+        for (String rootName : animationRoots) {
             NodeData node = nodes.get(rootName);
             if (node == null) throw new IllegalStateException("Missing legacy root node " + rootName);
             addNode(mesh.getRoot(), node, nodes, new float[]{0, 0, 0}, key);
         }
         root = LayerDefinition.create(mesh, data.textureWidth, data.textureHeight).bakeRoot();
         rootNames = List.copyOf(data.roots);
-        collect(root, data.roots, nodes);
+        collect(root, animationRoots, nodes);
+        motion = GeneratedLegacyMotion.create(key, parts);
         for (String rootName : rootNames) {
             NodeData node = nodes.get(rootName);
             rootScales.put(rootName, node == null ? 1.0F : node.renderScale);
@@ -180,249 +188,32 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
         }
     }
 
-    /**
-     * Replays the shared equations used by the original 1.12 model families. The
-     * converted bind pose remains authoritative; animation is applied only after
-     * resetPose(), so it cannot accumulate from one rendered entity to the next.
-     */
-    private void animate(T entity, float limbSwing, float limbSwingAmount, float ageInTicks,
-                         float netHeadYaw, float headPitch) {
-        boolean sleeping = entity != null && entity.getData(ModAttachments.SLEEPING);
-        if (sleeping) {
-            LegacyPose.load(key, "sleeping").apply(parts);
-            // No watch-player, eating or idle animation may overwrite a resting
-            // pose. Families without an extracted pose retain their bind pose.
-            return;
-        }
-        float walkA = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        float walkB = Mth.cos(limbSwing * 0.6662F + Mth.PI) * 1.4F * limbSwingAmount;
-        float tailSway = Mth.sin(ageInTicks * Mth.PI * 0.05F)
-                * Mth.sin(ageInTicks * Mth.PI * 0.0015F) * 0.15F * Mth.PI;
-        int eatingTicks = entity == null ? 0 : entity.getData(ModAttachments.EATING_TICKS);
-        float eatAnchor = eatingTicks <= 0 ? 0.0F
-                : eatingTicks >= 4 && eatingTicks <= 76 ? 1.0F
-                : eatingTicks < 4 ? eatingTicks / 4.0F : (80.0F - eatingTicks) / 4.0F;
-        float eatAngle = eatingTicks > 4 && eatingTicks <= 76
-                ? Mth.PI / 5.0F + Mth.PI * 7.0F / 150.0F
-                * Mth.sin((eatingTicks - 4.0F) / 24.0F * 28.7F)
-                : eatingTicks > 0 ? Mth.PI / 5.0F : Float.NaN;
+    @Override
+    public void prepareMobModel(T entity, float swing, float amount, float partial) {
+        partialTick = partial;
+        super.prepareMobModel(entity, swing, amount, partial);
+    }
 
-        if (key.contains("/pig/")) {
-            face(netHeadYaw, headPitch, "Head");
-            applyEating(eatAnchor, eatAngle, 5.5F, "Head");
-            setX(walkA, "Leg1", "Leg4");
-            setX(walkB, "Leg2", "Leg3");
-            addY(tailSway * 0.45F, "Tail1");
-            return;
-        }
-        if (key.contains("/cow/")) {
-            face(netHeadYaw, headPitch, "Head", "head");
-            applyEating(eatAnchor, eatAngle, 9.0F, "Head", "head");
-            setX(walkA, "Leg0", "Leg3", "leg1", "leg4");
-            setX(walkB, "Leg1", "Leg2", "leg2", "leg3");
-            // The legacy render method initially used -PI, then replaced it with
-            // this value every frame. Keeping -PI made the tail fold into the body.
-            setY(tailSway, "Tail");
-            return;
-        }
-        if (key.contains("/goats/")) {
-            face(netHeadYaw, headPitch, "HeadNode");
-            applyEating(eatAnchor, eatAngle, 6.0F, "HeadNode");
-            setX(walkA, "BackLeg_L", "BackLegWool_L", "FrontLeg_R", "FrontLegWool_R");
-            setX(walkB, "BackLeg_R", "BackLegWool_R", "FrontLeg_L", "FrontLegWool_L");
-            setY(tailSway, "Tail");
-            return;
-        }
-        if (key.contains("/sheep/")) {
-            face(netHeadYaw, headPitch, "HeadNode");
-            applyEating(eatAnchor, eatAngle, 4.0F, "HeadNode");
-            setX(walkA, "LeftBackLeg", "LeftBackLegWool", "RightFrontLeg", "RightFrontLegWool");
-            setX(walkB, "RightBackLeg", "RightBackLegWool", "LeftFrontLeg", "LeftFrontLegWool");
-            setY(tailSway, "Tail");
-            return;
-        }
-        if (key.contains("/horse/")) {
-            face(netHeadYaw, headPitch, "HeadNode");
-            applyEating(eatAnchor, Float.isNaN(eatAngle) ? eatAngle : 0.687F + eatAngle,
-                    10.0F, "HeadNode");
-            float horseA = walkA / 1.4F;
-            float horseB = walkB / 1.4F;
-            setX(horseA, "BackLeftMuscle", "FrontRightMuscle");
-            setX(horseB, "BackRightMuscle", "FrontLeftMuscle");
-            addY(tailSway * 0.35F, "TailNode");
-            return;
-        }
-        if (key.contains("/chicken/")) {
-            face(netHeadYaw, headPitch, "Neck");
-            if (key.endsWith("/modelchick")) {
-                setX(walkA, "leg1Top");
-                setX(walkB, "leg2Top");
-            } else {
-                setX(walkA, "leg1Pivot", "Leg1Pivot");
-                setX(walkB, "leg2Pivot", "Leg2Pivot");
+    private void animate(T entity, float swing, float amount, float age, float yaw, float pitch) {
+        if (entity.getData(ModAttachments.SLEEPING)) {
+            if ((key.endsWith("/modelhamster") || key.endsWith("/modelpeacock")) && motion != null)
+                motion.apply(new LegacyMotionContext(entity), 0, 0, 1, 0, 0, 0);
+            if (key.startsWith("catsdogs/")) {
+                LegacyPose.load(key, "sleeping").blend(parts, LegacySleepAnimation.petBlend(entity, partialTick));
+            } else if (!GeneratedLegacySleep.apply(key, parts, LegacySleepAnimation.timer(entity, partialTick))) {
+                LegacyPose.load(key, "sleeping").apply(parts);
             }
-            float flapStrength = entity != null && !entity.onGround() ? 0.75F
-                    : Mth.clamp(limbSwingAmount * 0.08F, 0, 0.08F);
-            float flap = Mth.sin(ageInTicks * 0.8F) * flapStrength;
-            addZ(flap, "Wing1", "wing1", "wing3");
-            addZ(-flap, "Wing2", "wing2", "wing4");
-            return;
-        }
-        if (key.contains("/peafowl/")) {
-            face(netHeadYaw, headPitch, "Neck");
-            setX(walkA, "leg1Top");
-            setX(walkB, "leg2Top");
-            float flapStrength = entity != null && !entity.onGround() ? 0.75F
-                    : Mth.clamp(limbSwingAmount * 0.08F, 0, 0.08F);
-            float flap = Mth.sin(ageInTicks * 0.8F) * flapStrength;
-            addZ(flap, "Wing1");
-            addZ(-flap, "Wing2");
-            return;
-        }
-        if (key.contains("/rabbits/")) {
-            face(netHeadYaw, headPitch, "Neck1");
-            addX(walkA, "BackLegL1", "BackLegL2", "BackLegR1", "BackLegR2");
-            addX(walkB, "LegL1", "LegR1");
-            addY(tailSway * 0.25F, "Tail");
-            return;
-        }
-        if (key.endsWith("/modelferret")) {
-            face(netHeadYaw, headPitch, "Head");
-            setX(walkA, "PawLF", "PawRB");
-            setX(walkB, "PawRF", "PawLB");
-            addY(tailSway * 0.5F, "Tail");
-            return;
-        }
-        if (key.endsWith("/modelhamster")) {
-            faceAll(netHeadYaw, headPitch, "hamsterHead", "hamsterNose", "hamsterEarRight", "hamsterEarLeft");
-            float hamsterA = Mth.cos(limbSwing * 1.5F) * 1.4F * limbSwingAmount;
-            float hamsterB = Mth.cos(limbSwing * 1.5F + Mth.PI) * 1.4F * limbSwingAmount;
-            setX(hamsterA, "hamsterLegBackRight", "hamsterLegFrontLeft");
-            setX(hamsterB, "hamsterLegBackLeft", "hamsterLegFrontRight");
-            addZ(tailSway, "hamsterTail");
-            return;
-        }
-        if (key.endsWith("/modelhedgehog")) {
-            face(netHeadYaw, headPitch, "HeadNode", "Head");
-            setX(walkA, "LegFrontLeft", "LegFrontLeftFoot", "LegFrontRight", "LegFrontLeftFoot3");
-            setX(walkB, "LegBackLeft", "LegFrontLeftFoot1", "LegBackRight", "LegFrontLeftFoot2");
-            return;
-        }
-        if (key.contains("/cats/")) {
-            faceScaled(netHeadYaw, headPitch, 0.001453292F, "neck1");
-            boolean sitting = entity instanceof TamableAnimal tame && tame.isInSittingPose();
-            if (!sitting) {
-                addX(walkA * 0.6F, "back_leg_l1", "leg_r1");
-                addX(walkB * 0.6F, "back_leg_r1", "leg_l1");
+            if (key.endsWith("/modelpeacock")) {
+                PeacockSleepingFan.apply(parts, LegacySleepAnimation.petBlend(entity, partialTick));
             }
-            setY(tailSway, "tail");
-            if (sitting) LegacyPose.load(key, "sitting").apply(parts);
+            // Sleeping entities retain a fixed pose, including during blinking layers.
             return;
         }
-        if (key.contains("/dogs/")) {
-            faceScaled(netHeadYaw, headPitch, 0.001453292F, "neck1", "neck", "pug_head");
-            boolean sitting = entity instanceof TamableAnimal tame && tame.isInSittingPose();
-            if (!sitting) {
-                addX(walkA * 0.6F, "back_leg_l1", "leg_r1");
-                addX(walkB * 0.6F, "back_leg_r1", "leg_l1");
-                // Dachshund uses the older flat four-leg naming scheme.
-                setX(walkA * 0.6F, "leg1", "leg4");
-                setX(walkB * 0.6F, "leg2", "leg3");
-                // Pomeranian, pug and chihuahua share this compact four-leg
-                // layout. These are the exact pairings used by their 1.12
-                // setRotationAngles implementations.
-                addX(walkA * 0.6F + 0.06981317F, "back_left", "front_right");
-                addX(walkB * 0.6F + 0.06981317F, "back_right", "front_left");
-            }
-            setY(tailSway, "tail");
-            faceScaled(netHeadYaw, headPitch, 0.001453292F, "head");
-            if (sitting) LegacyPose.load(key, "sitting").apply(parts);
-            return;
-        }
-        // Frogs and toads had only a static legacy render pose. Give their limb
-        // roots a restrained stride so locomotion is visible without disturbing it.
-        if (key.contains("/amphibians/")) {
-            addX(walkA * 0.35F, "HindLegL", "FrontLegRTop");
-            addX(walkB * 0.35F, "HindLegR", "FrontLegLTop");
-        }
-    }
-
-    private void face(float yawDegrees, float pitchDegrees, String... names) {
-        ModelPart part = first(names);
-        if (part != null) {
-            part.yRot = yawDegrees * Mth.DEG_TO_RAD;
-            part.xRot = pitchDegrees * Mth.DEG_TO_RAD;
-        }
-    }
-
-    private void applyEating(float anchor, float angle, float travel, String... names) {
-        if (anchor <= 0.0F) return;
-        ModelPart part = first(names);
-        if (part != null) {
-            part.y += anchor * travel;
-            if (!Float.isNaN(angle)) part.xRot = angle;
-        }
-    }
-
-    private void faceScaled(float yawDegrees, float pitchDegrees, float pitchScale, String... names) {
-        ModelPart part = first(names);
-        if (part != null) {
-            part.yRot = yawDegrees * Mth.DEG_TO_RAD;
-            part.xRot += pitchDegrees * pitchScale;
-        }
-    }
-
-    private void faceAll(float yawDegrees, float pitchDegrees, String... names) {
-        for (String name : names) {
-            ModelPart part = parts.get(name);
-            if (part != null) {
-                part.yRot = yawDegrees * Mth.DEG_TO_RAD;
-                part.xRot = pitchDegrees * Mth.DEG_TO_RAD;
-            }
-        }
-    }
-
-    private ModelPart first(String... names) {
-        for (String name : names) {
-            ModelPart part = parts.get(name);
-            if (part != null) return part;
-        }
-        return null;
-    }
-
-    private void setX(float value, String... names) {
-        for (String name : names) {
-            ModelPart part = parts.get(name);
-            if (part != null) part.xRot = value;
-        }
-    }
-
-    private void setY(float value, String... names) {
-        for (String name : names) {
-            ModelPart part = parts.get(name);
-            if (part != null) part.yRot = value;
-        }
-    }
-
-    private void addX(float value, String... names) {
-        for (String name : names) {
-            ModelPart part = parts.get(name);
-            if (part != null) part.xRot += value;
-        }
-    }
-
-    private void addY(float value, String... names) {
-        for (String name : names) {
-            ModelPart part = parts.get(name);
-            if (part != null) part.yRot += value;
-        }
-    }
-
-    private void addZ(float value, String... names) {
-        for (String name : names) {
-            ModelPart part = parts.get(name);
-            if (part != null) part.zRot += value;
-        }
+        if (motion != null) motion.apply(new LegacyMotionContext(entity), swing, amount, age, yaw, pitch, partialTick);
+        if (key.endsWith("/modelpeacock"))
+            PeacockSleepingFan.apply(parts, LegacySleepAnimation.petBlend(entity, partialTick));
+        if (key.startsWith("catsdogs/") && !(entity instanceof TamableAnimal tame && tame.isInSittingPose()))
+            LegacyPose.load(key, "sleeping").blend(parts, LegacySleepAnimation.petBlend(entity, partialTick));
     }
 
     @Override

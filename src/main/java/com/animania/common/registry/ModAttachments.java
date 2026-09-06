@@ -16,6 +16,11 @@ public final class ModAttachments {
     private static final DeferredRegister<AttachmentType<?>> ATTACHMENTS =
             DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, Animania.MOD_ID);
 
+    public static final Supplier<AttachmentType<Boolean>> FIGHTING = ATTACHMENTS.register(
+            "fighting", () -> AttachmentType.builder(() -> false).sync(ByteBufCodecs.BOOL).build());
+    public static final Supplier<AttachmentType<String>> RIVAL = ATTACHMENTS.register(
+            "rival", () -> AttachmentType.builder(() -> "").sync(ByteBufCodecs.STRING_UTF8).build());
+
     public static final Supplier<AttachmentType<Integer>> HUNGER = ATTACHMENTS.register(
             "hunger",
             () -> AttachmentType.builder(() -> MAX_NEED).serialize(Codec.intRange(0, MAX_NEED)).build()
@@ -103,7 +108,7 @@ public final class ModAttachments {
     /** Number of completed 1% legacy growth steps (0..85). */
     public static final Supplier<AttachmentType<Integer>> CHILD_GROWTH = ATTACHMENTS.register(
             "child_growth",
-            () -> AttachmentType.builder(() -> 0).serialize(Codec.intRange(0, 85)).build()
+            () -> AttachmentType.builder(() -> 0).serialize(Codec.intRange(0, 85)).sync(ByteBufCodecs.VAR_INT).build()
     );
 
     /** Tick accumulator for the next legacy growth step. */

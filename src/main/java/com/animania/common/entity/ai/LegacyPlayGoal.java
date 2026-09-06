@@ -6,6 +6,8 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.entity.ai.util.DefaultRandomPos;
+import net.minecraft.world.level.pathfinder.Path;
 
 import java.util.Comparator;
 import java.util.EnumSet;
@@ -20,6 +22,7 @@ public final class LegacyPlayGoal extends Goal {
     private Animal playmate;
     private boolean running;
     private boolean chaser;
+    private Path playPath;
 
     public LegacyPlayGoal(PathfinderMob mover, Animal child) {
         this.mover = mover;
@@ -43,6 +46,7 @@ public final class LegacyPlayGoal extends Goal {
 
     @Override
     public void start() {
+        if (running) return; // The playmate already assigned our flee/chase role.
         LegacyPlayGoal other = GOALS.get(playmate);
         if (other == null) return;
         running = true;
@@ -62,18 +66,22 @@ public final class LegacyPlayGoal extends Goal {
     public void tick() {
         if (!running || playmate == null) return;
         if (chaser) {
-            mover.getNavigation().moveTo(playmate, 1.0D);
+            if (playPath == null || mover.getNavigation().isDone())
+                playPath = mover.getNavigation().createPath(playmate, 0);
+            if (playPath != null) mover.getNavigation().moveTo(playPath, 1.0D);
             if (child.distanceTo(playmate) <= 0.5F) {
                 LegacyPlayGoal other = GOALS.get(playmate);
                 if (other != null) other.chaser = true;
                 chaser = false;
+                playPath = null;
+                if (other != null) other.playPath = null;
             }
         } else if (mover.getNavigation().isDone()) {
-            Vec3 away = child.position().subtract(playmate.position());
-            if (away.lengthSqr() < 0.01D) away = new Vec3(child.getRandom().nextDouble() - 0.5D, 0,
-                    child.getRandom().nextDouble() - 0.5D);
-            away = away.normalize().scale(8.0D);
-            mover.getNavigation().moveTo(child.getX() + away.x, child.getY(), child.getZ() + away.z, 1.0D);
+            Vec3 away = DefaultRandomPos.getPosAway(mover, 16, 7, playmate.position());
+            if (away != null) {
+                playPath = mover.getNavigation().createPath(away.x, away.y, away.z, 0);
+                if (playPath != null) mover.getNavigation().moveTo(playPath, 1.0D);
+            }
         }
     }
 
@@ -83,6 +91,7 @@ public final class LegacyPlayGoal extends Goal {
         running = false;
         chaser = false;
         playmate = null;
+        playPath = null;
         mover.getNavigation().stop();
         LegacyPlayGoal other = GOALS.get(oldMate);
         if (other != null && other.playmate == child) {
@@ -92,4 +101,7 @@ public final class LegacyPlayGoal extends Goal {
             other.mover.getNavigation().stop();
         }
     }
+
+    @Override
+    public boolean requiresUpdateEveryTick() { return true; }
 }

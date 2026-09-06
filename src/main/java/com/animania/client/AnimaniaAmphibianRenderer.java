@@ -28,7 +28,13 @@ public final class AnimaniaAmphibianRenderer
     protected void scale(AnimaniaAmphibian amphibian, PoseStack poseStack, float partialTick) {
         float scale = amphibian.kind() == AnimaniaAmphibian.Kind.TOAD ? 0.32F
                 : amphibian.kind() == AnimaniaAmphibian.Kind.DART_FROG ? 0.20F : 0.30F;
+        if (amphibian.kind() == AnimaniaAmphibian.Kind.FROG && amphibian.hasCustomName()
+                && amphibian.getName().getString().equals("Pepe")) scale = 0.5F;
         poseStack.scale(scale, scale, scale);
+        float squish = net.minecraft.util.Mth.lerp(partialTick,
+                amphibian.previousSquishFactor, amphibian.squishFactor) / 1.6F;
+        float stretch = 1 / (squish + 1);
+        poseStack.scale(stretch * 1.2F, 1.2F / stretch, stretch * 1.2F);
     }
 
     @Override

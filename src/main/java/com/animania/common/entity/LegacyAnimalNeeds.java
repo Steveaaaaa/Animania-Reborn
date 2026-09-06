@@ -173,6 +173,7 @@ public final class LegacyAnimalNeeds {
             animal.setData(ModAttachments.FED_TIMER,
                     LegacyConfig.FEED_TIMER.get() * 2 + animal.getRandom().nextInt(100));
         }
+        if (handFed && animal instanceof AnimaniaRodent rodent) rodent.storeHamsterFood();
         if (handFed) animal.setData(ModAttachments.HAND_FED, true);
         if (handFed) setInteracted(animal, true);
     }

@@ -7,16 +7,16 @@ modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
 logoFile="animania_logo.png"
-authors="Animania contributors; NeoForge port contributors"
+authors="Steveaaaaa; original Animania contributors"
 description='''
-A NeoForge 1.21.1 reimplementation of Animania, focused on richer animals and
-deeper husbandry systems.
+An unofficial Animania port for NeoForge 1.21.1, combining Base, Farm,
+Cats & Dogs, and Extra. Original code and assets are credited in NOTICE.
 '''
 
 [[dependencies.${mod_id}]]
 modId="neoforge"
 type="required"
-versionRange="[${neo_version},)"
+versionRange="[21.1.200,)"
 ordering="NONE"
 side="BOTH"
 

@@ -482,14 +482,14 @@
   "item.animania.chocolate_truffle": "Chocolate Truffle",
   "message.animania.salt_lick_uses": "Salt lick: %s uses remaining",
   "message.animania.hive_status": "Honey: %1$s/%2$s mB; next production in %3$s ticks",
-  "manual.animania.page.welcome": "Welcome to Animania. This guide summarizes the care, breeding, products and utilities restored in the NeoForge port.",
+  "manual.animania.page.welcome": "Welcome to Animania Reborn. Learn how to care for your animals, breed them, make cheese and use farm equipment.",
   "manual.animania.page.needs": "Animal care\\n\\nAnimals need food and water. Fill troughs or pet bowls and inspect an animal with an empty hand.",
   "manual.animania.page.farm": "Farm animals\\n\\nBreed compatible adult males and females. Well-cared-for animals reproduce and provide their breed-specific products.",
   "manual.animania.page.dairy": "Dairy\\n\\nMilk cows, goats and sheep with a bucket. Put a milk bucket into a cheese mold and wait for the wheel to mature.",
   "manual.animania.page.hives": "Hives\\n\\nHives produce up to 5000 mB of honey. Use a bottle or empty fluid container to extract it. Wild hives sting nearby players.",
-  "manual.animania.page.extra": "Extra animals\\n\\nRabbits, peafowl, amphibians, hamsters, hedgehogs and ferrets retain their species products and utilities.",
+  "manual.animania.page.extra": "Extra animals\\n\\nKeep rabbits, peafowl, hamsters, hedgehogs and ferrets, or look for frogs and toads in the wild. Hamsters can use exercise balls and wheels.",
   "manual.animania.page.pets": "Cats & Dogs\\n\\nTame pets, feed them from bowls, command them to sit and use beds, towers, houses, pillows and litter boxes.",
-  "manual.animania.page.vehicles": "Vehicles\\n\\nPull vehicles by hand, hitch an eligible ridden or leashed animal, or shift-use to ride/open storage. Carts accept a chest; pigs pull carts and cattle pull tillers.",
+  "manual.animania.page.vehicles": "Vehicles\\n\\nHitch a suitable ridden or leashed animal to a vehicle. Horses pull carts and wagons, pigs pull carts, and cattle pull tillers. Carts can be fitted with a chest.",
   "block.animania.wool_dorset_brown": "Dorset Brown Wool",
   "block.animania.wool_friesian_black": "Friesian Black Wool",
   "block.animania.wool_friesian_brown": "Friesian Brown Wool",
@@ -682,5 +682,7 @@
   "jade.animania.salt_lick": "Salt lick uses: %s/%s",
   "message.animania.update_notice": "Animania Reborn %s is installed. Check %s for releases and updates.",
   "message.animania.update_link": "the project page",
-  "message.animania.update_hover": "Open the Animania project page"
+  "message.animania.update_hover": "Open the Animania project page",
+  "death.attack.pepe": "%1$s was memed to death",
+  "death.attack.killer_rabbit": "%1$s didn't listen to the warnings"
 }

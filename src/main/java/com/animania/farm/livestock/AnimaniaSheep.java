@@ -53,7 +53,7 @@ public final class AnimaniaSheep extends Sheep {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(3, new RamButtGoal(this));
+        goalSelector.addGoal(3, new com.animania.common.entity.ai.LegacyHeadButtGoal(this));
     }
 
     public AnimaniaSheep(EntityType<? extends Sheep> type, Level level) {
@@ -295,59 +295,4 @@ public final class AnimaniaSheep extends Sheep {
         if (tag.contains("MateBreed")) mateBreed = SheepBreed.fromPath(tag.getString("MateBreed"));
     }
 
-    private static final class RamButtGoal extends Goal {
-        private final AnimaniaSheep ram;
-        private AnimaniaSheep rival;
-        private int cooldown = 800;
-        private int fightTicks;
-        private boolean struck;
-
-        private RamButtGoal(AnimaniaSheep ram) {
-            this.ram = ram;
-            setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
-        }
-
-        @Override
-        public boolean canUse() {
-            if (ram.role() != FarmAnimalRole.MALE || !ram.level().isDay() || ram.isBaby() || --cooldown > 0) {
-                return false;
-            }
-            rival = ram.level().getEntitiesOfClass(AnimaniaSheep.class,
-                            ram.getBoundingBox().inflate(10.0), sheep -> sheep != ram
-                                    && sheep.role() == FarmAnimalRole.MALE && !sheep.isBaby() && sheep.isAlive())
-                    .stream().min(Comparator.comparingDouble(ram::distanceToSqr)).orElse(null);
-            return rival != null;
-        }
-
-        @Override
-        public void start() {
-            fightTicks = 140;
-            struck = false;
-            ram.getNavigation().moveTo(rival, 1.3);
-        }
-
-        @Override
-        public boolean canContinueToUse() {
-            return rival != null && rival.isAlive() && fightTicks-- > 0;
-        }
-
-        @Override
-        public void tick() {
-            ram.getLookControl().setLookAt(rival, 10.0F, ram.getMaxHeadXRot());
-            ram.getNavigation().moveTo(rival, 1.3);
-            if (!struck && ram.distanceToSqr(rival) < 3.0) {
-                struck = true;
-                rival.hurt(ram.damageSources().mobAttack(ram), 2.0F);
-                rival.knockback(1.1, ram.getX() - rival.getX(), ram.getZ() - rival.getZ());
-                ram.playSound(SoundEvents.GOAT_RAM_IMPACT, 0.8F, 0.9F + ram.random.nextFloat() * 0.2F);
-            }
-        }
-
-        @Override
-        public void stop() {
-            ram.getNavigation().stop();
-            rival = null;
-            cooldown = 1_000 + ram.random.nextInt(500);
-        }
-    }
 }

@@ -62,6 +62,7 @@ public final class AnimaniaDogRenderer extends MobRenderer<AnimaniaDog, LegacyAn
             };
         };
         poseStack.scale(scale, scale, scale);
+        LegacySleepAnimation.transform(dog, poseStack, partialTick);
     }
 
     @Override

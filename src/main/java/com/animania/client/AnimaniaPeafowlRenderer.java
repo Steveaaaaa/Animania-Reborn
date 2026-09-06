@@ -37,6 +37,13 @@ public final class AnimaniaPeafowlRenderer extends MobRenderer<AnimaniaPeafowl, 
     }
 
     @Override
+    protected float getBob(AnimaniaPeafowl bird, float partial) {
+        float flap = net.minecraft.util.Mth.lerp(partial, bird.oFlap, bird.flap);
+        float speed = net.minecraft.util.Mth.lerp(partial, bird.oFlapSpeed, bird.flapSpeed);
+        return (net.minecraft.util.Mth.sin(flap) + 1) * speed;
+    }
+
+    @Override
     protected void scale(AnimaniaPeafowl bird, PoseStack poseStack, float partialTick) {
         float scale = bird.role() == PeafowlRole.PEACHICK ? 0.30F
                 : bird.role() == PeafowlRole.PEAHEN ? 0.9F : 1.0F;

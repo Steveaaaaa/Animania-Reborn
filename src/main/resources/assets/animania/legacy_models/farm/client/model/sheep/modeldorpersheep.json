@@ -10,7 +10,10 @@
     "RightBackLeg",
     "Tail",
     "LeftBackLeg",
-    "LeftFrontLeg"
+    "LeftFrontLeg",
+    "WoolBody1",
+    "WoolBody2",
+    "WoolHips"
   ],
   "nodes": [
     {
@@ -723,14 +726,202 @@
         }
       ],
       "parent": "HeadNode"
+    },
+    {
+      "name": "WoolBody1",
+      "u": 40,
+      "v": 100,
+      "mirror": false,
+      "pivot": [
+        0,
+        3.205133,
+        6.93093608
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.01679522,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -4.5,
+            -1.9,
+            -6
+          ],
+          "size": [
+            9,
+            8,
+            12
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "WoolBody2",
+      "u": 1,
+      "v": 104,
+      "mirror": false,
+      "pivot": [
+        0,
+        2.858269,
+        -1.8464550000000006
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.03490658,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -5,
+            -2.5,
+            -5
+          ],
+          "size": [
+            10,
+            7,
+            8
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "WoolHips",
+      "u": 85,
+      "v": 104,
+      "mirror": false,
+      "pivot": [
+        0,
+        3.509068,
+        18.167949999999998
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.03490658,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -5.5,
+            -2.5,
+            -6
+          ],
+          "size": [
+            11,
+            7,
+            8
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "NeckWool",
+      "u": 59,
+      "v": 69,
+      "mirror": false,
+      "pivot": [
+        0,
+        -2.251757,
+        -2.0444000000000013
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.5530767,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3.5,
+            -2.5,
+            -5
+          ],
+          "size": [
+            7,
+            10,
+            10
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "NeckWool2",
+      "u": 30,
+      "v": 75,
+      "mirror": false,
+      "pivot": [
+        0,
+        -5.04271159,
+        -5.987170000000001
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.19262,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -4,
+            -2.5,
+            -2
+          ],
+          "size": [
+            8,
+            11,
+            4
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
     }
   ],
   "audit": {
-    "nodeCount": 19,
-    "boxCount": 19,
-    "edgeCount": 11,
-    "parentlessCount": 8,
-    "renderedRootCount": 8,
+    "nodeCount": 24,
+    "boxCount": 24,
+    "edgeCount": 13,
+    "parentlessCount": 11,
+    "renderedRootCount": 11,
     "staticRotations": 33
   }
 }

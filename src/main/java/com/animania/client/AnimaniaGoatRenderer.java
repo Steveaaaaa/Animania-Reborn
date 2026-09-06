@@ -56,6 +56,7 @@ public final class AnimaniaGoatRenderer extends MobRenderer<AnimaniaGoat, Legacy
             scale = birth + growth * (adult - birth);
         }
         poseStack.scale(scale, scale, scale);
+        LegacySleepAnimation.transform(goat, poseStack, partialTick);
         if (!goat.getData(com.animania.common.registry.ModAttachments.SLEEPING)
                 && goat.isSpooked() && goat.spookedTimer() < 0.94F && goat.spookedTimer() > 0.06F) {
             poseStack.translate(0.0D, goat.getBbHeight() - 1.5D, 0.0D);

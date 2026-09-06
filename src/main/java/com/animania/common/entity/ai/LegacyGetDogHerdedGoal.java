@@ -21,7 +21,7 @@ public final class LegacyGetDogHerdedGoal extends Goal {
     public LegacyGetDogHerdedGoal(PathfinderMob herdMover, Animal herdAnimal) {
         this.herdMover = herdMover;
         this.herdAnimal = herdAnimal;
-        setFlags(EnumSet.of(Flag.MOVE));
+        setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
     @Override
@@ -39,9 +39,10 @@ public final class LegacyGetDogHerdedGoal extends Goal {
     @Override
     public void tick() {
         if (herder == null || herder.getNavigation().getPath() == null) return;
-        BlockPos destination = herder.getNavigation().getPath().getTarget();
-        herdMover.getNavigation().moveTo(destination.getX() + 0.5D, destination.getY(),
-                destination.getZ() + 0.5D, 1.0D);
+        var destination = herder.getNavigation().getPath().getEndNode();
+        if (destination == null) return;
+        herdMover.getNavigation().moveTo(destination.x, destination.y,
+                destination.z, 1.0D);
     }
 
     @Override
@@ -57,4 +58,6 @@ public final class LegacyGetDogHerdedGoal extends Goal {
                                 && dog.getNavigation().getPath() != null)
                 .stream().min(Comparator.comparingDouble(herdAnimal::distanceToSqr)).orElse(null);
     }
+    @Override
+    public boolean requiresUpdateEveryTick() { return true; }
 }

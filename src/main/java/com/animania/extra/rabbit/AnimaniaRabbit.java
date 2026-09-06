@@ -45,6 +45,7 @@ public final class AnimaniaRabbit extends Rabbit {
     private static final EntityDataAccessor<Integer> COLOR =
             SynchedEntityData.defineId(AnimaniaRabbit.class, EntityDataSerializers.INT);
     private boolean pregnant;
+    private boolean killerGoalsInstalled;
     private int gestation;
     private RabbitBreed mateBreed;
 
@@ -100,13 +101,28 @@ public final class AnimaniaRabbit extends Rabbit {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (hasCustomName() && getName().getString().equalsIgnoreCase("Killer")
-                && getVariant() != Variant.EVIL) setVariant(Variant.EVIL);
+        if (!level().isClientSide() && !killerGoalsInstalled && hasCustomName()
+                && getName().getString().equals("Killer")) installKillerGoals();
         if (!level().isClientSide() && role() == RabbitRole.KIT && !isBaby()) growIntoAdult();
         else if (!level().isClientSide() && role() == RabbitRole.DOE && pregnant) {
             com.animania.common.entity.LegacyReproduction.wakeForBirth(this, --gestation);
             if (gestation <= 0) giveBirth();
         }
+    }
+
+    private void installKillerGoals() {
+        killerGoalsInstalled = true;
+        goalSelector.removeAllGoals(goal -> true);
+        targetSelector.removeAllGoals(goal -> true);
+        goalSelector.addGoal(1, new net.minecraft.world.entity.ai.goal.LeapAtTargetGoal(this, 0.7F));
+        goalSelector.addGoal(2, new net.minecraft.world.entity.ai.goal.MeleeAttackGoal(this, 2.0D, true));
+        goalSelector.addGoal(3, new net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal(this, 1.8D));
+        goalSelector.addGoal(4, new net.minecraft.world.entity.ai.goal.LookAtPlayerGoal(this, Player.class, 10));
+        targetSelector.addGoal(1, new net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal(this));
+        targetSelector.addGoal(2, new com.animania.common.entity.ai.LegacyNearestAttackableTargetGoal<>(this, Player.class, true));
+        getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(50.0D);
+        setHealth(50.0F);
+        setData(ModAttachments.SLEEPING, false);
     }
 
     private void growIntoAdult() {
@@ -192,6 +208,20 @@ public final class AnimaniaRabbit extends Rabbit {
                     companion -> ((AnimaniaRabbit) companion).entityData.set(COLOR, entityData.get(COLOR)));
         }
         return result;
+    }
+
+    @Override
+    public boolean doHurtTarget(net.minecraft.world.entity.Entity target) {
+        var type = net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.DAMAGE_TYPE,
+                ResourceLocation.fromNamespaceAndPath("animania", "killer_rabbit"));
+        var source = new net.minecraft.world.damagesource.DamageSource(
+                level().registryAccess().registryOrThrow(net.minecraft.core.registries.Registries.DAMAGE_TYPE).getHolderOrThrow(type));
+        boolean hit = target.hurt(source, 5.0F);
+        target.hurt(source, 5.0F);
+        if (hit && level() instanceof ServerLevel server)
+            net.minecraft.world.item.enchantment.EnchantmentHelper.doPostAttackEffects(server, target, source);
+        if (target instanceof Player player) player.knockback(1.0D, getX() - player.getX(), getZ() - player.getZ());
+        return hit;
     }
 
     @Override
