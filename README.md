@@ -10,7 +10,7 @@ one mod, using the original 1.12 source, models, textures and sounds.
 - NeoForge 21.1.200 or newer
 - Java 21
 
-Place `animania-0.1.1.jar` in your instance's `mods` folder and remove older
+Place `animania-neoforge-1.21.1-0.1.1.jar` in your instance's `mods` folder and remove older
 Animania Reborn jars before starting the game. Restart the game after updating.
 Jade, JEI and EMI are optional.
 
