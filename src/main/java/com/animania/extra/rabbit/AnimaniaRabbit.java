@@ -174,7 +174,6 @@ public final class AnimaniaRabbit extends Rabbit {
         AnimaniaRabbit female = role() == RabbitRole.DOE ? this : rabbit.role() == RabbitRole.DOE ? rabbit : null;
         boolean opposite = role() != rabbit.role() && role() != RabbitRole.KIT && rabbit.role() != RabbitRole.KIT;
         return opposite && female != null && !female.pregnant && wellCaredFor() && rabbit.wellCaredFor()
-                && isInLove() && rabbit.isInLove()
                 && com.animania.common.config.LegacyBreedingRules.canMate(this, rabbit);
     }
 

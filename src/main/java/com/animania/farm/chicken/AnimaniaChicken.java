@@ -159,7 +159,7 @@ public final class AnimaniaChicken extends Chicken {
         }
         boolean oppositeSex = role() == ChickenRole.HEN && chicken.role() == ChickenRole.ROOSTER
                 || role() == ChickenRole.ROOSTER && chicken.role() == ChickenRole.HEN;
-        return oppositeSex && wellCaredFor() && chicken.wellCaredFor() && isInLove() && chicken.isInLove()
+        return oppositeSex && wellCaredFor() && chicken.wellCaredFor()
                 && com.animania.common.config.LegacyBreedingRules.canMate(this, chicken);
     }
 

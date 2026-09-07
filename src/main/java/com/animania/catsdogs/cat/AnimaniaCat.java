@@ -189,7 +189,6 @@ public final class AnimaniaCat extends TamableAnimal {
         AnimaniaCat female = role() == CatRole.QUEEN ? this : cat.role() == CatRole.QUEEN ? cat : null;
         boolean opposite = role() != cat.role() && role() != CatRole.KITTEN && cat.role() != CatRole.KITTEN;
         return opposite && female != null && !female.pregnant && wellCaredFor() && cat.wellCaredFor()
-                && isInLove() && cat.isInLove()
                 && com.animania.common.config.LegacyBreedingRules.canMate(this, cat);
     }
 

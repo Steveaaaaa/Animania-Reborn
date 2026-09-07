@@ -118,9 +118,9 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
                 boolean pregnant = saved.getBoolean("Pregnant");
                 data.putBoolean("Pregnant", pregnant);
                 data.putInt("Gestation", Math.max(0, saved.getInt("Gestation")));
-                data.putBoolean("Fertile", animal.isInLove() && !pregnant);
+                data.putBoolean("Fertile", com.animania.common.config.LegacyBreedingRules.isReady(animal) && !pregnant);
             } else if (AnimalInformation.gender(animal) != AnimalInformation.Gender.YOUNG) {
-                data.putBoolean("Fertile", animal.isInLove());
+                data.putBoolean("Fertile", com.animania.common.config.LegacyBreedingRules.isReady(animal));
             }
 
             if (supportsMilk(animal)) data.putBoolean("Milkable", saved.getBoolean("HasKids"));

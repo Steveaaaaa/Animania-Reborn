@@ -10,13 +10,17 @@ import net.minecraft.world.entity.animal.Animal;
 public final class LegacyBreedingRules {
     private LegacyBreedingRules() {}
 
+    public static boolean isReady(Animal animal) {
+        return animal.getAge() == 0 && !AnimalInformation.isSterilized(animal)
+                && com.animania.common.entity.LegacyAnimalNeeds.isFed(animal)
+                && com.animania.common.entity.LegacyAnimalNeeds.isWatered(animal)
+                && (!LegacyConfig.FEED_TO_BREED.get() || ModAttachments.getData(animal, ModAttachments.HAND_FED))
+                && (!LegacyConfig.REQUIRE_ANIMAL_INTERACTION_FOR_AI.get()
+                    || com.animania.common.entity.LegacyAnimalNeeds.isInteracted(animal));
+    }
+
     public static boolean canMate(Animal first, Animal second) {
-        if (!ModAttachments.getData(first, ModAttachments.FED) || !ModAttachments.getData(first, ModAttachments.WATERED)
-                || !ModAttachments.getData(second, ModAttachments.FED) || !ModAttachments.getData(second, ModAttachments.WATERED)) return false;
-        if (LegacyConfig.FEED_TO_BREED.get()
-                && (!ModAttachments.getData(first, ModAttachments.HAND_FED) || !ModAttachments.getData(second, ModAttachments.HAND_FED))) return false;
-        if (LegacyConfig.REQUIRE_ANIMAL_INTERACTION_FOR_AI.get()
-                && (!ModAttachments.getData(first, ModAttachments.INTERACTED) || !ModAttachments.getData(second, ModAttachments.INTERACTED))) return false;
+        if (!isReady(first) || !isReady(second)) return false;
         if (first.level() instanceof ServerLevel level) {
             int radius = LegacyConfig.ANIMAL_CAP_SEARCH_RANGE.get();
             int count = level.getEntitiesOfClass(first.getClass(), first.getBoundingBox().inflate(radius)).size();
