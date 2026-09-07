@@ -4,7 +4,7 @@ plugins {
 }
 version = mod_version
 group = mod_group_id
-base { archivesName = 'animania-forge-1.20.1' }
+base { archivesName = "${mod_id}-forge-${minecraft_version}" }
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 minecraft {
     mappings channel: 'official', version: '1.20.1'
