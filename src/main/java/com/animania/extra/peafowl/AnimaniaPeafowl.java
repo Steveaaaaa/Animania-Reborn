@@ -150,7 +150,6 @@ public final class AnimaniaPeafowl extends Chicken {
                 && bird.role() != PeafowlRole.PEACHICK;
         return opposite && getData(ModAttachments.HUNGER) > 20 && getData(ModAttachments.THIRST) > 20
                 && bird.getData(ModAttachments.HUNGER) > 20 && bird.getData(ModAttachments.THIRST) > 20
-                && isInLove() && bird.isInLove()
                 && com.animania.common.config.LegacyBreedingRules.canMate(this, bird);
     }
 

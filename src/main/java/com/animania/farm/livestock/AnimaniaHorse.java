@@ -146,7 +146,6 @@ public final class AnimaniaHorse extends Horse {
         boolean opposite = role() != horse.role() && role() != FarmAnimalRole.YOUNG
                 && horse.role() != FarmAnimalRole.YOUNG;
         return opposite && female != null && !female.pregnant && wellCaredFor() && horse.wellCaredFor()
-                && isInLove() && horse.isInLove()
                 && com.animania.common.config.LegacyBreedingRules.canMate(this, horse);
     }
 

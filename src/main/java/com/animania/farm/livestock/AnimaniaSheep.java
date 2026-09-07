@@ -161,7 +161,6 @@ public final class AnimaniaSheep extends Sheep {
         boolean opposite = role() != sheep.role() && role() != FarmAnimalRole.YOUNG
                 && sheep.role() != FarmAnimalRole.YOUNG;
         return opposite && female != null && !female.pregnant && wellCaredFor() && sheep.wellCaredFor()
-                && isInLove() && sheep.isInLove()
                 && com.animania.common.config.LegacyBreedingRules.canMate(this, sheep);
     }
 

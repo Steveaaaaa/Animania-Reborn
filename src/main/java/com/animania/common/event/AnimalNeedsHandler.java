@@ -69,13 +69,8 @@ public final class AnimalNeedsHandler {
         LegacyReproduction.tickFertility(animal);
         LegacyReproduction.tickMateReset(animal);
 
-        if ((!LegacyConfig.FEED_TO_BREED.get() || animal.getData(ModAttachments.HAND_FED))
-                && LegacyAnimalNeeds.isFed(animal) && LegacyAnimalNeeds.isWatered(animal)
-                && animal.getAge() == 0 && !AnimalInformation.isSterilized(animal)
-                && (!LegacyConfig.REQUIRE_ANIMAL_INTERACTION_FOR_AI.get()
-                || LegacyAnimalNeeds.isInteracted(animal))
-                && !(animal instanceof com.animania.farm.chicken.AnimaniaChicken)
-                && !(animal instanceof com.animania.extra.peafowl.AnimaniaPeafowl)) animal.setInLove(null);
+        // Old saves may retain vanilla love time. Animania uses its own mating state.
+        animal.resetLove();
 
     }
 
@@ -259,7 +254,7 @@ public final class AnimalNeedsHandler {
                 if (!event.getEntity().getAbilities().instabuild) emptyOneWaterContainer(event, held);
                 LegacyAnimalNeeds.water(animal);
                 animal.setData(ModAttachments.EATING_TICKS, 40);
-                showCareHeartsOrEnableBreeding(animal, event.getEntity());
+                showCareHearts(animal);
                 event.setCancellationResult(InteractionResult.SUCCESS);
                 event.setCanceled(true);
                 return;
@@ -270,7 +265,7 @@ public final class AnimalNeedsHandler {
                 if (!event.getEntity().getAbilities().instabuild) emptyOneFluidContainer(event, held, false);
                 LegacyAnimalNeeds.feed(animal, true, true);
                 animal.setData(ModAttachments.EATING_TICKS, 40);
-                showCareHeartsOrEnableBreeding(animal, event.getEntity());
+                showCareHearts(animal);
                 event.setCancellationResult(InteractionResult.SUCCESS);
                 event.setCanceled(true);
                 return;
@@ -285,7 +280,7 @@ public final class AnimalNeedsHandler {
                     if (!event.getEntity().getAbilities().instabuild) held.shrink(1);
                     LegacyAnimalNeeds.feed(animal, true, false);
                     animal.setData(ModAttachments.EATING_TICKS, 80);
-                    showCareHeartsOrEnableBreeding(animal, event.getEntity());
+                    showCareHearts(animal);
                     if (animal instanceof TamableAnimal tame && !tame.isTame()) {
                         tame.tame(event.getEntity());
                         tame.setOrderedToSit(false);
@@ -347,14 +342,8 @@ public final class AnimalNeedsHandler {
                 .map(fluid -> fluid.getFluid().isSame(Fluids.WATER)).orElse(false);
     }
 
-    private static void showCareHeartsOrEnableBreeding(Animal animal,
-                                                        net.minecraft.world.entity.player.Player player) {
-        if (animal instanceof com.animania.farm.chicken.AnimaniaChicken
-                || animal instanceof com.animania.extra.peafowl.AnimaniaPeafowl) {
-            animal.level().broadcastEntityEvent(animal, (byte) 18);
-        } else {
-            animal.setInLove(player);
-        }
+    private static void showCareHearts(Animal animal) {
+        animal.level().broadcastEntityEvent(animal, (byte) 18);
     }
 
     private static boolean isSlopContainer(ItemStack stack) {

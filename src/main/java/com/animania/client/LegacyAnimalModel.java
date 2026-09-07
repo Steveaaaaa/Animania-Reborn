@@ -14,6 +14,8 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.TamableAnimal;
 
@@ -170,6 +172,20 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
         root.getAllParts().forEach(ModelPart::resetPose);
         applyModestySetting();
         animate(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        restorePetRotationOrder();
+    }
+
+    private void restorePetRotationOrder() {
+        if (!key.startsWith("catsdogs/client/models/cats/")
+                && !key.startsWith("catsdogs/client/models/dogs/")) return;
+        // ModelRendererAnimania used CraftStudio's Y-X-Z quaternion order.
+        // ModelPart consumes Z-Y-X angles; convert after the original pose animation.
+        Quaternionf rotation = new Quaternionf();
+        Vector3f angles = new Vector3f();
+        for (ModelPart part : parts.values()) {
+            rotation.rotationYXZ(part.yRot, part.xRot, part.zRot).getEulerAnglesZYX(angles);
+            part.setRotation(angles.x, angles.y, angles.z);
+        }
     }
 
     /** Matches the source models' conditional render calls for adult males. */
@@ -210,6 +226,11 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
             return;
         }
         if (motion != null) motion.apply(new LegacyMotionContext(entity), swing, amount, age, yaw, pitch, partialTick);
+        if (key.startsWith("farm/client/model/goats/")) {
+            // All 21 original goat models reset head yaw in their awake render branch.
+            ModelPart head = parts.get("HeadNode");
+            if (head != null) head.yRot = 0;
+        }
         if (key.endsWith("/modelpeacock"))
             PeacockSleepingFan.apply(parts, LegacySleepAnimation.petBlend(entity, partialTick));
         if (key.startsWith("catsdogs/") && !(entity instanceof TamableAnimal tame && tame.isInSittingPose()))

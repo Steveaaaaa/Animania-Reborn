@@ -209,7 +209,6 @@ public final class AnimaniaGoat extends Goat {
         AnimaniaGoat female = role() == FarmAnimalRole.FEMALE ? this : goat.role() == FarmAnimalRole.FEMALE ? goat : null;
         boolean opposite = role() != goat.role() && role() != FarmAnimalRole.YOUNG && goat.role() != FarmAnimalRole.YOUNG;
         return opposite && female != null && !female.pregnant && wellCaredFor() && goat.wellCaredFor()
-                && isInLove() && goat.isInLove()
                 && com.animania.common.config.LegacyBreedingRules.canMate(this, goat);
     }
 
