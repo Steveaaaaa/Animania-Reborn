@@ -86,7 +86,7 @@ animal, AI, model and animation implementations while adapting platform APIs:
 - Rendering uses the 1.20.1 vertex and model interfaces with the existing geometry,
   UV coordinates, normals and animation formulas.
 
-`main` remains the NeoForge 1.21.1 branch; `codex/forge-1.20.1` is maintained
+`main` remains the NeoForge 1.21.1 branch; `forge-1.20.1` is maintained
 separately. Review gameplay fixes for both branches. Shared conversion tools still
 read the same original 1.12 checkout.
 

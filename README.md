@@ -49,7 +49,7 @@ The jar is written to `build/libs/`. Compilation targets Forge 47.1.0 and Java 1
 The loader range is a compatibility declaration; later Forge builds still need
 in-game checking.
 
-This branch, `codex/forge-1.20.1`, maintains the Forge port. The `main` branch
+This branch, `forge-1.20.1`, maintains the Forge port. The `main` branch
 continues to maintain NeoForge 1.21.1. Both descend from the 0.1.1 implementation;
 fixes should be reviewed and applied to each branch as needed. Worlds cannot be
 downgraded from Minecraft 1.21.1 to 1.20.1.
