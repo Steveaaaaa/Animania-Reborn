@@ -101,7 +101,7 @@ $env:JAVA_TOOL_OPTIONS='-Djdk.net.unixdomain.tmpdir=C:\jtmp'
 ```
 
 The jar task is followed by ForgeGradle's `reobfJar`, producing the distributable
-`animania-forge-1.20.1-0.1.1.jar`. EMI uses the local Maven directory in `libs/` and
+`animania-forge-1.20.1-0.1.2.jar`. EMI uses the local Maven directory in `libs/` and
 is not bundled. Do not substitute the NeoForge EMI jar.
 
 No GameTests or unit tests are used. Game behaviour, shader support and other mod
