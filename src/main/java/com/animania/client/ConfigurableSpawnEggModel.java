@@ -2,7 +2,7 @@ package com.animania.client;
 
 import com.animania.common.config.LegacyConfig;
 import net.minecraft.client.resources.model.BakedModel;
-import net.neoforged.neoforge.client.model.BakedModelWrapper;
+import net.minecraftforge.client.model.BakedModelWrapper;
 
 /** Keeps normal egg quads available while selecting the custom renderer at runtime. */
 public final class ConfigurableSpawnEggModel extends BakedModelWrapper<BakedModel> {

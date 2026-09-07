@@ -32,7 +32,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -174,16 +174,16 @@ public final class AnimaniaAmphibian extends Frog {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(SKIN, 0);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(SKIN, 0);
     }
 
     @Override
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType spawnType, @Nullable SpawnGroupData data) {
-        SpawnGroupData result = super.finalizeSpawn(level, difficulty, spawnType, data);
+                                        MobSpawnType spawnType, @Nullable SpawnGroupData data, net.minecraft.nbt.CompoundTag spawnTag) {
+        SpawnGroupData result = super.finalizeSpawn(level, difficulty, spawnType, data, spawnTag);
         entityData.set(SKIN, random.nextInt(kind.skins));
         return result;
     }
@@ -235,7 +235,7 @@ public final class AnimaniaAmphibian extends Frog {
         if (kind == Kind.DART_FROG && held.is(Items.ARROW) && poisonHarvestCooldown == 0) {
             if (!level().isClientSide()) {
                 poisonHarvestCooldown = 800;
-                ItemStack poisonedArrow = PotionContents.createItemStack(Items.TIPPED_ARROW, Potions.POISON);
+                ItemStack poisonedArrow = PotionUtils.setPotion(new ItemStack(Items.TIPPED_ARROW), Potions.POISON);
                 if (!player.isCreative()) held.shrink(1);
                 if (held.isEmpty()) player.setItemInHand(hand, poisonedArrow);
                 else if (!player.getInventory().add(poisonedArrow)) player.drop(poisonedArrow, false);
@@ -249,13 +249,13 @@ public final class AnimaniaAmphibian extends Frog {
     @Override
     public boolean doHurtTarget(net.minecraft.world.entity.Entity target) {
         var type = net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.DAMAGE_TYPE,
-                ResourceLocation.fromNamespaceAndPath("animania", "pepe"));
+                new ResourceLocation("animania", "pepe"));
         var source = new net.minecraft.world.damagesource.DamageSource(
                 level().registryAccess().registryOrThrow(net.minecraft.core.registries.Registries.DAMAGE_TYPE).getHolderOrThrow(type));
         boolean hit = target.hurt(source, 2.0F);
         target.hurt(source, 2.0F);
         if (hit && level() instanceof ServerLevel server)
-            net.minecraft.world.item.enchantment.EnchantmentHelper.doPostAttackEffects(server, target, source);
+            doEnchantDamageEffects(this, target);
         if (target instanceof Player player) player.knockback(1.0D, getX() - player.getX(), getZ() - player.getZ());
         return hit;
     }
@@ -277,9 +277,8 @@ public final class AnimaniaAmphibian extends Frog {
     }
 
     @Override
-    public ResourceKey<LootTable> getDefaultLootTable() {
-        return ResourceKey.create(Registries.LOOT_TABLE,
-                ResourceLocation.fromNamespaceAndPath("animania", "entities/" + kind.lootPath));
+    public ResourceLocation getDefaultLootTable() {
+        return new ResourceLocation("animania", "entities/" + kind.lootPath);
     }
 
     @Override
@@ -309,5 +308,10 @@ public final class AnimaniaAmphibian extends Frog {
             this.lootPath = lootPath;
             this.skins = skins;
         }
+    }
+    @Override public void tick() {
+        com.animania.common.entity.AnimalTickBridge.before(this);
+        super.tick();
+        com.animania.common.entity.AnimalTickBridge.after(this);
     }
 }

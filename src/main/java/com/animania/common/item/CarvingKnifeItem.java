@@ -7,7 +7,7 @@ import net.minecraft.world.item.Tier;
 /** Durable recipe tool; one durability point is consumed whenever it remains in a crafting grid. */
 public final class CarvingKnifeItem extends SwordItem {
     public CarvingKnifeItem(Tier tier, Properties properties) {
-        super(tier, properties);
+        super(tier, 2, -2.4F, properties);
     }
 
     @Override

@@ -16,18 +16,18 @@ public final class LegacyGrowth {
             return;
         }
 
-        int step = animal.getData(ModAttachments.CHILD_GROWTH);
-        int timer = Math.min(20_000_000, animal.getData(ModAttachments.CHILD_GROWTH_TIMER) + 1);
+        int step = ModAttachments.getData(animal, ModAttachments.CHILD_GROWTH);
+        int timer = Math.min(20_000_000, ModAttachments.getData(animal, ModAttachments.CHILD_GROWTH_TIMER) + 1);
         int stepTicks = LegacyConfig.CHILD_GROWTH_TICK.get();
         if (timer >= stepTicks && LegacyAnimalNeeds.isFed(animal)
                 && LegacyAnimalNeeds.isWatered(animal)
-                && !animal.getData(ModAttachments.SLEEPING)) {
+                && !ModAttachments.getData(animal, ModAttachments.SLEEPING)) {
             timer = 0;
             step = Math.min(ADULT_STEP, step + 1);
-            animal.setData(ModAttachments.CHILD_GROWTH, step);
+            ModAttachments.setData(animal, ModAttachments.CHILD_GROWTH, step);
             if (step == ADULT_STEP) notifyMother(animal);
         }
-        animal.setData(ModAttachments.CHILD_GROWTH_TIMER, timer);
+        ModAttachments.setData(animal, ModAttachments.CHILD_GROWTH_TIMER, timer);
 
         // The old renderer encoded the same progress through growingAge.  Continually
         // overriding vanilla's counter also prevents unattended children growing up.
@@ -35,7 +35,7 @@ public final class LegacyGrowth {
     }
 
     private static void notifyMother(Animal child) {
-        String parentId = child.getData(ModAttachments.PARENT);
+        String parentId = ModAttachments.getData(child, ModAttachments.PARENT);
         if (parentId.isEmpty()) return;
         child.level().getEntitiesOfClass(Animal.class, child.getBoundingBox().inflate(15.0D),
                 possible -> possible.getClass() == child.getClass()

@@ -41,11 +41,11 @@ public final class AnimaniaChickenRenderer extends MobRenderer<AnimaniaChicken, 
     public ResourceLocation getTextureLocation(AnimaniaChicken chicken) {
         if (chicken.role() == com.animania.farm.chicken.ChickenRole.ROOSTER && chicken.hasCustomName()
                 && chicken.getName().getString().equals("Ducktonio")) {
-            return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+            return new ResourceLocation(Animania.MOD_ID,
                     "textures/entity/chickens/rooster_antonio.png");
         }
         String role = chicken.role().name().toLowerCase();
-        return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+        return new ResourceLocation(Animania.MOD_ID,
                 "textures/entity/chickens/" + role + "_" + chicken.breed().texture() + ".png");
     }
 
@@ -61,7 +61,7 @@ public final class AnimaniaChickenRenderer extends MobRenderer<AnimaniaChicken, 
         float scale = chicken.role() == com.animania.farm.chicken.ChickenRole.HEN ? 0.9F : 1.0F;
         poseStack.scale(scale, scale, scale);
         boolean nesting = chicken.level().getBlockState(chicken.blockPosition()).is(ModBlocks.NEST.get());
-        if (nesting || chicken.getData(ModAttachments.SLEEPING)) {
+        if (nesting || ModAttachments.getData(chicken, ModAttachments.SLEEPING)) {
             double y = chicken.role() == com.animania.farm.chicken.ChickenRole.CHICK ? 0.10D : 0.35D;
             poseStack.translate(-0.25D, y, -0.25D);
         }

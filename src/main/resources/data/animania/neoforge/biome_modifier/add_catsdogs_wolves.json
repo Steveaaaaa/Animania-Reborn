@@ -1,8 +1,0 @@
-{
-  "type": "animania:legacy_add_spawns",
-  "biomes": "#animania:wolf_dog_habitats",
-  "probability_group": "dogs",
-  "default_probability": 5,
-  "family_group": "dogs",
-  "spawners": [{ "type": "animania:female_wolf", "weight": 5, "minCount": 2, "maxCount": 2 }]
-}

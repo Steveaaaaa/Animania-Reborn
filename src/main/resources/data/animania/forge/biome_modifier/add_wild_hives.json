@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#animania:hive_habitats",
+  "features": "animania:wild_hive",
+  "step": "vegetal_decoration"
+}

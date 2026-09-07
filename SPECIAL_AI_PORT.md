@@ -2,7 +2,7 @@
 
 依据：本地 `.upstream-animania` 的 1.12 分支（32ae2b4c56cb84284e865dae0d3b78770992ba1d）。下表列出原实现与移植版的主要对应关系。
 
-| 原实现 | NeoForge 实现 |
+| 原实现 | Forge 实现 |
 | --- | --- |
 | EntityAIFindMud | LegacyFindMudGoal；娱乐计时、白天限制、搜索范围、泥坑容量、角色接近坐标 |
 | 猪实体及泥浴渲染 | AnimaniaPig、AnimaniaPigRenderer、PigMudLayer；泥浴减速、侧躺、泥层、雨水清洗、娱乐恢复 |

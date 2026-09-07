@@ -13,12 +13,12 @@ public final class LegacyReproduction {
         if (animal.level().isClientSide() || AnimalInformation.gender(animal) != AnimalInformation.Gender.FEMALE
                 || animal instanceof com.animania.farm.chicken.AnimaniaChicken
                 || animal instanceof com.animania.extra.peafowl.AnimaniaPeafowl) return;
-        int dryTimer = animal.getData(ModAttachments.DRY_TIMER);
-        if (!animal.getData(ModAttachments.FERTILE) && dryTimer > -1) {
-            animal.setData(ModAttachments.DRY_TIMER, dryTimer - 1);
+        int dryTimer = ModAttachments.getData(animal, ModAttachments.DRY_TIMER);
+        if (!ModAttachments.getData(animal, ModAttachments.FERTILE) && dryTimer > -1) {
+            ModAttachments.setData(animal, ModAttachments.DRY_TIMER, dryTimer - 1);
         } else {
-            animal.setData(ModAttachments.FERTILE, true);
-            animal.setData(ModAttachments.DRY_TIMER,
+            ModAttachments.setData(animal, ModAttachments.FERTILE, true);
+            ModAttachments.setData(animal, ModAttachments.DRY_TIMER,
                     LegacyConfig.GESTATION_TIMER.get() / 9 + animal.getRandom().nextInt(50));
         }
     }
@@ -27,27 +27,27 @@ public final class LegacyReproduction {
     public static void tickMateReset(Animal animal) {
         if (animal.level().isClientSide() || animal.getRandom().nextInt(200) != 0
                 || AnimalInformation.gender(animal) == AnimalInformation.Gender.YOUNG) return;
-        String mateId = animal.getData(ModAttachments.LAST_MATE);
+        String mateId = ModAttachments.getData(animal, ModAttachments.LAST_MATE);
         if (mateId.isEmpty()) return;
         boolean present = animal.level().getEntitiesOfClass(Animal.class,
                         animal.getBoundingBox().inflate(30.0D), other -> other != animal
                                 && other.getClass() == animal.getClass() && other.isAlive()
                                 && other.getUUID().toString().equals(mateId))
                 .stream().findAny().isPresent();
-        if (!present) animal.setData(ModAttachments.LAST_MATE, "");
+        if (!present) ModAttachments.setData(animal, ModAttachments.LAST_MATE, "");
     }
 
     public static void conceived(Animal female) {
-        female.setData(ModAttachments.FERTILE, false);
+        ModAttachments.setData(female, ModAttachments.FERTILE, false);
     }
 
     public static void completedPregnancy(Animal female) {
-        female.setData(ModAttachments.FERTILE, false);
+        ModAttachments.setData(female, ModAttachments.FERTILE, false);
     }
 
     public static void wakeForBirth(Animal female, int gestation) {
-        if (gestation < 200 && female.getData(ModAttachments.SLEEPING)) {
-            female.setData(ModAttachments.SLEEPING, false);
+        if (gestation < 200 && ModAttachments.getData(female, ModAttachments.SLEEPING)) {
+            ModAttachments.setData(female, ModAttachments.SLEEPING, false);
         }
     }
 }

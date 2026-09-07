@@ -11,7 +11,7 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
-/** NeoForge port of Animania 1.12's GenericAISearchBlock. */
+/** Forge port of Animania 1.12's GenericAISearchBlock. */
 abstract class LegacySearchBlockGoal extends Goal {
     protected final PathfinderMob animal;
     protected final ServerLevel level;

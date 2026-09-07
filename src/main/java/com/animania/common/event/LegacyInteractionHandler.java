@@ -5,15 +5,15 @@ import com.animania.common.config.LegacyConfig;
 import com.animania.common.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
+
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 /** Interaction switches that were global event handlers in the 1.12 release. */
 @EventBusSubscriber(modid = Animania.MOD_ID)
@@ -28,7 +28,7 @@ public final class LegacyInteractionHandler {
             event.setCanceled(true);
             return;
         }
-        if (LegacyConfig.EAT_FOOD_ANYTIME.get() && stack.has(DataComponents.FOOD)
+        if (LegacyConfig.EAT_FOOD_ANYTIME.get() && stack.isEdible()
                 && BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals(Animania.MOD_ID)
                 && !event.getEntity().canEat(false)) {
             event.getEntity().startUsingItem(event.getHand());
@@ -52,7 +52,7 @@ public final class LegacyInteractionHandler {
                 || !seedState.canSurvive(level, place)) return;
         if (!level.isClientSide()) {
             level.setBlock(place, seedState, 3);
-            if (!event.getEntity().hasInfiniteMaterials()) stack.shrink(1);
+            if (!event.getEntity().getAbilities().instabuild) stack.shrink(1);
         }
         event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));
         event.setCanceled(true);

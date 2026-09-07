@@ -86,12 +86,12 @@ public final class AnimaniaPig extends Pig {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(MUDDY, false);
-        builder.define(IN_MUD, false);
-        builder.define(MUD_AMOUNT, 0.0F);
-        builder.define(SPLASH_TIMER, 0.0F);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(MUDDY, false);
+        entityData.define(IN_MUD, false);
+        entityData.define(MUD_AMOUNT, 0.0F);
+        entityData.define(SPLASH_TIMER, 0.0F);
     }
 
     @Override
@@ -118,7 +118,7 @@ public final class AnimaniaPig extends Pig {
     }
 
     private boolean wellCaredFor() {
-        return getData(ModAttachments.HUNGER) > 20 && getData(ModAttachments.THIRST) > 20;
+        return ModAttachments.getData(this, ModAttachments.HUNGER) > 20 && ModAttachments.getData(this, ModAttachments.THIRST) > 20;
     }
 
     @Override
@@ -242,8 +242,8 @@ public final class AnimaniaPig extends Pig {
     @Override
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
-        SpawnGroupData result = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData, net.minecraft.nbt.CompoundTag spawnTag) {
+        SpawnGroupData result = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData, spawnTag);
         if (role() == FarmAnimalRole.FEMALE) {
             com.animania.common.entity.LegacyNaturalFamily.spawn(level, this, spawnType,
                     AnimaniaPig.class, 8,
@@ -273,10 +273,10 @@ public final class AnimaniaPig extends Pig {
     }
 
     @Override
-    protected ResourceKey<LootTable> getDefaultLootTable() {
+    protected ResourceLocation getDefaultLootTable() {
         if (role() == FarmAnimalRole.YOUNG) return BuiltInLootTables.EMPTY;
         return breed().isPrime()
-                ? ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("animania", "entities/pig_prime"))
+                ? new ResourceLocation("animania", "entities/pig_prime")
                 : EntityType.PIG.getDefaultLootTable();
     }
 
@@ -311,4 +311,9 @@ public final class AnimaniaPig extends Pig {
         if (tag.contains("MateBreed")) mateBreed = PigBreed.fromPath(tag.getString("MateBreed"));
     }
 
+    @Override public void tick() {
+        com.animania.common.entity.AnimalTickBridge.before(this);
+        super.tick();
+        com.animania.common.entity.AnimalTickBridge.after(this);
+    }
 }

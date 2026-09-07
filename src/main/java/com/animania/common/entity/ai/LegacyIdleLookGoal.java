@@ -14,7 +14,7 @@ public final class LegacyIdleLookGoal extends Goal {
     private double x, z;
     public LegacyIdleLookGoal(Mob mob) { this.mob = mob; setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK)); }
     @Override public boolean canUse() {
-        return !mob.getData(ModAttachments.SLEEPING)
+        return !ModAttachments.getData(mob, ModAttachments.SLEEPING)
                 && (!(mob instanceof AnimaniaHorse) || mob.level().isDay())
                 && (!(mob instanceof AnimaniaRodent) || !mob.isPassenger()) && mob.getRandom().nextFloat() < 0.02F;
     }
@@ -22,7 +22,7 @@ public final class LegacyIdleLookGoal extends Goal {
         double angle = Math.PI * 2 * mob.getRandom().nextDouble();
         x = Math.cos(angle); z = Math.sin(angle); remaining = 20 + mob.getRandom().nextInt(20);
     }
-    @Override public boolean canContinueToUse() { return remaining >= 0 && !mob.getData(ModAttachments.SLEEPING); }
+    @Override public boolean canContinueToUse() { return remaining >= 0 && !ModAttachments.getData(mob, ModAttachments.SLEEPING); }
     @Override public void tick() {
         --remaining;
         mob.getLookControl().setLookAt(mob.getX() + x, mob.getEyeY(), mob.getZ() + z,

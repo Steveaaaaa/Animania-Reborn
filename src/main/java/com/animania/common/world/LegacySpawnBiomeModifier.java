@@ -4,14 +4,13 @@ import com.animania.common.config.LegacyConfig;
 import com.animania.common.registry.ModWorldgen;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
-import net.neoforged.neoforge.common.world.BiomeModifier;
-import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
+import net.minecraftforge.common.world.BiomeModifier;
+import net.minecraftforge.common.world.ModifiableBiomeInfo;
 
 import java.util.List;
 import java.util.function.Function;
@@ -23,11 +22,11 @@ import java.util.function.Function;
 public record LegacySpawnBiomeModifier(HolderSet<Biome> biomes, List<SpawnerData> spawners,
                                        String probabilityGroup, int defaultProbability,
                                        String familyGroup) implements BiomeModifier {
-    public static final MapCodec<LegacySpawnBiomeModifier> CODEC = RecordCodecBuilder.mapCodec(builder -> builder.group(
+    public static final Codec<LegacySpawnBiomeModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             Biome.LIST_CODEC.fieldOf("biomes").forGetter(LegacySpawnBiomeModifier::biomes),
             Codec.either(SpawnerData.CODEC.listOf(), SpawnerData.CODEC).xmap(
                     either -> either.map(Function.identity(), List::of),
-                    list -> list.size() == 1 ? Either.right(list.getFirst()) : Either.left(list))
+                    list -> list.size() == 1 ? Either.right(list.get(0)) : Either.left(list))
                     .fieldOf("spawners").forGetter(LegacySpawnBiomeModifier::spawners),
             Codec.STRING.fieldOf("probability_group").forGetter(LegacySpawnBiomeModifier::probabilityGroup),
             Codec.INT.fieldOf("default_probability").forGetter(LegacySpawnBiomeModifier::defaultProbability),
@@ -57,7 +56,7 @@ public record LegacySpawnBiomeModifier(HolderSet<Biome> biomes, List<SpawnerData
     }
 
     @Override
-    public MapCodec<? extends BiomeModifier> codec() {
+    public Codec<? extends BiomeModifier> codec() {
         return ModWorldgen.LEGACY_SPAWNS.get();
     }
 }

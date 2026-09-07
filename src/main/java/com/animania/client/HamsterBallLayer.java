@@ -21,8 +21,8 @@ import net.minecraft.world.item.DyeColor;
 
 public final class HamsterBallLayer extends RenderLayer<AnimaniaRodent, LegacyAnimalModel<AnimaniaRodent>> {
     public static final ModelLayerLocation LAYER = new ModelLayerLocation(
-            ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID, "hamster_ball"), "main");
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
+            new ResourceLocation(Animania.MOD_ID, "hamster_ball"), "main");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(
             Animania.MOD_ID, "textures/entity/rodents/hamster_ball.png");
     private final ModelPart ball;
 
@@ -65,15 +65,15 @@ public final class HamsterBallLayer extends RenderLayer<AnimaniaRodent, LegacyAn
                        float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks,
                        float netHeadYaw, float headPitch) {
         if (!rodent.isInBall()) return;
-        int color = rodent.ballColor() < 0 ? 0x66FFFFFF
-                : (0x88000000 | (DyeColor.byId(rodent.ballColor()).getTextureDiffuseColor() & 0xFFFFFF));
+        float[] rgb = rodent.ballColor() < 0 ? new float[]{1, 1, 1} : DyeColor.byId(rodent.ballColor()).getTextureDiffuseColors();
+        float alpha = rodent.ballColor() < 0 ? 0x66 / 255F : 0x88 / 255F;
         VertexConsumer consumer = buffers.getBuffer(RenderType.entityTranslucent(TEXTURE));
         poseStack.pushPose();
         poseStack.translate(0.0D, 1.0D, 0.0D);
         poseStack.mulPose(Axis.XP.rotationDegrees((int) limbSwing * 20.0F));
         poseStack.translate(-0.1D, -1.9D, 0.0D);
         poseStack.scale(1.7F, 1.7F, 1.7F);
-        ball.render(poseStack, consumer, light, OverlayTexture.NO_OVERLAY, color);
+        ball.render(poseStack, consumer, light, OverlayTexture.NO_OVERLAY, rgb[0], rgb[1], rgb[2], alpha);
         poseStack.popPose();
     }
 }

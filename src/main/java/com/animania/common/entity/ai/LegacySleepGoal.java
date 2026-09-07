@@ -36,7 +36,7 @@ public final class LegacySleepGoal extends LegacySearchBlockGoal {
         if (++delay <= LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get() + sleeper.getRandom().nextInt(100)) {
             return false;
         }
-        if (sleeper.getData(ModAttachments.SLEEPING)) return false;
+        if (ModAttachments.getData(sleeper, ModAttachments.SLEEPING)) return false;
         return shouldSleepNow(sleeper) && !sleeper.level().isRainingAt(sleeper.blockPosition())
                 && sleeper.getRandom().nextInt(3) == 0 && searchForDestination();
     }
@@ -52,13 +52,13 @@ public final class LegacySleepGoal extends LegacySearchBlockGoal {
         if (!shouldSleepNow(animal) || animal.isOnFire()
                 || animal.level().isRainingAt(animal.blockPosition())
                 && animal.level().canSeeSky(animal.blockPosition())) {
-            animal.setData(ModAttachments.SLEEPING, false);
+            ModAttachments.setData(animal, ModAttachments.SLEEPING, false);
         }
     }
 
     @Override
     public boolean canContinueToUse() {
-        return super.canContinueToUse() && !sleeper.getData(ModAttachments.SLEEPING)
+        return super.canContinueToUse() && !ModAttachments.getData(sleeper, ModAttachments.SLEEPING)
                 && shouldSleepNow(sleeper);
     }
 
@@ -86,7 +86,7 @@ public final class LegacySleepGoal extends LegacySearchBlockGoal {
 
     @Override
     protected void onArriveAtDestination() {
-        sleeper.setData(ModAttachments.SLEEPING, true);
+        ModAttachments.setData(sleeper, ModAttachments.SLEEPING, true);
         sleeper.getNavigation().stop();
         delay = 0;
     }

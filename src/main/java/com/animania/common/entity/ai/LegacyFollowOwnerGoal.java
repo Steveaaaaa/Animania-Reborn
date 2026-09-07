@@ -32,22 +32,22 @@ public final class LegacyFollowOwnerGoal extends Goal {
     public boolean canUse() {
         owner = pet.getOwner();
         return owner != null && !owner.isSpectator() && !pet.isInSittingPose() && !pet.isPassenger()
-                && !pet.getData(ModAttachments.SLEEPING)
+                && !ModAttachments.getData(pet, ModAttachments.SLEEPING)
                 && pet.distanceToSqr(owner) >= startDistance * startDistance;
     }
 
     @Override
     public boolean canContinueToUse() {
         return owner != null && owner.isAlive() && !pet.getNavigation().isDone() && !pet.isInSittingPose()
-                && !pet.getData(ModAttachments.SLEEPING)
+                && !ModAttachments.getData(pet, ModAttachments.SLEEPING)
                 && pet.distanceToSqr(owner) > stopDistance * stopDistance;
     }
 
     @Override
     public void start() {
         recalc = 0;
-        oldWaterCost = pet.getPathfindingMalus(net.minecraft.world.level.pathfinder.PathType.WATER);
-        pet.setPathfindingMalus(net.minecraft.world.level.pathfinder.PathType.WATER, 0);
+        oldWaterCost = pet.getPathfindingMalus(net.minecraft.world.level.pathfinder.BlockPathTypes.WATER);
+        pet.setPathfindingMalus(net.minecraft.world.level.pathfinder.BlockPathTypes.WATER, 0);
     }
 
     @Override
@@ -63,7 +63,7 @@ public final class LegacyFollowOwnerGoal extends Goal {
 
     @Override
     public void stop() {
-        pet.setPathfindingMalus(net.minecraft.world.level.pathfinder.PathType.WATER, oldWaterCost);
+        pet.setPathfindingMalus(net.minecraft.world.level.pathfinder.BlockPathTypes.WATER, oldWaterCost);
         owner = null;
         pet.getNavigation().stop();
     }

@@ -49,8 +49,8 @@ public final class LegacyFollowParentGoal extends Goal {
         if (++firingDelay <= LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get()) return false;
         firingDelay = 0;
         if (!child.isBaby() || !(child.level() instanceof ServerLevel server)) return false;
-        if (!child.level().isDay() || child.getData(ModAttachments.SLEEPING)) return false;
-        String parentId = child.getData(ModAttachments.PARENT);
+        if (!child.level().isDay() || ModAttachments.getData(child, ModAttachments.SLEEPING)) return false;
+        String parentId = ModAttachments.getData(child, ModAttachments.PARENT);
         if (parentId.isBlank()) return false;
         Entity found;
         try {

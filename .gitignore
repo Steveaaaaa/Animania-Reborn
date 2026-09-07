@@ -26,3 +26,6 @@ src/generated/resources/.cache/
 .upstream-animania/
 .mdk-1.21.1/
 .tools/
+
+# Local compiler diagnostics.
+/compile-output.txt

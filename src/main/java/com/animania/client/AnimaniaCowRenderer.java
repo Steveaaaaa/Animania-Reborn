@@ -65,10 +65,10 @@ public final class AnimaniaCowRenderer extends MobRenderer<AnimaniaCow, LegacyAn
         if ((cow.breed() == com.animania.farm.livestock.CowBreed.FRIESIAN
                 || cow.breed() == com.animania.farm.livestock.CowBreed.HOLSTEIN)
                 && cow.hasCustomName() && cow.getName().getString().trim().equalsIgnoreCase("purp")) {
-            return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+            return new ResourceLocation(Animania.MOD_ID,
                     "textures/entity/cows/" + role + "_purplicious.png");
         }
-        return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+        return new ResourceLocation(Animania.MOD_ID,
                 "textures/entity/cows/" + role + "_" + cow.breed().getSerializedName() + ".png");
     }
 

@@ -13,7 +13,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.common.Tags;
+import net.minecraftforge.common.Tags;
 
 import java.util.EnumSet;
 
@@ -33,7 +33,7 @@ public final class LegacyPigSnuffleGoal extends Goal {
     public boolean canUse() {
         BlockPos below = pig.blockPosition().below();
         return !AnimaniaPig.isMud(pig.level(), below)
-                && !pig.getData(ModAttachments.SLEEPING)
+                && !ModAttachments.getData(pig, ModAttachments.SLEEPING)
                 && !LegacyAnimalNeeds.isFed(pig)
                 && pig.getRandom().nextInt(120) == 50;
     }
@@ -46,7 +46,7 @@ public final class LegacyPigSnuffleGoal extends Goal {
     @Override
     public void start() {
         eatingTimer = 160;
-        pig.setData(ModAttachments.EATING_TICKS, 80);
+        ModAttachments.setData(pig, ModAttachments.EATING_TICKS, 80);
         pig.getNavigation().stop();
     }
 
@@ -59,7 +59,7 @@ public final class LegacyPigSnuffleGoal extends Goal {
             return;
         }
         var biome = pig.level().getBiome(below);
-        boolean forest = biome.is(BiomeTags.IS_FOREST) || biome.is(Tags.Biomes.IS_FOREST);
+        boolean forest = biome.is(BiomeTags.IS_FOREST) || biome.is(net.minecraft.tags.BiomeTags.IS_FOREST);
         if (eatingTimer > 80 && forest && pig.role() != FarmAnimalRole.YOUNG
                 && pig.getLeashHolder() instanceof Player) {
             pig.level().levelEvent(2001, below, Block.getId(pig.level().getBlockState(below)));

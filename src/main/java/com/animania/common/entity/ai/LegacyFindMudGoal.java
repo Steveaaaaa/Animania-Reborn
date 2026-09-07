@@ -20,7 +20,7 @@ public final class LegacyFindMudGoal extends Goal {
     }
     @Override public boolean canUse() {
         if (++delay <= LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get()) return false;
-        if (pig.hasPlayed() || !pig.level().isDay() || pig.getData(ModAttachments.SLEEPING)) {
+        if (pig.hasPlayed() || !pig.level().isDay() || ModAttachments.getData(pig, ModAttachments.SLEEPING)) {
             delay = 0;
             return false;
         }

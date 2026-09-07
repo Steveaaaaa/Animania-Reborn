@@ -14,9 +14,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.EnergyStorage;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.energy.EnergyStorage;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraft.world.item.ItemStack;
 import com.animania.common.registry.ModItems;
 
@@ -158,8 +158,8 @@ public final class HamsterWheelBlockEntity extends net.minecraft.world.level.blo
         wheel.runTicks++;
 
         for (Direction direction : Direction.values()) {
-            var receiver = level.getCapability(Capabilities.EnergyStorage.BLOCK,
-                    pos.relative(direction), direction.getOpposite());
+            var adjacent = level.getBlockEntity(pos.relative(direction));
+            var receiver = adjacent == null ? null : adjacent.getCapability(ForgeCapabilities.ENERGY, direction.getOpposite()).orElse(null);
             if (receiver != null && receiver.canReceive()) {
                 int accepted = receiver.receiveEnergy(Math.min(generation, wheel.energy.getEnergyStored()), false);
                 wheel.energy.extractEnergy(accepted, false);
@@ -187,8 +187,8 @@ public final class HamsterWheelBlockEntity extends net.minecraft.world.level.blo
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
         if (hamsterId != null) tag.putUUID("Hamster", hamsterId);
         tag.putInt("Food", food);
         tag.putInt("RunTicks", runTicks);
@@ -196,8 +196,8 @@ public final class HamsterWheelBlockEntity extends net.minecraft.world.level.blo
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
+    public void load(CompoundTag tag) {
+        super.load(tag);
         hamsterId = tag.hasUUID("Hamster") ? tag.getUUID("Hamster") : null;
         food = Math.max(0, Math.min(16, tag.getInt("Food")));
         runTicks = Math.max(0, tag.getInt("RunTicks"));

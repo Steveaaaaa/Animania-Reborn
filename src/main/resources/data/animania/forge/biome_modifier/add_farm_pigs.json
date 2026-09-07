@@ -1,0 +1,45 @@
+{
+  "type": "animania:legacy_add_spawns",
+  "biomes": "#minecraft:is_overworld",
+  "probability_group": "pigs",
+  "default_probability": 9,
+  "family_group": "pigs",
+  "spawners": [
+    {
+      "type": "animania:sow_duroc",
+      "weight": 9,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:sow_hampshire",
+      "weight": 9,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:sow_large_black",
+      "weight": 9,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:sow_large_white",
+      "weight": 9,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:sow_old_spot",
+      "weight": 9,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:sow_yorkshire",
+      "weight": 4,
+      "minCount": 2,
+      "maxCount": 2
+    }
+  ]
+}

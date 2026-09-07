@@ -23,7 +23,7 @@ public final class CatBlinkLayer extends RenderLayer<AnimaniaCat, LegacyAnimalMo
     public void render(PoseStack poseStack, MultiBufferSource buffers, int packedLight, AnimaniaCat cat,
                        float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks,
                        float netHeadYaw, float headPitch) {
-        if (!cat.getData(ModAttachments.SLEEPING) && !cat.isBlinking()) return;
+        if (!ModAttachments.getData(cat, ModAttachments.SLEEPING) && !cat.isBlinking()) return;
         String mask = cat.breed() == CatBreed.RAGDOLL || cat.breed() == CatBreed.NORWEGIAN
                 ? "blink_2" : "blink_1";
         int color = 0xFF000000 | eyelidColor(cat.breed());
@@ -33,7 +33,7 @@ public final class CatBlinkLayer extends RenderLayer<AnimaniaCat, LegacyAnimalMo
 
     private void renderMask(PoseStack poseStack, MultiBufferSource buffers, int packedLight,
                             String file, int color) {
-        ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+        ResourceLocation texture = new ResourceLocation(Animania.MOD_ID,
                 "textures/entity/cats/" + file);
         VertexConsumer consumer = buffers.getBuffer(RenderType.entityCutoutNoCull(texture));
         getParentModel().renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, color);

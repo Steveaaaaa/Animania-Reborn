@@ -19,8 +19,8 @@ public final class LegacyBullAttackGoal extends Goal {
     @Override public boolean canUse() {
         var target = bull.getTarget();
         if (target == null || !target.isAlive() || target instanceof Skeleton) return false;
-        if (bull.getData(ModAttachments.SLEEPING)) bull.setData(ModAttachments.SLEEPING, false);
-        else { bull.setData(ModAttachments.FIGHTING, true); bull.setData(ModAttachments.EATING_TICKS, 0); }
+        if (ModAttachments.getData(bull, ModAttachments.SLEEPING)) ModAttachments.setData(bull, ModAttachments.SLEEPING, false);
+        else { ModAttachments.setData(bull, ModAttachments.FIGHTING, true); ModAttachments.setData(bull, ModAttachments.EATING_TICKS, 0); }
         path = bull.getNavigation().createPath(target, 0);
         return path != null;
     }
@@ -30,7 +30,7 @@ public final class LegacyBullAttackGoal extends Goal {
     @Override public void start() { bull.getNavigation().moveTo(path, 1.8D); delay = 0; }
     @Override public void stop() {
         if (bull.getTarget() instanceof Player p && (p.isSpectator() || p.isCreative())) bull.setTarget(null);
-        bull.getNavigation().stop(); bull.setData(ModAttachments.FIGHTING, false);
+        bull.getNavigation().stop(); ModAttachments.setData(bull, ModAttachments.FIGHTING, false);
     }
     @Override public void tick() {
         var target = bull.getTarget();

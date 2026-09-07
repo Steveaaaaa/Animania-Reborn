@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:crafting_shaped",
-  "pattern": [" I ", "I I", "SIS"],
-  "key": {
-    "I": {"tag": "c:ingots/iron"},
-    "S": {"item": "minecraft:smooth_stone_slab"}
-  },
-  "result": {"id": "animania:block_hamster_wheel"}
-}

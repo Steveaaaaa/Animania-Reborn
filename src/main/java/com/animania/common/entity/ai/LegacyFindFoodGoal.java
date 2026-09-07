@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.TallGrassBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-/** NeoForge port of Animania 1.12's GenericAIFindFood. */
+/** Forge port of Animania 1.12's GenericAIFindFood. */
 public final class LegacyFindFoodGoal extends LegacySearchBlockGoal {
     private final Animal foodAnimal;
     private final LegacyAnimalNeeds.Profile profile;
@@ -34,7 +34,7 @@ public final class LegacyFindFoodGoal extends LegacySearchBlockGoal {
     public boolean canUse() {
         if (++foodDelay <= LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get()) return false;
         if (LegacyAnimalNeeds.isFed(foodAnimal) || foodAnimal.isVehicle()
-                || foodAnimal.getData(ModAttachments.SLEEPING)
+                || ModAttachments.getData(foodAnimal, ModAttachments.SLEEPING)
                 || LegacyConfig.REQUIRE_ANIMAL_INTERACTION_FOR_AI.get()
                 && !LegacyAnimalNeeds.isInteracted(foodAnimal)) {
             foodDelay = 0;
@@ -100,7 +100,7 @@ public final class LegacyFindFoodGoal extends LegacySearchBlockGoal {
         // plant or a placed slop source did not mark the animal as interacted.
         LegacyAnimalNeeds.feed(foodAnimal, providerConsumed,
                 slop && foodAnimal instanceof AnimaniaPig);
-        if (profile.automaticEatAnimation()) foodAnimal.setData(ModAttachments.EATING_TICKS, 80);
+        if (profile.automaticEatAnimation()) ModAttachments.setData(foodAnimal, ModAttachments.EATING_TICKS, 80);
         foodDelay = 0;
     }
 

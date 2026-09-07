@@ -22,14 +22,14 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.neoforged.neoforge.client.textures.FluidSpriteCache;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
+
 
 /** Renders the original two-block ModelTrough geometry and its contents. */
 public final class TroughRenderer implements BlockEntityRenderer<TroughBlockEntity> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
+    private static final ResourceLocation TEXTURE = new ResourceLocation(
             Animania.MOD_ID, "textures/entity/tileentities/block_trough.png");
-    private static final ResourceLocation WHEAT_TEXTURE = ResourceLocation.fromNamespaceAndPath(
+    private static final ResourceLocation WHEAT_TEXTURE = new ResourceLocation(
             Animania.MOD_ID, "textures/entity/tileentities/wheat.png");
     private final LegacyAnimalModel<Entity> model = LegacyAnimalModel.load("base/client/models/modeltrough");
     private final LegacyAnimalModel<Entity> feedBase = LegacyAnimalModel.load(
@@ -67,7 +67,7 @@ public final class TroughRenderer implements BlockEntityRenderer<TroughBlockEnti
         if (content == TroughContent.WATER) {
             Fluid fluid = Fluids.WATER;
             IClientFluidTypeExtensions extension = IClientFluidTypeExtensions.of(fluid);
-            sprite = FluidSpriteCache.getSprite(extension.getStillTexture());
+            sprite = net.minecraft.client.Minecraft.getInstance().getTextureAtlas(net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS).apply(extension.getStillTexture());
             if (trough.getLevel() != null) {
                 color = extension.getTintColor(fluid.defaultFluidState(), trough.getLevel(), trough.getBlockPos());
             }
@@ -75,7 +75,7 @@ public final class TroughRenderer implements BlockEntityRenderer<TroughBlockEnti
         } else {
             Fluid fluid = ModFluids.SLOP.source();
             IClientFluidTypeExtensions extension = IClientFluidTypeExtensions.of(fluid);
-            sprite = FluidSpriteCache.getSprite(extension.getStillTexture());
+            sprite = net.minecraft.client.Minecraft.getInstance().getTextureAtlas(net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS).apply(extension.getStillTexture());
             color = extension.getTintColor();
         }
         renderSurface(trough, poseStack, buffers.getBuffer(RenderType.translucent()), sprite,
@@ -166,15 +166,14 @@ public final class TroughRenderer implements BlockEntityRenderer<TroughBlockEnti
 
     private static void vertex(PoseStack poseStack, VertexConsumer consumer, float x, float y, float z,
                                int color, float u, float v, int light, int overlay) {
-        consumer.addVertex(poseStack.last(), x, y, z)
-                .setColor(color)
-                .setUv(u, v)
-                .setOverlay(overlay)
-                .setLight(light)
-                .setNormal(poseStack.last(), 0.0F, 1.0F, 0.0F);
+        consumer.vertex(poseStack.last().pose(), x, y, z)
+                .color(color)
+                .uv(u, v)
+                .overlayCoords(overlay)
+                .uv2(light)
+                .normal(poseStack.last().normal(), 0.0F, 1.0F, 0.0F).endVertex();
     }
 
-    @Override
     public AABB getRenderBoundingBox(TroughBlockEntity trough) {
         BlockPos pos = trough.getBlockPos();
         Direction direction = TroughBlock.extensionDirection(trough.getBlockState());

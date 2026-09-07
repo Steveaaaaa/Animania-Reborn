@@ -80,10 +80,10 @@ public final class AnimaniaGoat extends Goat {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(ANGORA_SHEARED, false);
-        builder.define(SPOOKED_TIMER, 0.0F);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(ANGORA_SHEARED, false);
+        entityData.define(SPOOKED_TIMER, 0.0F);
     }
 
     public FarmAnimalRole role() {
@@ -118,7 +118,7 @@ public final class AnimaniaGoat extends Goat {
     }
 
     private boolean wellCaredFor() {
-        return getData(ModAttachments.HUNGER) > 20 && getData(ModAttachments.THIRST) > 20;
+        return ModAttachments.getData(this, ModAttachments.HUNGER) > 20 && ModAttachments.getData(this, ModAttachments.THIRST) > 20;
     }
 
     @Override
@@ -216,8 +216,8 @@ public final class AnimaniaGoat extends Goat {
     @Override
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
-        SpawnGroupData result = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData, net.minecraft.nbt.CompoundTag spawnTag) {
+        SpawnGroupData result = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData, spawnTag);
         if (role() == FarmAnimalRole.FEMALE) {
             var family = com.animania.common.entity.LegacyNaturalFamily.spawn(level, this, spawnType,
                     AnimaniaGoat.class, 8,
@@ -251,7 +251,7 @@ public final class AnimaniaGoat extends Goat {
         if (stack.is(Items.SHEARS) && breed() == GoatBreed.ANGORA && role() != FarmAnimalRole.YOUNG && woolRegrowth == 0) {
             if (!level().isClientSide()) {
                 spawnAtLocation(new ItemStack(Items.WHITE_WOOL, 2 + random.nextInt(2)));
-                stack.hurtAndBreak(1, player, getSlotForHand(hand));
+                stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
                 woolRegrowth = com.animania.common.config.LegacyConfig.WOOL_REGROWTH_TIMER.get();
                 entityData.set(ANGORA_SHEARED, true);
             }
@@ -287,11 +287,11 @@ public final class AnimaniaGoat extends Goat {
     }
 
     @Override
-    protected ResourceKey<LootTable> getDefaultLootTable() {
+    protected ResourceLocation getDefaultLootTable() {
         if (role() == FarmAnimalRole.YOUNG) return BuiltInLootTables.EMPTY;
         return breed().isPrime()
-                ? ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("animania", "entities/goat_prime"))
-                : ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("animania", "entities/goat_regular"));
+                ? new ResourceLocation("animania", "entities/goat_prime")
+                : new ResourceLocation("animania", "entities/goat_regular");
     }
 
     @Override
@@ -315,5 +315,10 @@ public final class AnimaniaGoat extends Goat {
         entityData.set(SPOOKED_TIMER, Math.max(0.0F, tag.getFloat("SpookedTimer")));
         entityData.set(ANGORA_SHEARED, woolRegrowth > 0);
         if (tag.contains("MateBreed")) mateBreed = GoatBreed.fromPath(tag.getString("MateBreed"));
+    }
+    @Override public void tick() {
+        com.animania.common.entity.AnimalTickBridge.before(this);
+        super.tick();
+        com.animania.common.entity.AnimalTickBridge.after(this);
     }
 }

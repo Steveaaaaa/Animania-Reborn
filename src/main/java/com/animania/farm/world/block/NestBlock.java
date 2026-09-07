@@ -9,7 +9,6 @@ import com.animania.farm.chicken.ChickenRole;
 import com.animania.extra.peafowl.AnimaniaPeafowl;
 import com.animania.extra.peafowl.PeafowlBreed;
 import com.animania.extra.peafowl.PeafowlRole;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -37,7 +36,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.List;
 
 public final class NestBlock extends BaseEntityBlock {
-    public static final MapCodec<NestBlock> CODEC = simpleCodec(NestBlock::new);
     public static final IntegerProperty EGGS = IntegerProperty.create("eggs", 0, 3);
     public static final EnumProperty<NestBreed> BREED = EnumProperty.create("breed", NestBreed.class);
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 5, 16);
@@ -48,12 +46,7 @@ public final class NestBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
-
-    @Override
-    protected RenderShape getRenderShape(BlockState state) {
+    public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
@@ -68,7 +61,7 @@ public final class NestBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
@@ -100,7 +93,6 @@ public final class NestBlock extends BaseEntityBlock {
         return true;
     }
 
-    @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
                                                 Player player, BlockHitResult hitResult) {
         int eggs = state.getValue(EGGS);
@@ -127,12 +119,12 @@ public final class NestBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected boolean isRandomlyTicking(BlockState state) {
+    public boolean isRandomlyTicking(BlockState state) {
         return state.getValue(EGGS) > 0;
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (!state.is(newState.getBlock()) && !level.isClientSide()) {
             NestBreed nestBreed = state.getValue(BREED);
             ChickenBreed breed = nestBreed.chickenBreed();
@@ -149,7 +141,7 @@ public final class NestBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         NestBreed nestBreed = state.getValue(BREED);
         ChickenBreed breed = nestBreed.chickenBreed();
         PeafowlBreed peafowlBreed = nestBreed.peafowlBreed();
@@ -160,7 +152,7 @@ public final class NestBlock extends BaseEntityBlock {
             List<AnimaniaPeafowl> males = level.getEntitiesOfClass(AnimaniaPeafowl.class,
                     SHAPE.bounds().move(pos).inflate(4.0), bird -> bird.role() == PeafowlRole.PEACOCK);
             if (males.isEmpty()) return;
-            PeafowlBreed childBreed = random.nextBoolean() ? peafowlBreed : males.getFirst().breed();
+            PeafowlBreed childBreed = random.nextBoolean() ? peafowlBreed : males.get(0).breed();
             AnimaniaPeafowl chick = ModEntities.peafowl(PeafowlRole.PEACHICK, childBreed).create(level);
             if (chick != null) {
                 chick.moveTo(pos.getX() + 0.5, pos.getY() + 0.3, pos.getZ() + 0.5,
@@ -178,7 +170,7 @@ public final class NestBlock extends BaseEntityBlock {
             return;
         }
 
-        ChickenBreed childBreed = random.nextBoolean() ? breed : roosters.getFirst().breed();
+        ChickenBreed childBreed = random.nextBoolean() ? breed : roosters.get(0).breed();
         AnimaniaChicken chick = ModEntities.chicken(ChickenRole.CHICK, childBreed).create(level);
         if (chick != null) {
             chick.moveTo(pos.getX() + 0.5, pos.getY() + 0.3, pos.getZ() + 0.5, random.nextFloat() * 360.0F, 0.0F);
@@ -219,5 +211,12 @@ public final class NestBlock extends BaseEntityBlock {
                 || state.getValue(BREED).chickenBreed() == null) return false;
         consumeEgg(level, pos, state);
         return true;
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return useWithoutItem(state, level, pos, player, hit);
     }
 }

@@ -41,9 +41,9 @@ public final class AnimaniaChicken extends Chicken {
                     net.minecraft.network.syncher.EntityDataSerializers.INT);
     private int crowTimer;
     public int getCrowDuration() { return entityData.get(CROW_DURATION); }
-    @Override protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(CROW_DURATION, 0);
+    @Override protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(CROW_DURATION, 0);
     }
     private boolean lookingForNest;
     private int nestLayTimer;
@@ -93,7 +93,7 @@ public final class AnimaniaChicken extends Chicken {
     }
 
     private boolean wellCaredFor() {
-        return getData(ModAttachments.HUNGER) > 20 && getData(ModAttachments.THIRST) > 20;
+        return ModAttachments.getData(this, ModAttachments.HUNGER) > 20 && ModAttachments.getData(this, ModAttachments.THIRST) > 20;
     }
 
     public boolean isLookingForNest() {
@@ -176,8 +176,8 @@ public final class AnimaniaChicken extends Chicken {
     @Override
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
-        SpawnGroupData result = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData, net.minecraft.nbt.CompoundTag spawnTag) {
+        SpawnGroupData result = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData, spawnTag);
         if (role() == ChickenRole.HEN) {
             com.animania.common.entity.LegacyNaturalFamily.spawn(level, this, spawnType,
                     AnimaniaChicken.class, 4,
@@ -220,10 +220,10 @@ public final class AnimaniaChicken extends Chicken {
     }
 
     @Override
-    protected ResourceKey<LootTable> getDefaultLootTable() {
+    protected ResourceLocation getDefaultLootTable() {
         if (role() == ChickenRole.CHICK) return BuiltInLootTables.EMPTY;
-        return ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("animania",
-                breed().isPrime() ? "entities/chicken_prime" : "entities/chicken_regular"));
+        return new ResourceLocation("animania",
+                breed().isPrime() ? "entities/chicken_prime" : "entities/chicken_regular");
     }
 
     @Override
@@ -244,5 +244,10 @@ public final class AnimaniaChicken extends Chicken {
         }
         lookingForNest = tag.getBoolean("LookingForNest");
         if (tag.contains("NestLayTimer")) nestLayTimer = tag.getInt("NestLayTimer");
+    }
+    @Override public void tick() {
+        com.animania.common.entity.AnimalTickBridge.before(this);
+        super.tick();
+        com.animania.common.entity.AnimalTickBridge.after(this);
     }
 }

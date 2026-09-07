@@ -21,7 +21,7 @@ public final class LegacyRaidNestGoal extends Goal {
     }
     @Override public boolean canUse() {
         if (++delay <= (rodent.kind().isHedgehog() ? 60 : LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get())) return false;
-        if (LegacyAnimalNeeds.isFed(rodent) || rodent.getData(ModAttachments.SLEEPING)) { delay = 0; return false; }
+        if (LegacyAnimalNeeds.isFed(rodent) || ModAttachments.getData(rodent, ModAttachments.SLEEPING)) { delay = 0; return false; }
         if (rodent.kind().isFerret() && rodent.getRandom().nextInt(100) == 0) {
             var pos = DefaultRandomPos.getPos(rodent, 20, 4);
             if (pos != null) { delay = 0; stop(); rodent.getNavigation().moveTo(pos.x, pos.y, pos.z, 1.0D); }
@@ -32,14 +32,14 @@ public final class LegacyRaidNestGoal extends Goal {
             if (NestBlock.takeChickenEggForPredator(rodent.level(), feet)) {
                 LegacyAnimalNeeds.setFed(rodent, true);
                 LegacyAnimalNeeds.setWatered(rodent, true);
-                rodent.setData(ModAttachments.EATING_TICKS, 80);
+                ModAttachments.setData(rodent, ModAttachments.EATING_TICKS, 80);
                 delay = 0; return false;
             }
             if (rodent.level().getBlockState(feet).getValue(NestBlock.EGGS) == 0) { delay = 0; return false; }
         }
         if (isCrop(feet)) {
             LegacyAnimalNeeds.setFed(rodent, true);
-            rodent.setData(ModAttachments.EATING_TICKS, 80);
+            ModAttachments.setData(rodent, ModAttachments.EATING_TICKS, 80);
             if (LegacyConfig.PLANTS_REMOVED_AFTER_EATING.get()) rodent.level().destroyBlock(feet, false);
             delay = 0; return false;
         }

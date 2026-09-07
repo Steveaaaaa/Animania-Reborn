@@ -32,9 +32,9 @@ import com.animania.catsdogs.dog.DogRole;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
 
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
@@ -44,40 +44,40 @@ public final class ModEntities {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(Registries.ENTITY_TYPE, Animania.MOD_ID);
 
-    private static final Map<ChickenRole, Map<ChickenBreed, DeferredHolder<EntityType<?>, EntityType<AnimaniaChicken>>>> CHICKENS =
+    private static final Map<ChickenRole, Map<ChickenBreed, RegistryObject<EntityType<AnimaniaChicken>>>> CHICKENS =
             new EnumMap<>(ChickenRole.class);
-    public static final Map<String, DeferredHolder<EntityType<?>, EntityType<AnimaniaChicken>>> ALL_CHICKENS =
+    public static final Map<String, RegistryObject<EntityType<AnimaniaChicken>>> ALL_CHICKENS =
             new LinkedHashMap<>();
-    private static final Map<FarmAnimalRole, Map<CowBreed, DeferredHolder<EntityType<?>, EntityType<AnimaniaCow>>>> COWS =
+    private static final Map<FarmAnimalRole, Map<CowBreed, RegistryObject<EntityType<AnimaniaCow>>>> COWS =
             new EnumMap<>(FarmAnimalRole.class);
-    private static final Map<FarmAnimalRole, Map<GoatBreed, DeferredHolder<EntityType<?>, EntityType<AnimaniaGoat>>>> GOATS =
+    private static final Map<FarmAnimalRole, Map<GoatBreed, RegistryObject<EntityType<AnimaniaGoat>>>> GOATS =
             new EnumMap<>(FarmAnimalRole.class);
-    private static final Map<FarmAnimalRole, Map<PigBreed, DeferredHolder<EntityType<?>, EntityType<AnimaniaPig>>>> PIGS =
+    private static final Map<FarmAnimalRole, Map<PigBreed, RegistryObject<EntityType<AnimaniaPig>>>> PIGS =
             new EnumMap<>(FarmAnimalRole.class);
-    private static final Map<FarmAnimalRole, Map<SheepBreed, DeferredHolder<EntityType<?>, EntityType<AnimaniaSheep>>>> SHEEP =
+    private static final Map<FarmAnimalRole, Map<SheepBreed, RegistryObject<EntityType<AnimaniaSheep>>>> SHEEP =
             new EnumMap<>(FarmAnimalRole.class);
-    public static final Map<String, DeferredHolder<EntityType<?>, EntityType<AnimaniaCow>>> ALL_COWS = new LinkedHashMap<>();
-    public static final Map<String, DeferredHolder<EntityType<?>, EntityType<AnimaniaGoat>>> ALL_GOATS = new LinkedHashMap<>();
-    public static final Map<String, DeferredHolder<EntityType<?>, EntityType<AnimaniaPig>>> ALL_PIGS = new LinkedHashMap<>();
-    public static final Map<String, DeferredHolder<EntityType<?>, EntityType<AnimaniaSheep>>> ALL_SHEEP = new LinkedHashMap<>();
-    public static final Map<String, DeferredHolder<EntityType<?>, EntityType<AnimaniaHorse>>> ALL_HORSES = new LinkedHashMap<>();
-    public static final DeferredHolder<EntityType<?>, EntityType<FarmVehicleEntity>> CART = vehicle("cart", FarmVehicleEntity.Kind.CART, 2.0F, 1.2F);
-    public static final DeferredHolder<EntityType<?>, EntityType<FarmVehicleEntity>> WAGON = vehicle("wagon", FarmVehicleEntity.Kind.WAGON, 2.5F, 1.2F);
-    public static final DeferredHolder<EntityType<?>, EntityType<FarmVehicleEntity>> TILLER = vehicle("tiller", FarmVehicleEntity.Kind.TILLER, 2.0F, 1.2F);
-    public static final Map<String, DeferredHolder<EntityType<?>, EntityType<AnimaniaAmphibian>>> ALL_AMPHIBIANS = new LinkedHashMap<>();
-    public static final Map<String, DeferredHolder<EntityType<?>, EntityType<AnimaniaRodent>>> ALL_RODENTS = new LinkedHashMap<>();
-    private static final Map<RabbitRole, Map<RabbitBreed, DeferredHolder<EntityType<?>, EntityType<AnimaniaRabbit>>>> RABBITS =
+    public static final Map<String, RegistryObject<EntityType<AnimaniaCow>>> ALL_COWS = new LinkedHashMap<>();
+    public static final Map<String, RegistryObject<EntityType<AnimaniaGoat>>> ALL_GOATS = new LinkedHashMap<>();
+    public static final Map<String, RegistryObject<EntityType<AnimaniaPig>>> ALL_PIGS = new LinkedHashMap<>();
+    public static final Map<String, RegistryObject<EntityType<AnimaniaSheep>>> ALL_SHEEP = new LinkedHashMap<>();
+    public static final Map<String, RegistryObject<EntityType<AnimaniaHorse>>> ALL_HORSES = new LinkedHashMap<>();
+    public static final RegistryObject<EntityType<FarmVehicleEntity>> CART = vehicle("cart", FarmVehicleEntity.Kind.CART, 2.0F, 1.2F);
+    public static final RegistryObject<EntityType<FarmVehicleEntity>> WAGON = vehicle("wagon", FarmVehicleEntity.Kind.WAGON, 2.5F, 1.2F);
+    public static final RegistryObject<EntityType<FarmVehicleEntity>> TILLER = vehicle("tiller", FarmVehicleEntity.Kind.TILLER, 2.0F, 1.2F);
+    public static final Map<String, RegistryObject<EntityType<AnimaniaAmphibian>>> ALL_AMPHIBIANS = new LinkedHashMap<>();
+    public static final Map<String, RegistryObject<EntityType<AnimaniaRodent>>> ALL_RODENTS = new LinkedHashMap<>();
+    private static final Map<RabbitRole, Map<RabbitBreed, RegistryObject<EntityType<AnimaniaRabbit>>>> RABBITS =
             new EnumMap<>(RabbitRole.class);
-    public static final Map<String, DeferredHolder<EntityType<?>, EntityType<AnimaniaRabbit>>> ALL_RABBITS = new LinkedHashMap<>();
-    private static final Map<PeafowlRole, Map<PeafowlBreed, DeferredHolder<EntityType<?>, EntityType<AnimaniaPeafowl>>>> PEAFOWL =
+    public static final Map<String, RegistryObject<EntityType<AnimaniaRabbit>>> ALL_RABBITS = new LinkedHashMap<>();
+    private static final Map<PeafowlRole, Map<PeafowlBreed, RegistryObject<EntityType<AnimaniaPeafowl>>>> PEAFOWL =
             new EnumMap<>(PeafowlRole.class);
-    public static final Map<String, DeferredHolder<EntityType<?>, EntityType<AnimaniaPeafowl>>> ALL_PEAFOWL = new LinkedHashMap<>();
-    private static final Map<CatRole, Map<CatBreed, DeferredHolder<EntityType<?>, EntityType<AnimaniaCat>>>> CATS =
+    public static final Map<String, RegistryObject<EntityType<AnimaniaPeafowl>>> ALL_PEAFOWL = new LinkedHashMap<>();
+    private static final Map<CatRole, Map<CatBreed, RegistryObject<EntityType<AnimaniaCat>>>> CATS =
             new EnumMap<>(CatRole.class);
-    public static final Map<String, DeferredHolder<EntityType<?>, EntityType<AnimaniaCat>>> ALL_CATS = new LinkedHashMap<>();
-    private static final Map<DogRole, Map<DogBreed, DeferredHolder<EntityType<?>, EntityType<AnimaniaDog>>>> DOGS =
+    public static final Map<String, RegistryObject<EntityType<AnimaniaCat>>> ALL_CATS = new LinkedHashMap<>();
+    private static final Map<DogRole, Map<DogBreed, RegistryObject<EntityType<AnimaniaDog>>>> DOGS =
             new EnumMap<>(DogRole.class);
-    public static final Map<String, DeferredHolder<EntityType<?>, EntityType<AnimaniaDog>>> ALL_DOGS = new LinkedHashMap<>();
+    public static final Map<String, RegistryObject<EntityType<AnimaniaDog>>> ALL_DOGS = new LinkedHashMap<>();
 
     static {
         for (ChickenRole role : ChickenRole.values()) {
@@ -130,7 +130,7 @@ public final class ModEntities {
         String name = role.name().toLowerCase() + "_" + breed.getSerializedName();
         float width = role == ChickenRole.CHICK ? 0.30F : role == ChickenRole.HEN ? 0.50F : 0.60F;
         float height = role == ChickenRole.CHICK ? 0.35F : role == ChickenRole.HEN ? 0.70F : 0.80F;
-        DeferredHolder<EntityType<?>, EntityType<AnimaniaChicken>> holder = ENTITY_TYPES.register(name,
+        RegistryObject<EntityType<AnimaniaChicken>> holder = ENTITY_TYPES.register(name,
                 () -> EntityType.Builder.of(AnimaniaChicken::new, MobCategory.CREATURE)
                         .sized(width, height)
                         .clientTrackingRange(10)
@@ -148,7 +148,7 @@ public final class ModEntities {
         String name = prefix + "_" + breed.getSerializedName();
         float width = role == FarmAnimalRole.YOUNG ? 0.70F : 1.40F;
         float height = role == FarmAnimalRole.YOUNG ? 0.90F : 1.80F;
-        DeferredHolder<EntityType<?>, EntityType<AnimaniaCow>> holder = ENTITY_TYPES.register(name,
+        RegistryObject<EntityType<AnimaniaCow>> holder = ENTITY_TYPES.register(name,
                 () -> EntityType.Builder.of(AnimaniaCow::new, MobCategory.CREATURE)
                         .sized(width, height).clientTrackingRange(10).build(name));
         COWS.get(role).put(breed, holder);
@@ -160,7 +160,7 @@ public final class ModEntities {
         String name = prefix + "_" + breed.getSerializedName();
         float size = role == FarmAnimalRole.YOUNG ? 0.55F : 0.90F;
         float height = role == FarmAnimalRole.YOUNG ? 0.65F : 1.30F;
-        DeferredHolder<EntityType<?>, EntityType<AnimaniaGoat>> holder = ENTITY_TYPES.register(name,
+        RegistryObject<EntityType<AnimaniaGoat>> holder = ENTITY_TYPES.register(name,
                 () -> EntityType.Builder.of(AnimaniaGoat::new, MobCategory.CREATURE)
                         .sized(size, height).clientTrackingRange(10).build(name));
         GOATS.get(role).put(breed, holder);
@@ -180,7 +180,7 @@ public final class ModEntities {
         String name = prefix + "_" + breed.getSerializedName();
         float width = role == FarmAnimalRole.YOUNG ? 0.45F : 0.90F;
         float height = role == FarmAnimalRole.YOUNG ? 0.45F : 0.90F;
-        DeferredHolder<EntityType<?>, EntityType<AnimaniaPig>> holder = ENTITY_TYPES.register(name,
+        RegistryObject<EntityType<AnimaniaPig>> holder = ENTITY_TYPES.register(name,
                 () -> EntityType.Builder.of(AnimaniaPig::new, MobCategory.CREATURE)
                         .sized(width, height).clientTrackingRange(10).build(name));
         PIGS.get(role).put(breed, holder);
@@ -196,7 +196,7 @@ public final class ModEntities {
         String name = prefix + "_" + breed.getSerializedName();
         float width = role == FarmAnimalRole.YOUNG ? 0.45F : 0.90F;
         float height = role == FarmAnimalRole.YOUNG ? 0.65F : 1.30F;
-        DeferredHolder<EntityType<?>, EntityType<AnimaniaSheep>> holder = ENTITY_TYPES.register(name,
+        RegistryObject<EntityType<AnimaniaSheep>> holder = ENTITY_TYPES.register(name,
                 () -> EntityType.Builder.of(AnimaniaSheep::new, MobCategory.CREATURE)
                         .sized(width, height).clientTrackingRange(10).build(name));
         SHEEP.get(role).put(breed, holder);
@@ -212,7 +212,7 @@ public final class ModEntities {
         String name = prefix + "_draft";
         float width = role == FarmAnimalRole.YOUNG ? 0.80F : 1.40F;
         float height = role == FarmAnimalRole.YOUNG ? 1.20F : 1.90F;
-        DeferredHolder<EntityType<?>, EntityType<AnimaniaHorse>> holder = ENTITY_TYPES.register(name,
+        RegistryObject<EntityType<AnimaniaHorse>> holder = ENTITY_TYPES.register(name,
                 () -> EntityType.Builder.of(AnimaniaHorse::new, MobCategory.CREATURE)
                         .sized(width, height).clientTrackingRange(10).build(name));
         ALL_HORSES.put(name, holder);
@@ -223,7 +223,7 @@ public final class ModEntities {
         return ALL_HORSES.get(prefix + "_draft").get();
     }
 
-    private static DeferredHolder<EntityType<?>, EntityType<FarmVehicleEntity>> vehicle(
+    private static RegistryObject<EntityType<FarmVehicleEntity>> vehicle(
             String name, FarmVehicleEntity.Kind kind, float width, float height) {
         return ENTITY_TYPES.register(name, () -> EntityType.Builder
                 .<FarmVehicleEntity>of((type, level) -> new FarmVehicleEntity(type, level, kind), MobCategory.MISC)
@@ -231,7 +231,7 @@ public final class ModEntities {
     }
 
     private static void registerAmphibian(String name, AnimaniaAmphibian.Kind kind) {
-        DeferredHolder<EntityType<?>, EntityType<AnimaniaAmphibian>> holder = ENTITY_TYPES.register(name,
+        RegistryObject<EntityType<AnimaniaAmphibian>> holder = ENTITY_TYPES.register(name,
                 () -> EntityType.Builder.<AnimaniaAmphibian>of(
                                 (type, level) -> new AnimaniaAmphibian(type, level, kind), MobCategory.CREATURE)
                         .sized(0.5F, 0.5F).clientTrackingRange(8).build(name));
@@ -239,7 +239,7 @@ public final class ModEntities {
     }
 
     private static void registerRodent(String name, AnimaniaRodent.Kind kind, float width, float height) {
-        DeferredHolder<EntityType<?>, EntityType<AnimaniaRodent>> holder = ENTITY_TYPES.register(name,
+        RegistryObject<EntityType<AnimaniaRodent>> holder = ENTITY_TYPES.register(name,
                 () -> EntityType.Builder.<AnimaniaRodent>of(
                                 (type, level) -> new AnimaniaRodent(type, level, kind), MobCategory.CREATURE)
                         .sized(width, height).clientTrackingRange(8).build(name));
@@ -250,7 +250,7 @@ public final class ModEntities {
         String name = role.name().toLowerCase() + "_" + breed.getSerializedName();
         float width = role == RabbitRole.KIT ? 0.35F : 0.7F;
         float height = role == RabbitRole.KIT ? 0.35F : 0.6F;
-        DeferredHolder<EntityType<?>, EntityType<AnimaniaRabbit>> holder = ENTITY_TYPES.register(name,
+        RegistryObject<EntityType<AnimaniaRabbit>> holder = ENTITY_TYPES.register(name,
                 () -> EntityType.Builder.of(AnimaniaRabbit::new, MobCategory.CREATURE)
                         .sized(width, height).clientTrackingRange(8).build(name));
         RABBITS.get(role).put(breed, holder);
@@ -265,7 +265,7 @@ public final class ModEntities {
         String name = role.name().toLowerCase() + "_" + breed.getSerializedName();
         float width = role == PeafowlRole.PEACHICK ? 0.45F : role == PeafowlRole.PEAHEN ? 0.6F : 0.8F;
         float height = role == PeafowlRole.PEACHICK ? 0.65F : role == PeafowlRole.PEAHEN ? 1.2F : 1.6F;
-        DeferredHolder<EntityType<?>, EntityType<AnimaniaPeafowl>> holder = ENTITY_TYPES.register(name,
+        RegistryObject<EntityType<AnimaniaPeafowl>> holder = ENTITY_TYPES.register(name,
                 () -> EntityType.Builder.of(AnimaniaPeafowl::new, MobCategory.CREATURE)
                         .sized(width, height).clientTrackingRange(10).build(name));
         PEAFOWL.get(role).put(breed, holder);
@@ -280,7 +280,7 @@ public final class ModEntities {
         String name = role.prefix() + "_" + breed.getSerializedName();
         float width = role == CatRole.KITTEN ? 0.40F : 0.80F;
         float height = role == CatRole.KITTEN ? 0.40F : 0.80F;
-        DeferredHolder<EntityType<?>, EntityType<AnimaniaCat>> holder = ENTITY_TYPES.register(name,
+        RegistryObject<EntityType<AnimaniaCat>> holder = ENTITY_TYPES.register(name,
                 () -> EntityType.Builder.of(AnimaniaCat::new, MobCategory.CREATURE)
                         .sized(width, height).clientTrackingRange(10).build(name));
         CATS.get(role).put(breed, holder);
@@ -304,7 +304,7 @@ public final class ModEntities {
             default -> 0.85F;
         };
         float scale = role == DogRole.PUPPY ? 0.55F : role == DogRole.FEMALE ? 0.90F : 1.0F;
-        DeferredHolder<EntityType<?>, EntityType<AnimaniaDog>> holder = ENTITY_TYPES.register(name,
+        RegistryObject<EntityType<AnimaniaDog>> holder = ENTITY_TYPES.register(name,
                 () -> EntityType.Builder.of(AnimaniaDog::new, MobCategory.CREATURE)
                         .sized(breedWidth * scale, breedHeight * scale).clientTrackingRange(10).build(name));
         DOGS.get(role).put(breed, holder);

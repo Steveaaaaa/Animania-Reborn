@@ -1,0 +1,45 @@
+{
+  "type": "animania:legacy_add_spawns",
+  "biomes": "#minecraft:is_overworld",
+  "probability_group": "sheep",
+  "default_probability": 8,
+  "family_group": "sheep",
+  "spawners": [
+    {
+      "type": "animania:ewe_dorper",
+      "weight": 8,
+      "minCount": 2,
+      "maxCount": 3
+    },
+    {
+      "type": "animania:ewe_dorset",
+      "weight": 8,
+      "minCount": 2,
+      "maxCount": 3
+    },
+    {
+      "type": "animania:ewe_friesian",
+      "weight": 8,
+      "minCount": 2,
+      "maxCount": 3
+    },
+    {
+      "type": "animania:ewe_jacob",
+      "weight": 8,
+      "minCount": 2,
+      "maxCount": 3
+    },
+    {
+      "type": "animania:ewe_merino",
+      "weight": 8,
+      "minCount": 2,
+      "maxCount": 3
+    },
+    {
+      "type": "animania:ewe_suffolk",
+      "weight": 8,
+      "minCount": 2,
+      "maxCount": 3
+    }
+  ]
+}

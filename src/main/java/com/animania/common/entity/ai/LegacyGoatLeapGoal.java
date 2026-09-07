@@ -13,7 +13,7 @@ public final class LegacyGoatLeapGoal extends Goal {
     public LegacyGoatLeapGoal(AnimaniaGoat goat) { this.goat = goat; setFlags(EnumSet.of(Flag.MOVE, Flag.JUMP)); }
     @Override public boolean canUse() {
         target = goat.getTarget();
-        return !goat.getData(ModAttachments.SLEEPING) && goat.getData(ModAttachments.FIGHTING)
+        return !ModAttachments.getData(goat, ModAttachments.SLEEPING) && ModAttachments.getData(goat, ModAttachments.FIGHTING)
                 && target != null && goat.distanceToSqr(target) <= 4.0D
                 && goat.onGround() && goat.getRandom().nextInt(20) == 0;
     }

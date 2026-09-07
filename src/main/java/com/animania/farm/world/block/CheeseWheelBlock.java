@@ -1,6 +1,5 @@
 package com.animania.farm.world.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -15,7 +14,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class CheeseWheelBlock extends Block {
-    public static final MapCodec<CheeseWheelBlock> CODEC = simpleCodec(CheeseWheelBlock::new);
     public static final IntegerProperty BITES = IntegerProperty.create("bites", 0, 3);
     private static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 8, 15);
 
@@ -25,21 +23,15 @@ public final class CheeseWheelBlock extends Block {
     }
 
     @Override
-    protected MapCodec<? extends Block> codec() {
-        return CODEC;
-    }
-
-    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(BITES);
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
-    @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
                                                 Player player, BlockHitResult hitResult) {
         if (!player.canEat(false)) return InteractionResult.PASS;
@@ -50,5 +42,12 @@ public final class CheeseWheelBlock extends Block {
             else level.removeBlock(pos, false);
         }
         return InteractionResult.sidedSuccess(level.isClientSide());
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return useWithoutItem(state, level, pos, player, hit);
     }
 }

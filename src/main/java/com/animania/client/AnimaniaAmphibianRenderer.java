@@ -40,12 +40,12 @@ public final class AnimaniaAmphibianRenderer
     @Override
     public ResourceLocation getTextureLocation(AnimaniaAmphibian amphibian) {
         if (amphibian.hasCustomName() && amphibian.getName().getString().equals("Pepe")) {
-            return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+            return new ResourceLocation(Animania.MOD_ID,
                     "textures/entity/amphibians/frogs/pepe_frog.png");
         }
         if (amphibian.hasCustomName() && amphibian.getName().getString().equalsIgnoreCase("me_irl")
                 && java.time.LocalDate.now().getDayOfWeek() == java.time.DayOfWeek.WEDNESDAY) {
-            return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+            return new ResourceLocation(Animania.MOD_ID,
                     "textures/entity/amphibians/frogs/frog_white.png");
         }
         String path = switch (amphibian.kind()) {
@@ -57,6 +57,6 @@ public final class AnimaniaAmphibianRenderer
                 default -> "blue_dart_frog";
             };
         };
-        return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID, "textures/entity/" + path + ".png");
+        return new ResourceLocation(Animania.MOD_ID, "textures/entity/" + path + ".png");
     }
 }

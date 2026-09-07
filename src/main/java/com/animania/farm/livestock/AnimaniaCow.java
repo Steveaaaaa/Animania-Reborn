@@ -61,7 +61,7 @@ public final class AnimaniaCow extends Cow {
     }
 
     private boolean wellCaredFor() {
-        return getData(ModAttachments.HUNGER) > 20 && getData(ModAttachments.THIRST) > 20;
+        return ModAttachments.getData(this, ModAttachments.HUNGER) > 20 && ModAttachments.getData(this, ModAttachments.THIRST) > 20;
     }
 
     @Override
@@ -160,8 +160,8 @@ public final class AnimaniaCow extends Cow {
     @Override
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
-        SpawnGroupData result = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData, net.minecraft.nbt.CompoundTag spawnTag) {
+        SpawnGroupData result = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData, spawnTag);
         if (role() == FarmAnimalRole.FEMALE && !isBaby()
                 && com.animania.common.config.LegacyConfig.COWS_MILKABLE_AT_SPAWN.get()) milkable = true;
         if (role() == FarmAnimalRole.FEMALE) {
@@ -229,10 +229,10 @@ public final class AnimaniaCow extends Cow {
     }
 
     @Override
-    protected ResourceKey<LootTable> getDefaultLootTable() {
+    protected ResourceLocation getDefaultLootTable() {
         if (role() == FarmAnimalRole.YOUNG) return BuiltInLootTables.EMPTY;
         return breed().isPrime()
-                ? ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("animania", "entities/cow_prime"))
+                ? new ResourceLocation("animania", "entities/cow_prime")
                 : EntityType.COW.getDefaultLootTable();
     }
 
@@ -252,5 +252,10 @@ public final class AnimaniaCow extends Cow {
         milkable = tag.getBoolean("HasKids");
         gestation = tag.getInt("Gestation");
         if (tag.contains("MateBreed")) mateBreed = CowBreed.fromPath(tag.getString("MateBreed"));
+    }
+    @Override public void tick() {
+        com.animania.common.entity.AnimalTickBridge.before(this);
+        super.tick();
+        com.animania.common.entity.AnimalTickBridge.after(this);
     }
 }

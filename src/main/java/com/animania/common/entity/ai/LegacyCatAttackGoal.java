@@ -8,6 +8,6 @@ import net.minecraft.world.entity.ai.goal.OcelotAttackGoal;
 public final class LegacyCatAttackGoal extends OcelotAttackGoal {
     private final Mob cat;
     public LegacyCatAttackGoal(Mob cat) { super(cat); this.cat = cat; }
-    @Override public boolean canUse() { return !cat.getData(ModAttachments.SLEEPING) && super.canUse(); }
-    @Override public boolean canContinueToUse() { return !cat.getData(ModAttachments.SLEEPING) && super.canContinueToUse(); }
+    @Override public boolean canUse() { return !ModAttachments.getData(cat, ModAttachments.SLEEPING) && super.canUse(); }
+    @Override public boolean canContinueToUse() { return !ModAttachments.getData(cat, ModAttachments.SLEEPING) && super.canContinueToUse(); }
 }

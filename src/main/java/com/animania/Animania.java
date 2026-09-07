@@ -13,10 +13,10 @@ import com.animania.common.registry.ModVillagers;
 import com.animania.common.registry.ModSounds;
 import com.animania.common.registry.ModWorldgen;
 import com.mojang.logging.LogUtils;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.common.Mod;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
 
 @Mod(Animania.MOD_ID)
@@ -24,7 +24,9 @@ public final class Animania {
     public static final String MOD_ID = "animania";
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public Animania(IEventBus modBus, ModContainer container) {
+    public Animania() {
+        IEventBus modBus = net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext.get().getModEventBus();
+        var container = net.minecraftforge.fml.ModLoadingContext.get();
         ModFluids.register(modBus);
         ModBlocks.register(modBus);
         ModBlockEntities.register(modBus);
@@ -38,6 +40,6 @@ public final class Animania {
         container.registerConfig(ModConfig.Type.SERVER, AnimaniaConfig.SPEC, "animania-modern-server.toml");
         LegacyConfig.register(container);
 
-        LOGGER.info("Loading Animania Reborn for NeoForge 1.21.1");
+        LOGGER.info("Loading Animania Reborn for Forge 1.20.1");
     }
 }

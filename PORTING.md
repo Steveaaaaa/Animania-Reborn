@@ -69,23 +69,41 @@ The original settings are grouped into `animania-server.toml`,
   with UV associations preserved. This addresses dark wagon canopy panels under
   shaders. Thin slabs replace zero-thickness feather planes to reduce depth flicker.
 
-## Building and checking changes
+## Forge 1.20.1 adaptation
 
-Use Java 21 and the Gradle wrapper. The build toolchain uses NeoForge 21.1.249;
-`META-INF/neoforge.mods.toml` declares `[21.1.200,)` independently of that toolchain.
-Keep this declaration when updating the build dependency.
+The Forge branch starts from NeoForge 0.1.1 at commit `68484dc`. It retains the
+animal, AI, model and animation implementations while adapting platform APIs:
+
+- Forge registry objects, lifecycle events and configuration specs.
+- Persistent entity NBT and a tracking channel in `ModAttachments`, replacing
+  NeoForge attachments. Temporary fighting state remains unsaved.
+- `AnimalTickBridge` preserves the update order before and after entity AI,
+  including resting orientation and one animation update per client tick.
+- Forge block-entity capabilities preserve inventory, fluid and energy access.
+- Item NBT replaces data components; recipes, loot tables, tags and model loaders
+  use the 1.20.1 formats.
+- The vehicle uses Forge's spawn packet and the 1.20.1 passenger-position callback.
+- Rendering uses the 1.20.1 vertex and model interfaces with the existing geometry,
+  UV coordinates, normals and animation formulas.
+
+`main` remains the NeoForge 1.21.1 branch; `codex/forge-1.20.1` is maintained
+separately. Review gameplay fixes for both branches. Shared conversion tools still
+read the same original 1.12 checkout.
+
+## Building
+
+Use Java 17 and the Gradle wrapper. Both compilation and `META-INF/mods.toml`
+target Forge 47.1.0 as the minimum version for Minecraft 1.20.1.
 
 ```powershell
 $env:JAVA_TOOL_OPTIONS='-Djdk.net.unixdomain.tmpdir=C:\jtmp'
 .\gradlew.bat build -x test --no-daemon
 ```
 
-The Windows command assumes `C:\jtmp` already exists and does not change system
-TEMP/TMP settings. EMI is compiled against the jar in `libs/` because the remote
-Maven endpoint was unreliable.
+The jar task is followed by ForgeGradle's `reobfJar`, producing the distributable
+`animania-forge-1.20.1-0.1.1.jar`. EMI uses the local Maven directory in `libs/` and
+is not bundled. Do not substitute the NeoForge EMI jar.
 
-For a version-range-only metadata edit, no Java changes or verification are
-required. Normal development builds skip tests. Game behaviour and shader
-compatibility are checked manually. The optional `tools/verify-port.ps1` script
-checks resource and registration inventories; it is not a substitute for playing
-the game and is not run after every change.
+No GameTests or unit tests are used. Game behaviour, shader support and other mod
+combinations are checked manually. The optional resource inventory script is not
+part of the regular build.

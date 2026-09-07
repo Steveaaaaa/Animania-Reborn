@@ -57,7 +57,7 @@ public final class AnimaniaGoatRenderer extends MobRenderer<AnimaniaGoat, Legacy
         }
         poseStack.scale(scale, scale, scale);
         LegacySleepAnimation.transform(goat, poseStack, partialTick);
-        if (!goat.getData(com.animania.common.registry.ModAttachments.SLEEPING)
+        if (!com.animania.common.registry.ModAttachments.getData(goat, com.animania.common.registry.ModAttachments.SLEEPING)
                 && goat.isSpooked() && goat.spookedTimer() < 0.94F && goat.spookedTimer() > 0.06F) {
             poseStack.translate(0.0D, goat.getBbHeight() - 1.5D, 0.0D);
             poseStack.mulPose(Axis.ZP.rotationDegrees(86.0F));
@@ -72,7 +72,7 @@ public final class AnimaniaGoatRenderer extends MobRenderer<AnimaniaGoat, Legacy
             case MALE -> "buck";
         };
         String suffix = goat.isAngoraSheared() && role.equals("buck") ? "angora_sheared" : goat.breed().texture();
-        return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+        return new ResourceLocation(Animania.MOD_ID,
                 "textures/entity/goats/" + role + "_" + suffix + ".png");
     }
 

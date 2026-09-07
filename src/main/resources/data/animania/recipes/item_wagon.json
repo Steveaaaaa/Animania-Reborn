@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "OOP",
+    "BPC",
+    "WAW"
+  ],
+  "key": {
+    "O": {
+      "tag": "minecraft:wool"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "B": {
+      "item": "minecraft:white_bed"
+    },
+    "C": {
+      "item": "minecraft:chest"
+    },
+    "W": {
+      "item": "animania:wheel"
+    },
+    "A": {
+      "item": "animania:item_cart"
+    }
+  },
+  "result": {
+    "count": 1,
+    "item": "animania:item_wagon"
+  }
+}

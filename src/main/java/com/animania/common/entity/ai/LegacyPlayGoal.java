@@ -34,12 +34,12 @@ public final class LegacyPlayGoal extends Goal {
     @Override
     public boolean canUse() {
         if (running) return true;
-        if (child.getData(ModAttachments.SLEEPING)) return false;
+        if (ModAttachments.getData(child, ModAttachments.SLEEPING)) return false;
         playmate = child.level().getEntitiesOfClass(Animal.class, child.getBoundingBox().inflate(5.0D), other -> {
                     LegacyPlayGoal goal = GOALS.get(other);
                     return other != child && other.getClass() == child.getClass()
                             && AnimalInformation.gender(other) == AnimalInformation.Gender.YOUNG
-                            && !other.getData(ModAttachments.SLEEPING) && goal != null && !goal.running;
+                            && !ModAttachments.getData(other, ModAttachments.SLEEPING) && goal != null && !goal.running;
                 }).stream().min(Comparator.comparingDouble(child::distanceToSqr)).orElse(null);
         return playmate != null && child.getRandom().nextDouble() < 0.2D;
     }
@@ -59,7 +59,7 @@ public final class LegacyPlayGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         return running && playmate != null && playmate.isAlive()
-                && !child.getData(ModAttachments.SLEEPING) && child.getRandom().nextDouble() >= 0.1D;
+                && !ModAttachments.getData(child, ModAttachments.SLEEPING) && child.getRandom().nextDouble() >= 0.1D;
     }
 
     @Override

@@ -26,7 +26,7 @@ public final class AnimaniaEmiPlugin implements EmiPlugin {
     }
 
     private static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID, path);
+        return new ResourceLocation(Animania.MOD_ID, path);
     }
 
     private static final class CheeseAgingRecipe extends BasicEmiRecipe {
@@ -39,9 +39,9 @@ public final class AnimaniaEmiPlugin implements EmiPlugin {
 
         @Override
         public void addWidgets(WidgetHolder widgets) {
-            widgets.addSlot(inputs.getFirst(), 2, 2);
+            widgets.addSlot(inputs.get(0), 2, 2);
             widgets.addFillingArrow(29, 3, 5_000);
-            widgets.addSlot(outputs.getFirst(), 64, 2).recipeContext(this);
+            widgets.addSlot(outputs.get(0), 64, 2).recipeContext(this);
             widgets.addText(Component.translatable("compat.animania.aging_time"), 18, 28, 0xFF808080, false);
         }
     }

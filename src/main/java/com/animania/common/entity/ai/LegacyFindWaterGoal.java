@@ -11,9 +11,9 @@ import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.common.Tags;
+import net.minecraftforge.common.Tags;
 
-/** NeoForge port of Animania 1.12's GenericAIFindWater. */
+/** Forge port of Animania 1.12's GenericAIFindWater. */
 public final class LegacyFindWaterGoal extends LegacySearchBlockGoal {
     private final Animal waterAnimal;
     private final LegacyAnimalNeeds.Profile profile;
@@ -29,7 +29,7 @@ public final class LegacyFindWaterGoal extends LegacySearchBlockGoal {
     public boolean canUse() {
         if (++waterFindTimer <= LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get()) return false;
         if (LegacyAnimalNeeds.isWatered(waterAnimal) || waterAnimal.isVehicle()
-                || waterAnimal.getData(ModAttachments.SLEEPING)
+                || ModAttachments.getData(waterAnimal, ModAttachments.SLEEPING)
                 || LegacyConfig.REQUIRE_ANIMAL_INTERACTION_FOR_AI.get()
                 && !LegacyAnimalNeeds.isInteracted(waterAnimal)) {
             waterFindTimer = 0;
@@ -62,8 +62,8 @@ public final class LegacyFindWaterGoal extends LegacySearchBlockGoal {
         if (!level.getBlockState(pos).is(Blocks.WATER)) return false;
         var biome = level.getBiome(pos);
         return !biome.is(BiomeTags.IS_OCEAN)
-                && !biome.is(Tags.Biomes.IS_OCEAN)
-                && !biome.is(Tags.Biomes.IS_BEACH);
+                && !biome.is(net.minecraft.tags.BiomeTags.IS_OCEAN)
+                && !biome.is(net.minecraft.tags.BiomeTags.IS_BEACH);
     }
 
     @Override
@@ -87,7 +87,7 @@ public final class LegacyFindWaterGoal extends LegacySearchBlockGoal {
         if (!consumed) return;
         if (providerConsumed) LegacyAnimalNeeds.water(waterAnimal);
         else LegacyAnimalNeeds.setWatered(waterAnimal, true);
-        if (profile.automaticEatAnimation()) waterAnimal.setData(ModAttachments.EATING_TICKS, 80);
+        if (profile.automaticEatAnimation()) ModAttachments.setData(waterAnimal, ModAttachments.EATING_TICKS, 80);
         waterFindTimer = 0;
     }
 }

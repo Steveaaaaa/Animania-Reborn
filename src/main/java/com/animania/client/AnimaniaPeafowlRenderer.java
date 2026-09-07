@@ -50,7 +50,7 @@ public final class AnimaniaPeafowlRenderer extends MobRenderer<AnimaniaPeafowl, 
         poseStack.scale(scale, scale, scale);
         boolean nesting = bird.role() != PeafowlRole.PEACOCK
                 && bird.level().getBlockState(bird.blockPosition()).is(ModBlocks.NEST.get());
-        if (nesting || bird.getData(ModAttachments.SLEEPING)) {
+        if (nesting || ModAttachments.getData(bird, ModAttachments.SLEEPING)) {
             if (bird.role() == PeafowlRole.PEACOCK) poseStack.translate(-0.25D, 0.45D, -0.45D);
             else poseStack.translate(-0.25D, bird.role() == PeafowlRole.PEACHICK ? 0.10D : 0.35D, -0.25D);
         }
@@ -63,7 +63,7 @@ public final class AnimaniaPeafowlRenderer extends MobRenderer<AnimaniaPeafowl, 
             case PEAHEN -> "peafowl_";
             case PEACOCK -> "peacock_";
         };
-        return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+        return new ResourceLocation(Animania.MOD_ID,
                 "textures/entity/peacocks/" + prefix + bird.breed().getSerializedName() + ".png");
     }
 

@@ -10,7 +10,7 @@ The upstream repository is hosted by capnkirok.
 Upstream reference: branch 1.12, commit
 32ae2b4c56cb84284e865dae0d3b78770992ba1d.
 
-This is an unofficial NeoForge 1.21.1 adaptation, not an official release
+This is an unofficial Forge 1.20.1 adaptation, not an official release
 by the original Animania team. The port rewrites the platform integration,
 registries, entities, AI and rendering for modern Minecraft while deriving
 gameplay and converted model/animation resources from the original project.

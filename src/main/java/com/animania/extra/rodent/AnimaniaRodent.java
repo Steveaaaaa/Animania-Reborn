@@ -113,13 +113,13 @@ public final class AnimaniaRodent extends TamableAnimal {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(COLOR, 0);
-        builder.define(BALL_COLOR, NO_BALL);
-        builder.define(FOOD_STACK, 0);
-        builder.define(STANDING, false);
-        builder.define(INTERESTED, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(COLOR, 0);
+        entityData.define(BALL_COLOR, NO_BALL);
+        entityData.define(FOOD_STACK, 0);
+        entityData.define(STANDING, false);
+        entityData.define(INTERESTED, false);
     }
 
     public int getFoodStackCount() { return entityData.get(FOOD_STACK); }
@@ -130,7 +130,7 @@ public final class AnimaniaRodent extends TamableAnimal {
 
     /** The original hand-feeding action fills up to five cheek sections. */
     public void storeHamsterFood() {
-        if (kind != Kind.HAMSTER || getData(ModAttachments.SLEEPING)) return;
+        if (kind != Kind.HAMSTER || ModAttachments.getData(this, ModAttachments.SLEEPING)) return;
         entityData.set(STANDING, true);
         standCount = 100;
         if (getFoodStackCount() < 5) entityData.set(FOOD_STACK, getFoodStackCount() + 1);
@@ -148,7 +148,7 @@ public final class AnimaniaRodent extends TamableAnimal {
         super.aiStep();
         if (kind != Kind.HAMSTER || level().isClientSide()) return;
         if (getHealth() < 10) { eatStoredFood(); eatCount = 5000; }
-        if (!isHamsterStanding() && !isInSittingPose() && !getData(ModAttachments.SLEEPING)) {
+        if (!isHamsterStanding() && !isInSittingPose() && !ModAttachments.getData(this, ModAttachments.SLEEPING)) {
             if (random.nextInt(20) == 0 && random.nextInt(20) == 0) {
                 entityData.set(STANDING, true);
                 standCount = 30;
@@ -171,9 +171,11 @@ public final class AnimaniaRodent extends TamableAnimal {
     }
 
     @Override public void tick() {
+        com.animania.common.entity.AnimalTickBridge.before(this);
         super.tick();
         previousInterest = interest;
         interest += ((entityData.get(INTERESTED) ? 1 : 0) - interest) * 0.4F;
+        com.animania.common.entity.AnimalTickBridge.after(this);
     }
 
     @Override
@@ -208,8 +210,8 @@ public final class AnimaniaRodent extends TamableAnimal {
     @Override
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType reason, @Nullable SpawnGroupData data) {
-        SpawnGroupData result = super.finalizeSpawn(level, difficulty, reason, data);
+                                        MobSpawnType reason, @Nullable SpawnGroupData data, net.minecraft.nbt.CompoundTag spawnTag) {
+        SpawnGroupData result = super.finalizeSpawn(level, difficulty, reason, data, spawnTag);
         if (kind == Kind.HAMSTER) entityData.set(COLOR, random.nextInt(Kind.HAMSTER_COLORS.length));
         return result;
     }
@@ -249,7 +251,7 @@ public final class AnimaniaRodent extends TamableAnimal {
                 entityData.set(BALL_COLOR, ball.ballColor());
                 setOrderedToSit(false);
                 if (!player.isCreative()) held.shrink(1);
-                playSound(SoundEvents.ARMOR_EQUIP_LEATHER.value(), 0.5F, 1.4F);
+                playSound(SoundEvents.ARMOR_EQUIP_LEATHER, 0.5F, 1.4F);
             }
             return InteractionResult.sidedSuccess(level().isClientSide());
         }
@@ -269,7 +271,7 @@ public final class AnimaniaRodent extends TamableAnimal {
                     level().broadcastEntityEvent(this, (byte) 7);
                 }
                 storeHamsterFood();
-                setData(ModAttachments.HUNGER, ModAttachments.MAX_NEED);
+                ModAttachments.setData(this, ModAttachments.HUNGER, ModAttachments.MAX_NEED);
                 heal(2.0F);
                 if (!player.isCreative()) held.shrink(1);
                 playSound(kind == Kind.HAMSTER ? ModSounds.HAMSTER_EAT.get() : SoundEvents.GENERIC_EAT,

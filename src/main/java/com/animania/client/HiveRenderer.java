@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 
 /** Renders the CraftStudio hive and looping bee animations. */
 public final class HiveRenderer implements BlockEntityRenderer<HiveBlockEntity> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
+    private static final ResourceLocation TEXTURE = new ResourceLocation(
             Animania.MOD_ID, "textures/entity/props/bee_hive.png");
     private final CraftStudioModel beeHive = CraftStudioModel.load("farm/blocks/model_bee_hive");
     private final CraftStudioModel wildHive = CraftStudioModel.load("farm/blocks/model_wild_hive");

@@ -5,15 +5,15 @@ import com.animania.common.config.LegacyConfig;
 import com.animania.common.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.dispenser.BlockSource;
+import net.minecraft.core.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 /** Restores the configurable 1.12 dispenser behavior for loose seed ground cover. */
 @EventBusSubscriber(modid = Animania.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
@@ -34,9 +34,9 @@ public final class LegacyDispenserHandler {
         DispenserBlock.registerBehavior(item, new DefaultDispenseItemBehavior() {
             @Override
             protected ItemStack execute(BlockSource source, ItemStack stack) {
-                Direction facing = source.state().getValue(DispenserBlock.FACING);
-                BlockPos place = source.pos().relative(facing);
-                var level = source.level();
+                Direction facing = source.getBlockState().getValue(DispenserBlock.FACING);
+                BlockPos place = source.getPos().relative(facing);
+                var level = source.getLevel();
                 var state = ModBlocks.SEEDS.get().defaultBlockState();
                 if (LegacyConfig.ALLOW_SEED_DISPENSER_PLACEMENT.get()
                         && level.getBlockState(place).canBeReplaced() && state.canSurvive(level, place)) {

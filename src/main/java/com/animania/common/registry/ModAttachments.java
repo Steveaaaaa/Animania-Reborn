@@ -1,137 +1,100 @@
 package com.animania.common.registry;
-
 import com.animania.Animania;
-import com.mojang.serialization.Codec;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.attachment.AttachmentType;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.simple.SimpleChannel;
+import java.util.*;
 
-import java.util.function.Supplier;
-
+/** Animal persistence and tracking updates for fields used by client animation. */
+@EventBusSubscriber(modid = Animania.MOD_ID)
 public final class ModAttachments {
     public static final int MAX_NEED = 100;
-
-    private static final DeferredRegister<AttachmentType<?>> ATTACHMENTS =
-            DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, Animania.MOD_ID);
-
-    public static final Supplier<AttachmentType<Boolean>> FIGHTING = ATTACHMENTS.register(
-            "fighting", () -> AttachmentType.builder(() -> false).sync(ByteBufCodecs.BOOL).build());
-    public static final Supplier<AttachmentType<String>> RIVAL = ATTACHMENTS.register(
-            "rival", () -> AttachmentType.builder(() -> "").sync(ByteBufCodecs.STRING_UTF8).build());
-
-    public static final Supplier<AttachmentType<Integer>> HUNGER = ATTACHMENTS.register(
-            "hunger",
-            () -> AttachmentType.builder(() -> MAX_NEED).serialize(Codec.intRange(0, MAX_NEED)).build()
-    );
-
-    public static final Supplier<AttachmentType<Integer>> THIRST = ATTACHMENTS.register(
-            "thirst",
-            () -> AttachmentType.builder(() -> MAX_NEED).serialize(Codec.intRange(0, MAX_NEED)).build()
-    );
-
-    public static final Supplier<AttachmentType<Boolean>> SLEEPING = ATTACHMENTS.register(
-            "sleeping",
-            () -> AttachmentType.builder(() -> false).serialize(Codec.BOOL).sync(ByteBufCodecs.BOOL).build()
-    );
-
-    public static final Supplier<AttachmentType<Integer>> EATING_TICKS = ATTACHMENTS.register(
-            "eating_ticks",
-            () -> AttachmentType.builder(() -> 0).serialize(Codec.intRange(0, 80))
-                    .sync(ByteBufCodecs.VAR_INT).build()
-    );
-
-    /** Persistent husbandry data used by gameplay and information-overlay integrations. */
-    public static final Supplier<AttachmentType<Boolean>> STERILIZED = ATTACHMENTS.register(
-            "sterilized",
-            () -> AttachmentType.builder(() -> false).serialize(Codec.BOOL).sync(ByteBufCodecs.BOOL).build()
-    );
-
-    public static final Supplier<AttachmentType<Boolean>> INTERACTED = ATTACHMENTS.register(
-            "interacted",
-            () -> AttachmentType.builder(() -> false).serialize(Codec.BOOL).build()
-    );
-
-    /** Original 1.12 care-and-feeding state.  These values, rather than the
-     * compatibility percentages above, are authoritative for gameplay. */
-    public static final Supplier<AttachmentType<Boolean>> NEEDS_INITIALIZED = ATTACHMENTS.register(
-            "needs_initialized",
-            () -> AttachmentType.builder(() -> false).serialize(Codec.BOOL).build()
-    );
-
-    public static final Supplier<AttachmentType<Boolean>> FED = ATTACHMENTS.register(
-            "fed",
-            () -> AttachmentType.builder(() -> true).serialize(Codec.BOOL).build()
-    );
-
-    public static final Supplier<AttachmentType<Boolean>> WATERED = ATTACHMENTS.register(
-            "watered",
-            () -> AttachmentType.builder(() -> true).serialize(Codec.BOOL).build()
-    );
-
-    public static final Supplier<AttachmentType<Boolean>> HAND_FED = ATTACHMENTS.register(
-            "hand_fed",
-            () -> AttachmentType.builder(() -> false).serialize(Codec.BOOL).build()
-    );
-
-    public static final Supplier<AttachmentType<Integer>> FED_TIMER = ATTACHMENTS.register(
-            "fed_timer",
-            () -> AttachmentType.builder(() -> -1).serialize(Codec.intRange(-1, 20_000_000)).build()
-    );
-
-    public static final Supplier<AttachmentType<Integer>> WATERED_TIMER = ATTACHMENTS.register(
-            "watered_timer",
-            () -> AttachmentType.builder(() -> -1).serialize(Codec.intRange(-1, 20_000_000)).build()
-    );
-
-    public static final Supplier<AttachmentType<Integer>> STARVATION_TIMER = ATTACHMENTS.register(
-            "starvation_timer",
-            () -> AttachmentType.builder(() -> 0).serialize(Codec.intRange(0, 9_600_000)).build()
-    );
-
-    public static final Supplier<AttachmentType<Integer>> UNHAPPY_TIMER = ATTACHMENTS.register(
-            "unhappy_timer",
-            () -> AttachmentType.builder(() -> 60).serialize(Codec.intRange(-1, 60)).build()
-    );
-
-    public static final Supplier<AttachmentType<String>> LAST_MATE = ATTACHMENTS.register(
-            "last_mate",
-            () -> AttachmentType.builder(() -> "").serialize(Codec.STRING).build()
-    );
-
-    public static final Supplier<AttachmentType<String>> PARENT = ATTACHMENTS.register(
-            "parent",
-            () -> AttachmentType.builder(() -> "").serialize(Codec.STRING).build()
-    );
-
-    /** Number of completed 1% legacy growth steps (0..85). */
-    public static final Supplier<AttachmentType<Integer>> CHILD_GROWTH = ATTACHMENTS.register(
-            "child_growth",
-            () -> AttachmentType.builder(() -> 0).serialize(Codec.intRange(0, 85)).sync(ByteBufCodecs.VAR_INT).build()
-    );
-
-    /** Tick accumulator for the next legacy growth step. */
-    public static final Supplier<AttachmentType<Integer>> CHILD_GROWTH_TIMER = ATTACHMENTS.register(
-            "child_growth_timer",
-            () -> AttachmentType.builder(() -> 0).serialize(Codec.intRange(0, 20_000_000)).build()
-    );
-
-    /** Original female fertility/dry-period state, independent of vanilla love mode. */
-    public static final Supplier<AttachmentType<Boolean>> FERTILE = ATTACHMENTS.register(
-            "fertile",
-            () -> AttachmentType.builder(() -> true).serialize(Codec.BOOL).build()
-    );
-
-    public static final Supplier<AttachmentType<Integer>> DRY_TIMER = ATTACHMENTS.register(
-            "dry_timer",
-            () -> AttachmentType.builder(() -> -1).serialize(Codec.intRange(-1, 20_000_000)).build()
-    );
-
-    private ModAttachments() {
+    private static final List<Key<?>> KEYS = new ArrayList<>();
+    private static final Map<Entity, CompoundTag> TRANSIENT = Collections.synchronizedMap(new WeakHashMap<>());
+    private static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
+            new ResourceLocation(Animania.MOD_ID, "animal_state"), () -> "1", "1"::equals, "1"::equals);
+    public record Key<T>(String id, T initial, boolean persistent, boolean sync) {}
+    private static <T> Key<T> key(String id, T initial, boolean persistent, boolean sync) {
+        Key<T> key = new Key<>(id, initial, persistent, sync); KEYS.add(key); return key;
     }
-
-    public static void register(IEventBus modBus) {
-        ATTACHMENTS.register(modBus);
+    public static final Key<Boolean> FIGHTING = key("fighting", false, false, true);
+    public static final Key<String> RIVAL = key("rival", "", false, true);
+    public static final Key<Integer> HUNGER = key("hunger", MAX_NEED, true, false);
+    public static final Key<Integer> THIRST = key("thirst", MAX_NEED, true, false);
+    public static final Key<Boolean> SLEEPING = key("sleeping", false, true, true);
+    public static final Key<Integer> EATING_TICKS = key("eating_ticks", 0, true, true);
+    public static final Key<Boolean> STERILIZED = key("sterilized", false, true, true);
+    public static final Key<Boolean> INTERACTED = key("interacted", false, true, false);
+    public static final Key<Boolean> NEEDS_INITIALIZED = key("needs_initialized", false, true, false);
+    public static final Key<Boolean> FED = key("fed", true, true, false);
+    public static final Key<Boolean> WATERED = key("watered", true, true, false);
+    public static final Key<Boolean> HAND_FED = key("hand_fed", false, true, false);
+    public static final Key<Integer> FED_TIMER = key("fed_timer", -1, true, false);
+    public static final Key<Integer> WATERED_TIMER = key("watered_timer", -1, true, false);
+    public static final Key<Integer> STARVATION_TIMER = key("starvation_timer", 0, true, false);
+    public static final Key<Integer> UNHAPPY_TIMER = key("unhappy_timer", 60, true, false);
+    public static final Key<String> LAST_MATE = key("last_mate", "", true, false);
+    public static final Key<String> PARENT = key("parent", "", true, false);
+    public static final Key<Integer> CHILD_GROWTH = key("child_growth", 0, true, true);
+    public static final Key<Integer> CHILD_GROWTH_TIMER = key("child_growth_timer", 0, true, false);
+    public static final Key<Boolean> FERTILE = key("fertile", true, true, false);
+    public static final Key<Integer> DRY_TIMER = key("dry_timer", -1, true, false);
+    private static CompoundTag data(Entity entity, Key<?> key) {
+        if (!key.persistent()) return TRANSIENT.computeIfAbsent(entity, e -> new CompoundTag());
+        CompoundTag root = entity.getPersistentData();
+        if (!root.contains("AnimaniaState", 10)) root.put("AnimaniaState", new CompoundTag());
+        return root.getCompound("AnimaniaState");
+    }
+    @SuppressWarnings("unchecked")
+    public static <T> T getData(Entity entity, Key<T> key) {
+        CompoundTag tag = data(entity, key);
+        if (!tag.contains(key.id())) return key.initial();
+        Object value = key.initial() instanceof Boolean ? tag.getBoolean(key.id())
+                : key.initial() instanceof Integer ? tag.getInt(key.id()) : tag.getString(key.id());
+        return (T) value;
+    }
+    private static <T> void put(CompoundTag tag, Key<T> key, T value) {
+        if (value instanceof Boolean v) tag.putBoolean(key.id(), v);
+        else if (value instanceof Integer v) tag.putInt(key.id(), v);
+        else tag.putString(key.id(), (String)value);
+    }
+    public static <T> void setData(Entity entity, Key<T> key, T value) {
+        if (Objects.equals(getData(entity, key), value)) return;
+        put(data(entity, key), key, value);
+        if (key.sync() && !entity.level().isClientSide()) {
+            CompoundTag update = new CompoundTag(); put(update, key, value);
+            CHANNEL.send(PacketDistributor.TRACKING_ENTITY.with(() -> entity), new Update(entity.getId(), update));
+        }
+    }
+    private static <T> void snapshot(Entity entity, Key<T> key, CompoundTag tag) { put(tag, key, getData(entity, key)); }
+    @SubscribeEvent public static void startTracking(PlayerEvent.StartTracking event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        if (!net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(event.getTarget().getType()).getNamespace().equals(Animania.MOD_ID)) return;
+        CompoundTag snapshot = new CompoundTag();
+        for (Key<?> key : KEYS) if (key.sync()) snapshot(event.getTarget(), key, snapshot);
+        CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new Update(event.getTarget().getId(), snapshot));
+    }
+    public record Update(int entityId, CompoundTag values) {
+        public static void encode(Update msg, FriendlyByteBuf buf) { buf.writeVarInt(msg.entityId()); buf.writeNbt(msg.values()); }
+        public static Update decode(FriendlyByteBuf buf) { return new Update(buf.readVarInt(), buf.readNbt()); }
+    }
+    public static void apply(Entity entity, CompoundTag values) {
+        for (Key<?> key : KEYS) if (key.sync() && values.contains(key.id()))
+            data(entity, key).put(key.id(), values.get(key.id()).copy());
+    }
+    public static void register(IEventBus bus) {
+        CHANNEL.messageBuilder(Update.class, 0, NetworkDirection.PLAY_TO_CLIENT)
+            .encoder(Update::encode).decoder(Update::decode)
+            .consumerMainThread((msg, ctx) -> com.animania.client.AnimalStateReceiver.receive(msg)).add();
     }
 }

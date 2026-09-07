@@ -1,19 +1,19 @@
 package com.animania.common.config;
 
-import net.neoforged.neoforge.common.ModConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec;
 
 public final class AnimaniaConfig {
-    private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+    private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
-    public static final ModConfigSpec.BooleanValue SHOW_NEEDS_ON_EMPTY_HAND;
-    public static final ModConfigSpec.DoubleValue SALT_LICK_HEALING;
-    public static final ModConfigSpec.IntValue HIVE_HONEY_PER_CYCLE;
-    public static final ModConfigSpec.DoubleValue WILD_HIVE_DAMAGE;
-    public static final ModConfigSpec.BooleanValue ENABLE_FARM_SPAWNS;
-    public static final ModConfigSpec.BooleanValue ENABLE_EXTRA_SPAWNS;
-    public static final ModConfigSpec.BooleanValue ENABLE_PET_WILDLIFE_SPAWNS;
+    public static final ForgeConfigSpec.BooleanValue SHOW_NEEDS_ON_EMPTY_HAND;
+    public static final ForgeConfigSpec.DoubleValue SALT_LICK_HEALING;
+    public static final ForgeConfigSpec.IntValue HIVE_HONEY_PER_CYCLE;
+    public static final ForgeConfigSpec.DoubleValue WILD_HIVE_DAMAGE;
+    public static final ForgeConfigSpec.BooleanValue ENABLE_FARM_SPAWNS;
+    public static final ForgeConfigSpec.BooleanValue ENABLE_EXTRA_SPAWNS;
+    public static final ForgeConfigSpec.BooleanValue ENABLE_PET_WILDLIFE_SPAWNS;
 
-    public static final ModConfigSpec SPEC;
+    public static final ForgeConfigSpec SPEC;
 
     static {
         BUILDER.comment("Modern UI additions. Original husbandry rules are in animania-server.toml.")
@@ -24,7 +24,7 @@ public final class AnimaniaConfig {
                 .defineInRange("saltLickHealing", 2.0D, 0.0D, 100.0D);
         BUILDER.pop();
 
-        BUILDER.comment("NeoForge-only farm tuning. Legacy production timers are in animania_farm-server.toml.")
+        BUILDER.comment("Additional farm tuning. Legacy production timers are in animania_farm-server.toml.")
                 .push("farm");
         HIVE_HONEY_PER_CYCLE = BUILDER.comment("Honey produced per successful cycle, in millibuckets.")
                 .defineInRange("hiveHoneyPerCycle", 25, 1, 1000);

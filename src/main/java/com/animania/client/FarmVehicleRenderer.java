@@ -178,10 +178,10 @@ public final class FarmVehicleRenderer extends EntityRenderer<FarmVehicleEntity>
             float y = (float) Mth.lerp(t, start.y, end.y);
             float z = (float) Mth.lerp(t, start.z, end.z);
             float shade = (i & 1) == 0 ? 0.78F : 1.0F;
-            consumer.addVertex(matrix, x - edgeX, y, z - edgeZ)
-                    .setColor(0.30F * shade, 0.16F * shade, 0.07F * shade, 1.0F).setLight(packedLight);
-            consumer.addVertex(matrix, x + edgeX, y + 0.025F, z + edgeZ)
-                    .setColor(0.30F * shade, 0.16F * shade, 0.07F * shade, 1.0F).setLight(packedLight);
+            consumer.vertex(matrix, x - edgeX, y, z - edgeZ)
+                    .color(0.30F * shade, 0.16F * shade, 0.07F * shade, 1.0F).uv2(packedLight);
+            consumer.vertex(matrix, x + edgeX, y + 0.025F, z + edgeZ)
+                    .color(0.30F * shade, 0.16F * shade, 0.07F * shade, 1.0F).uv2(packedLight);
         }
         for (int i = 16; i >= 0; i--) {
             float t = i / 16.0F;
@@ -189,10 +189,10 @@ public final class FarmVehicleRenderer extends EntityRenderer<FarmVehicleEntity>
             float y = (float) Mth.lerp(t, start.y, end.y);
             float z = (float) Mth.lerp(t, start.z, end.z);
             float shade = (i & 1) == 0 ? 1.0F : 0.78F;
-            consumer.addVertex(matrix, x - edgeX, y + 0.025F, z - edgeZ)
-                    .setColor(0.30F * shade, 0.16F * shade, 0.07F * shade, 1.0F).setLight(packedLight);
-            consumer.addVertex(matrix, x + edgeX, y, z + edgeZ)
-                    .setColor(0.30F * shade, 0.16F * shade, 0.07F * shade, 1.0F).setLight(packedLight);
+            consumer.vertex(matrix, x - edgeX, y + 0.025F, z - edgeZ)
+                    .color(0.30F * shade, 0.16F * shade, 0.07F * shade, 1.0F).uv2(packedLight);
+            consumer.vertex(matrix, x + edgeX, y, z + edgeZ)
+                    .color(0.30F * shade, 0.16F * shade, 0.07F * shade, 1.0F).uv2(packedLight);
         }
     }
 
@@ -200,7 +200,7 @@ public final class FarmVehicleRenderer extends EntityRenderer<FarmVehicleEntity>
     public ResourceLocation getTextureLocation(FarmVehicleEntity vehicle) {
         String texture = vehicle.kind() == FarmVehicleEntity.Kind.CART && vehicle.hasChest()
                 ? "cart_chest" : vehicle.kind().id();
-        return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+        return new ResourceLocation(Animania.MOD_ID,
                 "textures/entity/props/" + texture + ".png");
     }
 }

@@ -16,9 +16,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public final class CheeseMoldBlockEntity extends BlockEntity {
     /** Default retained for binary compatibility with optional integration plugins. */
@@ -118,8 +118,8 @@ public final class CheeseMoldBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
         if (milk != null) tag.putString("MilkType", milk.getSerializedName());
         tag.putBoolean("Water", water);
         tag.putInt("FluidAmount", fluidAmount);
@@ -128,8 +128,8 @@ public final class CheeseMoldBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
+    public void load(CompoundTag tag) {
+        super.load(tag);
         progress = tag.getInt("progress");
         water = tag.getBoolean("Water");
         milk = null;
@@ -150,9 +150,9 @@ public final class CheeseMoldBlockEntity extends BlockEntity {
 
     private boolean accepts(FluidStack stack) {
         if (stack.isEmpty() || isReady()) return false;
-        if (stack.is(Fluids.WATER)) return !LegacyConfig.DISABLE_SALT_CREATION.get() && milk == null;
+        if ((stack.getFluid() == Fluids.WATER)) return !LegacyConfig.DISABLE_SALT_CREATION.get() && milk == null;
         for (MilkType type : MilkType.values()) {
-            if (stack.is(ModFluids.milk(type).source())) return !water && (milk == null || milk == type);
+            if ((stack.getFluid() == ModFluids.milk(type).source())) return !water && (milk == null || milk == type);
         }
         return false;
     }
@@ -179,10 +179,10 @@ public final class CheeseMoldBlockEntity extends BlockEntity {
             if (accepted <= 0) return 0;
             if (action.execute()) {
                 if (fluidAmount == 0) {
-                    water = resource.is(Fluids.WATER);
+                    water = (resource.getFluid() == Fluids.WATER);
                     milk = null;
                     if (!water) for (MilkType type : MilkType.values()) {
-                        if (resource.is(ModFluids.milk(type).source())) { milk = type; break; }
+                        if ((resource.getFluid() == ModFluids.milk(type).source())) { milk = type; break; }
                     }
                     progress = 0;
                 }
@@ -193,14 +193,14 @@ public final class CheeseMoldBlockEntity extends BlockEntity {
         }
         @Override public FluidStack drain(FluidStack resource, FluidAction action) {
             FluidStack stored = storedFluid();
-            if (stored.isEmpty() || !FluidStack.isSameFluidSameComponents(stored, resource)) return FluidStack.EMPTY;
+            if (stored.isEmpty() || !stored.isFluidEqual(resource)) return FluidStack.EMPTY;
             return drain(resource.getAmount(), action);
         }
         @Override public FluidStack drain(int maxDrain, FluidAction action) {
             FluidStack stored = storedFluid();
             if (stored.isEmpty() || maxDrain <= 0) return FluidStack.EMPTY;
             int drained = Math.min(maxDrain, fluidAmount);
-            FluidStack result = stored.copyWithAmount(drained);
+            FluidStack result = new FluidStack(stored, drained);
             if (action.execute()) {
                 fluidAmount -= drained;
                 if (fluidAmount < 1_000) progress = 0;

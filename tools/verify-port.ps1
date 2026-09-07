@@ -45,14 +45,14 @@ $configSource = Get-Content (Join-Path $root 'src/main/java/com/animania/common/
 $javaSource = (Get-ChildItem (Join-Path $root 'src/main/java') -Recurse -Filter '*.java' |
     ForEach-Object { [IO.File]::ReadAllText($_.FullName) }) -join "`n"
 $fields = [regex]::Matches($configSource,
-    '(?m)^\s*public static final ModConfigSpec\.[A-Za-z]+Value\s+([A-Z][A-Z0-9_]+);') |
+    '(?m)^\s*public static final ForgeConfigSpec\.[A-Za-z]+Value\s+([A-Z][A-Z0-9_]+);') |
     ForEach-Object { $_.Groups[1].Value }
 foreach ($field in $fields) {
     $references = ([regex]::Matches($javaSource, "\b$field\b")).Count
     Require ($references -ge 3) "Legacy config field has no runtime consumer: $field"
 }
 
-$spawnData = Get-ChildItem (Join-Path $resources 'data/animania/neoforge/biome_modifier') -Filter 'add_*.json'
+$spawnData = Get-ChildItem (Join-Path $resources 'data/animania/forge/biome_modifier') -Filter 'add_*.json'
 foreach ($file in $spawnData) {
     if ($file.Name -eq 'add_wild_hives.json') { continue }
     $raw = [IO.File]::ReadAllText($file.FullName)

@@ -1,111 +1,111 @@
 package com.animania.common.config;
 
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.neoforge.common.ModConfigSpec;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * NeoForge representation of every user-facing option in Animania 1.12's
+ * Forge representation of every user-facing option in Animania 1.12's
  * CommonConfig, FarmConfig, ExtraConfig and CatsDogsConfig.
  */
 public final class LegacyConfig {
-    public static final ModConfigSpec BASE_SPEC;
-    public static final ModConfigSpec FARM_SPEC;
-    public static final ModConfigSpec EXTRA_SPEC;
-    public static final ModConfigSpec CATSDOGS_SPEC;
+    public static final ForgeConfigSpec BASE_SPEC;
+    public static final ForgeConfigSpec FARM_SPEC;
+    public static final ForgeConfigSpec EXTRA_SPEC;
+    public static final ForgeConfigSpec CATSDOGS_SPEC;
 
-    public static final Map<String, ModConfigSpec.ConfigValue<List<? extends String>>> FOOD_LISTS = new LinkedHashMap<>();
-    public static final Map<String, ModConfigSpec.ConfigValue<String>> PREFERRED_BEDS = new LinkedHashMap<>();
-    public static final Map<String, ModConfigSpec.ConfigValue<String>> BACKUP_BEDS = new LinkedHashMap<>();
-    public static final Map<String, ModConfigSpec.ConfigValue<List<? extends String>>> BIOME_TYPES = new LinkedHashMap<>();
-    public static final Map<String, ModConfigSpec.BooleanValue> SPAWN_ENABLED = new LinkedHashMap<>();
-    public static final Map<String, ModConfigSpec.IntValue> SPAWN_PROBABILITY = new LinkedHashMap<>();
-    public static final Map<String, ModConfigSpec.IntValue> SPAWN_LIMIT = new LinkedHashMap<>();
-    public static final Map<String, ModConfigSpec.IntValue> FAMILY_COUNT = new LinkedHashMap<>();
+    public static final Map<String, ForgeConfigSpec.ConfigValue<List<? extends String>>> FOOD_LISTS = new LinkedHashMap<>();
+    public static final Map<String, ForgeConfigSpec.ConfigValue<String>> PREFERRED_BEDS = new LinkedHashMap<>();
+    public static final Map<String, ForgeConfigSpec.ConfigValue<String>> BACKUP_BEDS = new LinkedHashMap<>();
+    public static final Map<String, ForgeConfigSpec.ConfigValue<List<? extends String>>> BIOME_TYPES = new LinkedHashMap<>();
+    public static final Map<String, ForgeConfigSpec.BooleanValue> SPAWN_ENABLED = new LinkedHashMap<>();
+    public static final Map<String, ForgeConfigSpec.IntValue> SPAWN_PROBABILITY = new LinkedHashMap<>();
+    public static final Map<String, ForgeConfigSpec.IntValue> SPAWN_LIMIT = new LinkedHashMap<>();
+    public static final Map<String, ForgeConfigSpec.IntValue> FAMILY_COUNT = new LinkedHashMap<>();
 
     // Base: game rules
-    public static final ModConfigSpec.BooleanValue FOODS_GIVE_BONUS_EFFECTS;
-    public static final ModConfigSpec.BooleanValue SHOW_MOD_UPDATE_NOTIFICATION;
-    public static final ModConfigSpec.BooleanValue SHOW_PARTS;
-    public static final ModConfigSpec.BooleanValue SHOW_UNHAPPY_PARTICLES;
-    public static final ModConfigSpec.BooleanValue ALLOW_SEED_DISPENSER_PLACEMENT;
-    public static final ModConfigSpec.BooleanValue SHIFT_SEED_PLACEMENT;
-    public static final ModConfigSpec.BooleanValue ANIMALS_STARVE;
-    public static final ModConfigSpec.BooleanValue ALLOW_MOB_RIDING;
-    public static final ModConfigSpec.BooleanValue ALLOW_TROUGH_AUTOMATION;
-    public static final ModConfigSpec.DoubleValue FALL_DAMAGE_REDUCE_MULTIPLIER;
-    public static final ModConfigSpec.BooleanValue WATER_REMOVED_AFTER_DRINKING;
-    public static final ModConfigSpec.BooleanValue PLANTS_REMOVED_AFTER_EATING;
-    public static final ModConfigSpec.BooleanValue AMBIANCE_MODE;
-    public static final ModConfigSpec.BooleanValue ANIMALS_SLEEP;
-    public static final ModConfigSpec.BooleanValue ANIMALS_CAN_ATTACK_OTHERS;
-    public static final ModConfigSpec.IntValue TICKS_BETWEEN_AI_FIRINGS;
-    public static final ModConfigSpec.BooleanValue TAMED_ANIMALS_TELEPORT;
-    public static final ModConfigSpec.BooleanValue FANCY_EGGS;
-    public static final ModConfigSpec.BooleanValue FANCY_EGGS_ROTATE;
-    public static final ModConfigSpec.BooleanValue EAT_FOOD_ANYTIME;
-    public static final ModConfigSpec.BooleanValue BIRDS_DROP_FEATHERS;
-    public static final ModConfigSpec.IntValue AI_BLOCK_SEARCH_RANGE;
-    public static final ModConfigSpec.IntValue ANIMAL_CAP_SEARCH_RANGE;
-    public static final ModConfigSpec.BooleanValue REQUIRE_ANIMAL_INTERACTION_FOR_AI;
-    public static final ModConfigSpec.BooleanValue SPAWN_FRESH_WATER_SQUIDS;
+    public static final ForgeConfigSpec.BooleanValue FOODS_GIVE_BONUS_EFFECTS;
+    public static final ForgeConfigSpec.BooleanValue SHOW_MOD_UPDATE_NOTIFICATION;
+    public static final ForgeConfigSpec.BooleanValue SHOW_PARTS;
+    public static final ForgeConfigSpec.BooleanValue SHOW_UNHAPPY_PARTICLES;
+    public static final ForgeConfigSpec.BooleanValue ALLOW_SEED_DISPENSER_PLACEMENT;
+    public static final ForgeConfigSpec.BooleanValue SHIFT_SEED_PLACEMENT;
+    public static final ForgeConfigSpec.BooleanValue ANIMALS_STARVE;
+    public static final ForgeConfigSpec.BooleanValue ALLOW_MOB_RIDING;
+    public static final ForgeConfigSpec.BooleanValue ALLOW_TROUGH_AUTOMATION;
+    public static final ForgeConfigSpec.DoubleValue FALL_DAMAGE_REDUCE_MULTIPLIER;
+    public static final ForgeConfigSpec.BooleanValue WATER_REMOVED_AFTER_DRINKING;
+    public static final ForgeConfigSpec.BooleanValue PLANTS_REMOVED_AFTER_EATING;
+    public static final ForgeConfigSpec.BooleanValue AMBIANCE_MODE;
+    public static final ForgeConfigSpec.BooleanValue ANIMALS_SLEEP;
+    public static final ForgeConfigSpec.BooleanValue ANIMALS_CAN_ATTACK_OTHERS;
+    public static final ForgeConfigSpec.IntValue TICKS_BETWEEN_AI_FIRINGS;
+    public static final ForgeConfigSpec.BooleanValue TAMED_ANIMALS_TELEPORT;
+    public static final ForgeConfigSpec.BooleanValue FANCY_EGGS;
+    public static final ForgeConfigSpec.BooleanValue FANCY_EGGS_ROTATE;
+    public static final ForgeConfigSpec.BooleanValue EAT_FOOD_ANYTIME;
+    public static final ForgeConfigSpec.BooleanValue BIRDS_DROP_FEATHERS;
+    public static final ForgeConfigSpec.IntValue AI_BLOCK_SEARCH_RANGE;
+    public static final ForgeConfigSpec.IntValue ANIMAL_CAP_SEARCH_RANGE;
+    public static final ForgeConfigSpec.BooleanValue REQUIRE_ANIMAL_INTERACTION_FOR_AI;
+    public static final ForgeConfigSpec.BooleanValue SPAWN_FRESH_WATER_SQUIDS;
 
     // Base: care and feeding
-    public static final ModConfigSpec.IntValue CHILD_GROWTH_TICK;
-    public static final ModConfigSpec.IntValue FEED_TIMER;
-    public static final ModConfigSpec.IntValue WATER_TIMER;
-    public static final ModConfigSpec.IntValue PLAY_TIMER;
-    public static final ModConfigSpec.IntValue LAID_TIMER;
-    public static final ModConfigSpec.IntValue FEATHER_TIMER;
-    public static final ModConfigSpec.IntValue GESTATION_TIMER;
-    public static final ModConfigSpec.BooleanValue FEED_TO_BREED;
-    public static final ModConfigSpec.IntValue WOOL_REGROWTH_TIMER;
-    public static final ModConfigSpec.IntValue STARVATION_TIMER;
-    public static final ModConfigSpec.IntValue EGG_HATCH_CHANCE;
-    public static final ModConfigSpec.IntValue SALT_LICK_TICK;
-    public static final ModConfigSpec.IntValue SALT_LICK_MAX_USES;
-    public static final ModConfigSpec.IntValue ENTITY_BREEDING_LIMIT;
-    public static final ModConfigSpec.BooleanValue MALES_MATE_MULTIPLE_FEMALES;
-    public static final ModConfigSpec.DoubleValue BIRTH_MULTIPLE_CHANCE;
-    public static final ModConfigSpec.DoubleValue ANIMAL_LOSS_CHANCE;
-    public static final ModConfigSpec.ConfigValue<List<? extends String>> FOOD_VALUE_OVERRIDES;
+    public static final ForgeConfigSpec.IntValue CHILD_GROWTH_TICK;
+    public static final ForgeConfigSpec.IntValue FEED_TIMER;
+    public static final ForgeConfigSpec.IntValue WATER_TIMER;
+    public static final ForgeConfigSpec.IntValue PLAY_TIMER;
+    public static final ForgeConfigSpec.IntValue LAID_TIMER;
+    public static final ForgeConfigSpec.IntValue FEATHER_TIMER;
+    public static final ForgeConfigSpec.IntValue GESTATION_TIMER;
+    public static final ForgeConfigSpec.BooleanValue FEED_TO_BREED;
+    public static final ForgeConfigSpec.IntValue WOOL_REGROWTH_TIMER;
+    public static final ForgeConfigSpec.IntValue STARVATION_TIMER;
+    public static final ForgeConfigSpec.IntValue EGG_HATCH_CHANCE;
+    public static final ForgeConfigSpec.IntValue SALT_LICK_TICK;
+    public static final ForgeConfigSpec.IntValue SALT_LICK_MAX_USES;
+    public static final ForgeConfigSpec.IntValue ENTITY_BREEDING_LIMIT;
+    public static final ForgeConfigSpec.BooleanValue MALES_MATE_MULTIPLE_FEMALES;
+    public static final ForgeConfigSpec.DoubleValue BIRTH_MULTIPLE_CHANCE;
+    public static final ForgeConfigSpec.DoubleValue ANIMAL_LOSS_CHANCE;
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> FOOD_VALUE_OVERRIDES;
 
     // Farm settings
-    public static final ModConfigSpec.BooleanValue ALLOW_EGG_THROWING;
-    public static final ModConfigSpec.IntValue CHEESE_MATURITY_TIME;
-    public static final ModConfigSpec.BooleanValue COWS_MILKABLE_AT_SPAWN;
-    public static final ModConfigSpec.BooleanValue SLEEP_ALLOWED_WAGON;
-    public static final ModConfigSpec.BooleanValue DISABLE_SALT_CREATION;
-    public static final ModConfigSpec.IntValue SALT_CREATION_AMOUNT;
-    public static final ModConfigSpec.BooleanValue DISABLE_ROLLING_VEHICLES;
-    public static final ModConfigSpec.BooleanValue CHICKENS_DROP_EGGS;
-    public static final ModConfigSpec.BooleanValue HIVE_SPAWNING;
-    public static final ModConfigSpec.IntValue HIVE_SPAWNING_FREQUENCY;
-    public static final ModConfigSpec.IntValue HIVE_WILD_HONEY_RATE;
-    public static final ModConfigSpec.IntValue HIVE_PLAYERMADE_HONEY_RATE;
-    public static final ModConfigSpec.BooleanValue ROOSTERS_FIGHT;
+    public static final ForgeConfigSpec.BooleanValue ALLOW_EGG_THROWING;
+    public static final ForgeConfigSpec.IntValue CHEESE_MATURITY_TIME;
+    public static final ForgeConfigSpec.BooleanValue COWS_MILKABLE_AT_SPAWN;
+    public static final ForgeConfigSpec.BooleanValue SLEEP_ALLOWED_WAGON;
+    public static final ForgeConfigSpec.BooleanValue DISABLE_SALT_CREATION;
+    public static final ForgeConfigSpec.IntValue SALT_CREATION_AMOUNT;
+    public static final ForgeConfigSpec.BooleanValue DISABLE_ROLLING_VEHICLES;
+    public static final ForgeConfigSpec.BooleanValue CHICKENS_DROP_EGGS;
+    public static final ForgeConfigSpec.BooleanValue HIVE_SPAWNING;
+    public static final ForgeConfigSpec.IntValue HIVE_SPAWNING_FREQUENCY;
+    public static final ForgeConfigSpec.IntValue HIVE_WILD_HONEY_RATE;
+    public static final ForgeConfigSpec.IntValue HIVE_PLAYERMADE_HONEY_RATE;
+    public static final ForgeConfigSpec.BooleanValue ROOSTERS_FIGHT;
 
     // Vanilla replacement switches
-    public static final ModConfigSpec.BooleanValue REPLACE_VANILLA_COWS;
-    public static final ModConfigSpec.BooleanValue REPLACE_VANILLA_PIGS;
-    public static final ModConfigSpec.BooleanValue REPLACE_VANILLA_CHICKENS;
-    public static final ModConfigSpec.BooleanValue REPLACE_VANILLA_SHEEP;
-    public static final ModConfigSpec.BooleanValue REPLACE_VANILLA_HORSES;
-    public static final ModConfigSpec.BooleanValue REPLACE_VANILLA_RABBITS;
-    public static final ModConfigSpec.BooleanValue REPLACE_VANILLA_WOLVES;
-    public static final ModConfigSpec.BooleanValue REPLACE_VANILLA_OCELOTS;
+    public static final ForgeConfigSpec.BooleanValue REPLACE_VANILLA_COWS;
+    public static final ForgeConfigSpec.BooleanValue REPLACE_VANILLA_PIGS;
+    public static final ForgeConfigSpec.BooleanValue REPLACE_VANILLA_CHICKENS;
+    public static final ForgeConfigSpec.BooleanValue REPLACE_VANILLA_SHEEP;
+    public static final ForgeConfigSpec.BooleanValue REPLACE_VANILLA_HORSES;
+    public static final ForgeConfigSpec.BooleanValue REPLACE_VANILLA_RABBITS;
+    public static final ForgeConfigSpec.BooleanValue REPLACE_VANILLA_WOLVES;
+    public static final ForgeConfigSpec.BooleanValue REPLACE_VANILLA_OCELOTS;
 
     // Extra/Cats & Dogs utilities
-    public static final ModConfigSpec.IntValue HAMSTER_WHEEL_CAPACITY;
-    public static final ModConfigSpec.IntValue HAMSTER_WHEEL_RF_GENERATION;
-    public static final ModConfigSpec.IntValue HAMSTER_WHEEL_USE_TIME;
+    public static final ForgeConfigSpec.IntValue HAMSTER_WHEEL_CAPACITY;
+    public static final ForgeConfigSpec.IntValue HAMSTER_WHEEL_RF_GENERATION;
+    public static final ForgeConfigSpec.IntValue HAMSTER_WHEEL_USE_TIME;
 
     static {
-        ModConfigSpec.Builder base = new ModConfigSpec.Builder();
+        ForgeConfigSpec.Builder base = new ForgeConfigSpec.Builder();
         base.push("gameRules");
         FOODS_GIVE_BONUS_EFFECTS = bool(base, "foodsGiveBonusEffects", true, "Foods give bonus effects");
         SHOW_MOD_UPDATE_NOTIFICATION = bool(base, "showModUpdateNotification", true, "Show mod update notification at startup");
@@ -160,7 +160,7 @@ public final class LegacyConfig {
         base.pop();
         BASE_SPEC = base.build();
 
-        ModConfigSpec.Builder farm = new ModConfigSpec.Builder();
+        ForgeConfigSpec.Builder farm = new ForgeConfigSpec.Builder();
         farm.push("farm");
         ALLOW_EGG_THROWING = bool(farm, "allowEggThrowing", false, "Allow eggs to be thrown");
         CHEESE_MATURITY_TIME = integer(farm, "cheeseMaturityTime", 24_000, 20, 2_400_000, "Ticks cheese takes to mature");
@@ -221,7 +221,7 @@ public final class LegacyConfig {
         farm.pop(2);
         FARM_SPEC = farm.build();
 
-        ModConfigSpec.Builder extra = new ModConfigSpec.Builder();
+        ForgeConfigSpec.Builder extra = new ForgeConfigSpec.Builder();
         extra.push("extra");
         REPLACE_VANILLA_RABBITS = bool(extra, "replaceVanillaRabbits", true, "Remove naturally spawning vanilla rabbits");
         HAMSTER_WHEEL_CAPACITY = integer(extra, "hamsterWheelCapacity", 200_000, 1_000, 20_000_000, "Hamster wheel energy capacity");
@@ -269,7 +269,7 @@ public final class LegacyConfig {
         extra.pop(2);
         EXTRA_SPEC = extra.build();
 
-        ModConfigSpec.Builder pets = new ModConfigSpec.Builder();
+        ForgeConfigSpec.Builder pets = new ForgeConfigSpec.Builder();
         pets.push("catsdogs");
         addFood(pets, "cat", List.of("minecraft:fish"));
         addBeds(pets, "cat", "animania:cat_bed_1", "animania:cat_bed_2");
@@ -293,43 +293,43 @@ public final class LegacyConfig {
 
     private LegacyConfig() {}
 
-    public static void register(ModContainer container) {
+    public static void register(net.minecraftforge.fml.ModLoadingContext container) {
         container.registerConfig(ModConfig.Type.SERVER, BASE_SPEC, "animania-server.toml");
         container.registerConfig(ModConfig.Type.SERVER, FARM_SPEC, "animania_farm-server.toml");
         container.registerConfig(ModConfig.Type.SERVER, EXTRA_SPEC, "animania_extra-server.toml");
         container.registerConfig(ModConfig.Type.SERVER, CATSDOGS_SPEC, "animania_cats_dogs-server.toml");
     }
 
-    private static ModConfigSpec.BooleanValue bool(ModConfigSpec.Builder b, String key, boolean value, String comment) {
+    private static ForgeConfigSpec.BooleanValue bool(ForgeConfigSpec.Builder b, String key, boolean value, String comment) {
         return b.comment(comment).define(key, value);
     }
-    private static ModConfigSpec.IntValue integer(ModConfigSpec.Builder b, String key, int value, int min, int max, String comment) {
+    private static ForgeConfigSpec.IntValue integer(ForgeConfigSpec.Builder b, String key, int value, int min, int max, String comment) {
         return b.comment(comment).defineInRange(key, value, min, max);
     }
-    private static ModConfigSpec.DoubleValue decimal(ModConfigSpec.Builder b, String key, double value, double min, double max, String comment) {
+    private static ForgeConfigSpec.DoubleValue decimal(ForgeConfigSpec.Builder b, String key, double value, double min, double max, String comment) {
         return b.comment(comment).defineInRange(key, value, min, max);
     }
-    private static ModConfigSpec.ConfigValue<List<? extends String>> strings(ModConfigSpec.Builder b, String key, List<String> values, String comment) {
+    private static ForgeConfigSpec.ConfigValue<List<? extends String>> strings(ForgeConfigSpec.Builder b, String key, List<String> values, String comment) {
         return b.comment(comment).defineListAllowEmpty(key, values, value -> value instanceof String);
     }
-    private static ModConfigSpec.ConfigValue<String> string(ModConfigSpec.Builder b, String key, String value, String comment) {
+    private static ForgeConfigSpec.ConfigValue<String> string(ForgeConfigSpec.Builder b, String key, String value, String comment) {
         return b.comment(comment).define(key, value);
     }
-    private static void addFood(ModConfigSpec.Builder b, String animal, List<String> values) {
+    private static void addFood(ForgeConfigSpec.Builder b, String animal, List<String> values) {
         FOOD_LISTS.put(animal, strings(b, animal + "Food", values, "Food items accepted by " + animal));
     }
-    private static void addBeds(ModConfigSpec.Builder b, String animal, String preferred, String backup) {
+    private static void addBeds(ForgeConfigSpec.Builder b, String animal, String preferred, String backup) {
         PREFERRED_BEDS.put(animal, string(b, animal + "Bed", preferred, "Preferred bed block for " + animal));
         BACKUP_BEDS.put(animal, string(b, animal + "Bed2", backup, "Backup bed block for " + animal));
     }
-    private static void addSpawnGroup(ModConfigSpec.Builder b, String group, boolean enabled, int probability, int limit, int families) {
+    private static void addSpawnGroup(ForgeConfigSpec.Builder b, String group, boolean enabled, int probability, int limit, int families) {
         String title = title(group);
         SPAWN_ENABLED.put(group, bool(b, "spawnAnimania" + title, enabled, "Spawn Animania " + group + " in the world"));
         SPAWN_PROBABILITY.put(group, integer(b, "spawnProbability" + title, probability, 0, 1000, "Legacy spawn weight"));
         SPAWN_LIMIT.put(group, integer(b, "spawnLimit" + title, limit, 0, 10_000, "Nearby spawn limit"));
         FAMILY_COUNT.put(group, integer(b, "number" + singularTitle(group) + "Families", families, 1, 64, "Maximum family group size"));
     }
-    private static void addBiome(ModConfigSpec.Builder b, String key, String... types) {
+    private static void addBiome(ForgeConfigSpec.Builder b, String key, String... types) {
         BIOME_TYPES.put(key, strings(b, key + "BiomeTypes", List.of(types), "Legacy biome categories for " + key));
     }
     private static String title(String value) {

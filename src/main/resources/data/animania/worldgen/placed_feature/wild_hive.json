@@ -1,9 +1,18 @@
 {
   "feature": "animania:wild_hive",
   "placement": [
-    { "type": "animania:configured_hive_rarity" },
-    { "type": "minecraft:in_square" },
-    { "type": "minecraft:heightmap", "heightmap": "WORLD_SURFACE_WG" },
-    { "type": "minecraft:biome" }
+    {
+      "type": "animania:configured_hive_rarity"
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "WORLD_SURFACE_WG"
+    },
+    {
+      "type": "minecraft:biome"
+    }
   ]
 }

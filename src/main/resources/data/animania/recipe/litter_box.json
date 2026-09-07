@@ -1,5 +1,0 @@
-{
-  "type": "minecraft:crafting_shaped", "pattern": ["ISI", "III"],
-  "key": { "I": { "tag": "c:ingots/iron" }, "S": { "tag": "minecraft:sand" } },
-  "result": { "id": "animania:litter_box" }
-}

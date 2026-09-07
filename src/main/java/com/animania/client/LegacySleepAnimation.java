@@ -4,10 +4,10 @@ import com.animania.Animania;
 import com.animania.common.registry.ModAttachments;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.util.Mth;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -21,7 +21,7 @@ public final class LegacySleepAnimation {
     }
     private static State state(Entity entity) {
         State state = STATES.computeIfAbsent(entity, ignored -> new State());
-        boolean sleeping = entity.getData(ModAttachments.SLEEPING);
+        boolean sleeping = ModAttachments.getData(entity, ModAttachments.SLEEPING);
         if (sleeping != state.sleeping) {
             state.sleeping = sleeping;
             state.timer = state.previousTimer = 0;
@@ -29,8 +29,7 @@ public final class LegacySleepAnimation {
         }
         return state;
     }
-    @SubscribeEvent public static void tick(EntityTickEvent.Post event) {
-        Entity entity = event.getEntity();
+    public static void tick(Entity entity) {
         if (!entity.level().isClientSide() || !entity.getType().builtInRegistryHolder().key().location().getNamespace().equals("animania")) return;
         State state = state(entity);
         state.previousTimer = state.timer;
@@ -56,7 +55,7 @@ public final class LegacySleepAnimation {
     /** Original preRenderScale transforms, applied after each renderer's scale. */
     static void transform(net.minecraft.world.entity.animal.Animal animal,
                           com.mojang.blaze3d.vertex.PoseStack pose, float partial) {
-        if (!animal.getData(ModAttachments.SLEEPING)) return;
+        if (!ModAttachments.getData(animal, ModAttachments.SLEEPING)) return;
         float base;
         if (animal instanceof com.animania.farm.livestock.AnimaniaCow cow) {
             base = cow.role() == com.animania.farm.livestock.FarmAnimalRole.YOUNG ? 1.15F : 1.85F;

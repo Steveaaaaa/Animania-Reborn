@@ -42,7 +42,7 @@ public final class ContainerFoodItem extends Item {
         }
         ItemStack empty = new ItemStack(container == Container.BOWL ? Items.BOWL : Items.GLASS_BOTTLE);
         if (result.isEmpty()) return empty;
-        if (living instanceof Player player && !player.hasInfiniteMaterials() && !player.getInventory().add(empty)) {
+        if (living instanceof Player player && !player.getAbilities().instabuild && !player.getInventory().add(empty)) {
             player.drop(empty, false);
         }
         return result;

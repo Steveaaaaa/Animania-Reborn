@@ -19,12 +19,12 @@ public final class LegacyFollowMateHorseGoal extends Goal {
     @Override
     public boolean canUse() {
         if (++delay <= LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get()) return false;
-        if (!stallion.level().isDay() || stallion.getData(ModAttachments.SLEEPING)
+        if (!stallion.level().isDay() || ModAttachments.getData(stallion, ModAttachments.SLEEPING)
                 || stallion.role() != FarmAnimalRole.MALE) {
             delay = 0;
             return false;
         }
-        String mateId = stallion.getData(ModAttachments.LAST_MATE);
+        String mateId = ModAttachments.getData(stallion, ModAttachments.LAST_MATE);
         if (mateId.isEmpty()) return false;
         mate = stallion.level().getEntitiesOfClass(AnimaniaHorse.class, stallion.getBoundingBox().inflate(40.0D),
                 horse -> horse.role() == FarmAnimalRole.FEMALE && horse.getUUID().toString().equals(mateId))

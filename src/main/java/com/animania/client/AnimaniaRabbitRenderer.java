@@ -49,12 +49,12 @@ public final class AnimaniaRabbitRenderer extends MobRenderer<AnimaniaRabbit, Le
         };
         poseStack.scale(breed, breed, breed);
         poseStack.translate(0, 0, -0.5F);
-        if (rabbit.getData(ModAttachments.SLEEPING)) poseStack.translate(-0.25D, 0.25D, -0.25D);
+        if (ModAttachments.getData(rabbit, ModAttachments.SLEEPING)) poseStack.translate(-0.25D, 0.25D, -0.25D);
     }
 
     @Override
     public ResourceLocation getTextureLocation(AnimaniaRabbit rabbit) {
-        return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+        return new ResourceLocation(Animania.MOD_ID,
                 "textures/entity/rabbits/rabbit_" + rabbit.textureName() + ".png");
     }
 

@@ -1,7 +1,12 @@
 {
   "replace": false,
   "values": [
-    "#animania:fox_dog_habitats", "minecraft:windswept_hills", "minecraft:windswept_forest",
-    "minecraft:snowy_plains", "minecraft:snowy_slopes", "minecraft:jagged_peaks", "minecraft:frozen_peaks"
+    "#animania:fox_dog_habitats",
+    "minecraft:windswept_hills",
+    "minecraft:windswept_forest",
+    "minecraft:snowy_plains",
+    "minecraft:snowy_slopes",
+    "minecraft:jagged_peaks",
+    "minecraft:frozen_peaks"
   ]
 }

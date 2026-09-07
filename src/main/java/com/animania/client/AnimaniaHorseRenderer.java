@@ -47,7 +47,7 @@ public final class AnimaniaHorseRenderer extends MobRenderer<AnimaniaHorse, Lega
 
     @Override
     public ResourceLocation getTextureLocation(AnimaniaHorse horse) {
-        return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+        return new ResourceLocation(Animania.MOD_ID,
                 "textures/entity/horses/draft_horse_" + COATS[Math.floorMod(horse.coat(), COATS.length)] + ".png");
     }
 }

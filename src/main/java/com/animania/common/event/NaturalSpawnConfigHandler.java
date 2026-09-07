@@ -12,9 +12,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 
 @EventBusSubscriber(modid = Animania.MOD_ID)
 public final class NaturalSpawnConfigHandler {
@@ -26,11 +26,11 @@ public final class NaturalSpawnConfigHandler {
         EntityType<?> type = event.getEntityType();
         if (type == EntityType.SQUID && !LegacyConfig.SPAWN_FRESH_WATER_SQUIDS.get()
                 && !event.getLevel().getBiome(event.getPos()).is(BiomeTags.IS_OCEAN)) {
-            event.setResult(MobSpawnEvent.SpawnPlacementCheck.Result.FAIL);
+            event.setResult(net.minecraftforge.eventbus.api.Event.Result.DENY);
             return;
         }
         if (replacedVanillaType(type)) {
-            event.setResult(MobSpawnEvent.SpawnPlacementCheck.Result.FAIL);
+            event.setResult(net.minecraftforge.eventbus.api.Event.Result.DENY);
             return;
         }
 
@@ -41,7 +41,7 @@ public final class NaturalSpawnConfigHandler {
                 || (!AnimaniaConfig.ENABLE_PET_WILDLIFE_SPAWNS.get() && isPetWildlife(type))
                 || (LegacyConfig.SPAWN_ENABLED.containsKey(group) && !LegacyConfig.SPAWN_ENABLED.get(group).get());
         if (disabled || !allowedBiome(event, type) || overCap(event, group, type)) {
-            event.setResult(MobSpawnEvent.SpawnPlacementCheck.Result.FAIL);
+            event.setResult(net.minecraftforge.eventbus.api.Event.Result.DENY);
         }
     }
 

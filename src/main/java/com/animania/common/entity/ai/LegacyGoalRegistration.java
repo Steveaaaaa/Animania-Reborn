@@ -59,12 +59,12 @@ public final class LegacyGoalRegistration {
         if (animal instanceof AnimaniaDog d) {
             animal.targetSelector.removeAllGoals(goal -> goal instanceof OwnerHurtByTargetGoal || goal instanceof OwnerHurtTargetGoal);
             animal.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(d) {
-                private boolean awake() { return !d.getData(ModAttachments.SLEEPING) && !d.isInSittingPose(); }
+                private boolean awake() { return !ModAttachments.getData(d, ModAttachments.SLEEPING) && !d.isInSittingPose(); }
                 @Override public boolean canUse() { return awake() && super.canUse(); }
                 @Override public boolean canContinueToUse() { return awake() && super.canContinueToUse(); }
             });
             animal.targetSelector.addGoal(2, new OwnerHurtTargetGoal(d) {
-                private boolean awake() { return !d.getData(ModAttachments.SLEEPING) && !d.isInSittingPose(); }
+                private boolean awake() { return !ModAttachments.getData(d, ModAttachments.SLEEPING) && !d.isInSittingPose(); }
                 @Override public boolean canUse() { return awake() && super.canUse(); }
                 @Override public boolean canContinueToUse() { return awake() && super.canContinueToUse(); }
             });
@@ -79,7 +79,7 @@ public final class LegacyGoalRegistration {
         double wanderSpeed = pet || ferret ? 1.2D : rabbit ? 1.8D : hamster ? 1.1D : 1.0D;
         animal.goalSelector.addGoal(wanderPriority, new WaterAvoidingRandomStrollGoal(animal, wanderSpeed) {
             @Override public boolean canUse() {
-                return !animal.getData(ModAttachments.SLEEPING)
+                return !ModAttachments.getData(animal, ModAttachments.SLEEPING)
                         && (!(animal instanceof AnimaniaHorse h) || h.level().isDay() && !h.isPullingVehicle())
                         && super.canUse();
             }
@@ -91,7 +91,7 @@ public final class LegacyGoalRegistration {
         animal.goalSelector.addGoal(panicPriority, new PanicGoal(animal, panicSpeed) {
             @Override public boolean canUse() {
                 if (animal instanceof AnimaniaCow && animal.getLastHurtByMob() != null) return false;
-                if (animal.isOnFire()) animal.setData(ModAttachments.SLEEPING, false);
+                if (animal.isOnFire()) ModAttachments.setData(animal, ModAttachments.SLEEPING, false);
                 return super.canUse();
             }
         });

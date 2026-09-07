@@ -51,7 +51,7 @@ public final class AnimaniaCatRenderer extends MobRenderer<AnimaniaCat, LegacyAn
 
     @Override
     public ResourceLocation getTextureLocation(AnimaniaCat cat) {
-        return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+        return new ResourceLocation(Animania.MOD_ID,
                 "textures/entity/cats/" + cat.breed().getSerializedName() + ".png");
     }
 }

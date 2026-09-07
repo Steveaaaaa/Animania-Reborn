@@ -4,14 +4,13 @@ import com.animania.common.registry.ModBlockEntities;
 import com.animania.common.registry.ModItems;
 import com.animania.extra.rodent.AnimaniaRodent;
 import com.animania.extra.world.block.entity.HamsterWheelBlockEntity;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -36,7 +35,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 
 public final class HamsterWheelBlock extends BaseEntityBlock {
-    public static final MapCodec<HamsterWheelBlock> CODEC = simpleCodec(HamsterWheelBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty RUNNING = BooleanProperty.create("running");
     private static final VoxelShape SHAPE = Block.box(1, 0, 2, 15, 15, 14);
@@ -47,12 +45,7 @@ public final class HamsterWheelBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
-
-    @Override
-    protected RenderShape getRenderShape(BlockState state) {
+    public RenderShape getRenderShape(BlockState state) {
         return RenderShape.INVISIBLE;
     }
 
@@ -67,22 +60,20 @@ public final class HamsterWheelBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
-    @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                                Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!stack.is(ModItems.HAMSTER_FOOD.get())) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if (!stack.is(ModItems.HAMSTER_FOOD.get())) return InteractionResult.PASS;
         if (!(level.getBlockEntity(pos) instanceof HamsterWheelBlockEntity wheel) || !wheel.addFood()) {
-            return ItemInteractionResult.FAIL;
+            return InteractionResult.FAIL;
         }
         if (!level.isClientSide() && !player.getAbilities().instabuild) stack.shrink(1);
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        return InteractionResult.sidedSuccess(level.isClientSide());
     }
 
-    @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
                                                 Player player, BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof HamsterWheelBlockEntity wheel)) return InteractionResult.PASS;
@@ -109,17 +100,17 @@ public final class HamsterWheelBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected boolean hasAnalogOutputSignal(BlockState state) {
+    public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
         return level.getBlockEntity(pos) instanceof HamsterWheelBlockEntity wheel && wheel.hasHamster() ? 15 : 0;
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof HamsterWheelBlockEntity wheel) {
             if (!level.isClientSide()) {
                 wheel.releaseHamster();
@@ -140,5 +131,14 @@ public final class HamsterWheelBlock extends BaseEntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return level.isClientSide() ? null
                 : createTickerHelper(type, ModBlockEntities.HAMSTER_WHEEL.get(), HamsterWheelBlockEntity::serverTick);
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        InteractionResult result = useItemOn(player.getItemInHand(hand), state, level, pos, player, hand, hit);
+        if (result != InteractionResult.PASS) return result;
+        return useWithoutItem(state, level, pos, player, hit);
     }
 }

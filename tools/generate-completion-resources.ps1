@@ -28,17 +28,17 @@ function Block-Cube([string]$Name, [string]$Texture = '') {
 }
 
 function Shapeless([string]$Name, [array]$Ingredients, [string]$Result, [int]$Count = 1) {
-    $resultObject = [ordered]@{ id = $Result }
+    $resultObject = [ordered]@{ item = $Result }
     if ($Count -ne 1) { $resultObject.count = $Count }
-    Write-JsonFile (Join-Path $data "recipe/$Name.json") ([ordered]@{
+    Write-JsonFile (Join-Path $data "recipes/$Name.json") ([ordered]@{
         type = 'minecraft:crafting_shapeless'; category = 'misc'; ingredients = $Ingredients; result = $resultObject
     })
 }
 
 function Smelting([string]$Name, [string]$IngredientId, [string]$Result, [double]$Experience = 0.35) {
-    Write-JsonFile (Join-Path $data "recipe/$Name.json") ([ordered]@{
+    Write-JsonFile (Join-Path $data "recipes/$Name.json") ([ordered]@{
         type = 'minecraft:smelting'; category = 'food'; cookingtime = 200; experience = $Experience
-        ingredient = [ordered]@{ item = $IngredientId }; result = [ordered]@{ id = $Result }
+        ingredient = [ordered]@{ item = $IngredientId }; result = $Result
     })
 }
 
@@ -55,7 +55,7 @@ Item-Model 'bucket_slop'
 
 foreach ($name in @('bucket_honey')) {
     Write-JsonFile (Join-Path $assets "models/item/$name.json") ([ordered]@{
-        parent = 'neoforge:item/bucket'; loader = 'neoforge:fluid_container'; fluid = 'animania:animania_honey'
+        parent = 'forge:item/bucket'; loader = 'forge:fluid_container'; fluid = 'animania:animania_honey'
     })
 }
 
@@ -89,26 +89,26 @@ foreach ($fluid in @('milk_holstein','milk_friesian','milk_jersey','milk_goat','
 $item = { param($id) [ordered]@{ item = $id } }
 $tag = { param($id) [ordered]@{ tag = $id } }
 Shapeless 'block_straw' @((&$item 'minecraft:wheat')) 'animania:block_straw'
-Shapeless 'animania_manual' @((&$item 'minecraft:book'), (&$tag 'c:seeds'), (&$item 'animania:block_straw')) 'animania:animania_manual'
+Shapeless 'animania_manual' @((&$item 'minecraft:book'), (&$tag 'forge:seeds'), (&$item 'animania:block_straw')) 'animania:animania_manual'
 Shapeless 'salt_lick' @((1..8 | ForEach-Object { &$item 'animania:salt' }) + @((&$item 'minecraft:water_bucket'))) 'animania:salt_lick'
 
-Write-JsonFile (Join-Path $data 'recipe/carving_knife.json') ([ordered]@{
+Write-JsonFile (Join-Path $data 'recipes/carving_knife.json') ([ordered]@{
     type='minecraft:crafting_shaped'; category='equipment'; pattern=@(' II',' SI','S  ')
-    key=[ordered]@{ I=(& $tag 'c:ingots/iron'); S=(& $tag 'c:rods/wooden') }
-    result=[ordered]@{ id='animania:carving_knife' }
+    key=[ordered]@{ I=(& $tag 'forge:ingots/iron'); S=(& $tag 'forge:rods/wooden') }
+    result=[ordered]@{ item='animania:carving_knife' }
 })
-Write-JsonFile (Join-Path $data 'recipe/riding_crop.json') ([ordered]@{
+Write-JsonFile (Join-Path $data 'recipes/riding_crop.json') ([ordered]@{
     type='minecraft:crafting_shaped'; category='equipment'; pattern=@('  L',' S ','L  ')
-    key=[ordered]@{ L=(& $item 'minecraft:leather'); S=(& $tag 'c:rods/wooden') }
-    result=[ordered]@{ id='animania:riding_crop' }
+    key=[ordered]@{ L=(& $item 'minecraft:leather'); S=(& $tag 'forge:rods/wooden') }
+    result=[ordered]@{ item='animania:riding_crop' }
 })
-Write-JsonFile (Join-Path $data 'recipe/bee_hive.json') ([ordered]@{
+Write-JsonFile (Join-Path $data 'recipes/bee_hive.json') ([ordered]@{
     type='minecraft:crafting_shaped'; category='misc'; pattern=@('PPP','HSH','PPP')
     key=[ordered]@{ P=(& $tag 'minecraft:planks'); H=(& $item 'minecraft:honeycomb'); S=(& $item 'minecraft:slime_ball') }
-    result=[ordered]@{ id='animania:bee_hive' }
+    result=[ordered]@{ item='animania:bee_hive' }
 })
 
-Shapeless 'plain_omelette' @((&$tag 'c:eggs'), (&$tag 'c:eggs')) 'animania:plain_omelette'
+Shapeless 'plain_omelette' @((&$tag 'forge:eggs'), (&$tag 'forge:eggs')) 'animania:plain_omelette'
 Shapeless 'cheese_omelette' @((&$item 'animania:plain_omelette'), (&$tag 'animania:cheese_wedges')) 'animania:cheese_omelette'
 Shapeless 'bacon_omelette' @((&$item 'animania:plain_omelette'), (&$item 'animania:cooked_prime_bacon')) 'animania:bacon_omelette'
 Shapeless 'truffle_omelette' @((&$item 'animania:plain_omelette'), (&$item 'animania:truffle')) 'animania:truffle_omelette'
@@ -140,25 +140,25 @@ foreach ($entry in $woolToVanilla.GetEnumerator()) {
     Shapeless "wool_$($entry.Key)_to_vanilla" @((&$item "animania:wool_$($entry.Key)")) $entry.Value
 }
 
-Write-JsonFile (Join-Path $data 'tags/item/cheese_wedges.json') ([ordered]@{
+Write-JsonFile (Join-Path $data 'tags/items/cheese_wedges.json') ([ordered]@{
     replace=$false; values=@('animania:holstein_cheese_wedge','animania:friesian_cheese_wedge',
         'animania:jersey_cheese_wedge','animania:goat_cheese_wedge','animania:sheep_cheese_wedge')
 })
 
 function Simple-Loot([string]$Name, [string]$ItemName) {
-    Write-JsonFile (Join-Path $data "loot_table/blocks/$Name.json") ([ordered]@{
+    Write-JsonFile (Join-Path $data "loot_tables/blocks/$Name.json") ([ordered]@{
         type='minecraft:block'; pools=@([ordered]@{ rolls=1; entries=@([ordered]@{ type='minecraft:item'; name=$ItemName }) })
-        random_sequence="animania:blocks/$Name"
+
     })
 }
 Simple-Loot 'block_straw' 'animania:block_straw'
 Simple-Loot 'block_hive' 'animania:bee_hive'
 Simple-Loot 'block_wild_hive' 'animania:wild_hive'
 foreach ($wool in $wools) { Simple-Loot "wool_$wool" "animania:wool_$wool" }
-Write-JsonFile (Join-Path $data 'loot_table/blocks/salt_lick.json') ([ordered]@{ type='minecraft:block'; pools=@() })
+Write-JsonFile (Join-Path $data 'loot_tables/blocks/salt_lick.json') ([ordered]@{ type='minecraft:block'; pools=@() })
 
 function Entity-Loot([string]$Name, [string]$Meat) {
-    Write-JsonFile (Join-Path $data "loot_table/entities/$Name.json") ([ordered]@{
+    Write-JsonFile (Join-Path $data "loot_tables/entities/$Name.json") ([ordered]@{
         type='minecraft:entity'; pools=@(
             [ordered]@{ rolls=1; entries=@([ordered]@{ type='minecraft:item'; name='minecraft:feather'; functions=@([ordered]@{ function='minecraft:set_count'; count=[ordered]@{ min=0; max=1 } },[ordered]@{ function='minecraft:enchanted_count_increase'; enchantment='minecraft:looting'; count=[ordered]@{ min=0; max=1 } }) }) },
             [ordered]@{ rolls=1; entries=@([ordered]@{ type='minecraft:item'; name=$Meat; functions=@([ordered]@{ function='minecraft:set_count'; count=1 },[ordered]@{ function='minecraft:furnace_smelt'; conditions=@([ordered]@{ condition='minecraft:entity_properties'; entity='this'; predicate=[ordered]@{ flags=[ordered]@{ is_on_fire=$true } } }) }) }) }
@@ -167,7 +167,7 @@ function Entity-Loot([string]$Name, [string]$Meat) {
 }
 Entity-Loot 'chicken_prime' 'animania:raw_prime_chicken'
 Entity-Loot 'chicken_regular' 'minecraft:chicken'
-Write-JsonFile (Join-Path $data 'loot_table/entities/goat_regular.json') ([ordered]@{
+Write-JsonFile (Join-Path $data 'loot_tables/entities/goat_regular.json') ([ordered]@{
     type='minecraft:entity'; pools=@([ordered]@{ rolls=1; entries=@([ordered]@{ type='minecraft:item'; name='animania:raw_chevon'; functions=@([ordered]@{ function='minecraft:set_count'; count=[ordered]@{ min=1; max=2 } },[ordered]@{ function='minecraft:furnace_smelt'; conditions=@([ordered]@{ condition='minecraft:entity_properties'; entity='this'; predicate=[ordered]@{ flags=[ordered]@{ is_on_fire=$true } } }) }) }) }); random_sequence='animania:entities/goat_regular'
 })
 

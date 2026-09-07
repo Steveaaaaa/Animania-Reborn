@@ -52,9 +52,9 @@ public final class AnimaniaHorse extends Horse {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(COAT, 0);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(COAT, 0);
     }
 
     private String entityPath() {
@@ -70,7 +70,7 @@ public final class AnimaniaHorse extends Horse {
     }
 
     private boolean wellCaredFor() {
-        return getData(ModAttachments.HUNGER) > 20 && getData(ModAttachments.THIRST) > 20;
+        return ModAttachments.getData(this, ModAttachments.HUNGER) > 20 && ModAttachments.getData(this, ModAttachments.THIRST) > 20;
     }
 
     @Override
@@ -167,8 +167,8 @@ public final class AnimaniaHorse extends Horse {
     @Override
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
-        SpawnGroupData result = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData, net.minecraft.nbt.CompoundTag spawnTag) {
+        SpawnGroupData result = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData, spawnTag);
         entityData.set(COAT, random.nextInt(6));
         if (role() == FarmAnimalRole.FEMALE) {
             com.animania.common.entity.LegacyNaturalFamily.spawn(level, this, spawnType,
@@ -201,10 +201,9 @@ public final class AnimaniaHorse extends Horse {
     }
 
     @Override
-    public ResourceKey<LootTable> getDefaultLootTable() {
+    public ResourceLocation getDefaultLootTable() {
         if (role() == FarmAnimalRole.YOUNG) return BuiltInLootTables.EMPTY;
-        return ResourceKey.create(Registries.LOOT_TABLE,
-                ResourceLocation.fromNamespaceAndPath("animania", "entities/horse"));
+        return new ResourceLocation("animania", "entities/horse");
     }
 
     @Override
@@ -221,5 +220,10 @@ public final class AnimaniaHorse extends Horse {
         pregnant = tag.getBoolean("Pregnant");
         gestation = tag.getInt("Gestation");
         entityData.set(COAT, Math.floorMod(tag.getInt("ColorNumber"), 6));
+    }
+    @Override public void tick() {
+        com.animania.common.entity.AnimalTickBridge.before(this);
+        super.tick();
+        com.animania.common.entity.AnimalTickBridge.after(this);
     }
 }

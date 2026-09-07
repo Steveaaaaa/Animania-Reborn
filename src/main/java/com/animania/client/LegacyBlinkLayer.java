@@ -40,7 +40,7 @@ public final class LegacyBlinkLayer<T extends Entity> extends RenderLayer<T, Leg
     public void render(PoseStack poseStack, MultiBufferSource buffers, int packedLight, T entity,
                        float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks,
                        float netHeadYaw, float headPitch) {
-        boolean sleeping = entity.getData(ModAttachments.SLEEPING);
+        boolean sleeping = ModAttachments.getData(entity, ModAttachments.SLEEPING);
         // The old timer blinked for seven ticks at randomized roughly five-second intervals.
         // Entity id offsets keep nearby animals from blinking in lockstep without networking a cosmetic timer.
         boolean blinking = Math.floorMod(entity.tickCount + entity.getId() * 31, 100) < 7;
@@ -56,7 +56,7 @@ public final class LegacyBlinkLayer<T extends Entity> extends RenderLayer<T, Leg
 
     private void renderMask(PoseStack poseStack, MultiBufferSource buffers, int packedLight,
                             String file, int rgb) {
-        ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+        ResourceLocation texture = new ResourceLocation(Animania.MOD_ID,
                 "textures/entity/" + file);
         VertexConsumer consumer = buffers.getBuffer(RenderType.entityCutoutNoCull(texture));
         getParentModel().renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY,

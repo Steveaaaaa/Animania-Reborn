@@ -1,18 +1,19 @@
 # Animania Reborn · 动物谷重生
 
 Animania Reborn brings [Animania](https://github.com/capnkirok/animaniamod) to
-Minecraft 1.21.1 on NeoForge. It combines Base, Farm, Cats & Dogs, and Extra in
+Minecraft 1.20.1 on Forge. It combines Base, Farm, Cats & Dogs, and Extra in
 one mod, using the original 1.12 source, models, textures and sounds.
 
 ## Installation
 
-- Minecraft 1.21.1
-- NeoForge 21.1.200 or newer
-- Java 21
+- Minecraft 1.20.1
+- Forge 47.1.0 or newer for Minecraft 1.20.1
+- Java 17
 
-Place `animania-0.1.1.jar` in your instance's `mods` folder and remove older
+Place `animania-forge-1.20.1-0.1.1.jar` in your instance's `mods` folder and remove older
 Animania Reborn jars before starting the game. Restart the game after updating.
-Jade, JEI and EMI are optional.
+Jade 11.13.1+, JEI 15.20.0.106+ and EMI 1.1.22+ are optional. Use their
+Forge 1.20.1 builds.
 
 ## Features
 
@@ -38,15 +39,20 @@ part of `latest.log`. Importing worlds from the original 1.12 mod is not support
 
 ## Building
 
-With a Java 21 JDK installed, run:
+With a Java 17 JDK installed, run:
 
 ```powershell
 .\gradlew.bat build -x test --no-daemon
 ```
 
-The jar is written to `build/libs/`. The build uses NeoForge 21.1.249; the mod's
-metadata permits 21.1.200 and later. This lower bound is a compatibility
-declaration, not a record of testing every NeoForge release.
+The jar is written to `build/libs/`. Compilation targets Forge 47.1.0 and Java 17.
+The loader range is a compatibility declaration; later Forge builds still need
+in-game checking.
+
+This branch, `codex/forge-1.20.1`, maintains the Forge port. The `main` branch
+continues to maintain NeoForge 1.21.1. Both descend from the 0.1.1 implementation;
+fixes should be reviewed and applied to each branch as needed. Worlds cannot be
+downgraded from Minecraft 1.21.1 to 1.20.1.
 
 If Windows reports `Unable to establish loopback connection`, create `C:\jtmp`
 and set a short socket path for the current shell:

@@ -48,7 +48,7 @@ public final class AnimaniaJeiPlugin implements IModPlugin {
     }
 
     private static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID, path);
+        return new ResourceLocation(Animania.MOD_ID, path);
     }
 
     private static final class CheeseAgingCategory implements IRecipeCategory<CheeseAgingDisplay> {

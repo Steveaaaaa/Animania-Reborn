@@ -55,10 +55,10 @@ public final class AnimaniaPigRenderer extends MobRenderer<AnimaniaPig, LegacyAn
             };
         }
         poseStack.scale(scale, scale, scale);
-        if (pig.getData(ModAttachments.SLEEPING) || pig.isInMud()) {
-            boolean mudPose = !pig.getData(ModAttachments.SLEEPING) && pig.isInMud();
+        if (ModAttachments.getData(pig, ModAttachments.SLEEPING) || pig.isInMud()) {
+            boolean mudPose = !ModAttachments.getData(pig, ModAttachments.SLEEPING) && pig.isInMud();
             double y = pig.role() == com.animania.farm.livestock.FarmAnimalRole.YOUNG
-                    ? pig.getBbHeight() - (mudPose ? 0.80D : 0.70D) + pig.getData(ModAttachments.CHILD_GROWTH) * 0.001D
+                    ? pig.getBbHeight() - (mudPose ? 0.80D : 0.70D) + ModAttachments.getData(pig, ModAttachments.CHILD_GROWTH) * 0.001D
                     : pig.getBbHeight() - (mudPose ? 1.45D : 1.25D);
             poseStack.translate(0.0D, y, 0.0D);
             poseStack.mulPose(Axis.ZP.rotationDegrees(86.0F));
@@ -72,7 +72,7 @@ public final class AnimaniaPigRenderer extends MobRenderer<AnimaniaPig, LegacyAn
             case FEMALE -> "sow";
             case MALE -> "hog";
         };
-        return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+        return new ResourceLocation(Animania.MOD_ID,
                 "textures/entity/pigs/" + role + "_" + pig.breed().getSerializedName() + ".png");
     }
 

@@ -10,9 +10,9 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public final class PetBowlBlockEntity extends BlockEntity {
     private ItemStack food = ItemStack.EMPTY;
@@ -22,7 +22,7 @@ public final class PetBowlBlockEntity extends BlockEntity {
         @Override public ItemStack getStackInSlot(int slot) { return slot == 0 ? food.copy() : ItemStack.EMPTY; }
         @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
             if (slot != 0 || stack.isEmpty() || water > 0 || !PetBowlBlock.isBowlFood(stack)
-                    || !food.isEmpty() && !ItemStack.isSameItemSameComponents(food, stack)) return stack;
+                    || !food.isEmpty() && !ItemStack.isSameItemSameTags(food, stack)) return stack;
             int accepted = Math.min(stack.getCount(), 3 - food.getCount());
             if (accepted <= 0) return stack;
             if (!simulate) {
@@ -90,7 +90,7 @@ public final class PetBowlBlockEntity extends BlockEntity {
     public IFluidHandler automationFluids() { return automationFluids; }
 
     public boolean addFood(ItemStack stack) {
-        if (water > 0 || !PetBowlBlock.isBowlFood(stack) || !food.isEmpty() && !ItemStack.isSameItemSameComponents(food, stack)
+        if (water > 0 || !PetBowlBlock.isBowlFood(stack) || !food.isEmpty() && !ItemStack.isSameItemSameTags(food, stack)
                 || food.getCount() >= 3) return false;
         if (food.isEmpty()) food = stack.copyWithCount(1);
         else food.grow(1);
@@ -151,17 +151,17 @@ public final class PetBowlBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        if (!food.isEmpty()) tag.put("Food", food.save(registries));
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        if (!food.isEmpty()) tag.put("Food", food.save(new CompoundTag()));
         tag.putInt("StorageVersion", 2);
         tag.putInt("Water", water);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        food = tag.contains("Food") ? ItemStack.parseOptional(registries, tag.getCompound("Food")) : ItemStack.EMPTY;
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        food = tag.contains("Food") ? ItemStack.of(tag.getCompound("Food")) : ItemStack.EMPTY;
         int storedWater = tag.getInt("Water");
         water = !tag.contains("StorageVersion") && storedWater <= 3 ? storedWater * 334 : storedWater;
         water = Math.max(0, Math.min(1000, water));

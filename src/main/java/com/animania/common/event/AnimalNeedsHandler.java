@@ -36,13 +36,13 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
-import net.neoforged.neoforge.fluids.FluidUtil;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import java.util.Collections;
 import java.util.Set;
@@ -56,20 +56,18 @@ public final class AnimalNeedsHandler {
     private AnimalNeedsHandler() {
     }
 
-    @SubscribeEvent
-    public static void onAnimalTick(EntityTickEvent.Post event) {
-        Entity entity = event.getEntity();
-        if (!(entity instanceof Animal animal) || animal.level().isClientSide()
+    public static void onAnimalTick(Animal animal) {
+        if (animal.level().isClientSide()
                 || LegacyAnimalNeeds.profile(animal) == null) return;
         maintainSleeping(animal);
-        int eating = animal.getData(ModAttachments.EATING_TICKS);
-        if (eating > 0) animal.setData(ModAttachments.EATING_TICKS, eating - 1);
+        int eating = ModAttachments.getData(animal, ModAttachments.EATING_TICKS);
+        if (eating > 0) ModAttachments.setData(animal, ModAttachments.EATING_TICKS, eating - 1);
         LegacyAnimalNeeds.tick(animal);
         LegacyGrowth.tick(animal);
         LegacyReproduction.tickFertility(animal);
         LegacyReproduction.tickMateReset(animal);
 
-        if ((!LegacyConfig.FEED_TO_BREED.get() || animal.getData(ModAttachments.HAND_FED))
+        if ((!LegacyConfig.FEED_TO_BREED.get() || ModAttachments.getData(animal, ModAttachments.HAND_FED))
                 && LegacyAnimalNeeds.isFed(animal) && LegacyAnimalNeeds.isWatered(animal)
                 && animal.getAge() == 0 && !AnimalInformation.isSterilized(animal)
                 && (!LegacyConfig.REQUIRE_ANIMAL_INTERACTION_FOR_AI.get()
@@ -82,7 +80,8 @@ public final class AnimalNeedsHandler {
     @SubscribeEvent
     public static void onEntityJoin(EntityJoinLevelEvent event) {
         if (event.getLevel().isClientSide() || !(event.getEntity() instanceof Animal animal)
-                || !(animal instanceof PathfinderMob pathfinder) || !GOALS_INSTALLED.add(animal)) return;
+                || !GOALS_INSTALLED.add(animal)) return;
+        PathfinderMob pathfinder = animal;
         LegacyAnimalNeeds.Profile profile = LegacyAnimalNeeds.profile(animal);
         if (profile == null) return;
         pathfinder.goalSelector.removeAllGoals(goal -> goal instanceof net.minecraft.world.entity.ai.goal.TemptGoal);
@@ -233,15 +232,16 @@ public final class AnimalNeedsHandler {
     }
 
     private static void maintainSleeping(Animal animal) {
-        if (animal.getData(ModAttachments.SLEEPING)) LegacySleepGoal.checkSleepingWake(animal);
-        boolean sleeping = animal.getData(ModAttachments.SLEEPING);
+        if (ModAttachments.getData(animal, ModAttachments.SLEEPING)) LegacySleepGoal.checkSleepingWake(animal);
+        boolean sleeping = ModAttachments.getData(animal, ModAttachments.SLEEPING);
         if (sleeping && (!LegacyConfig.ANIMALS_SLEEP.get() || animal.isPassenger() || animal.isVehicle() || animal.isLeashed() || animal.hurtTime > 0
                 || animal.getTarget() != null
                 || animal instanceof TamableAnimal tame && tame.isInSittingPose())) {
-            animal.setData(ModAttachments.SLEEPING, false);
+            ModAttachments.setData(animal, ModAttachments.SLEEPING, false);
             sleeping = false;
         }
-        if (sleeping && animal instanceof Mob mob) {
+        if (sleeping) {
+            Mob mob = animal;
             mob.getNavigation().stop();
             mob.setDeltaMovement(0.0D, mob.getDeltaMovement().y, 0.0D);
         }
@@ -255,10 +255,10 @@ public final class AnimalNeedsHandler {
         if (event.getTarget() instanceof Animal animal && LegacyAnimalNeeds.profile(animal) != null) {
             ItemStack held = event.getEntity().getItemInHand(event.getHand());
             if (!animal.level().isClientSide() && isWaterContainer(held)
-                    && !animal.getData(ModAttachments.SLEEPING)) {
+                    && !ModAttachments.getData(animal, ModAttachments.SLEEPING)) {
                 if (!event.getEntity().getAbilities().instabuild) emptyOneWaterContainer(event, held);
                 LegacyAnimalNeeds.water(animal);
-                animal.setData(ModAttachments.EATING_TICKS, 40);
+                ModAttachments.setData(animal, ModAttachments.EATING_TICKS, 40);
                 showCareHeartsOrEnableBreeding(animal, event.getEntity());
                 event.setCancellationResult(InteractionResult.SUCCESS);
                 event.setCanceled(true);
@@ -266,17 +266,17 @@ public final class AnimalNeedsHandler {
             }
             if (animal instanceof com.animania.farm.livestock.AnimaniaPig
                     && !animal.level().isClientSide() && isSlopContainer(held)
-                    && !animal.getData(ModAttachments.SLEEPING)) {
+                    && !ModAttachments.getData(animal, ModAttachments.SLEEPING)) {
                 if (!event.getEntity().getAbilities().instabuild) emptyOneFluidContainer(event, held, false);
                 LegacyAnimalNeeds.feed(animal, true, true);
-                animal.setData(ModAttachments.EATING_TICKS, 40);
+                ModAttachments.setData(animal, ModAttachments.EATING_TICKS, 40);
                 showCareHeartsOrEnableBreeding(animal, event.getEntity());
                 event.setCancellationResult(InteractionResult.SUCCESS);
                 event.setCanceled(true);
                 return;
             }
             if (animal.isFood(held)) {
-                if (animal.getData(ModAttachments.SLEEPING)) {
+                if (ModAttachments.getData(animal, ModAttachments.SLEEPING)) {
                     event.setCancellationResult(InteractionResult.sidedSuccess(animal.level().isClientSide()));
                     event.setCanceled(true);
                     return;
@@ -284,7 +284,7 @@ public final class AnimalNeedsHandler {
                 if (!animal.level().isClientSide()) {
                     if (!event.getEntity().getAbilities().instabuild) held.shrink(1);
                     LegacyAnimalNeeds.feed(animal, true, false);
-                    animal.setData(ModAttachments.EATING_TICKS, 80);
+                    ModAttachments.setData(animal, ModAttachments.EATING_TICKS, 80);
                     showCareHeartsOrEnableBreeding(animal, event.getEntity());
                     if (animal instanceof TamableAnimal tame && !tame.isTame()) {
                         tame.tame(event.getEntity());
@@ -301,13 +301,12 @@ public final class AnimalNeedsHandler {
                 && event.getEntity().getItemInHand(event.getHand()).is(ModItems.CARVING_KNIFE.get())
                 && AnimalInformation.canBeSterilized(animal)) {
             if (!animal.level().isClientSide() && !AnimalInformation.isSterilized(animal)) {
-                animal.setData(ModAttachments.STERILIZED, true);
+                ModAttachments.setData(animal, ModAttachments.STERILIZED, true);
                 animal.resetLove();
                 var player = event.getEntity();
                 var knife = player.getItemInHand(event.getHand());
                 knife.hurtAndBreak(1, player,
-                        event.getHand() == net.minecraft.world.InteractionHand.MAIN_HAND
-                                ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+                        p -> p.broadcastBreakEvent(event.getHand()));
                 if (animal.level() instanceof ServerLevel server) {
                     server.sendParticles(ParticleTypes.EXPLOSION,
                             animal.getX(), animal.getY() + animal.getBbHeight() * 0.5D, animal.getZ(),
@@ -328,13 +327,13 @@ public final class AnimalNeedsHandler {
             event.getEntity().displayClientMessage(Component.translatable(
                     "message.animania.animal_needs",
                     animal.getName(),
-                    animal.getData(ModAttachments.HUNGER),
-                    animal.getData(ModAttachments.THIRST)), true);
+                    ModAttachments.getData(animal, ModAttachments.HUNGER),
+                    ModAttachments.getData(animal, ModAttachments.THIRST)), true);
         }
     }
 
     @SubscribeEvent
-    public static void onLivingFall(net.neoforged.neoforge.event.entity.living.LivingFallEvent event) {
+    public static void onLivingFall(net.minecraftforge.event.entity.living.LivingFallEvent event) {
         if (event.getEntity() instanceof Animal animal && AnimalInformation.isAnimaniaAnimal(animal)
                 && animal.getLeashHolder() != null) {
             event.setDamageMultiplier(event.getDamageMultiplier()

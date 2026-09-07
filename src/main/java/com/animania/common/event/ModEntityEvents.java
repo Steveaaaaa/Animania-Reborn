@@ -15,15 +15,15 @@ import com.animania.extra.peafowl.AnimaniaPeafowl;
 import com.animania.catsdogs.cat.AnimaniaCat;
 import com.animania.catsdogs.dog.AnimaniaDog;
 import net.minecraft.world.entity.animal.frog.Frog;
-import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
-import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 
 @EventBusSubscriber(modid = Animania.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public final class ModEntityEvents {
@@ -81,84 +81,84 @@ public final class ModEntityEvents {
     }
 
     @SubscribeEvent
-    public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
+    public static void registerSpawnPlacements(SpawnPlacementRegisterEvent event) {
         ModEntities.ALL_CHICKENS.forEach((name, type) -> {
             if (name.startsWith("hen_")) {
-                event.register(type.get(), SpawnPlacementTypes.ON_GROUND,
+                event.register(type.get(), SpawnPlacements.Type.ON_GROUND,
                         Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
-                        RegisterSpawnPlacementsEvent.Operation.REPLACE);
+                        SpawnPlacementRegisterEvent.Operation.REPLACE);
             }
         });
         ModEntities.ALL_COWS.forEach((name, type) -> {
             if (name.startsWith("cow_")) {
-                event.register(type.get(), SpawnPlacementTypes.ON_GROUND,
+                event.register(type.get(), SpawnPlacements.Type.ON_GROUND,
                         Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
-                        RegisterSpawnPlacementsEvent.Operation.REPLACE);
+                        SpawnPlacementRegisterEvent.Operation.REPLACE);
             }
         });
         ModEntities.ALL_GOATS.forEach((name, type) -> {
             if (name.startsWith("doe_")) {
-                event.register(type.get(), SpawnPlacementTypes.ON_GROUND,
+                event.register(type.get(), SpawnPlacements.Type.ON_GROUND,
                         Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
-                        RegisterSpawnPlacementsEvent.Operation.REPLACE);
+                        SpawnPlacementRegisterEvent.Operation.REPLACE);
             }
         });
         ModEntities.ALL_PIGS.forEach((name, type) -> {
             if (name.startsWith("sow_")) {
-                event.register(type.get(), SpawnPlacementTypes.ON_GROUND,
+                event.register(type.get(), SpawnPlacements.Type.ON_GROUND,
                         Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
-                        RegisterSpawnPlacementsEvent.Operation.REPLACE);
+                        SpawnPlacementRegisterEvent.Operation.REPLACE);
             }
         });
         ModEntities.ALL_SHEEP.forEach((name, type) -> {
             if (name.startsWith("ewe_")) {
-                event.register(type.get(), SpawnPlacementTypes.ON_GROUND,
+                event.register(type.get(), SpawnPlacements.Type.ON_GROUND,
                         Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
-                        RegisterSpawnPlacementsEvent.Operation.REPLACE);
+                        SpawnPlacementRegisterEvent.Operation.REPLACE);
             }
         });
         ModEntities.ALL_HORSES.forEach((name, type) -> {
             if (name.startsWith("mare_")) {
-                event.register(type.get(), SpawnPlacementTypes.ON_GROUND,
+                event.register(type.get(), SpawnPlacements.Type.ON_GROUND,
                         Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
-                        RegisterSpawnPlacementsEvent.Operation.REPLACE);
+                        SpawnPlacementRegisterEvent.Operation.REPLACE);
             }
         });
         ModEntities.ALL_AMPHIBIANS.values().forEach(type ->
-                event.register(type.get(), SpawnPlacementTypes.ON_GROUND,
+                event.register(type.get(), SpawnPlacements.Type.ON_GROUND,
                         Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Frog::checkFrogSpawnRules,
-                        RegisterSpawnPlacementsEvent.Operation.REPLACE));
+                        SpawnPlacementRegisterEvent.Operation.REPLACE));
         ModEntities.ALL_RODENTS.forEach((name, type) ->
-                event.register(type.get(), SpawnPlacementTypes.ON_GROUND,
+                event.register(type.get(), SpawnPlacements.Type.ON_GROUND,
                         Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                         name.equals("hamster") ? Mob::checkMobSpawnRules : Animal::checkAnimalSpawnRules,
-                        RegisterSpawnPlacementsEvent.Operation.REPLACE));
+                        SpawnPlacementRegisterEvent.Operation.REPLACE));
         ModEntities.ALL_RABBITS.forEach((name, type) -> {
             if (name.startsWith("doe_")) {
-                event.register(type.get(), SpawnPlacementTypes.ON_GROUND,
+                event.register(type.get(), SpawnPlacements.Type.ON_GROUND,
                         Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AnimaniaRabbit::checkSpawnRules,
-                        RegisterSpawnPlacementsEvent.Operation.REPLACE);
+                        SpawnPlacementRegisterEvent.Operation.REPLACE);
             }
         });
         ModEntities.ALL_PEAFOWL.forEach((name, type) -> {
             if (name.startsWith("peahen_")) {
-                event.register(type.get(), SpawnPlacementTypes.ON_GROUND,
+                event.register(type.get(), SpawnPlacements.Type.ON_GROUND,
                         Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
-                        RegisterSpawnPlacementsEvent.Operation.REPLACE);
+                        SpawnPlacementRegisterEvent.Operation.REPLACE);
             }
         });
         ModEntities.ALL_CATS.forEach((name, type) -> {
             if (name.equals("queen_ocelot")) {
-                event.register(type.get(), SpawnPlacementTypes.ON_GROUND,
+                event.register(type.get(), SpawnPlacements.Type.ON_GROUND,
                         Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
-                        RegisterSpawnPlacementsEvent.Operation.REPLACE);
+                        SpawnPlacementRegisterEvent.Operation.REPLACE);
             }
         });
         ModEntities.ALL_DOGS.forEach((name, type) -> {
             if (name.equals("female_fox") || name.equals("female_wolf")) {
-                event.register(type.get(), SpawnPlacementTypes.ON_GROUND,
+                event.register(type.get(), SpawnPlacements.Type.ON_GROUND,
                         Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
-                        RegisterSpawnPlacementsEvent.Operation.REPLACE);
+                        SpawnPlacementRegisterEvent.Operation.REPLACE);
             }
         });
     }

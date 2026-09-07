@@ -94,7 +94,7 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
     }
 
     private static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID, path);
+        return new ResourceLocation(Animania.MOD_ID, path);
     }
 
     private enum AnimalProvider implements IEntityComponentProvider, IServerDataProvider<EntityAccessor> {
@@ -105,9 +105,9 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
             if (!(accessor.getEntity() instanceof Animal animal) || !AnimalInformation.isAnimaniaAnimal(animal)) return;
 
             data.putBoolean("AnimaniaAnimal", true);
-            data.putBoolean("Fed", animal.getData(ModAttachments.FED));
-            data.putBoolean("Watered", animal.getData(ModAttachments.WATERED));
-            data.putBoolean("Sleeping", animal.getData(ModAttachments.SLEEPING));
+            data.putBoolean("Fed", ModAttachments.getData(animal, ModAttachments.FED));
+            data.putBoolean("Watered", ModAttachments.getData(animal, ModAttachments.WATERED));
+            data.putBoolean("Sleeping", ModAttachments.getData(animal, ModAttachments.SLEEPING));
             data.putString("Gender", AnimalInformation.gender(animal).name().toLowerCase());
             data.putBoolean("Sterilized", AnimalInformation.isSterilized(animal));
 
@@ -162,8 +162,8 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
                 }
             }
 
-            addRelationship(data, animal, "Mate", animal.getData(ModAttachments.LAST_MATE), false);
-            addRelationship(data, animal, "Parent", animal.getData(ModAttachments.PARENT), true);
+            addRelationship(data, animal, "Mate", ModAttachments.getData(animal, ModAttachments.LAST_MATE), false);
+            addRelationship(data, animal, "Parent", ModAttachments.getData(animal, ModAttachments.PARENT), true);
         }
 
         private static void addRelationship(CompoundTag data, Animal animal, String key,

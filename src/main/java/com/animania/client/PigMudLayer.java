@@ -25,7 +25,7 @@ public final class PigMudLayer extends RenderLayer<AnimaniaPig, LegacyAnimalMode
         if (pig.mudAmount() <= 0.0F || pig.isMuddy() && pig.splashTimer() > 0) return;
         String texture = pig.role() == FarmAnimalRole.YOUNG ? "piglet_muddy"
                 : pig.breed() == PigBreed.HAMPSHIRE ? "pig_muddy_hampshire" : "pig_muddy";
-        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+        ResourceLocation location = new ResourceLocation(Animania.MOD_ID,
                 "textures/entity/pigs/" + texture + ".png");
         VertexConsumer consumer = buffers.getBuffer(RenderType.entityTranslucent(location));
         int alpha = (int) (255 * pig.mudAmount());

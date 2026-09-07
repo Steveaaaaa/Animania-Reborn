@@ -89,13 +89,13 @@ public final class AnimaniaRabbit extends Rabbit {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(COLOR, 0);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(COLOR, 0);
     }
 
     private boolean wellCaredFor() {
-        return getData(ModAttachments.HUNGER) > 20 && getData(ModAttachments.THIRST) > 20;
+        return ModAttachments.getData(this, ModAttachments.HUNGER) > 20 && ModAttachments.getData(this, ModAttachments.THIRST) > 20;
     }
 
     @Override
@@ -122,7 +122,7 @@ public final class AnimaniaRabbit extends Rabbit {
         targetSelector.addGoal(2, new com.animania.common.entity.ai.LegacyNearestAttackableTargetGoal<>(this, Player.class, true));
         getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(50.0D);
         setHealth(50.0F);
-        setData(ModAttachments.SLEEPING, false);
+        ModAttachments.setData(this, ModAttachments.SLEEPING, false);
     }
 
     private void growIntoAdult() {
@@ -197,8 +197,8 @@ public final class AnimaniaRabbit extends Rabbit {
     @Override
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType spawnType, @Nullable SpawnGroupData data) {
-        SpawnGroupData result = super.finalizeSpawn(level, difficulty, spawnType, data);
+                                        MobSpawnType spawnType, @Nullable SpawnGroupData data, net.minecraft.nbt.CompoundTag spawnTag) {
+        SpawnGroupData result = super.finalizeSpawn(level, difficulty, spawnType, data, spawnTag);
         if (breed() == RabbitBreed.LOP) entityData.set(COLOR, random.nextInt(LOP_COLORS.length));
         if (role() == RabbitRole.DOE) {
             com.animania.common.entity.LegacyNaturalFamily.spawn(level, this, spawnType,
@@ -213,13 +213,13 @@ public final class AnimaniaRabbit extends Rabbit {
     @Override
     public boolean doHurtTarget(net.minecraft.world.entity.Entity target) {
         var type = net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.DAMAGE_TYPE,
-                ResourceLocation.fromNamespaceAndPath("animania", "killer_rabbit"));
+                new ResourceLocation("animania", "killer_rabbit"));
         var source = new net.minecraft.world.damagesource.DamageSource(
                 level().registryAccess().registryOrThrow(net.minecraft.core.registries.Registries.DAMAGE_TYPE).getHolderOrThrow(type));
         boolean hit = target.hurt(source, 5.0F);
         target.hurt(source, 5.0F);
         if (hit && level() instanceof ServerLevel server)
-            net.minecraft.world.item.enchantment.EnchantmentHelper.doPostAttackEffects(server, target, source);
+            doEnchantDamageEffects(this, target);
         if (target instanceof Player player) player.knockback(1.0D, getX() - player.getX(), getZ() - player.getZ());
         return hit;
     }
@@ -249,10 +249,10 @@ public final class AnimaniaRabbit extends Rabbit {
     }
 
     @Override
-    protected ResourceKey<LootTable> getDefaultLootTable() {
+    protected ResourceLocation getDefaultLootTable() {
         if (role() == RabbitRole.KIT) return BuiltInLootTables.EMPTY;
-        return ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("animania",
-                breed().isPrime() ? "entities/rabbit_prime" : "entities/rabbit_regular"));
+        return new ResourceLocation("animania",
+                breed().isPrime() ? "entities/rabbit_prime" : "entities/rabbit_regular");
     }
 
     @Override
@@ -271,5 +271,10 @@ public final class AnimaniaRabbit extends Rabbit {
         gestation = tag.getInt("Gestation");
         entityData.set(COLOR, Math.floorMod(tag.getInt("ColorNumber"), LOP_COLORS.length));
         if (tag.contains("MateBreed")) mateBreed = RabbitBreed.fromPath(tag.getString("MateBreed"));
+    }
+    @Override public void tick() {
+        com.animania.common.entity.AnimalTickBridge.before(this);
+        super.tick();
+        com.animania.common.entity.AnimalTickBridge.after(this);
     }
 }

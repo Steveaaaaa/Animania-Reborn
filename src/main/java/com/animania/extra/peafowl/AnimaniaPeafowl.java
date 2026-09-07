@@ -75,9 +75,9 @@ public final class AnimaniaPeafowl extends Chicken {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(DISPLAYING, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(DISPLAYING, false);
     }
 
     @Override
@@ -148,8 +148,8 @@ public final class AnimaniaPeafowl extends Chicken {
         if (!(other instanceof AnimaniaPeafowl bird) || other == this || isBaby() || bird.isBaby()) return false;
         boolean opposite = role() != bird.role() && role() != PeafowlRole.PEACHICK
                 && bird.role() != PeafowlRole.PEACHICK;
-        return opposite && getData(ModAttachments.HUNGER) > 20 && getData(ModAttachments.THIRST) > 20
-                && bird.getData(ModAttachments.HUNGER) > 20 && bird.getData(ModAttachments.THIRST) > 20
+        return opposite && ModAttachments.getData(this, ModAttachments.HUNGER) > 20 && ModAttachments.getData(this, ModAttachments.THIRST) > 20
+                && ModAttachments.getData(bird, ModAttachments.HUNGER) > 20 && ModAttachments.getData(bird, ModAttachments.THIRST) > 20
                 && isInLove() && bird.isInLove()
                 && com.animania.common.config.LegacyBreedingRules.canMate(this, bird);
     }
@@ -176,18 +176,18 @@ public final class AnimaniaPeafowl extends Chicken {
     @Override
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType reason, @Nullable SpawnGroupData data) {
-        SpawnGroupData result = super.finalizeSpawn(level, difficulty, reason, data);
+                                        MobSpawnType reason, @Nullable SpawnGroupData data, net.minecraft.nbt.CompoundTag spawnTag) {
+        SpawnGroupData result = super.finalizeSpawn(level, difficulty, reason, data, spawnTag);
         int timer = com.animania.common.config.LegacyConfig.LAID_TIMER.get();
         layTimer = timer + random.nextInt(timer);
         return result;
     }
 
     @Override
-    protected ResourceKey<LootTable> getDefaultLootTable() {
+    protected ResourceLocation getDefaultLootTable() {
         if (role() == PeafowlRole.PEACHICK) return BuiltInLootTables.EMPTY;
-        return ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath("animania",
-                "entities/peacock_" + breed().getSerializedName()));
+        return new ResourceLocation("animania",
+                "entities/peacock_" + breed().getSerializedName());
     }
 
     @Override
@@ -206,5 +206,10 @@ public final class AnimaniaPeafowl extends Chicken {
         lookingForNest = tag.getBoolean("LookingForNest");
         featherTimer = tag.getInt("FeatherTimer");
         entityData.set(DISPLAYING, tag.getBoolean("Displaying"));
+    }
+    @Override public void tick() {
+        com.animania.common.entity.AnimalTickBridge.before(this);
+        super.tick();
+        com.animania.common.entity.AnimalTickBridge.after(this);
     }
 }

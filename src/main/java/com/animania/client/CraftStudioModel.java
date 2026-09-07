@@ -235,12 +235,12 @@ public final class CraftStudioModel {
         private void vertex(PoseStack poseStack, VertexConsumer consumer, int index, float u, float v,
                             Vector3f normal, int light, int overlay, int color) {
             float[] point = vertices[index];
-            consumer.addVertex(poseStack.last(), point[0] / 16.0F, point[1] / 16.0F, point[2] / 16.0F)
-                    .setColor(color)
-                    .setUv(u, v)
-                    .setOverlay(overlay)
-                    .setLight(light)
-                    .setNormal(poseStack.last(), normal.x, normal.y, normal.z);
+            consumer.vertex(poseStack.last().pose(), point[0] / 16.0F, point[1] / 16.0F, point[2] / 16.0F)
+                    .color(color)
+                    .uv(u, v)
+                    .overlayCoords(overlay)
+                    .uv2(light)
+                    .normal(poseStack.last().normal(), normal.x, normal.y, normal.z).endVertex();
         }
     }
 

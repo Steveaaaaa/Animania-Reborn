@@ -6,12 +6,12 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.material.Fluid;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.fluids.BaseFlowingFluid;
-import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fluids.ForgeFlowingFluid;
+import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Collection;
 import java.util.EnumMap;
@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 
 public final class ModFluids {
     private static final DeferredRegister<FluidType> FLUID_TYPES =
-            DeferredRegister.create(NeoForgeRegistries.FLUID_TYPES, Animania.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, Animania.MOD_ID);
     private static final DeferredRegister<Fluid> FLUIDS =
             DeferredRegister.create(Registries.FLUID, Animania.MOD_ID);
     private static final Map<MilkType, MilkFluidSet> MILKS = new EnumMap<>(MilkType.class);
@@ -51,22 +51,26 @@ public final class ModFluids {
 
     public static final class MilkFluidSet {
         private final MilkType milkType;
-        private final DeferredHolder<FluidType, FluidType> type;
-        private final DeferredHolder<Fluid, BaseFlowingFluid.Source> source;
-        private final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> flowing;
+        private final RegistryObject<FluidType> type;
+        private final RegistryObject<ForgeFlowingFluid.Source> source;
+        private final RegistryObject<ForgeFlowingFluid.Flowing> flowing;
 
         private MilkFluidSet(MilkType milkType) {
             this.milkType = milkType;
             String id = "milk_" + milkType.getSerializedName();
             this.type = FLUID_TYPES.register(id, () -> new FluidType(
                     FluidType.Properties.create().descriptionId("fluid.animania." + id)
-                            .density(500).viscosity(1000)) {});
-            this.source = FLUIDS.register(id, () -> new BaseFlowingFluid.Source(properties()));
-            this.flowing = FLUIDS.register("flowing_" + id, () -> new BaseFlowingFluid.Flowing(properties()));
+                            .density(500).viscosity(1000)) {
+                @Override public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions> consumer) {
+                    consumer.accept(com.animania.client.ClientModEvents.fluidRendering("fluid/" + id + "_still", "fluid/" + id + "_flow", 0xFFFFFFFF));
+                }
+            });
+            this.source = FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(properties()));
+            this.flowing = FLUIDS.register("flowing_" + id, () -> new ForgeFlowingFluid.Flowing(properties()));
         }
 
-        private BaseFlowingFluid.Properties properties() {
-            return new BaseFlowingFluid.Properties(type, source, flowing)
+        private ForgeFlowingFluid.Properties properties() {
+            return new ForgeFlowingFluid.Properties(type, source, flowing)
                     .bucket(bucketSupplier())
                     .block(blockSupplier())
                     .tickRate(8)
@@ -85,20 +89,20 @@ public final class ModFluids {
             return type.get();
         }
 
-        public BaseFlowingFluid.Source source() {
+        public ForgeFlowingFluid.Source source() {
             return source.get();
         }
 
-        public BaseFlowingFluid.Flowing flowing() {
+        public ForgeFlowingFluid.Flowing flowing() {
             return flowing.get();
         }
     }
 
     public static final class SimpleFluidSet {
         private final String id;
-        private final DeferredHolder<FluidType, FluidType> type;
-        private final DeferredHolder<Fluid, BaseFlowingFluid.Source> source;
-        private final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> flowing;
+        private final RegistryObject<FluidType> type;
+        private final RegistryObject<ForgeFlowingFluid.Source> source;
+        private final RegistryObject<ForgeFlowingFluid.Flowing> flowing;
         private final Supplier<? extends Item> bucket;
         private final Supplier<? extends LiquidBlock> block;
 
@@ -109,13 +113,17 @@ public final class ModFluids {
             this.block = block;
             this.type = FLUID_TYPES.register(id, () -> new FluidType(
                     FluidType.Properties.create().descriptionId("fluid.animania." + id)
-                            .density(density).viscosity(viscosity)) {});
-            this.source = FLUIDS.register(id, () -> new BaseFlowingFluid.Source(properties()));
-            this.flowing = FLUIDS.register("flowing_" + id, () -> new BaseFlowingFluid.Flowing(properties()));
+                            .density(density).viscosity(viscosity)) {
+                @Override public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions> consumer) {
+                    consumer.accept(com.animania.client.ClientModEvents.fluidRendering("fluid/" + id + "_still", "fluid/" + id + "_flow", 0xFFFFFFFF));
+                }
+            });
+            this.source = FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(properties()));
+            this.flowing = FLUIDS.register("flowing_" + id, () -> new ForgeFlowingFluid.Flowing(properties()));
         }
 
-        private BaseFlowingFluid.Properties properties() {
-            return new BaseFlowingFluid.Properties(type, source, flowing)
+        private ForgeFlowingFluid.Properties properties() {
+            return new ForgeFlowingFluid.Properties(type, source, flowing)
                     .bucket(bucket).block(block).tickRate(20).slopeFindDistance(2);
         }
 
@@ -127,11 +135,11 @@ public final class ModFluids {
             return type.get();
         }
 
-        public BaseFlowingFluid.Source source() {
+        public ForgeFlowingFluid.Source source() {
             return source.get();
         }
 
-        public BaseFlowingFluid.Flowing flowing() {
+        public ForgeFlowingFluid.Flowing flowing() {
             return flowing.get();
         }
     }

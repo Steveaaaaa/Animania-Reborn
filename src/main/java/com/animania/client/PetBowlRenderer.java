@@ -14,7 +14,7 @@ import net.minecraft.world.entity.Entity;
 
 /** Renders the original Java ModelPetBowl geometry instead of the placeholder block model. */
 public final class PetBowlRenderer implements BlockEntityRenderer<PetBowlBlockEntity> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
+    private static final ResourceLocation TEXTURE = new ResourceLocation(
             Animania.MOD_ID, "textures/entity/tileentities/pet_bowl.png");
     private final LegacyAnimalModel<Entity> model = LegacyAnimalModel.load(
             "catsdogs/client/models/blocks/modelpetbowl");

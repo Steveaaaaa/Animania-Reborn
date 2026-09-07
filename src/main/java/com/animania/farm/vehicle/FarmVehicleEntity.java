@@ -77,10 +77,10 @@ public final class FarmVehicleEntity extends Entity implements MenuProvider {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        builder.define(PULLER, Optional.empty());
-        builder.define(PULLER_ID, -1);
-        builder.define(HAS_CHEST, false);
+    protected void defineSynchedData() {
+        entityData.define(PULLER, Optional.empty());
+        entityData.define(PULLER_ID, -1);
+        entityData.define(HAS_CHEST, false);
     }
 
     @Override
@@ -179,12 +179,14 @@ public final class FarmVehicleEntity extends Entity implements MenuProvider {
     }
 
     @Override
-    protected Vec3 getPassengerAttachmentPoint(Entity passenger, EntityDimensions dimensions, float partialTick) {
+    protected void positionRider(Entity passenger, Entity.MoveFunction move) {
+        if (!hasPassenger(passenger)) return;
         int index = Math.max(0, getPassengers().indexOf(passenger));
         double foreAft = index == 0 ? 0.25D : -0.55D;
         if (kind == Kind.WAGON) foreAft += 0.35D;
         double height = kind == Kind.WAGON ? 1.05D : 0.72D;
-        return new Vec3(0.0D, height, foreAft).yRot(-getYRot() * ((float) Math.PI / 180.0F));
+        Vec3 offset = new Vec3(0.0D, height, foreAft).yRot(-getYRot() * ((float) Math.PI / 180.0F));
+        move.accept(passenger, getX() + offset.x, getY() + offset.y + passenger.getMyRidingOffset(), getZ() + offset.z);
     }
 
     private void tillGround() {
@@ -399,8 +401,7 @@ public final class FarmVehicleEntity extends Entity implements MenuProvider {
 
     @Override
     protected void addAdditionalSaveData(CompoundTag tag) {
-        HolderLookup.Provider registries = level().registryAccess();
-        tag.put("Items", inventory.createTag(registries));
+        tag.put("Items", inventory.createTag());
         tag.putBoolean("HasChest", hasChest());
         entityData.get(PULLER).ifPresent(uuid -> tag.putUUID("Puller", uuid));
         tag.putFloat("Damage", accumulatedDamage);
@@ -408,7 +409,7 @@ public final class FarmVehicleEntity extends Entity implements MenuProvider {
 
     @Override
     protected void readAdditionalSaveData(CompoundTag tag) {
-        inventory.fromTag(tag.getList("Items", Tag.TAG_COMPOUND), level().registryAccess());
+        inventory.fromTag(tag.getList("Items", Tag.TAG_COMPOUND));
         entityData.set(HAS_CHEST, kind != Kind.CART || tag.getBoolean("HasChest"));
         setPuller(tag.hasUUID("Puller") ? level() instanceof ServerLevel server
                 ? server.getEntity(tag.getUUID("Puller")) : null : null);
@@ -445,5 +446,9 @@ public final class FarmVehicleEntity extends Entity implements MenuProvider {
                 case TILLER -> ModItems.TILLER.get();
             };
         }
+    }
+    @Override
+    public net.minecraft.network.protocol.Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getAddEntityPacket() {
+        return net.minecraftforge.network.NetworkHooks.getEntitySpawningPacket(this);
     }
 }

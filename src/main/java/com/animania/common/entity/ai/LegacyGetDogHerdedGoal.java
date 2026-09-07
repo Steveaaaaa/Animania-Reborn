@@ -26,14 +26,14 @@ public final class LegacyGetDogHerdedGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (herdAnimal.getData(ModAttachments.SLEEPING)) return false;
+        if (ModAttachments.getData(herdAnimal, ModAttachments.SLEEPING)) return false;
         herder = findHerder();
         return herder != null;
     }
 
     @Override
     public boolean canContinueToUse() {
-        return !herdAnimal.getData(ModAttachments.SLEEPING) && (herder = findHerder()) != null;
+        return !ModAttachments.getData(herdAnimal, ModAttachments.SLEEPING) && (herder = findHerder()) != null;
     }
 
     @Override
@@ -54,7 +54,7 @@ public final class LegacyGetDogHerdedGoal extends Goal {
         return herdAnimal.level().getEntitiesOfClass(AnimaniaDog.class, herdAnimal.getBoundingBox().inflate(10.0D),
                         dog -> dog.breed() == DogBreed.GERMAN_SHEPHERD && dog.role() != DogRole.PUPPY
                                 && dog.isTame() && !dog.isInSittingPose()
-                                && !dog.getData(ModAttachments.SLEEPING)
+                                && !ModAttachments.getData(dog, ModAttachments.SLEEPING)
                                 && dog.getNavigation().getPath() != null)
                 .stream().min(Comparator.comparingDouble(herdAnimal::distanceToSqr)).orElse(null);
     }

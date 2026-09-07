@@ -13,9 +13,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 
@@ -30,7 +30,7 @@ public final class TroughBlockEntity extends BlockEntity {
         @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
             if (slot != 0 || stack.isEmpty() || water > 0 || slop > 0
                     || !com.animania.common.config.LegacyItemMatcher.matches(stack, "trough")
-                    || !feed.isEmpty() && !ItemStack.isSameItemSameComponents(feed, stack)) return stack;
+                    || !feed.isEmpty() && !ItemStack.isSameItemSameTags(feed, stack)) return stack;
             int accepted = Math.min(stack.getCount(), 3 - feed.getCount());
             if (accepted <= 0) return stack;
             if (!simulate) addFeed(stack, accepted);
@@ -80,14 +80,14 @@ public final class TroughBlockEntity extends BlockEntity {
         @Override public FluidStack drain(FluidStack resource, FluidAction action) {
             FluidStack stored = getFluidInTank(0);
             if (resource.isEmpty() || stored.isEmpty()
-                    || !FluidStack.isSameFluidSameComponents(resource, stored)) return FluidStack.EMPTY;
+                    || !resource.isFluidEqual(stored)) return FluidStack.EMPTY;
             return drain(resource.getAmount(), action);
         }
         @Override public FluidStack drain(int maxDrain, FluidAction action) {
             FluidStack stored = getFluidInTank(0);
             if (stored.isEmpty() || maxDrain <= 0) return FluidStack.EMPTY;
             int drained = Math.min(maxDrain, stored.getAmount());
-            FluidStack result = stored.copyWithAmount(drained);
+            FluidStack result = new FluidStack(stored, drained);
             if (action.execute()) {
                 if (water > 0) water -= drained; else slop -= drained;
                 syncState();
@@ -117,7 +117,7 @@ public final class TroughBlockEntity extends BlockEntity {
 
     public boolean addFeed(ItemStack stack, int portions) {
         if (water > 0 || slop > 0 || portions <= 0
-                || !feed.isEmpty() && !ItemStack.isSameItemSameComponents(feed, stack)
+                || !feed.isEmpty() && !ItemStack.isSameItemSameTags(feed, stack)
                 || feed.getCount() >= 3) return false;
         int added = Math.min(portions, 3 - feed.getCount());
         if (feed.isEmpty()) feed = stack.copyWithCount(added);
@@ -201,18 +201,18 @@ public final class TroughBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        if (!feed.isEmpty()) tag.put("Feed", feed.save(registries));
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        if (!feed.isEmpty()) tag.put("Feed", feed.save(new CompoundTag()));
         tag.putInt("StorageVersion", 2);
         tag.putInt("Water", water);
         tag.putInt("Slop", slop);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        feed = tag.contains("Feed") ? ItemStack.parseOptional(registries, tag.getCompound("Feed")) : ItemStack.EMPTY;
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        feed = tag.contains("Feed") ? ItemStack.of(tag.getCompound("Feed")) : ItemStack.EMPTY;
         if (feed.is(ModItems.SLOP_BUCKET.get())) {
             slop = Math.min(1000, feed.getCount() * 250);
             feed = ItemStack.EMPTY;
@@ -229,8 +229,8 @@ public final class TroughBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        return saveWithoutMetadata(registries);
+    public CompoundTag getUpdateTag() {
+        return saveWithoutMetadata();
     }
 
     @Override
@@ -239,9 +239,12 @@ public final class TroughBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet,
-                             HolderLookup.Provider registries) {
+    public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
         CompoundTag tag = packet.getTag();
-        if (tag != null) loadAdditional(tag, registries);
+        if (tag != null) load(tag);
+    }
+    @Override public net.minecraft.world.phys.AABB getRenderBoundingBox() {
+        var direction = com.animania.common.world.block.TroughBlock.extensionDirection(getBlockState());
+        return new net.minecraft.world.phys.AABB(getBlockPos()).expandTowards(direction.getStepX(), 0, direction.getStepZ()).inflate(0.01);
     }
 }

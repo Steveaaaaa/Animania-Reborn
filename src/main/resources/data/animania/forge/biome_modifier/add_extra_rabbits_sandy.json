@@ -1,0 +1,15 @@
+{
+  "type": "animania:legacy_add_spawns",
+  "biomes": "#animania:rabbit_sandy_habitats",
+  "probability_group": "rabbits",
+  "default_probability": 8,
+  "family_group": "rabbits",
+  "spawners": [
+    {
+      "type": "animania:doe_jack",
+      "weight": 8,
+      "minCount": 2,
+      "maxCount": 2
+    }
+  ]
+}

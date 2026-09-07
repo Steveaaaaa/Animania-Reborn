@@ -23,7 +23,7 @@ public final class LegacyFindSaltLickGoal extends LegacySearchBlockGoal {
     public boolean canUse() {
         if (++delay <= LegacyConfig.SALT_LICK_TICK.get()) return false;
         if (consumer.getHealth() >= consumer.getMaxHealth() || consumer.isVehicle()
-                || consumer.getData(ModAttachments.SLEEPING)
+                || ModAttachments.getData(consumer, ModAttachments.SLEEPING)
                 || consumer instanceof AnimaniaPig pig && pig.isMuddy()) {
             delay = 0;
             return false;
@@ -52,7 +52,7 @@ public final class LegacyFindSaltLickGoal extends LegacySearchBlockGoal {
     @Override
     protected void onArriveAtDestination() {
         if (seekingBlockPos != null && level.getBlockEntity(seekingBlockPos) instanceof SaltLickBlockEntity lick) {
-            consumer.setData(ModAttachments.EATING_TICKS, 40);
+            ModAttachments.setData(consumer, ModAttachments.EATING_TICKS, 40);
             lick.use(consumer);
             delay = 0;
         }

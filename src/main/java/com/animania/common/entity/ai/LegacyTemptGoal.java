@@ -45,7 +45,7 @@ public final class LegacyTemptGoal extends Goal {
             cooldown--;
             return false;
         }
-        if (animal.getData(ModAttachments.SLEEPING)
+        if (ModAttachments.getData(animal, ModAttachments.SLEEPING)
                 || animal instanceof TamableAnimal tame && tame.isInSittingPose()) return false;
         player = nearestTemptingPlayer();
         return player != null;
@@ -65,7 +65,7 @@ public final class LegacyTemptGoal extends Goal {
         lastXRot = player.getXRot();
         lastYRot = player.getYRot();
         player = nearestTemptingPlayer();
-        return player != null && !animal.getData(ModAttachments.SLEEPING)
+        return player != null && !ModAttachments.getData(animal, ModAttachments.SLEEPING)
                 && (!(animal instanceof TamableAnimal tame) || !tame.isInSittingPose());
     }
 

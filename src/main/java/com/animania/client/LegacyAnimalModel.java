@@ -195,7 +195,7 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
     }
 
     private void animate(T entity, float swing, float amount, float age, float yaw, float pitch) {
-        if (entity.getData(ModAttachments.SLEEPING)) {
+        if (ModAttachments.getData(entity, ModAttachments.SLEEPING)) {
             if ((key.endsWith("/modelhamster") || key.endsWith("/modelpeacock")) && motion != null)
                 motion.apply(new LegacyMotionContext(entity), 0, 0, 1, 0, 0, 0);
             if (key.startsWith("catsdogs/")) {
@@ -216,18 +216,23 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
             LegacyPose.load(key, "sleeping").blend(parts, LegacySleepAnimation.petBlend(entity, partialTick));
     }
 
-    @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int light, int overlay, int color) {
+        renderToBuffer(poseStack, consumer, light, overlay, ((color >> 16) & 255) / 255F,
+                ((color >> 8) & 255) / 255F, (color & 255) / 255F, ((color >>> 24) & 255) / 255F);
+    }
+    @Override
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int light, int overlay,
+            float red, float green, float blue, float alpha) {
         for (String rootName : rootNames) {
             ModelPart part = parts.get(rootName);
             if (part == null) continue;
             float scale = rootScales.getOrDefault(rootName, 1.0F);
             if (Math.abs(scale - 1.0F) < 0.00001F) {
-                part.render(poseStack, consumer, light, overlay, color);
+                part.render(poseStack, consumer, light, overlay, red, green, blue, alpha);
             } else {
                 poseStack.pushPose();
                 poseStack.scale(scale, scale, scale);
-                part.render(poseStack, consumer, light, overlay, color);
+                part.render(poseStack, consumer, light, overlay, red, green, blue, alpha);
                 poseStack.popPose();
             }
         }

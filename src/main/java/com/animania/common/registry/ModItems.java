@@ -28,162 +28,161 @@ import com.animania.catsdogs.cat.CatRole;
 import com.animania.catsdogs.dog.DogBreed;
 import com.animania.catsdogs.dog.DogRole;
 import net.minecraft.world.item.DyeColor;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
 
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.LinkedHashMap;
 
 public final class ModItems {
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Animania.MOD_ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(net.minecraftforge.registries.ForgeRegistries.ITEMS, Animania.MOD_ID);
 
-    public static final DeferredItem<BlockItem> TROUGH = ITEMS.register(
+    public static final RegistryObject<BlockItem> TROUGH = ITEMS.register(
             "trough",
             () -> new BlockItem(ModBlocks.TROUGH.get(), new Item.Properties())
     );
 
-    public static final DeferredItem<BlockItem> NEST = ITEMS.register(
+    public static final RegistryObject<BlockItem> NEST = ITEMS.register(
             "block_nest",
             () -> new BlockItem(ModBlocks.NEST.get(), new Item.Properties())
     );
-    public static final DeferredItem<BlockItem> MUD = ITEMS.register("block_mud",
+    public static final RegistryObject<BlockItem> MUD = ITEMS.register("block_mud",
             () -> new BlockItem(ModBlocks.MUD.get(), new Item.Properties()));
-    public static final DeferredItem<BlockItem> STRAW = blockItem("block_straw", ModBlocks.STRAW);
-    public static final DeferredItem<BlockItem> SALT_LICK = ITEMS.register("salt_lick",
+    public static final RegistryObject<BlockItem> STRAW = blockItem("block_straw", ModBlocks.STRAW);
+    public static final RegistryObject<BlockItem> SALT_LICK = ITEMS.register("salt_lick",
             () -> new BlockItem(ModBlocks.SALT_LICK.get(), new Item.Properties().durability(200)));
-    public static final DeferredItem<BlockItem> HAMSTER_WHEEL = ITEMS.register("block_hamster_wheel",
+    public static final RegistryObject<BlockItem> HAMSTER_WHEEL = ITEMS.register("block_hamster_wheel",
             () -> new BlockItem(ModBlocks.HAMSTER_WHEEL.get(), new Item.Properties()));
-    public static final DeferredItem<BlockItem> PET_BOWL = blockItem("pet_bowl", ModBlocks.PET_BOWL);
-    public static final DeferredItem<BlockItem> HIVE = blockItem("bee_hive", ModBlocks.HIVE);
-    public static final DeferredItem<BlockItem> WILD_HIVE = blockItem("wild_hive", ModBlocks.WILD_HIVE);
-    public static final DeferredItem<BlockItem> CAT_BED_1 = blockItem("cat_bed_1", ModBlocks.CAT_BED_1);
-    public static final DeferredItem<BlockItem> CAT_BED_2 = blockItem("cat_bed_2", ModBlocks.CAT_BED_2);
-    public static final DeferredItem<BlockItem> CAT_TOWER = blockItem("cat_tower", ModBlocks.CAT_TOWER);
-    public static final DeferredItem<BlockItem> DOG_HOUSE = blockItem("dog_house", ModBlocks.DOG_HOUSE);
-    public static final DeferredItem<BlockItem> DOG_PILLOW = blockItem("dog_pillow", ModBlocks.DOG_PILLOW);
-    public static final DeferredItem<BlockItem> LITTER_BOX = blockItem("litter_box", ModBlocks.LITTER_BOX);
+    public static final RegistryObject<BlockItem> PET_BOWL = blockItem("pet_bowl", ModBlocks.PET_BOWL);
+    public static final RegistryObject<BlockItem> HIVE = blockItem("bee_hive", ModBlocks.HIVE);
+    public static final RegistryObject<BlockItem> WILD_HIVE = blockItem("wild_hive", ModBlocks.WILD_HIVE);
+    public static final RegistryObject<BlockItem> CAT_BED_1 = blockItem("cat_bed_1", ModBlocks.CAT_BED_1);
+    public static final RegistryObject<BlockItem> CAT_BED_2 = blockItem("cat_bed_2", ModBlocks.CAT_BED_2);
+    public static final RegistryObject<BlockItem> CAT_TOWER = blockItem("cat_tower", ModBlocks.CAT_TOWER);
+    public static final RegistryObject<BlockItem> DOG_HOUSE = blockItem("dog_house", ModBlocks.DOG_HOUSE);
+    public static final RegistryObject<BlockItem> DOG_PILLOW = blockItem("dog_pillow", ModBlocks.DOG_PILLOW);
+    public static final RegistryObject<BlockItem> LITTER_BOX = blockItem("litter_box", ModBlocks.LITTER_BOX);
 
-    public static final DeferredItem<Item> BROWN_EGG = ITEMS.register(
+    public static final RegistryObject<Item> BROWN_EGG = ITEMS.register(
             "brown_egg",
             () -> new BrownEggItem(new Item.Properties().stacksTo(16))
     );
-    public static final DeferredItem<Item> RAW_PRIME_BEEF = rawFood("raw_prime_beef");
-    public static final DeferredItem<Item> COOKED_PRIME_BEEF = effectFood("cooked_prime_beef", 12, 0.5F,
+    public static final RegistryObject<Item> RAW_PRIME_BEEF = rawFood("raw_prime_beef");
+    public static final RegistryObject<Item> COOKED_PRIME_BEEF = effectFood("cooked_prime_beef", 12, 0.5F,
             new MobEffectInstance(MobEffects.HEAL, 1, 0));
-    public static final DeferredItem<Item> RAW_PRIME_STEAK = rawFood("raw_prime_steak");
-    public static final DeferredItem<Item> COOKED_PRIME_STEAK = effectFood("cooked_prime_steak", 8, 0.5F,
+    public static final RegistryObject<Item> RAW_PRIME_STEAK = rawFood("raw_prime_steak");
+    public static final RegistryObject<Item> COOKED_PRIME_STEAK = effectFood("cooked_prime_steak", 8, 0.5F,
             new MobEffectInstance(MobEffects.HEAL, 1, 0));
-    public static final DeferredItem<Item> RAW_PRIME_CHEVON = rawFood("raw_prime_chevon");
-    public static final DeferredItem<Item> COOKED_PRIME_CHEVON = effectFood("cooked_prime_chevon", 10, 0.5F,
+    public static final RegistryObject<Item> RAW_PRIME_CHEVON = rawFood("raw_prime_chevon");
+    public static final RegistryObject<Item> COOKED_PRIME_CHEVON = effectFood("cooked_prime_chevon", 10, 0.5F,
             new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 1));
-    public static final DeferredItem<Item> RAW_PRIME_PORK = rawFood("raw_prime_pork");
-    public static final DeferredItem<Item> COOKED_PRIME_PORK = effectFood("cooked_prime_pork", 12, 0.5F,
+    public static final RegistryObject<Item> RAW_PRIME_PORK = rawFood("raw_prime_pork");
+    public static final RegistryObject<Item> COOKED_PRIME_PORK = effectFood("cooked_prime_pork", 12, 0.5F,
             new MobEffectInstance(MobEffects.ABSORPTION, 3000, 0));
-    public static final DeferredItem<Item> RAW_PRIME_BACON = rawFood("raw_prime_bacon");
-    public static final DeferredItem<Item> COOKED_PRIME_BACON = effectFood("cooked_prime_bacon", 8, 0.5F,
+    public static final RegistryObject<Item> RAW_PRIME_BACON = rawFood("raw_prime_bacon");
+    public static final RegistryObject<Item> COOKED_PRIME_BACON = effectFood("cooked_prime_bacon", 8, 0.5F,
             new MobEffectInstance(MobEffects.ABSORPTION, 1800, 0));
-    public static final DeferredItem<Item> RAW_PRIME_CHICKEN = rawFood("raw_prime_chicken");
-    public static final DeferredItem<Item> COOKED_PRIME_CHICKEN = effectFood("cooked_prime_chicken", 8, 0.5F,
+    public static final RegistryObject<Item> RAW_PRIME_CHICKEN = rawFood("raw_prime_chicken");
+    public static final RegistryObject<Item> COOKED_PRIME_CHICKEN = effectFood("cooked_prime_chicken", 8, 0.5F,
             new MobEffectInstance(MobEffects.DIG_SPEED, 3000, 0));
-    public static final DeferredItem<Item> RAW_CHEVON = rawFood("raw_chevon");
-    public static final DeferredItem<Item> COOKED_CHEVON = effectFood("cooked_chevon", 5, 0.5F,
+    public static final RegistryObject<Item> RAW_CHEVON = rawFood("raw_chevon");
+    public static final RegistryObject<Item> COOKED_CHEVON = effectFood("cooked_chevon", 5, 0.5F,
             new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 600, 0));
-    public static final DeferredItem<Item> TRUFFLE = food("truffle", 2, 0.7F);
-    public static final DeferredItem<Item> PLAIN_OMELETTE = food("plain_omelette", 5, 0.6F);
-    public static final DeferredItem<Item> CHEESE_OMELETTE = effectFood("cheese_omelette", 5, 0.7F,
+    public static final RegistryObject<Item> TRUFFLE = food("truffle", 2, 0.7F);
+    public static final RegistryObject<Item> PLAIN_OMELETTE = food("plain_omelette", 5, 0.6F);
+    public static final RegistryObject<Item> CHEESE_OMELETTE = effectFood("cheese_omelette", 5, 0.7F,
             new MobEffectInstance(MobEffects.HEAL, 1, 1));
-    public static final DeferredItem<Item> BACON_OMELETTE = effectFood("bacon_omelette", 5, 0.7F,
+    public static final RegistryObject<Item> BACON_OMELETTE = effectFood("bacon_omelette", 5, 0.7F,
             new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 0));
-    public static final DeferredItem<Item> TRUFFLE_OMELETTE = effectFood("truffle_omelette", 5, 0.8F,
+    public static final RegistryObject<Item> TRUFFLE_OMELETTE = effectFood("truffle_omelette", 5, 0.8F,
             new MobEffectInstance(MobEffects.REGENERATION, 600, 1));
-    public static final DeferredItem<Item> SUPER_OMELETTE = ITEMS.register("super_omelette", () -> new BonusFoodItem(
-            new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationModifier(0.9F).build()),
+    public static final RegistryObject<Item> SUPER_OMELETTE = ITEMS.register("super_omelette", () -> new BonusFoodItem(
+            new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.9F).build()),
             new MobEffectInstance(MobEffects.REGENERATION, 600, 1),
             new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 0),
             new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 600, 1)));
-    public static final DeferredItem<ContainerFoodItem> TRUFFLE_SOUP = ITEMS.register("truffle_soup",
+    public static final RegistryObject<ContainerFoodItem> TRUFFLE_SOUP = ITEMS.register("truffle_soup",
             () -> new ContainerFoodItem(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder()
-                    .nutrition(10).saturationModifier(0.6F).build()), ContainerFoodItem.Container.BOWL, false,
+                    .nutrition(10).saturationMod(0.6F).build()), ContainerFoodItem.Container.BOWL, false,
                     new MobEffectInstance(MobEffects.REGENERATION, 1200, 1)));
-    public static final DeferredItem<Item> CHOCOLATE_TRUFFLE = ITEMS.register("chocolate_truffle",
+    public static final RegistryObject<Item> CHOCOLATE_TRUFFLE = ITEMS.register("chocolate_truffle",
             () -> new BonusFoodItem(new Item.Properties().food(new FoodProperties.Builder().nutrition(6)
-                    .saturationModifier(0.7F).alwaysEdible().build()),
+                    .saturationMod(0.7F).alwaysEat().build()),
                     new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 3)));
-    public static final DeferredItem<Item> RAW_PRIME_MUTTON = rawFood("raw_prime_mutton");
-    public static final DeferredItem<Item> COOKED_PRIME_MUTTON = effectFood("cooked_prime_mutton", 12, 0.5F,
+    public static final RegistryObject<Item> RAW_PRIME_MUTTON = rawFood("raw_prime_mutton");
+    public static final RegistryObject<Item> COOKED_PRIME_MUTTON = effectFood("cooked_prime_mutton", 12, 0.5F,
             new MobEffectInstance(MobEffects.HEAL, 1, 0));
-    public static final DeferredItem<Item> RAW_HORSE = rawFood("raw_horse");
-    public static final DeferredItem<Item> COOKED_HORSE = effectFood("cooked_horse", 12, 0.5F,
+    public static final RegistryObject<Item> RAW_HORSE = rawFood("raw_horse");
+    public static final RegistryObject<Item> COOKED_HORSE = effectFood("cooked_horse", 12, 0.5F,
             new MobEffectInstance(MobEffects.DAMAGE_BOOST, 600, 0));
-    public static final DeferredItem<Item> RAW_FROG_LEGS = rawFood("raw_frog_legs");
-    public static final DeferredItem<Item> COOKED_FROG_LEGS = effectFood("cooked_frog_legs", 7, 0.5F,
+    public static final RegistryObject<Item> RAW_FROG_LEGS = rawFood("raw_frog_legs");
+    public static final RegistryObject<Item> COOKED_FROG_LEGS = effectFood("cooked_frog_legs", 7, 0.5F,
             new MobEffectInstance(MobEffects.JUMP, 1200, 2));
-    public static final DeferredItem<Item> RAW_PRIME_RABBIT = rawFood("raw_prime_rabbit");
-    public static final DeferredItem<Item> COOKED_PRIME_RABBIT = effectFood("cooked_prime_rabbit", 8, 0.5F,
+    public static final RegistryObject<Item> RAW_PRIME_RABBIT = rawFood("raw_prime_rabbit");
+    public static final RegistryObject<Item> COOKED_PRIME_RABBIT = effectFood("cooked_prime_rabbit", 8, 0.5F,
             new MobEffectInstance(MobEffects.JUMP, 600, 3));
-    public static final DeferredItem<Item> PEACOCK_EGG_BLUE = ITEMS.registerSimpleItem("peacock_egg_blue",
+    public static final RegistryObject<Item> PEACOCK_EGG_BLUE = simpleItem("peacock_egg_blue",
             new Item.Properties().stacksTo(16));
-    public static final DeferredItem<Item> PEACOCK_EGG_WHITE = ITEMS.registerSimpleItem("peacock_egg_white",
+    public static final RegistryObject<Item> PEACOCK_EGG_WHITE = simpleItem("peacock_egg_white",
             new Item.Properties().stacksTo(16));
-    public static final DeferredItem<Item> RAW_PEACOCK = rawFood("raw_peacock");
-    public static final DeferredItem<Item> COOKED_PEACOCK = effectFood("cooked_peacock", 6, 0.5F,
+    public static final RegistryObject<Item> RAW_PEACOCK = rawFood("raw_peacock");
+    public static final RegistryObject<Item> COOKED_PEACOCK = effectFood("cooked_peacock", 6, 0.5F,
             new MobEffectInstance(MobEffects.LUCK, 600, 0));
-    public static final DeferredItem<Item> RAW_PRIME_PEACOCK = rawFood("raw_prime_peacock");
-    public static final DeferredItem<Item> COOKED_PRIME_PEACOCK = effectFood("cooked_prime_peacock", 9, 0.5F,
+    public static final RegistryObject<Item> RAW_PRIME_PEACOCK = rawFood("raw_prime_peacock");
+    public static final RegistryObject<Item> COOKED_PRIME_PEACOCK = effectFood("cooked_prime_peacock", 9, 0.5F,
             new MobEffectInstance(MobEffects.LUCK, 1200, 1));
-    private static final Map<PeafowlBreed, DeferredItem<Item>> PEACOCK_FEATHERS = new EnumMap<>(PeafowlBreed.class);
-    public static final DeferredItem<Item> HAMSTER_FOOD = ITEMS.registerSimpleItem("hamster_food");
-    public static final DeferredItem<HamsterBallItem> HAMSTER_BALL_CLEAR = ITEMS.register("hamster_ball_clear",
+    private static final Map<PeafowlBreed, RegistryObject<Item>> PEACOCK_FEATHERS = new EnumMap<>(PeafowlBreed.class);
+    public static final RegistryObject<Item> HAMSTER_FOOD = ITEMS.register("hamster_food", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<HamsterBallItem> HAMSTER_BALL_CLEAR = ITEMS.register("hamster_ball_clear",
             () -> new HamsterBallItem(null, new Item.Properties()));
-    private static final Map<DyeColor, DeferredItem<HamsterBallItem>> HAMSTER_BALLS = new EnumMap<>(DyeColor.class);
-    public static final DeferredItem<RandomPetEggItem> RANDOM_CAT_EGG = ITEMS.register("entity_egg_cat_random",
+    private static final Map<DyeColor, RegistryObject<HamsterBallItem>> HAMSTER_BALLS = new EnumMap<>(DyeColor.class);
+    public static final RegistryObject<RandomPetEggItem> RANDOM_CAT_EGG = ITEMS.register("entity_egg_cat_random",
             () -> new RandomPetEggItem(RandomPetEggItem.Kind.CAT, new Item.Properties()));
-    public static final DeferredItem<RandomPetEggItem> RANDOM_DOG_EGG = ITEMS.register("entity_egg_dog_random",
+    public static final RegistryObject<RandomPetEggItem> RANDOM_DOG_EGG = ITEMS.register("entity_egg_dog_random",
             () -> new RandomPetEggItem(RandomPetEggItem.Kind.DOG, new Item.Properties()));
-    public static final DeferredItem<RandomAnimalEggItem> RANDOM_ANIMAL_EGG = randomEgg("entity_egg_random", RandomAnimalEggItem.Kind.ALL);
-    public static final DeferredItem<RandomAnimalEggItem> RANDOM_CHICKEN_EGG = randomEgg("entity_egg_chicken_random", RandomAnimalEggItem.Kind.CHICKEN);
-    public static final DeferredItem<RandomAnimalEggItem> RANDOM_COW_EGG = randomEgg("entity_egg_cow_random", RandomAnimalEggItem.Kind.COW);
-    public static final DeferredItem<RandomAnimalEggItem> RANDOM_GOAT_EGG = randomEgg("entity_egg_goat_random", RandomAnimalEggItem.Kind.GOAT);
-    public static final DeferredItem<RandomAnimalEggItem> RANDOM_PIG_EGG = randomEgg("entity_egg_pig_random", RandomAnimalEggItem.Kind.PIG);
-    public static final DeferredItem<RandomAnimalEggItem> RANDOM_SHEEP_EGG = randomEgg("entity_egg_sheep_random", RandomAnimalEggItem.Kind.SHEEP);
-    public static final DeferredItem<RandomAnimalEggItem> RANDOM_RABBIT_EGG = randomEgg("entity_egg_rabbit_random", RandomAnimalEggItem.Kind.RABBIT);
-    public static final DeferredItem<RandomAnimalEggItem> RANDOM_PEAFOWL_EGG = randomEgg("entity_egg_peacock_random", RandomAnimalEggItem.Kind.PEAFOWL);
-    private static final Map<String, DeferredItem<Item>> CAT_SPAWN_EGGS = new LinkedHashMap<>();
-    private static final Map<String, DeferredItem<Item>> DOG_SPAWN_EGGS = new LinkedHashMap<>();
-    public static final DeferredItem<Item> WHEEL = ITEMS.registerSimpleItem("wheel");
-    public static final DeferredItem<Item> CART = ITEMS.register("item_cart",
+    public static final RegistryObject<RandomAnimalEggItem> RANDOM_ANIMAL_EGG = randomEgg("entity_egg_random", RandomAnimalEggItem.Kind.ALL);
+    public static final RegistryObject<RandomAnimalEggItem> RANDOM_CHICKEN_EGG = randomEgg("entity_egg_chicken_random", RandomAnimalEggItem.Kind.CHICKEN);
+    public static final RegistryObject<RandomAnimalEggItem> RANDOM_COW_EGG = randomEgg("entity_egg_cow_random", RandomAnimalEggItem.Kind.COW);
+    public static final RegistryObject<RandomAnimalEggItem> RANDOM_GOAT_EGG = randomEgg("entity_egg_goat_random", RandomAnimalEggItem.Kind.GOAT);
+    public static final RegistryObject<RandomAnimalEggItem> RANDOM_PIG_EGG = randomEgg("entity_egg_pig_random", RandomAnimalEggItem.Kind.PIG);
+    public static final RegistryObject<RandomAnimalEggItem> RANDOM_SHEEP_EGG = randomEgg("entity_egg_sheep_random", RandomAnimalEggItem.Kind.SHEEP);
+    public static final RegistryObject<RandomAnimalEggItem> RANDOM_RABBIT_EGG = randomEgg("entity_egg_rabbit_random", RandomAnimalEggItem.Kind.RABBIT);
+    public static final RegistryObject<RandomAnimalEggItem> RANDOM_PEAFOWL_EGG = randomEgg("entity_egg_peacock_random", RandomAnimalEggItem.Kind.PEAFOWL);
+    private static final Map<String, RegistryObject<Item>> CAT_SPAWN_EGGS = new LinkedHashMap<>();
+    private static final Map<String, RegistryObject<Item>> DOG_SPAWN_EGGS = new LinkedHashMap<>();
+    public static final RegistryObject<Item> WHEEL = ITEMS.register("wheel", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> CART = ITEMS.register("item_cart",
             () -> new VehicleItem(ModEntities.CART, new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<Item> WAGON = ITEMS.register("item_wagon",
+    public static final RegistryObject<Item> WAGON = ITEMS.register("item_wagon",
             () -> new VehicleItem(ModEntities.WAGON, new Item.Properties().stacksTo(1)));
-    public static final DeferredItem<Item> TILLER = ITEMS.register("item_tiller",
+    public static final RegistryObject<Item> TILLER = ITEMS.register("item_tiller",
             () -> new VehicleItem(ModEntities.TILLER, new Item.Properties().stacksTo(1)));
-    private static final Map<MilkType, DeferredItem<BucketItem>> MILK_BUCKETS = new EnumMap<>(MilkType.class);
-    private static final Map<MilkType, DeferredItem<BlockItem>> CHEESE_WHEELS = new EnumMap<>(MilkType.class);
-    private static final Map<MilkType, DeferredItem<Item>> CHEESE_WEDGES = new EnumMap<>(MilkType.class);
-    private static final Map<String, DeferredItem<BlockItem>> ANIMANIA_WOOL = new LinkedHashMap<>();
-    public static final DeferredItem<BlockItem> CHEESE_MOLD = ITEMS.register("cheese_mold",
+    private static final Map<MilkType, RegistryObject<BucketItem>> MILK_BUCKETS = new EnumMap<>(MilkType.class);
+    private static final Map<MilkType, RegistryObject<BlockItem>> CHEESE_WHEELS = new EnumMap<>(MilkType.class);
+    private static final Map<MilkType, RegistryObject<Item>> CHEESE_WEDGES = new EnumMap<>(MilkType.class);
+    private static final Map<String, RegistryObject<BlockItem>> ANIMANIA_WOOL = new LinkedHashMap<>();
+    public static final RegistryObject<BlockItem> CHEESE_MOLD = ITEMS.register("cheese_mold",
             () -> new BlockItem(ModBlocks.CHEESE_MOLD.get(), new Item.Properties()));
-    public static final DeferredItem<BucketItem> HONEY_BUCKET = ITEMS.register("bucket_honey",
+    public static final RegistryObject<BucketItem> HONEY_BUCKET = ITEMS.register("bucket_honey",
             () -> new BucketItem(ModFluids.HONEY.source(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
-    public static final DeferredItem<BucketItem> SLOP_BUCKET = ITEMS.register("bucket_slop",
+    public static final RegistryObject<BucketItem> SLOP_BUCKET = ITEMS.register("bucket_slop",
             () -> new BucketItem(ModFluids.SLOP.source(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
-    public static final DeferredItem<ContainerFoodItem> HONEY_BOTTLE = ITEMS.register("honey_bottle",
+    public static final RegistryObject<ContainerFoodItem> HONEY_BOTTLE = ITEMS.register("honey_bottle",
             () -> new ContainerFoodItem(new Item.Properties().stacksTo(4).food(new FoodProperties.Builder()
-                    .nutrition(10).saturationModifier(1.5F).build()), ContainerFoodItem.Container.BOTTLE, false,
+                    .nutrition(10).saturationMod(1.5F).build()), ContainerFoodItem.Container.BOTTLE, false,
                     new MobEffectInstance(MobEffects.REGENERATION, 100, 1)));
-    public static final DeferredItem<ContainerFoodItem> MILK_BOTTLE = ITEMS.register("milk_bottle",
+    public static final RegistryObject<ContainerFoodItem> MILK_BOTTLE = ITEMS.register("milk_bottle",
             () -> new ContainerFoodItem(new Item.Properties().stacksTo(4).food(new FoodProperties.Builder()
-                    .nutrition(4).saturationModifier(1.0F).alwaysEdible().build()),
+                    .nutrition(4).saturationMod(1.0F).alwaysEat().build()),
                     ContainerFoodItem.Container.BOTTLE, true));
-    public static final DeferredItem<Item> SALT = ITEMS.registerSimpleItem("salt");
-    public static final DeferredItem<CarvingKnifeItem> CARVING_KNIFE = ITEMS.register("carving_knife",
-            () -> new CarvingKnifeItem(Tiers.IRON, new Item.Properties().durability(100)
-                    .attributes(SwordItem.createAttributes(Tiers.IRON, 2, -2.4F))));
-    public static final DeferredItem<RidingCropItem> RIDING_CROP = ITEMS.register("riding_crop",
+    public static final RegistryObject<Item> SALT = ITEMS.register("salt", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<CarvingKnifeItem> CARVING_KNIFE = ITEMS.register("carving_knife",
+            () -> new CarvingKnifeItem(Tiers.IRON, new Item.Properties().durability(100)));
+    public static final RegistryObject<RidingCropItem> RIDING_CROP = ITEMS.register("riding_crop",
             () -> new RidingCropItem(new Item.Properties().stacksTo(1).durability(100)));
-    public static final DeferredItem<AnimaniaManualItem> MANUAL = ITEMS.register("animania_manual",
+    public static final RegistryObject<AnimaniaManualItem> MANUAL = ITEMS.register("animania_manual",
             () -> new AnimaniaManualItem(new Item.Properties().stacksTo(1)));
 
     static {
@@ -202,7 +201,7 @@ public final class ModItems {
         ModBlocks.animaniaWool().forEach((name, block) -> ANIMANIA_WOOL.put(name,
                 blockItem("wool_" + name, block)));
         for (PeafowlBreed breed : PeafowlBreed.values()) {
-            PEACOCK_FEATHERS.put(breed, ITEMS.registerSimpleItem(
+            PEACOCK_FEATHERS.put(breed, simpleItem(
                     breed.getSerializedName() + "_peacock_feather"));
         }
         for (DyeColor color : DyeColor.values()) {
@@ -278,63 +277,67 @@ public final class ModItems {
     private ModItems() {
     }
 
-    public static DeferredItem<BucketItem> milkBucket(MilkType type) {
+    public static RegistryObject<BucketItem> milkBucket(MilkType type) {
         return MILK_BUCKETS.get(type);
     }
 
-    public static DeferredItem<BlockItem> cheeseWheel(MilkType type) {
+    public static RegistryObject<BlockItem> cheeseWheel(MilkType type) {
         return CHEESE_WHEELS.get(type);
     }
 
-    public static DeferredItem<Item> cheeseWedge(MilkType type) {
+    public static RegistryObject<Item> cheeseWedge(MilkType type) {
         return CHEESE_WEDGES.get(type);
     }
 
-    public static DeferredItem<Item> peacockFeather(PeafowlBreed breed) {
+    public static RegistryObject<Item> peacockFeather(PeafowlBreed breed) {
         return PEACOCK_FEATHERS.get(breed);
     }
 
-    public static DeferredItem<BlockItem> animaniaWool(String type) {
+    public static RegistryObject<BlockItem> animaniaWool(String type) {
         return ANIMANIA_WOOL.get(type);
     }
 
-    public static DeferredItem<? extends HamsterBallItem> hamsterBall(int color) {
+    public static RegistryObject<? extends HamsterBallItem> hamsterBall(int color) {
         return color < 0 ? HAMSTER_BALL_CLEAR : HAMSTER_BALLS.get(DyeColor.byId(color));
     }
 
-    public static DeferredItem<Item> catSpawnEgg(CatRole role, CatBreed breed) {
+    public static RegistryObject<Item> catSpawnEgg(CatRole role, CatBreed breed) {
         return CAT_SPAWN_EGGS.get(role.prefix() + "_" + breed.getSerializedName());
     }
 
-    public static DeferredItem<Item> dogSpawnEgg(DogRole role, DogBreed breed) {
+    public static RegistryObject<Item> dogSpawnEgg(DogRole role, DogBreed breed) {
         return DOG_SPAWN_EGGS.get(role.prefix() + "_" + breed.getSerializedName());
     }
 
-    private static DeferredItem<Item> food(String name, int nutrition, float saturation) {
+    private static RegistryObject<Item> food(String name, int nutrition, float saturation) {
         return ITEMS.register(name, () -> new Item(new Item.Properties().food(
-                new FoodProperties.Builder().nutrition(nutrition).saturationModifier(saturation).build())));
+                new FoodProperties.Builder().nutrition(nutrition).saturationMod(saturation).build())));
     }
 
-    private static DeferredItem<Item> rawFood(String name) {
+    private static RegistryObject<Item> rawFood(String name) {
         return effectFood(name, 1, 1.0F, new MobEffectInstance(MobEffects.CONFUSION, 200, 3));
     }
 
-    private static DeferredItem<Item> effectFood(String name, int nutrition, float saturation,
+    private static RegistryObject<Item> effectFood(String name, int nutrition, float saturation,
                                                   MobEffectInstance effect) {
         return ITEMS.register(name, () -> new BonusFoodItem(new Item.Properties().food(new FoodProperties.Builder()
-                .nutrition(nutrition).saturationModifier(saturation).build()), effect));
+                .nutrition(nutrition).saturationMod(saturation).build()), effect));
     }
 
-    private static DeferredItem<RandomAnimalEggItem> randomEgg(String name, RandomAnimalEggItem.Kind kind) {
+    private static RegistryObject<RandomAnimalEggItem> randomEgg(String name, RandomAnimalEggItem.Kind kind) {
         return ITEMS.register(name, () -> new RandomAnimalEggItem(kind, new Item.Properties()));
     }
 
-    private static <T extends net.minecraft.world.level.block.Block> DeferredItem<BlockItem> blockItem(
-            String name, net.neoforged.neoforge.registries.DeferredBlock<T> block) {
+    private static <T extends net.minecraft.world.level.block.Block> RegistryObject<BlockItem> blockItem(
+            String name, net.minecraftforge.registries.RegistryObject<T> block) {
         return ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
     }
 
     public static void register(IEventBus modBus) {
         ITEMS.register(modBus);
+    }
+    private static RegistryObject<Item> simpleItem(String id) { return simpleItem(id, new Item.Properties()); }
+    private static RegistryObject<Item> simpleItem(String id, Item.Properties properties) {
+        return ITEMS.register(id, () -> new Item(properties));
     }
 }

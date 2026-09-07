@@ -97,16 +97,16 @@ public final class AnimalInformation {
     }
 
     public static boolean isSterilized(Animal animal) {
-        return canBeSterilized(animal) && animal.getData(ModAttachments.STERILIZED);
+        return canBeSterilized(animal) && ModAttachments.getData(animal, ModAttachments.STERILIZED);
     }
 
     public static void recordMating(Animal first, Animal second) {
-        first.setData(ModAttachments.LAST_MATE, second.getUUID().toString());
-        second.setData(ModAttachments.LAST_MATE, first.getUUID().toString());
+        ModAttachments.setData(first, ModAttachments.LAST_MATE, second.getUUID().toString());
+        ModAttachments.setData(second, ModAttachments.LAST_MATE, first.getUUID().toString());
         com.animania.common.config.LegacyBreedingRules.recordConception(first, second);
     }
 
     public static void recordParent(Animal child, Animal parent) {
-        child.setData(ModAttachments.PARENT, parent.getUUID().toString());
+        ModAttachments.setData(child, ModAttachments.PARENT, parent.getUUID().toString());
     }
 }

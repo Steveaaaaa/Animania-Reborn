@@ -74,7 +74,7 @@ public final class AnimaniaCat extends TamableAnimal {
     }
 
     private boolean wellCaredFor() {
-        return getData(ModAttachments.HUNGER) > 20 && getData(ModAttachments.THIRST) > 20;
+        return ModAttachments.getData(this, ModAttachments.HUNGER) > 20 && ModAttachments.getData(this, ModAttachments.THIRST) > 20;
     }
 
     @Override
@@ -145,7 +145,7 @@ public final class AnimaniaCat extends TamableAnimal {
             com.animania.common.entity.LegacyAnimalNeeds.copyState(this, adult);
             if (isTame() && getOwnerUUID() != null) {
                 adult.setOwnerUUID(getOwnerUUID());
-                adult.setTame(true, true);
+                adult.setTame(true);
             }
             server.addFreshEntity(adult);
             discard();
@@ -172,7 +172,7 @@ public final class AnimaniaCat extends TamableAnimal {
                         getZ() + (random.nextDouble() - 0.5D) * 0.7D, getYRot(), 0);
                 if (isTame() && getOwnerUUID() != null) {
                     kitten.setOwnerUUID(getOwnerUUID());
-                    kitten.setTame(true, true);
+                    kitten.setTame(true);
                 }
                 server.addFreshEntity(kitten);
             }
@@ -226,7 +226,7 @@ public final class AnimaniaCat extends TamableAnimal {
             if (!level().isClientSide()) {
                 tame(player);
                 setOrderedToSit(false);
-                setData(ModAttachments.HUNGER, ModAttachments.MAX_NEED);
+                ModAttachments.setData(this, ModAttachments.HUNGER, ModAttachments.MAX_NEED);
                 level().broadcastEntityEvent(this, (byte) 7);
                 if (!player.isCreative()) held.shrink(1);
             }
@@ -250,8 +250,8 @@ public final class AnimaniaCat extends TamableAnimal {
     @Override
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType reason, @Nullable SpawnGroupData data) {
-        SpawnGroupData result = super.finalizeSpawn(level, difficulty, reason, data);
+                                        MobSpawnType reason, @Nullable SpawnGroupData data, net.minecraft.nbt.CompoundTag spawnTag) {
+        SpawnGroupData result = super.finalizeSpawn(level, difficulty, reason, data, spawnTag);
         if (role() == CatRole.QUEEN && breed() == CatBreed.OCELOT) {
             com.animania.common.entity.LegacyNaturalFamily.spawn(level, this, reason,
                     AnimaniaCat.class, 8,
@@ -270,7 +270,7 @@ public final class AnimaniaCat extends TamableAnimal {
     }
 
     @Override
-    protected ResourceKey<LootTable> getDefaultLootTable() {
+    protected ResourceLocation getDefaultLootTable() {
         return BuiltInLootTables.EMPTY;
     }
 
@@ -288,5 +288,10 @@ public final class AnimaniaCat extends TamableAnimal {
         pregnant = tag.getBoolean("Pregnant");
         gestation = tag.getInt("Gestation");
         if (tag.contains("MateBreed")) mateBreed = CatBreed.fromPath(tag.getString("MateBreed"));
+    }
+    @Override public void tick() {
+        com.animania.common.entity.AnimalTickBridge.before(this);
+        super.tick();
+        com.animania.common.entity.AnimalTickBridge.after(this);
     }
 }

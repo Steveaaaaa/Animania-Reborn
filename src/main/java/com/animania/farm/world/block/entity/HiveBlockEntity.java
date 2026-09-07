@@ -17,9 +17,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
 
@@ -31,7 +31,7 @@ public final class HiveBlockEntity extends BlockEntity {
 
     public HiveBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.HIVE.get(), pos, state);
-        tank = new FluidTank(CAPACITY, stack -> stack.is(ModFluids.HONEY.source())) {
+        tank = new FluidTank(CAPACITY, stack -> (stack.getFluid() == ModFluids.HONEY.source())) {
             @Override protected void onContentsChanged() { setChangedAndSync(); }
         };
     }
@@ -76,23 +76,23 @@ public final class HiveBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
         tag.putInt("NextHoney", nextHoney);
-        tag.put("HoneyTank", tank.writeToNBT(registries, new CompoundTag()));
+        tag.put("HoneyTank", tank.writeToNBT(new CompoundTag()));
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
+    public void load(CompoundTag tag) {
+        super.load(tag);
         nextHoney = tag.contains("NextHoney") ? Math.max(1, tag.getInt("NextHoney")) : 400;
-        if (tag.contains("HoneyTank")) tank.readFromNBT(registries, tag.getCompound("HoneyTank"));
+        if (tag.contains("HoneyTank")) tank.readFromNBT(tag.getCompound("HoneyTank"));
     }
 
-    @Override public CompoundTag getUpdateTag(HolderLookup.Provider registries) { return saveWithoutMetadata(registries); }
+    @Override public CompoundTag getUpdateTag() { return saveWithoutMetadata(); }
     @Override public @Nullable ClientboundBlockEntityDataPacket getUpdatePacket() { return ClientboundBlockEntityDataPacket.create(this); }
-    @Override public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider registries) {
+    @Override public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         CompoundTag tag = pkt.getTag();
-        if (tag != null) loadAdditional(tag, registries);
+        if (tag != null) load(tag);
     }
 }

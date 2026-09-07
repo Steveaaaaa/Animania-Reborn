@@ -19,17 +19,17 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
 
 import java.util.EnumMap;
 import java.util.Map;
 
 public final class ModBlocks {
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Animania.MOD_ID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(net.minecraftforge.registries.ForgeRegistries.BLOCKS, Animania.MOD_ID);
 
-    public static final DeferredBlock<TroughBlock> TROUGH = BLOCKS.register(
+    public static final RegistryObject<TroughBlock> TROUGH = BLOCKS.register(
             "trough",
             () -> new TroughBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.WOOD)
@@ -38,7 +38,7 @@ public final class ModBlocks {
                     .noOcclusion())
     );
 
-    public static final DeferredBlock<NestBlock> NEST = BLOCKS.register(
+    public static final RegistryObject<NestBlock> NEST = BLOCKS.register(
             "block_nest",
             () -> new NestBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_YELLOW)
@@ -47,62 +47,62 @@ public final class ModBlocks {
                     .randomTicks()
                     .noOcclusion())
     );
-    public static final DeferredBlock<MudBlock> MUD = BLOCKS.register("block_mud",
+    public static final RegistryObject<MudBlock> MUD = BLOCKS.register("block_mud",
             () -> new MudBlock(BlockBehaviour.Properties.of().mapColor(MapColor.DIRT)
                     .strength(1.0F).sound(SoundType.MUD).randomTicks()));
-    public static final DeferredBlock<GroundCoverBlock> STRAW = BLOCKS.register("block_straw",
+    public static final RegistryObject<GroundCoverBlock> STRAW = BLOCKS.register("block_straw",
             () -> new GroundCoverBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW)
                     .strength(0.1F).sound(SoundType.GRASS).noCollission().noOcclusion()));
-    public static final DeferredBlock<GroundCoverBlock> SEEDS = BLOCKS.register("block_seeds",
+    public static final RegistryObject<GroundCoverBlock> SEEDS = BLOCKS.register("block_seeds",
             () -> new GroundCoverBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT)
                     .strength(0.0F).sound(SoundType.CROP).noCollission().noOcclusion().noLootTable()));
-    public static final DeferredBlock<SaltLickBlock> SALT_LICK = BLOCKS.register("salt_lick",
+    public static final RegistryObject<SaltLickBlock> SALT_LICK = BLOCKS.register("salt_lick",
             () -> new SaltLickBlock(BlockBehaviour.Properties.of().mapColor(MapColor.SNOW)
                     .strength(1.2F, 1.7F).sound(SoundType.STONE).noOcclusion()));
-    public static final DeferredBlock<Invisiblock> INVISIBLOCK = BLOCKS.register("block_invisiblock",
+    public static final RegistryObject<Invisiblock> INVISIBLOCK = BLOCKS.register("block_invisiblock",
             () -> new Invisiblock(BlockBehaviour.Properties.of().mapColor(MapColor.NONE)
                     .strength(-1.0F, 3_600_000.0F).noLootTable().noOcclusion()));
-    public static final DeferredBlock<HamsterWheelBlock> HAMSTER_WHEEL = BLOCKS.register("block_hamster_wheel",
+    public static final RegistryObject<HamsterWheelBlock> HAMSTER_WHEEL = BLOCKS.register("block_hamster_wheel",
             () -> new HamsterWheelBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
                     .strength(1.4F, 3.4F).sound(SoundType.METAL).noOcclusion()));
-    public static final DeferredBlock<PetBowlBlock> PET_BOWL = BLOCKS.register("pet_bowl",
+    public static final RegistryObject<PetBowlBlock> PET_BOWL = BLOCKS.register("pet_bowl",
             () -> new PetBowlBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
                     .strength(1.2F, 1.5F).sound(SoundType.METAL).noOcclusion()));
-    public static final DeferredBlock<HiveBlock> HIVE = BLOCKS.register("block_hive",
+    public static final RegistryObject<HiveBlock> HIVE = BLOCKS.register("block_hive",
             () -> new HiveBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW)
                     .strength(1.3F, 0.3F).sound(SoundType.WOOD).noOcclusion(), false));
-    public static final DeferredBlock<HiveBlock> WILD_HIVE = BLOCKS.register("block_wild_hive",
+    public static final RegistryObject<HiveBlock> WILD_HIVE = BLOCKS.register("block_wild_hive",
             () -> new HiveBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW)
                     .strength(1.3F, 0.3F).sound(SoundType.WOOD).noOcclusion(), true));
-    public static final DeferredBlock<PetPropBlock> CAT_BED_1 = petProp("cat_bed_1", MapColor.COLOR_RED,
+    public static final RegistryObject<PetPropBlock> CAT_BED_1 = petProp("cat_bed_1", MapColor.COLOR_RED,
             SoundType.WOOL, 1.0F, Block.box(2, 0, 2, 14, 1, 14));
-    public static final DeferredBlock<PetPropBlock> CAT_BED_2 = petProp("cat_bed_2", MapColor.COLOR_RED,
+    public static final RegistryObject<PetPropBlock> CAT_BED_2 = petProp("cat_bed_2", MapColor.COLOR_RED,
             SoundType.WOOL, 1.0F, Block.box(2, 0, 2, 14, 2, 14));
-    public static final DeferredBlock<PetPropBlock> CAT_TOWER = petProp("cat_tower", MapColor.WOOD,
+    public static final RegistryObject<PetPropBlock> CAT_TOWER = petProp("cat_tower", MapColor.WOOD,
             SoundType.WOOD, 1.4F, Block.box(0, 0, 0, 16, 24, 16));
-    public static final DeferredBlock<PetPropBlock> DOG_HOUSE = petProp("dog_house", MapColor.COLOR_RED,
+    public static final RegistryObject<PetPropBlock> DOG_HOUSE = petProp("dog_house", MapColor.COLOR_RED,
             SoundType.STONE, 1.5F, Block.box(0, 0, 0, 16, 16, 16));
-    public static final DeferredBlock<PetPropBlock> DOG_PILLOW = petProp("dog_pillow", MapColor.COLOR_RED,
+    public static final RegistryObject<PetPropBlock> DOG_PILLOW = petProp("dog_pillow", MapColor.COLOR_RED,
             SoundType.WOOL, 1.0F, Block.box(1, 0, 1, 15, 1, 15));
-    public static final DeferredBlock<PetPropBlock> LITTER_BOX = petProp("litter_box", MapColor.METAL,
+    public static final RegistryObject<PetPropBlock> LITTER_BOX = petProp("litter_box", MapColor.METAL,
             SoundType.STONE, 1.5F, Block.box(1, 0, 1, 15, 3, 15));
-    private static final Map<MilkType, DeferredBlock<LiquidBlock>> MILK_BLOCKS = new EnumMap<>(MilkType.class);
-    private static final Map<MilkType, DeferredBlock<CheeseWheelBlock>> CHEESE_BLOCKS = new EnumMap<>(MilkType.class);
-    private static final Map<String, DeferredBlock<Block>> ANIMANIA_WOOL = new java.util.LinkedHashMap<>();
-    public static final DeferredBlock<LiquidBlock> HONEY = BLOCKS.register("animania_honey",
-            () -> new LiquidBlock(ModFluids.HONEY.source(), BlockBehaviour.Properties.of()
+    private static final Map<MilkType, RegistryObject<LiquidBlock>> MILK_BLOCKS = new EnumMap<>(MilkType.class);
+    private static final Map<MilkType, RegistryObject<CheeseWheelBlock>> CHEESE_BLOCKS = new EnumMap<>(MilkType.class);
+    private static final Map<String, RegistryObject<Block>> ANIMANIA_WOOL = new java.util.LinkedHashMap<>();
+    public static final RegistryObject<LiquidBlock> HONEY = BLOCKS.register("animania_honey",
+            () -> new LiquidBlock(() -> ModFluids.HONEY.source(), BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_YELLOW).replaceable().noCollission().strength(100.0F).noLootTable().liquid()));
-    public static final DeferredBlock<LiquidBlock> SLOP = BLOCKS.register("slop",
-            () -> new LiquidBlock(ModFluids.SLOP.source(), BlockBehaviour.Properties.of()
+    public static final RegistryObject<LiquidBlock> SLOP = BLOCKS.register("slop",
+            () -> new LiquidBlock(() -> ModFluids.SLOP.source(), BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN).replaceable().noCollission().strength(100.0F).noLootTable().liquid()));
-    public static final DeferredBlock<CheeseMoldBlock> CHEESE_MOLD = BLOCKS.register("cheese_mold",
+    public static final RegistryObject<CheeseMoldBlock> CHEESE_MOLD = BLOCKS.register("cheese_mold",
             () -> new CheeseMoldBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD)
                     .strength(0.9F).sound(SoundType.WOOD).noOcclusion()));
 
     static {
         for (MilkType type : MilkType.values()) {
             MILK_BLOCKS.put(type, BLOCKS.register("milk_" + type.getSerializedName(),
-                    () -> new LiquidBlock(ModFluids.milk(type).source(), BlockBehaviour.Properties.of()
+                    () -> new LiquidBlock(() -> ModFluids.milk(type).source(), BlockBehaviour.Properties.of()
                             .mapColor(MapColor.SNOW).replaceable().noCollission().strength(100.0F).noLootTable().liquid())));
             CHEESE_BLOCKS.put(type, BLOCKS.register("cheese_" + type.getSerializedName(),
                     () -> new CheeseWheelBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW)
@@ -119,19 +119,19 @@ public final class ModBlocks {
     private ModBlocks() {
     }
 
-    public static DeferredBlock<LiquidBlock> milkBlock(MilkType type) {
+    public static RegistryObject<LiquidBlock> milkBlock(MilkType type) {
         return MILK_BLOCKS.get(type);
     }
 
-    public static DeferredBlock<CheeseWheelBlock> cheeseBlock(MilkType type) {
+    public static RegistryObject<CheeseWheelBlock> cheeseBlock(MilkType type) {
         return CHEESE_BLOCKS.get(type);
     }
 
-    public static Map<String, DeferredBlock<Block>> animaniaWool() {
+    public static Map<String, RegistryObject<Block>> animaniaWool() {
         return java.util.Collections.unmodifiableMap(ANIMANIA_WOOL);
     }
 
-    private static DeferredBlock<PetPropBlock> petProp(String name, MapColor color, SoundType sound,
+    private static RegistryObject<PetPropBlock> petProp(String name, MapColor color, SoundType sound,
                                                         float strength, net.minecraft.world.phys.shapes.VoxelShape shape) {
         return BLOCKS.register(name, () -> new PetPropBlock(BlockBehaviour.Properties.of().mapColor(color)
                 .strength(strength).sound(sound).noOcclusion(), shape));

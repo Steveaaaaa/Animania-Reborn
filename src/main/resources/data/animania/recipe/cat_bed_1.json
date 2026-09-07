@@ -1,4 +1,0 @@
-{
-  "type": "minecraft:crafting_shaped", "pattern": ["W W", "WWW"],
-  "key": { "W": { "tag": "minecraft:wool" } }, "result": { "id": "animania:cat_bed_1" }
-}

@@ -1,6 +1,0 @@
-{
-  "type": "minecraft:crafting_shaped",
-  "pattern": ["GGG", "G G", "GGG"],
-  "key": { "G": { "item": "minecraft:glass_pane" } },
-  "result": { "id": "animania:hamster_ball_clear" }
-}

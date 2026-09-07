@@ -18,7 +18,7 @@ public final class LegacyNearestAttackableTargetGoal<T extends LivingEntity> ext
                                              boolean nearby, Predicate<LivingEntity> predicate) {
         super(mob, type, chance, sight, nearby, predicate); this.predicate = predicate;
     }
-    private boolean available() { return !mob.getData(ModAttachments.SLEEPING)
+    private boolean available() { return !ModAttachments.getData(mob, ModAttachments.SLEEPING)
             && (!(mob instanceof TamableAnimal tame) || !tame.isInSittingPose()); }
     @Override public boolean canUse() { return available() && super.canUse(); }
     @Override public boolean canContinueToUse() {

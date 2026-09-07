@@ -69,7 +69,7 @@ public final class AnimaniaSheepRenderer extends MobRenderer<AnimaniaSheep, Lega
             if (texture.equals("sheep_jacob_lamb")) texture = "sheep_jacob_sheared";
             else texture += "_sheared";
         }
-        return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+        return new ResourceLocation(Animania.MOD_ID,
                 "textures/entity/sheep/" + texture + ".png");
     }
 

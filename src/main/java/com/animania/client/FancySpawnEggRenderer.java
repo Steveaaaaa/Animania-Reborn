@@ -43,7 +43,7 @@ public final class FancySpawnEggRenderer extends BlockEntityWithoutLevelRenderer
             previews.clear();
             cachedLevel = level;
         }
-        EntityType<?> type = egg.getType(stack);
+        EntityType<?> type = egg.getType(stack.getTag());
         Entity entity = previews.computeIfAbsent(type, key -> key.create(level));
         if (entity == null) return;
 

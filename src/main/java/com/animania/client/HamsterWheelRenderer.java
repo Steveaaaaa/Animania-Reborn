@@ -14,9 +14,9 @@ import net.minecraft.resources.ResourceLocation;
 
 /** Renders the CraftStudio wheel and hamster with their original animations. */
 public final class HamsterWheelRenderer implements BlockEntityRenderer<HamsterWheelBlockEntity> {
-    private static final ResourceLocation WHEEL_TEXTURE = ResourceLocation.fromNamespaceAndPath(
+    private static final ResourceLocation WHEEL_TEXTURE = new ResourceLocation(
             Animania.MOD_ID, "textures/entity/tileentities/hamster_wheel.png");
-    private static final ResourceLocation HAMSTER_TEXTURE = ResourceLocation.fromNamespaceAndPath(
+    private static final ResourceLocation HAMSTER_TEXTURE = new ResourceLocation(
             Animania.MOD_ID, "textures/entity/rodents/hamster_tarou.png");
 
     private final CraftStudioModel wheel = CraftStudioModel.load("extra/blocks/model_hamster_wheel");

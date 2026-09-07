@@ -47,7 +47,7 @@ public final class RandomAnimalEggItem extends Item {
         ItemStack stack = context.getItemInHand();
         Mob spawned = type.spawn(level, stack, context.getPlayer(), pos, MobSpawnType.SPAWN_EGG, true, false);
         if (spawned == null) return InteractionResult.FAIL;
-        if (context.getPlayer() == null || !context.getPlayer().hasInfiniteMaterials()) stack.shrink(1);
+        if (context.getPlayer() == null || !context.getPlayer().getAbilities().instabuild) stack.shrink(1);
         return InteractionResult.SUCCESS;
     }
 
@@ -70,7 +70,7 @@ public final class RandomAnimalEggItem extends Item {
     }
 
     private static <T extends Mob> EntityType<? extends Mob> randomRegistered(
-            java.util.Map<String, ? extends net.neoforged.neoforge.registries.DeferredHolder<EntityType<?>, EntityType<T>>> values,
+            java.util.Map<String, ? extends net.minecraftforge.registries.RegistryObject<EntityType<T>>> values,
             ServerLevel level) {
         var entries = new java.util.ArrayList<>(values.values());
         return entries.get(level.random.nextInt(entries.size())).get();

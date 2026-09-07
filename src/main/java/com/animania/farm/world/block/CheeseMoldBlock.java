@@ -5,13 +5,12 @@ import com.animania.common.registry.ModItems;
 import com.animania.farm.dairy.DairyStage;
 import com.animania.farm.dairy.MilkType;
 import com.animania.farm.world.block.entity.CheeseMoldBlockEntity;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -35,7 +34,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 
 public final class CheeseMoldBlock extends BaseEntityBlock {
-    public static final MapCodec<CheeseMoldBlock> CODEC = simpleCodec(CheeseMoldBlock::new);
     public static final EnumProperty<DairyStage> STAGE = EnumProperty.create("stage", DairyStage.class);
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 10, 16);
 
@@ -45,12 +43,7 @@ public final class CheeseMoldBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
-    }
-
-    @Override
-    protected RenderShape getRenderShape(BlockState state) {
+    public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
@@ -60,28 +53,26 @@ public final class CheeseMoldBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
-    @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                                Player player, InteractionHand hand, BlockHitResult hitResult) {
         MilkType type = milkType(stack);
         boolean water = stack.is(Items.WATER_BUCKET);
-        if (type == null && !water) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if (type == null && !water) return InteractionResult.PASS;
         if (!(level.getBlockEntity(pos) instanceof CheeseMoldBlockEntity mold)
                 || state.getValue(STAGE) != DairyStage.EMPTY) {
-            return ItemInteractionResult.FAIL;
+            return InteractionResult.FAIL;
         }
         if (!level.isClientSide()) {
-            if (!(water ? mold.fillWater() : mold.fill(type))) return ItemInteractionResult.FAIL;
+            if (!(water ? mold.fillWater() : mold.fill(type))) return InteractionResult.FAIL;
             if (!player.getAbilities().instabuild) player.setItemInHand(hand, new ItemStack(Items.BUCKET));
         }
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        return InteractionResult.sidedSuccess(level.isClientSide());
     }
 
-    @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
                                                 Player player, BlockHitResult hitResult) {
         if (!(level.getBlockEntity(pos) instanceof CheeseMoldBlockEntity mold)) return InteractionResult.PASS;
@@ -106,7 +97,7 @@ public final class CheeseMoldBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (!state.is(newState.getBlock()) && !level.isClientSide()
                 && level.getBlockEntity(pos) instanceof CheeseMoldBlockEntity mold && mold.isReady()) {
             Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
@@ -125,5 +116,14 @@ public final class CheeseMoldBlock extends BaseEntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return level.isClientSide() ? null
                 : createTickerHelper(type, ModBlockEntities.CHEESE_MOLD.get(), CheeseMoldBlockEntity::serverTick);
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        InteractionResult result = useItemOn(player.getItemInHand(hand), state, level, pos, player, hand, hit);
+        if (result != InteractionResult.PASS) return result;
+        return useWithoutItem(state, level, pos, player, hit);
     }
 }

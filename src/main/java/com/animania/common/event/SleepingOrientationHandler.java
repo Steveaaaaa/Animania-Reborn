@@ -4,9 +4,9 @@ import com.animania.Animania;
 import com.animania.common.entity.AnimalInformation;
 import com.animania.common.registry.ModAttachments;
 import net.minecraft.world.entity.animal.Animal;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.event.entity.living.LivingEvent;
 
 import java.util.Collections;
 import java.util.Map;
@@ -19,19 +19,9 @@ public final class SleepingOrientationHandler {
 
     private SleepingOrientationHandler() { }
 
-    @SubscribeEvent
-    public static void beforeTick(EntityTickEvent.Pre event) {
-        if (event.getEntity() instanceof Animal animal) holdOrientation(animal);
-    }
-
-    @SubscribeEvent
-    public static void afterTick(EntityTickEvent.Post event) {
-        if (event.getEntity() instanceof Animal animal) holdOrientation(animal);
-    }
-
-    private static void holdOrientation(Animal animal) {
+    public static void holdOrientation(Animal animal) {
         if (!AnimalInformation.isAnimaniaAnimal(animal)) return;
-        if (!animal.getData(ModAttachments.SLEEPING)) {
+        if (!ModAttachments.getData(animal, ModAttachments.SLEEPING)) {
             RESTING.remove(animal);
             return;
         }

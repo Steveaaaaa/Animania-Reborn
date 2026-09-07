@@ -74,7 +74,7 @@ public final class AnimaniaSheep extends Sheep {
     }
 
     private boolean wellCaredFor() {
-        return getData(ModAttachments.HUNGER) > 20 && getData(ModAttachments.THIRST) > 20;
+        return ModAttachments.getData(this, ModAttachments.HUNGER) > 20 && ModAttachments.getData(this, ModAttachments.THIRST) > 20;
     }
 
     @Override
@@ -184,8 +184,8 @@ public final class AnimaniaSheep extends Sheep {
     @Override
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
-        SpawnGroupData result = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData, net.minecraft.nbt.CompoundTag spawnTag) {
+        SpawnGroupData result = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData, spawnTag);
         if (breed() == SheepBreed.FRIESIAN) {
             setColor(switch (random.nextInt(3)) {
                 case 0 -> DyeColor.BLACK;
@@ -267,11 +267,10 @@ public final class AnimaniaSheep extends Sheep {
     }
 
     @Override
-    public ResourceKey<LootTable> getDefaultLootTable() {
+    public ResourceLocation getDefaultLootTable() {
         if (role() == FarmAnimalRole.YOUNG) return BuiltInLootTables.EMPTY;
         return breed().isPrime()
-                ? ResourceKey.create(Registries.LOOT_TABLE,
-                ResourceLocation.fromNamespaceAndPath("animania", "entities/sheep_prime"))
+                ? new ResourceLocation("animania", "entities/sheep_prime")
                 : EntityType.SHEEP.getDefaultLootTable();
     }
 
@@ -295,4 +294,9 @@ public final class AnimaniaSheep extends Sheep {
         if (tag.contains("MateBreed")) mateBreed = SheepBreed.fromPath(tag.getString("MateBreed"));
     }
 
+    @Override public void tick() {
+        com.animania.common.entity.AnimalTickBridge.before(this);
+        super.tick();
+        com.animania.common.entity.AnimalTickBridge.after(this);
+    }
 }

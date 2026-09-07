@@ -1,121 +1,41 @@
 plugins {
-    id 'java-library'
-    id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.146'
-    id 'idea'
+    id 'java'
+    id 'net.minecraftforge.gradle' version '6.0.54'
 }
-
-repositories {
-    maven {
-        name = 'JEI'
-        url = 'https://maven.blamejared.com'
-    }
-    exclusiveContent {
-        forRepository {
-            maven {
-                name = 'Modrinth'
-                url = 'https://api.modrinth.com/maven'
-            }
-        }
-        filter {
-            includeGroup 'maven.modrinth'
-        }
-    }
-}
-
-dependencies {
-    compileOnly "maven.modrinth:jade:${jade_version}"
-    compileOnly "mezz.jei:jei-1.21.1-common-api:${jei_version}"
-    compileOnly "mezz.jei:jei-1.21.1-neoforge-api:${jei_version}"
-    // The SleepingTown Maven endpoint intermittently stalls Gradle for minutes.
-    // Use EMI's official GitHub release locally so clean builds are deterministic.
-    compileOnly files("libs/emi-${emi_version}+neoforge.jar")
-}
-
 version = mod_version
 group = mod_group_id
-
-base {
-    archivesName = mod_id
-}
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
-
-sourceSets.main.resources {
-    srcDir('src/generated/resources')
-    exclude('**/*.bbmodel')
-    exclude('src/generated/**/.cache')
-}
-
-neoForge {
-    version = project.neo_version
-
-    parchment {
-        mappingsVersion = project.parchment_mappings_version
-        minecraftVersion = project.parchment_minecraft_version
-    }
-
+base { archivesName = 'animania-forge-1.20.1' }
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
     runs {
-        client {
-            client()
-        }
-        server {
-            server()
-            programArgument '--nogui'
-        }
-        data {
-            data()
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output',
-                    file('src/generated/resources/').absolutePath, '--existing',
-                    file('src/main/resources/').absolutePath
-        }
-        configureEach {
-            systemProperty 'forge.logging.markers', 'REGISTRIES'
-            logLevel = org.slf4j.event.Level.INFO
-        }
-    }
-
-    mods {
-        "${mod_id}" {
-            sourceSet(sourceSets.main)
-        }
+        client { workingDirectory project.file('run'); mods { animania { source sourceSets.main } } }
+        server { workingDirectory project.file('run'); args '--nogui'; mods { animania { source sourceSets.main } } }
     }
 }
-
-configurations {
-    runtimeClasspath.extendsFrom localRuntime
+repositories {
+    exclusiveContent {
+        forRepository { maven { url = uri('libs/maven') } }
+        filter { includeVersion('maven.modrinth', 'emi', project.emi_version) }
+    }
+    maven { url = 'https://maven.blamejared.com' }
+    maven { url = 'https://api.modrinth.com/maven' }
 }
-
-var generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
-    var replaceProperties = [
-            minecraft_version       : minecraft_version,
-            minecraft_version_range : minecraft_version_range,
-            neo_version             : neo_version,
-            loader_version_range    : loader_version_range,
-            mod_id                  : mod_id,
-            mod_name                : mod_name,
-            mod_license             : mod_license,
-            mod_version             : mod_version,
-    ]
-    inputs.properties replaceProperties
-    expand replaceProperties
-    from 'src/main/templates'
-    into 'build/generated/sources/modMetadata'
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    compileOnly fg.deobf("maven.modrinth:jade:${jade_version}")
+    compileOnly fg.deobf("mezz.jei:jei-1.20.1-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-1.20.1-forge-api:${jei_version}")
+    compileOnly fg.deobf("maven.modrinth:emi:${emi_version}")
 }
-
-sourceSets.main.resources.srcDir generateModMetadata
-neoForge.ideSyncTask generateModMetadata
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
+sourceSets.main.resources { srcDir 'src/generated/resources'; exclude '**/*.bbmodel' }
+tasks.named('processResources', ProcessResources).configure {
+    def props = [mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version]
+    inputs.properties props
+    from('src/main/templates') { expand props }
 }
-
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8'; options.compilerArgs += ['-Xmaxerrs', '1000'] }
 tasks.named('jar', Jar).configure {
-    from(layout.projectDirectory.files('LICENSE', 'COPYING', 'NOTICE')) {
-        into('META-INF')
-    }
-}
-
-tasks.named('wrapper', Wrapper).configure {
-    distributionType = Wrapper.DistributionType.BIN
+    from(project.files('LICENSE', 'COPYING', 'NOTICE')) { into 'META-INF' }
+    finalizedBy 'reobfJar'
 }

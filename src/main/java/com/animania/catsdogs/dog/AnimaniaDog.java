@@ -1,4 +1,5 @@
 package com.animania.catsdogs.dog;
+import net.minecraft.resources.ResourceLocation;
 
 import com.animania.common.entity.AnimalInformation;
 import com.animania.common.registry.ModAttachments;
@@ -92,9 +93,9 @@ public final class AnimaniaDog extends TamableAnimal {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(VARIANT, 0);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(VARIANT, 0);
     }
 
     @Override
@@ -135,7 +136,7 @@ public final class AnimaniaDog extends TamableAnimal {
     }
 
     private boolean wellCaredFor() {
-        return getData(ModAttachments.HUNGER) > 20 && getData(ModAttachments.THIRST) > 20;
+        return ModAttachments.getData(this, ModAttachments.HUNGER) > 20 && ModAttachments.getData(this, ModAttachments.THIRST) > 20;
     }
 
     @Override
@@ -167,7 +168,7 @@ public final class AnimaniaDog extends TamableAnimal {
         com.animania.common.entity.LegacyAnimalNeeds.copyState(this, dog);
         if (isTame() && getOwnerUUID() != null) {
             dog.setOwnerUUID(getOwnerUUID());
-            dog.setTame(true, true);
+            dog.setTame(true);
         }
     }
 
@@ -192,7 +193,7 @@ public final class AnimaniaDog extends TamableAnimal {
                 if (childBreed == breed()) puppy.entityData.set(VARIANT, variant());
                 if (isTame() && getOwnerUUID() != null) {
                     puppy.setOwnerUUID(getOwnerUUID());
-                    puppy.setTame(true, true);
+                    puppy.setTame(true);
                 }
                 server.addFreshEntity(puppy);
             }
@@ -246,7 +247,7 @@ public final class AnimaniaDog extends TamableAnimal {
             if (!level().isClientSide()) {
                 tame(player);
                 setOrderedToSit(false);
-                setData(ModAttachments.HUNGER, ModAttachments.MAX_NEED);
+                ModAttachments.setData(this, ModAttachments.HUNGER, ModAttachments.MAX_NEED);
                 level().broadcastEntityEvent(this, (byte) 7);
                 if (!player.isCreative()) held.shrink(1);
             }
@@ -270,8 +271,8 @@ public final class AnimaniaDog extends TamableAnimal {
     @Override
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType reason, @Nullable SpawnGroupData data) {
-        SpawnGroupData result = super.finalizeSpawn(level, difficulty, reason, data);
+                                        MobSpawnType reason, @Nullable SpawnGroupData data, net.minecraft.nbt.CompoundTag spawnTag) {
+        SpawnGroupData result = super.finalizeSpawn(level, difficulty, reason, data, spawnTag);
         entityData.set(VARIANT, random.nextInt(breed().variants()));
         if (role() == DogRole.FEMALE && breed().naturallySpawns()) {
             com.animania.common.entity.LegacyNaturalFamily.spawn(level, this, reason,
@@ -291,7 +292,7 @@ public final class AnimaniaDog extends TamableAnimal {
     }
 
     @Override
-    protected ResourceKey<LootTable> getDefaultLootTable() {
+    protected ResourceLocation getDefaultLootTable() {
         return BuiltInLootTables.EMPTY;
     }
 
@@ -311,5 +312,10 @@ public final class AnimaniaDog extends TamableAnimal {
         pregnant = tag.getBoolean("Pregnant");
         gestation = tag.getInt("Gestation");
         if (tag.contains("MateBreed")) mateBreed = DogBreed.fromPath(tag.getString("MateBreed"));
+    }
+    @Override public void tick() {
+        com.animania.common.entity.AnimalTickBridge.before(this);
+        super.tick();
+        com.animania.common.entity.AnimalTickBridge.after(this);
     }
 }

@@ -35,7 +35,7 @@ public final class LegacyGrazeGoal extends LegacySearchBlockGoal {
         if (consumesGrass) super.start();
         else {
             eatingTimer = 160;
-            grazer.setData(ModAttachments.EATING_TICKS, 80);
+            ModAttachments.setData(grazer, ModAttachments.EATING_TICKS, 80);
             animal.getNavigation().stop();
         }
     }
@@ -43,7 +43,7 @@ public final class LegacyGrazeGoal extends LegacySearchBlockGoal {
     @Override
     public boolean canUse() {
         if (++firingTimer <= LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get()) return false;
-        if (grazer.getData(ModAttachments.SLEEPING) || LegacyAnimalNeeds.isFed(grazer)
+        if (ModAttachments.getData(grazer, ModAttachments.SLEEPING) || LegacyAnimalNeeds.isFed(grazer)
                 || grazer instanceof AnimaniaHorse horse && (horse.isVehicle() || horse.isPassenger() || horse.isPullingVehicle())) {
             firingTimer = 0;
             return false;
@@ -98,7 +98,7 @@ public final class LegacyGrazeGoal extends LegacySearchBlockGoal {
     @Override
     protected void onArriveAtDestination() {
         eatingTimer = 160;
-        grazer.setData(ModAttachments.EATING_TICKS, 80);
+        ModAttachments.setData(grazer, ModAttachments.EATING_TICKS, 80);
         animal.getNavigation().stop();
     }
 }

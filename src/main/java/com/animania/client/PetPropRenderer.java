@@ -30,7 +30,7 @@ public final class PetPropRenderer implements BlockEntityRenderer<PetPropBlockEn
         String name = BuiltInRegistries.BLOCK.getKey(blockEntity.getBlockState().getBlock()).getPath();
         CraftStudioModel model = MODELS.computeIfAbsent(name,
                 key -> CraftStudioModel.load("catsdogs/blocks/model_" + key));
-        ResourceLocation texture = TEXTURES.computeIfAbsent(name, key -> ResourceLocation.fromNamespaceAndPath(
+        ResourceLocation texture = TEXTURES.computeIfAbsent(name, key -> new ResourceLocation(
                 Animania.MOD_ID, "textures/entity/tileentities/" + key + ".png"));
 
         poseStack.pushPose();

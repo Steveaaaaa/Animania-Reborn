@@ -67,7 +67,7 @@ public final class AnimaniaDogRenderer extends MobRenderer<AnimaniaDog, LegacyAn
 
     @Override
     public ResourceLocation getTextureLocation(AnimaniaDog dog) {
-        return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+        return new ResourceLocation(Animania.MOD_ID,
                 "textures/entity/dogs/" + dog.textureName() + ".png");
     }
 

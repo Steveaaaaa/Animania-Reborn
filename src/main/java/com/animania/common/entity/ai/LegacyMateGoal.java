@@ -33,10 +33,10 @@ public final class LegacyMateGoal extends Goal {
     @Override
     public boolean canUse() {
         if (++delayCounter <= LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get()) return false;
-        if (AnimalInformation.isSterilized(male) || male.getData(ModAttachments.SLEEPING)
+        if (AnimalInformation.isSterilized(male) || ModAttachments.getData(male, ModAttachments.SLEEPING)
                 || male.isInWater() || AnimalInformation.gender(male) != AnimalInformation.Gender.MALE
                 || LegacyConfig.REQUIRE_ANIMAL_INTERACTION_FOR_AI.get() && !LegacyAnimalNeeds.isInteracted(male)
-                || LegacyConfig.FEED_TO_BREED.get() && !male.getData(ModAttachments.HAND_FED)
+                || LegacyConfig.FEED_TO_BREED.get() && !ModAttachments.getData(male, ModAttachments.HAND_FED)
                 || !LegacyAnimalNeeds.isFed(male) || !LegacyAnimalNeeds.isWatered(male)) {
             delayCounter = 0;
             return false;
@@ -70,9 +70,9 @@ public final class LegacyMateGoal extends Goal {
     @Override
     public void tick() {
         if (targetMate == null) return;
-        String assigned = targetMate.getData(ModAttachments.LAST_MATE);
+        String assigned = ModAttachments.getData(targetMate, ModAttachments.LAST_MATE);
         if ((!assigned.isEmpty() && !assigned.equals(male.getUUID().toString()))
-                || !targetMate.getData(ModAttachments.FERTILE)) {
+                || !ModAttachments.getData(targetMate, ModAttachments.FERTILE)) {
             stop();
             courtshipTimer = 200;
             return;
@@ -98,7 +98,7 @@ public final class LegacyMateGoal extends Goal {
     }
 
     private Animal findNearbyMate() {
-        String mateId = male.getData(ModAttachments.LAST_MATE);
+        String mateId = ModAttachments.getData(male, ModAttachments.LAST_MATE);
         if (LegacyConfig.MALES_MATE_MULTIPLE_FEMALES.get()) mateId = "";
         final String requiredMate = mateId;
         double radius = requiredMate.isEmpty() ? 8.0D : 5.0D;
@@ -106,8 +106,8 @@ public final class LegacyMateGoal extends Goal {
                         female != male && female.getClass() == male.getClass()
                                 && AnimalInformation.gender(female) == AnimalInformation.Gender.FEMALE
                                 && (requiredMate.isEmpty() || female.getUUID().toString().equals(requiredMate))
-                                && female.getData(ModAttachments.FERTILE)
-                                && !female.getData(ModAttachments.SLEEPING)
+                                && ModAttachments.getData(female, ModAttachments.FERTILE)
+                                && !ModAttachments.getData(female, ModAttachments.SLEEPING)
                                 && male.hasLineOfSight(female)
                                 && LegacyBreedingRules.canMate(male, female)
                                 && male.canMate(female))

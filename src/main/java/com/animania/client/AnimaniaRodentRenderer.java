@@ -38,7 +38,7 @@ public final class AnimaniaRodentRenderer extends MobRenderer<AnimaniaRodent, Le
         float scale = rodent.kind() == AnimaniaRodent.Kind.HAMSTER ? 0.40F
                 : rodent.kind().isFerret() ? 0.50F : 0.60F;
         poseStack.scale(scale, scale, scale);
-        if (rodent.getData(ModAttachments.SLEEPING) || rodent.kind().isHedgehog() && rodent.isInSittingPose()) {
+        if (ModAttachments.getData(rodent, ModAttachments.SLEEPING) || rodent.kind().isHedgehog() && rodent.isInSittingPose()) {
             double y = rodent.kind().isFerret() ? 0.20D : 0.15D;
             poseStack.translate(0.0D, y, 0.0D);
             if (rodent.kind() == AnimaniaRodent.Kind.HAMSTER) {
@@ -51,7 +51,7 @@ public final class AnimaniaRodentRenderer extends MobRenderer<AnimaniaRodent, Le
 
     @Override
     public ResourceLocation getTextureLocation(AnimaniaRodent rodent) {
-        return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
+        return new ResourceLocation(Animania.MOD_ID,
                 "textures/entity/rodents/" + (rodent.kind() == AnimaniaRodent.Kind.HAMSTER
                         ? "hamster_" : "") + rodent.textureName() + ".png");
     }

@@ -17,7 +17,7 @@ public final class LegacyStayAsleepGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return animal.getData(ModAttachments.SLEEPING);
+        return ModAttachments.getData(animal, ModAttachments.SLEEPING);
     }
 
     @Override

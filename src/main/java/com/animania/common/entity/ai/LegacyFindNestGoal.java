@@ -23,7 +23,7 @@ public final class LegacyFindNestGoal extends net.minecraft.world.entity.ai.goal
     @Override
     public boolean canUse() {
         if (++delay <= LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get()) return false;
-        if (!bird.level().isDay() || bird.getData(ModAttachments.SLEEPING) || !wellCaredFor()) {
+        if (!bird.level().isDay() || ModAttachments.getData(bird, ModAttachments.SLEEPING) || !wellCaredFor()) {
             delay = 0; return false;
         }
         if (bird.getRandom().nextInt(100) == 0) {
@@ -100,6 +100,6 @@ public final class LegacyFindNestGoal extends net.minecraft.world.entity.ai.goal
     }
 
     private boolean wellCaredFor() {
-        return bird.getData(ModAttachments.FED) && bird.getData(ModAttachments.WATERED);
+        return ModAttachments.getData(bird, ModAttachments.FED) && ModAttachments.getData(bird, ModAttachments.WATERED);
     }
 }

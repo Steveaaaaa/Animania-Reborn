@@ -5,13 +5,12 @@ import com.animania.common.registry.ModEntities;
 import com.animania.common.registry.ModFluids;
 import com.animania.common.registry.ModBlockEntities;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.ModelEvent;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
 import com.animania.common.item.AnimaniaSpawnEggItem;
@@ -63,36 +62,23 @@ public final class ClientModEvents {
     }
 
     @SubscribeEvent
-    public static void registerFluidExtensions(RegisterClientExtensionsEvent event) {
-        for (com.animania.farm.dairy.MilkType milkType : com.animania.farm.dairy.MilkType.values()) {
-            String id = milkType.getSerializedName();
-            event.registerFluidType(fluidRendering("fluid/milk_" + id + "_still",
-                    "fluid/milk_" + id + "_flow", 0xFFFFFFFF), ModFluids.milk(milkType).type());
-        }
-        event.registerFluidType(fluidRendering("fluid/animania_honey_still", "fluid/animania_honey_flow", 0xFFFFFFFF),
-                ModFluids.HONEY.type());
-        event.registerFluidType(fluidRendering("fluid/slop_still", "fluid/slop_flow", 0xFFFFFFFF),
-                ModFluids.SLOP.type());
-    }
-
-    @SubscribeEvent
     public static void wrapSpawnEggModels(ModelEvent.ModifyBakingResult event) {
         BuiltInRegistries.ITEM.forEach(item -> {
             if (!(item instanceof AnimaniaSpawnEggItem)) return;
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
-            ModelResourceLocation modelId = ModelResourceLocation.inventory(id);
+            ModelResourceLocation modelId = new ModelResourceLocation(id, "inventory");
             var model = event.getModels().get(modelId);
             if (model != null) event.getModels().put(modelId, new ConfigurableSpawnEggModel(model));
         });
     }
 
-    private static IClientFluidTypeExtensions fluidRendering(String still, String flowing, int tint) {
+    public static IClientFluidTypeExtensions fluidRendering(String still, String flowing, int tint) {
         return new IClientFluidTypeExtensions() {
             @Override public ResourceLocation getStillTexture() {
-                return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID, still);
+                return new ResourceLocation(Animania.MOD_ID, still);
             }
             @Override public ResourceLocation getFlowingTexture() {
-                return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID, flowing);
+                return new ResourceLocation(Animania.MOD_ID, flowing);
             }
             @Override public int getTintColor() { return tint; }
         };

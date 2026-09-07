@@ -20,7 +20,7 @@ public final class RidingCropItem extends Item {
         if (player.getVehicle() instanceof AnimaniaHorse horse && horse.isTamed()) {
             if (!level.isClientSide()) {
                 horse.addDeltaMovement(horse.getLookAngle().multiply(0.42, 0.08, 0.42));
-                stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+                stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(EquipmentSlot.MAINHAND));
             }
             return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
         }

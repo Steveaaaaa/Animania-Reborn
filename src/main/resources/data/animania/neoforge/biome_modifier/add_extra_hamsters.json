@@ -1,7 +1,0 @@
-{
-  "type": "animania:legacy_add_spawns",
-  "biomes": "#animania:hamster_habitats",
-  "probability_group": "hamsters",
-  "default_probability": 8,
-  "spawners": [{ "type": "animania:hamster", "weight": 8, "minCount": 1, "maxCount": 3 }]
-}
