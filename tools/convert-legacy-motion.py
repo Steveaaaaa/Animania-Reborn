@@ -1,6 +1,6 @@
 """Translate the original per-model animation methods, without pooling breed equations.
 
-Geometry/setupAngles is already baked by convert-legacy-models.mjs. Sleeping poses
+Geometry is baked by convert-legacy-models.mjs; setupAngles keeps its original call order. Sleeping poses
 are handled separately by LegacyAnimalModel and GeneratedLegacySleep.
 This generator writes only its generated Java output; it does not run tests.
 """
@@ -24,7 +24,6 @@ def translate(code):
     code = re.sub(r'super\.\w+\([^;]*\);', '', code)
     code = re.sub(r'ModelPose sleepingPose\s*=[^;]*;', '', code)
     code = re.sub(r'sleepingPose\.\w+\([^;]*\);', '', code)
-    code = re.sub(r'(?:this\.)?setupAngles\(\);', '', code)
     code = re.sub(r'this\.ball\.rotation\s*=[^;]*;', '', code) # HamsterBallLayer owns ball rendering.
     code = re.sub(r'this\.\w+\.postRender\([^;]*\);', '', code) # Legacy GL-only helper, not a model pose.
     code = re.sub(r'(\w+)\s+instanceof\s+(Entity\w+)', r'\1.isType("\2")', code)
@@ -47,8 +46,17 @@ for file in sorted(root.rglob('Model*.java')):
         continue
     source = re.sub(r'/\*[\s\S]*?\*/|//[^\n]*', '', file.read_text(encoding='utf-8'))
     methods = {}
-    for match in re.finditer(r'public\s+void\s+(setLivingAnimations|setRotationAngles)\s*\(([^)]*)\)', source):
-        methods[match[1]] = (translate(match[2]), translate(body(source, match.end())))
+    for match in re.finditer(r'public\s+void\s+(setLivingAnimations|setRotationAngles|setupAngles)\s*\(([^)]*)\)', source):
+        code = translate(body(source, match.end()))
+        if match[1] == 'setupAngles':
+            # Offsets are baked into cubes and child pivots. Restore only pivots
+            # explicitly reset by upstream, including their baked parent offsets.
+            code = re.sub(r'this\.\w+\.setOffset\([^;]*\);', '', code)
+            code = re.sub(r'this\.(\w+)\.setPos\([^;]*\);',
+                          lambda m: f'this.{m[1]}.setPos({m[1]}.getInitialPose().x, '
+                                    f'{m[1]}.getInitialPose().y, {m[1]}.getInitialPose().z);', code)
+            code = '\n'.join(line.rstrip() for line in code.splitlines())
+        methods[match[1]] = (translate(match[2]), code)
     if not methods:
         continue
     nodes = json.loads(datafile.read_text(encoding='utf-8'))['nodes']

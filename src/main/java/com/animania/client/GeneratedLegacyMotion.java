@@ -145,6 +145,145 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = 0.0F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.body.setPos(body.getInitialPose().x, body.getInitialPose().y, body.getInitialPose().z);
+
+		this.lower_body.xRot = -0.04414810342919657F;
+		this.lower_body.yRot = 0.0F;
+		this.lower_body.zRot = 0.0F;
+		this.lower_body.setPos(lower_body.getInitialPose().x, lower_body.getInitialPose().y, lower_body.getInitialPose().z);
+
+		this.tail.xRot = -1.0040809373553299F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.tail.setPos(tail.getInitialPose().x, tail.getInitialPose().y, tail.getInitialPose().z);
+
+		this.tail2.xRot = 0.21703867380250286F;
+		this.tail2.yRot = 0.0F;
+		this.tail2.zRot = 0.0F;
+		this.tail2.setPos(tail2.getInitialPose().x, tail2.getInitialPose().y, tail2.getInitialPose().z);
+
+		this.tail3.xRot = 0.578960619471559F;
+		this.tail3.yRot = 0.0F;
+		this.tail3.zRot = 0.0F;
+		this.tail3.setPos(tail3.getInitialPose().x, tail3.getInitialPose().y, tail3.getInitialPose().z);
+
+		this.back_leg_r1.xRot = 0.05145579700729682F;
+		this.back_leg_r1.yRot = 0.0F;
+		this.back_leg_r1.zRot = 0.0F;
+		this.back_leg_r1.setPos(back_leg_r1.getInitialPose().x, back_leg_r1.getInitialPose().y, back_leg_r1.getInitialPose().z);
+
+		this.back_leg_r2.xRot = 0.0F;
+		this.back_leg_r2.yRot = 0.0F;
+		this.back_leg_r2.zRot = 0.0F;
+		this.back_leg_r2.setPos(back_leg_r2.getInitialPose().x, back_leg_r2.getInitialPose().y, back_leg_r2.getInitialPose().z);
+
+		this.back_leg_l1.xRot = 0.03700098014227979F;
+		this.back_leg_l1.yRot = 0.0F;
+		this.back_leg_l1.zRot = 0.0F;
+		this.back_leg_l1.setPos(back_leg_l1.getInitialPose().x, back_leg_l1.getInitialPose().y, back_leg_l1.getInitialPose().z);
+
+		this.back_leg_l2.xRot = 0.0F;
+		this.back_leg_l2.yRot = 0.0F;
+		this.back_leg_l2.zRot = 0.0F;
+		this.back_leg_l2.setPos(back_leg_l2.getInitialPose().x, back_leg_l2.getInitialPose().y, back_leg_l2.getInitialPose().z);
+
+		this.neck1.xRot = -0.7687285237116505F;
+		this.neck1.yRot = 0.0F;
+		this.neck1.zRot = 0.0F;
+		this.neck1.setPos(neck1.getInitialPose().x, neck1.getInitialPose().y, neck1.getInitialPose().z);
+
+		this.head_base.xRot = 0.823969939866523F;
+		this.head_base.yRot = 0.0F;
+		this.head_base.zRot = 0.0F;
+		this.head_base.setPos(head_base.getInitialPose().x, head_base.getInitialPose().y, head_base.getInitialPose().z);
+
+		this.head_front.xRot = 0.21118483949131386F;
+		this.head_front.yRot = 0.0F;
+		this.head_front.zRot = 0.0F;
+		this.head_front.setPos(head_front.getInitialPose().x, head_front.getInitialPose().y, head_front.getInitialPose().z);
+
+		this.head_slope.xRot = 0.44692995221669196F;
+		this.head_slope.yRot = 0.0F;
+		this.head_slope.zRot = 0.0F;
+		this.head_slope.setPos(head_slope.getInitialPose().x, head_slope.getInitialPose().y, head_slope.getInitialPose().z);
+
+		this.nose.xRot = -0.2920110371511713F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.nose.setPos(nose.getInitialPose().x, nose.getInitialPose().y, nose.getInitialPose().z);
+
+		this.jaw.xRot = -0.0434604437039108F;
+		this.jaw.yRot = 0.0F;
+		this.jaw.zRot = 0.0F;
+		this.jaw.setPos(jaw.getInitialPose().x, jaw.getInitialPose().y, jaw.getInitialPose().z);
+
+		this.cheek_r.xRot = 0.008552113334772215F;
+		this.cheek_r.yRot = -0.09721483933608416F;
+		this.cheek_r.zRot = -0.12182398178920421F;
+		this.cheek_r.setPos(cheek_r.getInitialPose().x, cheek_r.getInitialPose().y, cheek_r.getInitialPose().z);
+
+		this.cheek_r2.xRot = 0.0F;
+		this.cheek_r2.yRot = -0.24005258531930007F;
+		this.cheek_r2.zRot = 0.0F;
+		this.cheek_r2.setPos(cheek_r2.getInitialPose().x, cheek_r2.getInitialPose().y, cheek_r2.getInitialPose().z);
+
+		this.cheek_l.xRot = 0.008552113334772215F;
+		this.cheek_l.yRot = 0.09721658466533616F;
+		this.cheek_l.zRot = 0.12182398178920421F;
+		this.cheek_l.setPos(cheek_l.getInitialPose().x, cheek_l.getInitialPose().y, cheek_l.getInitialPose().z);
+
+		this.cheek_l2.xRot = 0.0F;
+		this.cheek_l2.yRot = 0.24005433064855206F;
+		this.cheek_l2.zRot = 1.7453292519943296E-6F;
+		this.cheek_l2.setPos(cheek_l2.getInitialPose().x, cheek_l2.getInitialPose().y, cheek_l2.getInitialPose().z);
+
+		this.ear_r.xRot = -1.1098548713431942F;
+		this.ear_r.yRot = 1.0725048253505156F;
+		this.ear_r.zRot = -0.8227464640608749F;
+		this.ear_r.setPos(ear_r.getInitialPose().x, ear_r.getInitialPose().y, ear_r.getInitialPose().z);
+
+		this.ear_r2.xRot = 0.13962634015954636F;
+		this.ear_r2.yRot = 0.0F;
+		this.ear_r2.zRot = 0.0F;
+		this.ear_r2.setPos(ear_r2.getInitialPose().x, ear_r2.getInitialPose().y, ear_r2.getInitialPose().z);
+
+		this.ear_l.xRot = -1.1098548713431942F;
+		this.ear_l.yRot = -1.0725048253505156F;
+		this.ear_l.zRot = 0.8227482093901269F;
+		this.ear_l.setPos(ear_l.getInitialPose().x, ear_l.getInitialPose().y, ear_l.getInitialPose().z);
+
+		this.ear_l2.xRot = 0.13962634015954636F;
+		this.ear_l2.yRot = 0.0F;
+		this.ear_l2.zRot = 0.0F;
+		this.ear_l2.setPos(ear_l2.getInitialPose().x, ear_l2.getInitialPose().y, ear_l2.getInitialPose().z);
+
+		this.leg_r1.xRot = 0.0F;
+		this.leg_r1.yRot = 0.0F;
+		this.leg_r1.zRot = 0.0F;
+		this.leg_r1.setPos(leg_r1.getInitialPose().x, leg_r1.getInitialPose().y, leg_r1.getInitialPose().z);
+
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = 0.0F;
+		this.leg_r2.zRot = 0.0F;
+		this.leg_r2.setPos(leg_r2.getInitialPose().x, leg_r2.getInitialPose().y, leg_r2.getInitialPose().z);
+
+		this.leg_l1.xRot = 0.0F;
+		this.leg_l1.yRot = 0.0F;
+		this.leg_l1.zRot = 0.0F;
+		this.leg_l1.setPos(leg_l1.getInitialPose().x, leg_l1.getInitialPose().y, leg_l1.getInitialPose().z);
+
+		this.leg_l2.xRot = 0.0F;
+		this.leg_l2.yRot = 0.0F;
+		this.leg_l2.zRot = 0.0F;
+		this.leg_l2.setPos(leg_l2.getInitialPose().x, leg_l2.getInitialPose().y, leg_l2.getInitialPose().z);
+
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -169,7 +308,7 @@ final class GeneratedLegacyMotion {
         }
         private void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, LegacyMotionContext entity) {
 
-		
+		setupAngles();
 
 		
 
@@ -255,6 +394,155 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = 0.03490658503988659F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.body.setPos(body.getInitialPose().x, body.getInitialPose().y, body.getInitialPose().z);
+
+		this.lower_body.xRot = -0.04414810342919657F;
+		this.lower_body.yRot = 0.0F;
+		this.lower_body.zRot = 0.0F;
+		this.lower_body.setPos(lower_body.getInitialPose().x, lower_body.getInitialPose().y, lower_body.getInitialPose().z);
+
+		this.tail.xRot = -0.8751709188030287F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.tail.setPos(tail.getInitialPose().x, tail.getInitialPose().y, tail.getInitialPose().z);
+
+		this.tail2.xRot = 0.21703867380250286F;
+		this.tail2.yRot = 0.0F;
+		this.tail2.zRot = 0.0F;
+		this.tail2.setPos(tail2.getInitialPose().x, tail2.getInitialPose().y, tail2.getInitialPose().z);
+
+		this.tail3.xRot = 0.2716954046579573F;
+		this.tail3.yRot = 0.0F;
+		this.tail3.zRot = 0.0F;
+		this.tail3.setPos(tail3.getInitialPose().x, tail3.getInitialPose().y, tail3.getInitialPose().z);
+
+		this.back_leg_r1.xRot = -1.7453292519943296E-6F;
+		this.back_leg_r1.yRot = 0.0F;
+		this.back_leg_r1.zRot = 0.0F;
+		this.back_leg_r1.setPos(back_leg_r1.getInitialPose().x, back_leg_r1.getInitialPose().y, back_leg_r1.getInitialPose().z);
+
+		this.back_leg_r2.xRot = 0.0F;
+		this.back_leg_r2.yRot = 0.0F;
+		this.back_leg_r2.zRot = 0.0F;
+		this.back_leg_r2.setPos(back_leg_r2.getInitialPose().x, back_leg_r2.getInitialPose().y, back_leg_r2.getInitialPose().z);
+
+		this.back_leg_l1.xRot = -1.7453292519943296E-6F;
+		this.back_leg_l1.yRot = 0.0F;
+		this.back_leg_l1.zRot = 0.0F;
+		this.back_leg_l1.setPos(back_leg_l1.getInitialPose().x, back_leg_l1.getInitialPose().y, back_leg_l1.getInitialPose().z);
+
+		this.back_leg_l2.xRot = 0.0F;
+		this.back_leg_l2.yRot = 0.0F;
+		this.back_leg_l2.zRot = 0.0F;
+		this.back_leg_l2.setPos(back_leg_l2.getInitialPose().x, back_leg_l2.getInitialPose().y, back_leg_l2.getInitialPose().z);
+
+		this.neck1.xRot = -0.566649066927991F;
+		this.neck1.yRot = 0.0F;
+		this.neck1.zRot = 0.0F;
+		this.neck1.setPos(neck1.getInitialPose().x, neck1.getInitialPose().y, neck1.getInitialPose().z);
+
+		this.head_base.xRot = 0.77376030794515F;
+		this.head_base.yRot = 0.0F;
+		this.head_base.zRot = 0.0F;
+		this.head_base.setPos(head_base.getInitialPose().x, head_base.getInitialPose().y, head_base.getInitialPose().z);
+
+		this.head_front.xRot = 0.08333772645347724F;
+		this.head_front.yRot = 0.0F;
+		this.head_front.zRot = 0.0F;
+		this.head_front.setPos(head_front.getInitialPose().x, head_front.getInitialPose().y, head_front.getInitialPose().z);
+
+		this.head_slope.xRot = 0.35123180400059084F;
+		this.head_slope.yRot = 0.0F;
+		this.head_slope.zRot = 0.0F;
+		this.head_slope.setPos(head_slope.getInitialPose().x, head_slope.getInitialPose().y, head_slope.getInitialPose().z);
+
+		this.nose.xRot = -0.17677218262974168F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.nose.setPos(nose.getInitialPose().x, nose.getInitialPose().y, nose.getInitialPose().z);
+
+		this.jaw.xRot = -0.009829694347232064F;
+		this.jaw.yRot = 0.0F;
+		this.jaw.zRot = 0.0F;
+		this.jaw.setPos(jaw.getInitialPose().x, jaw.getInitialPose().y, jaw.getInitialPose().z);
+
+		this.cheek_r.xRot = 0.0F;
+		this.cheek_r.yRot = -0.16720254234105678F;
+		this.cheek_r.zRot = -0.12217304763960307F;
+		this.cheek_r.setPos(cheek_r.getInitialPose().x, cheek_r.getInitialPose().y, cheek_r.getInitialPose().z);
+
+		this.cheek_r2.xRot = 0.0F;
+		this.cheek_r2.yRot = -0.24005258531930007F;
+		this.cheek_r2.zRot = 0.0F;
+		this.cheek_r2.setPos(cheek_r2.getInitialPose().x, cheek_r2.getInitialPose().y, cheek_r2.getInitialPose().z);
+
+		this.cheek_l.xRot = 0.0F;
+		this.cheek_l.yRot = 0.16720254234105678F;
+		this.cheek_l.zRot = 0.12217304763960307F;
+		this.cheek_l.setPos(cheek_l.getInitialPose().x, cheek_l.getInitialPose().y, cheek_l.getInitialPose().z);
+
+		this.cheek_l2.xRot = 0.0F;
+		this.cheek_l2.yRot = 0.24005433064855206F;
+		this.cheek_l2.zRot = 1.7453292519943296E-6F;
+		this.cheek_l2.setPos(cheek_l2.getInitialPose().x, cheek_l2.getInitialPose().y, cheek_l2.getInitialPose().z);
+
+		this.ear_r.xRot = -1.1344657591255662F;
+		this.ear_r.yRot = 1.9198621771937625F;
+		this.ear_r.zRot = -1.3962634015954636F;
+		this.ear_r.setPos(ear_r.getInitialPose().x, ear_r.getInitialPose().y, ear_r.getInitialPose().z);
+
+		this.ear_r2.xRot = 0.13962634015954636F;
+		this.ear_r2.yRot = 0.0F;
+		this.ear_r2.zRot = 0.0F;
+		this.ear_r2.setPos(ear_r2.getInitialPose().x, ear_r2.getInitialPose().y, ear_r2.getInitialPose().z);
+
+		this.ear_r3.xRot = 0.20053833105414848F;
+		this.ear_r3.yRot = 0.0F;
+		this.ear_r3.zRot = 0.0F;
+		this.ear_r3.setPos(ear_r3.getInitialPose().x, ear_r3.getInitialPose().y, ear_r3.getInitialPose().z);
+
+		this.ear_l.xRot = -1.1344657591255662F;
+		this.ear_l.yRot = -1.9198621771937625F;
+		this.ear_l.zRot = 1.3962651469247156F;
+		this.ear_l.setPos(ear_l.getInitialPose().x, ear_l.getInitialPose().y, ear_l.getInitialPose().z);
+
+		this.ear_l2.xRot = 0.13962634015954636F;
+		this.ear_l2.yRot = 0.0F;
+		this.ear_l2.zRot = 0.0F;
+		this.ear_l2.setPos(ear_l2.getInitialPose().x, ear_l2.getInitialPose().y, ear_l2.getInitialPose().z);
+
+		this.ear_l3.xRot = 0.20053833105414848F;
+		this.ear_l3.yRot = 0.0F;
+		this.ear_l3.zRot = 0.0F;
+		this.ear_l3.setPos(ear_l3.getInitialPose().x, ear_l3.getInitialPose().y, ear_l3.getInitialPose().z);
+
+		this.leg_r1.xRot = -0.03490658503988659F;
+		this.leg_r1.yRot = 0.0F;
+		this.leg_r1.zRot = 0.0F;
+		this.leg_r1.setPos(leg_r1.getInitialPose().x, leg_r1.getInitialPose().y, leg_r1.getInitialPose().z);
+
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = 0.0F;
+		this.leg_r2.zRot = 0.0F;
+		this.leg_r2.setPos(leg_r2.getInitialPose().x, leg_r2.getInitialPose().y, leg_r2.getInitialPose().z);
+
+		this.leg_l1.xRot = -0.03490658503988659F;
+		this.leg_l1.yRot = 0.0F;
+		this.leg_l1.zRot = 0.0F;
+		this.leg_l1.setPos(leg_l1.getInitialPose().x, leg_l1.getInitialPose().y, leg_l1.getInitialPose().z);
+
+		this.leg_l2.xRot = 0.0F;
+		this.leg_l2.yRot = 0.0F;
+		this.leg_l2.zRot = 0.0F;
+		this.leg_l2.setPos(leg_l2.getInitialPose().x, leg_l2.getInitialPose().y, leg_l2.getInitialPose().z);
+
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -279,7 +567,7 @@ final class GeneratedLegacyMotion {
         }
         private void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, LegacyMotionContext entity) {
 
-		
+		setupAngles();
 
 		
 
@@ -363,6 +651,145 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = 0.03490658503988659F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.body.setPos(body.getInitialPose().x, body.getInitialPose().y, body.getInitialPose().z);
+
+		this.lower_body.xRot = -0.04414810342919657F;
+		this.lower_body.yRot = 0.0F;
+		this.lower_body.zRot = 0.0F;
+		this.lower_body.setPos(lower_body.getInitialPose().x, lower_body.getInitialPose().y, lower_body.getInitialPose().z);
+
+		this.tail.xRot = -0.8751709188030287F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.tail.setPos(tail.getInitialPose().x, tail.getInitialPose().y, tail.getInitialPose().z);
+
+		this.tail2.xRot = 0.21703867380250286F;
+		this.tail2.yRot = 0.0F;
+		this.tail2.zRot = 0.0F;
+		this.tail2.setPos(tail2.getInitialPose().x, tail2.getInitialPose().y, tail2.getInitialPose().z);
+
+		this.tail3.xRot = 0.2716954046579573F;
+		this.tail3.yRot = 0.0F;
+		this.tail3.zRot = 0.0F;
+		this.tail3.setPos(tail3.getInitialPose().x, tail3.getInitialPose().y, tail3.getInitialPose().z);
+
+		this.back_leg_r1.xRot = -1.7453292519943296E-6F;
+		this.back_leg_r1.yRot = 0.0F;
+		this.back_leg_r1.zRot = 0.0F;
+		this.back_leg_r1.setPos(back_leg_r1.getInitialPose().x, back_leg_r1.getInitialPose().y, back_leg_r1.getInitialPose().z);
+
+		this.back_leg_r2.xRot = 0.0F;
+		this.back_leg_r2.yRot = 0.0F;
+		this.back_leg_r2.zRot = 0.0F;
+		this.back_leg_r2.setPos(back_leg_r2.getInitialPose().x, back_leg_r2.getInitialPose().y, back_leg_r2.getInitialPose().z);
+
+		this.back_leg_l1.xRot = -1.7453292519943296E-6F;
+		this.back_leg_l1.yRot = 0.0F;
+		this.back_leg_l1.zRot = 0.0F;
+		this.back_leg_l1.setPos(back_leg_l1.getInitialPose().x, back_leg_l1.getInitialPose().y, back_leg_l1.getInitialPose().z);
+
+		this.back_leg_l2.xRot = 0.0F;
+		this.back_leg_l2.yRot = 0.0F;
+		this.back_leg_l2.zRot = 0.0F;
+		this.back_leg_l2.setPos(back_leg_l2.getInitialPose().x, back_leg_l2.getInitialPose().y, back_leg_l2.getInitialPose().z);
+
+		this.neck1.xRot = -0.698679734182858F;
+		this.neck1.yRot = 0.0F;
+		this.neck1.zRot = 0.0F;
+		this.neck1.setPos(neck1.getInitialPose().x, neck1.getInitialPose().y, neck1.getInitialPose().z);
+
+		this.head_base.xRot = 0.77376030794515F;
+		this.head_base.yRot = 0.0F;
+		this.head_base.zRot = 0.0F;
+		this.head_base.setPos(head_base.getInitialPose().x, head_base.getInitialPose().y, head_base.getInitialPose().z);
+
+		this.head_front.xRot = -0.18688811097430083F;
+		this.head_front.yRot = 0.0F;
+		this.head_front.zRot = 0.0F;
+		this.head_front.setPos(head_front.getInitialPose().x, head_front.getInitialPose().y, head_front.getInitialPose().z);
+
+		this.head_slope.xRot = 0.35123180400059084F;
+		this.head_slope.yRot = 0.0F;
+		this.head_slope.zRot = 0.0F;
+		this.head_slope.setPos(head_slope.getInitialPose().x, head_slope.getInitialPose().y, head_slope.getInitialPose().z);
+
+		this.nose.xRot = -0.17677218262974168F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.nose.setPos(nose.getInitialPose().x, nose.getInitialPose().y, nose.getInitialPose().z);
+
+		this.jaw.xRot = -0.009829694347232064F;
+		this.jaw.yRot = 0.0F;
+		this.jaw.zRot = 0.0F;
+		this.jaw.setPos(jaw.getInitialPose().x, jaw.getInitialPose().y, jaw.getInitialPose().z);
+
+		this.cheek_r.xRot = 0.0F;
+		this.cheek_r.yRot = -0.16720254234105678F;
+		this.cheek_r.zRot = -0.12217304763960307F;
+		this.cheek_r.setPos(cheek_r.getInitialPose().x, cheek_r.getInitialPose().y, cheek_r.getInitialPose().z);
+
+		this.cheek_r2.xRot = 0.0F;
+		this.cheek_r2.yRot = -0.24005258531930007F;
+		this.cheek_r2.zRot = 0.0F;
+		this.cheek_r2.setPos(cheek_r2.getInitialPose().x, cheek_r2.getInitialPose().y, cheek_r2.getInitialPose().z);
+
+		this.cheek_l.xRot = 0.0F;
+		this.cheek_l.yRot = 0.16720254234105678F;
+		this.cheek_l.zRot = 0.12217304763960307F;
+		this.cheek_l.setPos(cheek_l.getInitialPose().x, cheek_l.getInitialPose().y, cheek_l.getInitialPose().z);
+
+		this.cheek_l2.xRot = 0.0F;
+		this.cheek_l2.yRot = 0.24005433064855206F;
+		this.cheek_l2.zRot = 1.7453292519943296E-6F;
+		this.cheek_l2.setPos(cheek_l2.getInitialPose().x, cheek_l2.getInitialPose().y, cheek_l2.getInitialPose().z);
+
+		this.ear_r.xRot = -1.0327043370880369F;
+		this.ear_r.yRot = 1.4596223441013618F;
+		this.ear_r.zRot = -1.1730881501429486F;
+		this.ear_r.setPos(ear_r.getInitialPose().x, ear_r.getInitialPose().y, ear_r.getInitialPose().z);
+
+		this.ear_r2.xRot = 0.15707963267948966F;
+		this.ear_r2.yRot = 0.0F;
+		this.ear_r2.zRot = 0.0F;
+		this.ear_r2.setPos(ear_r2.getInitialPose().x, ear_r2.getInitialPose().y, ear_r2.getInitialPose().z);
+
+		this.ear_l.xRot = -1.0327043370880369F;
+		this.ear_l.yRot = -1.4596205987721098F;
+		this.ear_l.zRot = 1.1730898954722007F;
+		this.ear_l.setPos(ear_l.getInitialPose().x, ear_l.getInitialPose().y, ear_l.getInitialPose().z);
+
+		this.ear_l2.xRot = 0.15707963267948966F;
+		this.ear_l2.yRot = 0.0F;
+		this.ear_l2.zRot = 0.0F;
+		this.ear_l2.setPos(ear_l2.getInitialPose().x, ear_l2.getInitialPose().y, ear_l2.getInitialPose().z);
+
+		this.leg_r1.xRot = -0.03490658503988659F;
+		this.leg_r1.yRot = 0.0F;
+		this.leg_r1.zRot = 0.0F;
+		this.leg_r1.setPos(leg_r1.getInitialPose().x, leg_r1.getInitialPose().y, leg_r1.getInitialPose().z);
+
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = 0.0F;
+		this.leg_r2.zRot = 0.0F;
+		this.leg_r2.setPos(leg_r2.getInitialPose().x, leg_r2.getInitialPose().y, leg_r2.getInitialPose().z);
+
+		this.leg_l1.xRot = -0.03490658503988659F;
+		this.leg_l1.yRot = 0.0F;
+		this.leg_l1.zRot = 0.0F;
+		this.leg_l1.setPos(leg_l1.getInitialPose().x, leg_l1.getInitialPose().y, leg_l1.getInitialPose().z);
+
+		this.leg_l2.xRot = 0.0F;
+		this.leg_l2.yRot = 0.0F;
+		this.leg_l2.zRot = 0.0F;
+		this.leg_l2.setPos(leg_l2.getInitialPose().x, leg_l2.getInitialPose().y, leg_l2.getInitialPose().z);
+
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -387,7 +814,7 @@ final class GeneratedLegacyMotion {
         }
         private void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, LegacyMotionContext entity) {
 
-		
+		setupAngles();
 
 		
 
@@ -467,6 +894,125 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = -0.017453292519943295F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.body.setPos(body.getInitialPose().x, body.getInitialPose().y, body.getInitialPose().z);
+
+		this.lower_body.xRot = 0.05235987755982989F;
+		this.lower_body.yRot = 0.0F;
+		this.lower_body.zRot = 0.0F;
+		this.lower_body.setPos(lower_body.getInitialPose().x, lower_body.getInitialPose().y, lower_body.getInitialPose().z);
+
+		this.tail.xRot = -0.8726646259971648F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.tail.setPos(tail.getInitialPose().x, tail.getInitialPose().y, tail.getInitialPose().z);
+
+		this.tail2.xRot = 0.20943951023931956F;
+		this.tail2.yRot = 0.0F;
+		this.tail2.zRot = 0.0F;
+		this.tail2.setPos(tail2.getInitialPose().x, tail2.getInitialPose().y, tail2.getInitialPose().z);
+
+		this.tail3.xRot = 0.20943951023931956F;
+		this.tail3.yRot = 0.0F;
+		this.tail3.zRot = 0.0F;
+		this.tail3.setPos(tail3.getInitialPose().x, tail3.getInitialPose().y, tail3.getInitialPose().z);
+
+		this.back_leg_r1.xRot = -0.03490658503988659F;
+		this.back_leg_r1.yRot = 0.0F;
+		this.back_leg_r1.zRot = 0.0F;
+		this.back_leg_r1.setPos(back_leg_r1.getInitialPose().x, back_leg_r1.getInitialPose().y, back_leg_r1.getInitialPose().z);
+
+		this.back_leg_r2.xRot = 0.0F;
+		this.back_leg_r2.yRot = 0.0F;
+		this.back_leg_r2.zRot = 0.0F;
+		this.back_leg_r2.setPos(back_leg_r2.getInitialPose().x, back_leg_r2.getInitialPose().y, back_leg_r2.getInitialPose().z);
+
+		this.back_leg_l1.xRot = -0.03490658503988659F;
+		this.back_leg_l1.yRot = 0.0F;
+		this.back_leg_l1.zRot = 0.0F;
+		this.back_leg_l1.setPos(back_leg_l1.getInitialPose().x, back_leg_l1.getInitialPose().y, back_leg_l1.getInitialPose().z);
+
+		this.back_leg_l2.xRot = 0.0F;
+		this.back_leg_l2.yRot = 0.0F;
+		this.back_leg_l2.zRot = 0.0F;
+		this.back_leg_l2.setPos(back_leg_l2.getInitialPose().x, back_leg_l2.getInitialPose().y, back_leg_l2.getInitialPose().z);
+
+		this.neck1.xRot = -0.6042469496744529F;
+		this.neck1.yRot = 0.0F;
+		this.neck1.zRot = 0.0F;
+		this.neck1.setPos(neck1.getInitialPose().x, neck1.getInitialPose().y, neck1.getInitialPose().z);
+
+		this.head_base.xRot = 1.0428656439931479F;
+		this.head_base.yRot = 0.0F;
+		this.head_base.zRot = 0.0F;
+		this.head_base.setPos(head_base.getInitialPose().x, head_base.getInitialPose().y, head_base.getInitialPose().z);
+
+		this.head_front.xRot = -0.08239350332814831F;
+		this.head_front.yRot = 0.0F;
+		this.head_front.zRot = 0.0F;
+		this.head_front.setPos(head_front.getInitialPose().x, head_front.getInitialPose().y, head_front.getInitialPose().z);
+
+		this.head_slope.xRot = 0.2669882516653286F;
+		this.head_slope.yRot = 0.0F;
+		this.head_slope.zRot = 0.0F;
+		this.head_slope.setPos(head_slope.getInitialPose().x, head_slope.getInitialPose().y, head_slope.getInitialPose().z);
+
+		this.nose.xRot = -0.39269559104022017F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.nose.setPos(nose.getInitialPose().x, nose.getInitialPose().y, nose.getInitialPose().z);
+
+		this.jaw.xRot = -0.16585514815851715F;
+		this.jaw.yRot = 0.0F;
+		this.jaw.zRot = 0.0F;
+		this.jaw.setPos(jaw.getInitialPose().x, jaw.getInitialPose().y, jaw.getInitialPose().z);
+
+		this.ear_r.xRot = -0.9144879508627048F;
+		this.ear_r.yRot = -2.263808976896529F;
+		this.ear_r.zRot = 1.7145172093796217F;
+		this.ear_r.setPos(ear_r.getInitialPose().x, ear_r.getInitialPose().y, ear_r.getInitialPose().z);
+
+		this.ear_r2.xRot = 0.3490658503988659F;
+		this.ear_r2.yRot = 0.0F;
+		this.ear_r2.zRot = 0.0F;
+		this.ear_r2.setPos(ear_r2.getInitialPose().x, ear_r2.getInitialPose().y, ear_r2.getInitialPose().z);
+
+		this.ear_l.xRot = -0.9144879508627048F;
+		this.ear_l.yRot = 2.263810722225781F;
+		this.ear_l.zRot = -1.7145154640503697F;
+		this.ear_l.setPos(ear_l.getInitialPose().x, ear_l.getInitialPose().y, ear_l.getInitialPose().z);
+
+		this.ear_l2.xRot = 0.3490658503988659F;
+		this.ear_l2.yRot = 0.0F;
+		this.ear_l2.zRot = 0.0F;
+		this.ear_l2.setPos(ear_l2.getInitialPose().x, ear_l2.getInitialPose().y, ear_l2.getInitialPose().z);
+
+		this.leg_l2.xRot = 0.017453292519943295F;
+		this.leg_l2.yRot = 0.0F;
+		this.leg_l2.zRot = 0.0F;
+		this.leg_l2.setPos(leg_l2.getInitialPose().x, leg_l2.getInitialPose().y, leg_l2.getInitialPose().z);
+
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = 0.0F;
+		this.leg_r2.zRot = 0.0F;
+		this.leg_r2.setPos(leg_r2.getInitialPose().x, leg_r2.getInitialPose().y, leg_r2.getInitialPose().z);
+
+		this.leg_l1.xRot = 0.017453292519943295F;
+		this.leg_l1.yRot = 0.0F;
+		this.leg_l1.zRot = 0.0F;
+		this.leg_l1.setPos(leg_l1.getInitialPose().x, leg_l1.getInitialPose().y, leg_l1.getInitialPose().z);
+
+		this.leg_l21.xRot = 0.0F;
+		this.leg_l21.yRot = 0.0F;
+		this.leg_l21.zRot = 0.0F;
+		this.leg_l21.setPos(leg_l21.getInitialPose().x, leg_l21.getInitialPose().y, leg_l21.getInitialPose().z);
+
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -491,7 +1037,7 @@ final class GeneratedLegacyMotion {
         }
         private void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, LegacyMotionContext entity) {
 
-		
+		setupAngles();
 
 		
 
@@ -579,6 +1125,165 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = 0.03490658503988659F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.body.setPos(body.getInitialPose().x, body.getInitialPose().y, body.getInitialPose().z);
+
+		this.lower_body.xRot = -0.04414810342919657F;
+		this.lower_body.yRot = 0.0F;
+		this.lower_body.zRot = 0.0F;
+		this.lower_body.setPos(lower_body.getInitialPose().x, lower_body.getInitialPose().y, lower_body.getInitialPose().z);
+
+		this.tail.xRot = -0.9733229999474338F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.tail.setPos(tail.getInitialPose().x, tail.getInitialPose().y, tail.getInitialPose().z);
+
+		this.tail2.xRot = 0.40470694695244513F;
+		this.tail2.yRot = 0.0F;
+		this.tail2.zRot = 0.0F;
+		this.tail2.setPos(tail2.getInitialPose().x, tail2.getInitialPose().y, tail2.getInitialPose().z);
+
+		this.tail3.xRot = 0.43627646246251855F;
+		this.tail3.yRot = 0.0F;
+		this.tail3.zRot = 0.0F;
+		this.tail3.setPos(tail3.getInitialPose().x, tail3.getInitialPose().y, tail3.getInitialPose().z);
+
+		this.tail4.xRot = 0.0F;
+		this.tail4.yRot = 0.0F;
+		this.tail4.zRot = 0.0F;
+		this.tail4.setPos(tail4.getInitialPose().x, tail4.getInitialPose().y, tail4.getInitialPose().z);
+
+		this.back_leg_r1.xRot = -1.7453292519943296E-6F;
+		this.back_leg_r1.yRot = 0.0F;
+		this.back_leg_r1.zRot = 0.0F;
+		this.back_leg_r1.setPos(back_leg_r1.getInitialPose().x, back_leg_r1.getInitialPose().y, back_leg_r1.getInitialPose().z);
+
+		this.back_leg_r2.xRot = 0.0F;
+		this.back_leg_r2.yRot = 0.0F;
+		this.back_leg_r2.zRot = 0.0F;
+		this.back_leg_r2.setPos(back_leg_r2.getInitialPose().x, back_leg_r2.getInitialPose().y, back_leg_r2.getInitialPose().z);
+
+		this.back_leg_l1.xRot = -1.7453292519943296E-6F;
+		this.back_leg_l1.yRot = 0.0F;
+		this.back_leg_l1.zRot = 0.0F;
+		this.back_leg_l1.setPos(back_leg_l1.getInitialPose().x, back_leg_l1.getInitialPose().y, back_leg_l1.getInitialPose().z);
+
+		this.back_leg_l2.xRot = 0.0F;
+		this.back_leg_l2.yRot = 0.0F;
+		this.back_leg_l2.zRot = 0.0F;
+		this.back_leg_l2.setPos(back_leg_l2.getInitialPose().x, back_leg_l2.getInitialPose().y, back_leg_l2.getInitialPose().z);
+
+		this.neck1.xRot = -0.8681459685637515F;
+		this.neck1.yRot = 0.0F;
+		this.neck1.zRot = 0.0F;
+		this.neck1.setPos(neck1.getInitialPose().x, neck1.getInitialPose().y, neck1.getInitialPose().z);
+
+		this.head_base.xRot = 1.0383626945230024F;
+		this.head_base.yRot = 0.0F;
+		this.head_base.zRot = 0.0F;
+		this.head_base.setPos(head_base.getInitialPose().x, head_base.getInitialPose().y, head_base.getInitialPose().z);
+
+		this.head_front.xRot = 0.08333772645347724F;
+		this.head_front.yRot = 0.0F;
+		this.head_front.zRot = 0.0F;
+		this.head_front.setPos(head_front.getInitialPose().x, head_front.getInitialPose().y, head_front.getInitialPose().z);
+
+		this.head_slope.xRot = 0.35123180400059084F;
+		this.head_slope.yRot = 0.0F;
+		this.head_slope.zRot = 0.0F;
+		this.head_slope.setPos(head_slope.getInitialPose().x, head_slope.getInitialPose().y, head_slope.getInitialPose().z);
+
+		this.nose.xRot = -0.17677218262974168F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.nose.setPos(nose.getInitialPose().x, nose.getInitialPose().y, nose.getInitialPose().z);
+
+		this.jaw.xRot = -0.009829694347232064F;
+		this.jaw.yRot = 0.0F;
+		this.jaw.zRot = 0.0F;
+		this.jaw.setPos(jaw.getInitialPose().x, jaw.getInitialPose().y, jaw.getInitialPose().z);
+
+		this.cheek_l.xRot = 0.0464484473833251F;
+		this.cheek_l.yRot = 0.17291151432433022F;
+		this.cheek_l.zRot = -0.08372868020592397F;
+		this.cheek_l.setPos(cheek_l.getInitialPose().x, cheek_l.getInitialPose().y, cheek_l.getInitialPose().z);
+
+		this.cheek_l2.xRot = 0.0F;
+		this.cheek_l2.yRot = 0.24005433064855206F;
+		this.cheek_l2.zRot = 1.7453292519943296E-6F;
+		this.cheek_l2.setPos(cheek_l2.getInitialPose().x, cheek_l2.getInitialPose().y, cheek_l2.getInitialPose().z);
+
+		this.cheek_r.xRot = 0.0464484473833251F;
+		this.cheek_r.yRot = -0.17290976899507823F;
+		this.cheek_r.zRot = 0.08373042553517596F;
+		this.cheek_r.setPos(cheek_r.getInitialPose().x, cheek_r.getInitialPose().y, cheek_r.getInitialPose().z);
+
+		this.cheek_r2.xRot = 0.0F;
+		this.cheek_r2.yRot = -0.24005258531930007F;
+		this.cheek_r2.zRot = 0.0F;
+		this.cheek_r2.setPos(cheek_r2.getInitialPose().x, cheek_r2.getInitialPose().y, cheek_r2.getInitialPose().z);
+
+		this.ear_r.xRot = -1.0327043370880369F;
+		this.ear_r.yRot = 1.4596223441013618F;
+		this.ear_r.zRot = -1.433051451569F;
+		this.ear_r.setPos(ear_r.getInitialPose().x, ear_r.getInitialPose().y, ear_r.getInitialPose().z);
+
+		this.ear_r2.xRot = 0.15050148672872304F;
+		this.ear_r2.yRot = 0.0F;
+		this.ear_r2.zRot = 0.0F;
+		this.ear_r2.setPos(ear_r2.getInitialPose().x, ear_r2.getInitialPose().y, ear_r2.getInitialPose().z);
+
+		this.ear_r3.xRot = 0.1898272454346593F;
+		this.ear_r3.yRot = 1.7453292519943296E-6F;
+		this.ear_r3.zRot = 0.0F;
+		this.ear_r3.setPos(ear_r3.getInitialPose().x, ear_r3.getInitialPose().y, ear_r3.getInitialPose().z);
+
+		this.ear_l.xRot = -1.0327043370880369F;
+		this.ear_l.yRot = -1.4596205987721098F;
+		this.ear_l.zRot = 1.433053196898252F;
+		this.ear_l.setPos(ear_l.getInitialPose().x, ear_l.getInitialPose().y, ear_l.getInitialPose().z);
+
+		this.ear_l2.xRot = 0.15050148672872304F;
+		this.ear_l2.yRot = 0.0F;
+		this.ear_l2.zRot = 0.0F;
+		this.ear_l2.setPos(ear_l2.getInitialPose().x, ear_l2.getInitialPose().y, ear_l2.getInitialPose().z);
+
+		this.ear_l3.xRot = 0.1898272454346593F;
+		this.ear_l3.yRot = 0.0F;
+		this.ear_l3.zRot = 1.7453292519943296E-6F;
+		this.ear_l3.setPos(ear_l3.getInitialPose().x, ear_l3.getInitialPose().y, ear_l3.getInitialPose().z);
+
+		this.mane.xRot = 0.16029278383241125F;
+		this.mane.yRot = 0.0F;
+		this.mane.zRot = 0.0F;
+		this.mane.setPos(mane.getInitialPose().x, mane.getInitialPose().y, mane.getInitialPose().z);
+
+		this.leg_r1.xRot = -0.03490658503988659F;
+		this.leg_r1.yRot = 0.0F;
+		this.leg_r1.zRot = 0.0F;
+		this.leg_r1.setPos(leg_r1.getInitialPose().x, leg_r1.getInitialPose().y, leg_r1.getInitialPose().z);
+
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = 0.0F;
+		this.leg_r2.zRot = 0.0F;
+		this.leg_r2.setPos(leg_r2.getInitialPose().x, leg_r2.getInitialPose().y, leg_r2.getInitialPose().z);
+
+		this.leg_l1.xRot = -0.03490658503988659F;
+		this.leg_l1.yRot = 0.0F;
+		this.leg_l1.zRot = 0.0F;
+		this.leg_l1.setPos(leg_l1.getInitialPose().x, leg_l1.getInitialPose().y, leg_l1.getInitialPose().z);
+
+		this.leg_l2.xRot = 0.0F;
+		this.leg_l2.yRot = 0.0F;
+		this.leg_l2.zRot = 0.0F;
+		this.leg_l2.setPos(leg_l2.getInitialPose().x, leg_l2.getInitialPose().y, leg_l2.getInitialPose().z);
+
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -603,7 +1308,7 @@ final class GeneratedLegacyMotion {
         }
         private void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, LegacyMotionContext entity) {
 
-		
+		setupAngles();
 
 		
 
@@ -685,6 +1390,135 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = 0.03490658503988659F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.body.setPos(body.getInitialPose().x, body.getInitialPose().y, body.getInitialPose().z);
+
+		this.lower_body.xRot = -0.04414810342919657F;
+		this.lower_body.yRot = 0.0F;
+		this.lower_body.zRot = 0.0F;
+		this.lower_body.setPos(lower_body.getInitialPose().x, lower_body.getInitialPose().y, lower_body.getInitialPose().z);
+
+		this.tail.xRot = -0.8751709188030287F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.tail.setPos(tail.getInitialPose().x, tail.getInitialPose().y, tail.getInitialPose().z);
+
+		this.tail2.xRot = 0.21703867380250286F;
+		this.tail2.yRot = 0.0F;
+		this.tail2.zRot = 0.0F;
+		this.tail2.setPos(tail2.getInitialPose().x, tail2.getInitialPose().y, tail2.getInitialPose().z);
+
+		this.tail3.xRot = 0.2716954046579573F;
+		this.tail3.yRot = 0.0F;
+		this.tail3.zRot = 0.0F;
+		this.tail3.setPos(tail3.getInitialPose().x, tail3.getInitialPose().y, tail3.getInitialPose().z);
+
+		this.tail4.xRot = 0.29139842658372117F;
+		this.tail4.yRot = 0.0F;
+		this.tail4.zRot = 0.0F;
+		this.tail4.setPos(tail4.getInitialPose().x, tail4.getInitialPose().y, tail4.getInitialPose().z);
+
+		this.back_leg_r1.xRot = -1.7453292519943296E-6F;
+		this.back_leg_r1.yRot = 0.0F;
+		this.back_leg_r1.zRot = 0.0F;
+		this.back_leg_r1.setPos(back_leg_r1.getInitialPose().x, back_leg_r1.getInitialPose().y, back_leg_r1.getInitialPose().z);
+
+		this.back_leg_r2.xRot = 0.0F;
+		this.back_leg_r2.yRot = 0.0F;
+		this.back_leg_r2.zRot = 0.0F;
+		this.back_leg_r2.setPos(back_leg_r2.getInitialPose().x, back_leg_r2.getInitialPose().y, back_leg_r2.getInitialPose().z);
+
+		this.back_leg_l1.xRot = -1.7453292519943296E-6F;
+		this.back_leg_l1.yRot = 0.0F;
+		this.back_leg_l1.zRot = 0.0F;
+		this.back_leg_l1.setPos(back_leg_l1.getInitialPose().x, back_leg_l1.getInitialPose().y, back_leg_l1.getInitialPose().z);
+
+		this.back_leg_l2.xRot = 0.0F;
+		this.back_leg_l2.yRot = 0.0F;
+		this.back_leg_l2.zRot = 0.0F;
+		this.back_leg_l2.setPos(back_leg_l2.getInitialPose().x, back_leg_l2.getInitialPose().y, back_leg_l2.getInitialPose().z);
+
+		this.neck1.xRot = -0.7626390699514422F;
+		this.neck1.yRot = 0.0F;
+		this.neck1.zRot = 0.0F;
+		this.neck1.setPos(neck1.getInitialPose().x, neck1.getInitialPose().y, neck1.getInitialPose().z);
+
+		this.head_base.xRot = 0.9867114206394823F;
+		this.head_base.yRot = 0.0F;
+		this.head_base.zRot = 0.0F;
+		this.head_base.setPos(head_base.getInitialPose().x, head_base.getInitialPose().y, head_base.getInitialPose().z);
+
+		this.head_front.xRot = 0.08333772645347724F;
+		this.head_front.yRot = 0.0F;
+		this.head_front.zRot = 0.0F;
+		this.head_front.setPos(head_front.getInitialPose().x, head_front.getInitialPose().y, head_front.getInitialPose().z);
+
+		this.head_slope.xRot = 0.35123180400059084F;
+		this.head_slope.yRot = 0.0F;
+		this.head_slope.zRot = 0.0F;
+		this.head_slope.setPos(head_slope.getInitialPose().x, head_slope.getInitialPose().y, head_slope.getInitialPose().z);
+
+		this.nose.xRot = -0.17677218262974168F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.nose.setPos(nose.getInitialPose().x, nose.getInitialPose().y, nose.getInitialPose().z);
+
+		this.ear_r.xRot = -1.0327043370880369F;
+		this.ear_r.yRot = 1.4596223441013618F;
+		this.ear_r.zRot = -1.1730881501429486F;
+		this.ear_r.setPos(ear_r.getInitialPose().x, ear_r.getInitialPose().y, ear_r.getInitialPose().z);
+
+		this.ear_r2.xRot = 0.13962634015954636F;
+		this.ear_r2.yRot = 0.0F;
+		this.ear_r2.zRot = 0.0F;
+		this.ear_r2.setPos(ear_r2.getInitialPose().x, ear_r2.getInitialPose().y, ear_r2.getInitialPose().z);
+
+		this.ear_r3.xRot = 0.20053833105414848F;
+		this.ear_r3.yRot = 0.0F;
+		this.ear_r3.zRot = 0.0F;
+		this.ear_r3.setPos(ear_r3.getInitialPose().x, ear_r3.getInitialPose().y, ear_r3.getInitialPose().z);
+
+		this.ear_l.xRot = -1.0327043370880369F;
+		this.ear_l.yRot = -1.4596205987721098F;
+		this.ear_l.zRot = 1.1730898954722007F;
+		this.ear_l.setPos(ear_l.getInitialPose().x, ear_l.getInitialPose().y, ear_l.getInitialPose().z);
+
+		this.ear_l2.xRot = 0.13962634015954636F;
+		this.ear_l2.yRot = 0.0F;
+		this.ear_l2.zRot = 0.0F;
+		this.ear_l2.setPos(ear_l2.getInitialPose().x, ear_l2.getInitialPose().y, ear_l2.getInitialPose().z);
+
+		this.ear_l3.xRot = 0.20053833105414848F;
+		this.ear_l3.yRot = 0.0F;
+		this.ear_l3.zRot = 0.0F;
+		this.ear_l3.setPos(ear_l3.getInitialPose().x, ear_l3.getInitialPose().y, ear_l3.getInitialPose().z);
+
+		this.leg_r1.xRot = -0.03490658503988659F;
+		this.leg_r1.yRot = 0.0F;
+		this.leg_r1.zRot = 0.0F;
+		this.leg_r1.setPos(leg_r1.getInitialPose().x, leg_r1.getInitialPose().y, leg_r1.getInitialPose().z);
+
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = 0.0F;
+		this.leg_r2.zRot = 0.0F;
+		this.leg_r2.setPos(leg_r2.getInitialPose().x, leg_r2.getInitialPose().y, leg_r2.getInitialPose().z);
+
+		this.leg_l1.xRot = -0.03490658503988659F;
+		this.leg_l1.yRot = 0.0F;
+		this.leg_l1.zRot = 0.0F;
+		this.leg_l1.setPos(leg_l1.getInitialPose().x, leg_l1.getInitialPose().y, leg_l1.getInitialPose().z);
+
+		this.leg_l2.xRot = 0.0F;
+		this.leg_l2.yRot = 0.0F;
+		this.leg_l2.zRot = 0.0F;
+		this.leg_l2.setPos(leg_l2.getInitialPose().x, leg_l2.getInitialPose().y, leg_l2.getInitialPose().z);
+
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -709,7 +1543,7 @@ final class GeneratedLegacyMotion {
         }
         private void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, LegacyMotionContext entity) {
 
-		
+		setupAngles();
 
 		
 
@@ -795,6 +1629,155 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = 0.03490658503988659F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.body.setPos(body.getInitialPose().x, body.getInitialPose().y, body.getInitialPose().z);
+
+		this.lower_body.xRot = -0.04414810342919657F;
+		this.lower_body.yRot = 0.0F;
+		this.lower_body.zRot = 0.0F;
+		this.lower_body.setPos(lower_body.getInitialPose().x, lower_body.getInitialPose().y, lower_body.getInitialPose().z);
+
+		this.tail.xRot = -0.8751709188030287F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.tail.setPos(tail.getInitialPose().x, tail.getInitialPose().y, tail.getInitialPose().z);
+
+		this.tail2.xRot = 0.21703867380250286F;
+		this.tail2.yRot = 0.0F;
+		this.tail2.zRot = 0.0F;
+		this.tail2.setPos(tail2.getInitialPose().x, tail2.getInitialPose().y, tail2.getInitialPose().z);
+
+		this.tail3.xRot = 0.2716954046579573F;
+		this.tail3.yRot = 0.0F;
+		this.tail3.zRot = 0.0F;
+		this.tail3.setPos(tail3.getInitialPose().x, tail3.getInitialPose().y, tail3.getInitialPose().z);
+
+		this.back_leg_r1.xRot = -1.7453292519943296E-6F;
+		this.back_leg_r1.yRot = 0.0F;
+		this.back_leg_r1.zRot = 0.0F;
+		this.back_leg_r1.setPos(back_leg_r1.getInitialPose().x, back_leg_r1.getInitialPose().y, back_leg_r1.getInitialPose().z);
+
+		this.back_leg_r2.xRot = 0.0F;
+		this.back_leg_r2.yRot = 0.0F;
+		this.back_leg_r2.zRot = 0.0F;
+		this.back_leg_r2.setPos(back_leg_r2.getInitialPose().x, back_leg_r2.getInitialPose().y, back_leg_r2.getInitialPose().z);
+
+		this.back_leg_l1.xRot = -1.7453292519943296E-6F;
+		this.back_leg_l1.yRot = 0.0F;
+		this.back_leg_l1.zRot = 0.0F;
+		this.back_leg_l1.setPos(back_leg_l1.getInitialPose().x, back_leg_l1.getInitialPose().y, back_leg_l1.getInitialPose().z);
+
+		this.back_leg_l2.xRot = 0.0F;
+		this.back_leg_l2.yRot = 0.0F;
+		this.back_leg_l2.zRot = 0.0F;
+		this.back_leg_l2.setPos(back_leg_l2.getInitialPose().x, back_leg_l2.getInitialPose().y, back_leg_l2.getInitialPose().z);
+
+		this.neck1.xRot = -0.566649066927991F;
+		this.neck1.yRot = 0.0F;
+		this.neck1.zRot = 0.0F;
+		this.neck1.setPos(neck1.getInitialPose().x, neck1.getInitialPose().y, neck1.getInitialPose().z);
+
+		this.head_base.xRot = 0.77376030794515F;
+		this.head_base.yRot = 0.0F;
+		this.head_base.zRot = 0.0F;
+		this.head_base.setPos(head_base.getInitialPose().x, head_base.getInitialPose().y, head_base.getInitialPose().z);
+
+		this.head_front.xRot = 0.08333772645347724F;
+		this.head_front.yRot = 0.0F;
+		this.head_front.zRot = 0.0F;
+		this.head_front.setPos(head_front.getInitialPose().x, head_front.getInitialPose().y, head_front.getInitialPose().z);
+
+		this.head_slope.xRot = 0.35123180400059084F;
+		this.head_slope.yRot = 0.0F;
+		this.head_slope.zRot = 0.0F;
+		this.head_slope.setPos(head_slope.getInitialPose().x, head_slope.getInitialPose().y, head_slope.getInitialPose().z);
+
+		this.nose.xRot = -0.17677218262974168F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.nose.setPos(nose.getInitialPose().x, nose.getInitialPose().y, nose.getInitialPose().z);
+
+		this.jaw.xRot = -0.009829694347232064F;
+		this.jaw.yRot = 0.0F;
+		this.jaw.zRot = 0.0F;
+		this.jaw.setPos(jaw.getInitialPose().x, jaw.getInitialPose().y, jaw.getInitialPose().z);
+
+		this.cheek_r.xRot = 0.0F;
+		this.cheek_r.yRot = -0.16720254234105678F;
+		this.cheek_r.zRot = -0.12217304763960307F;
+		this.cheek_r.setPos(cheek_r.getInitialPose().x, cheek_r.getInitialPose().y, cheek_r.getInitialPose().z);
+
+		this.cheek_r2.xRot = 0.0F;
+		this.cheek_r2.yRot = -0.24005258531930007F;
+		this.cheek_r2.zRot = 0.0F;
+		this.cheek_r2.setPos(cheek_r2.getInitialPose().x, cheek_r2.getInitialPose().y, cheek_r2.getInitialPose().z);
+
+		this.cheek_l.xRot = 0.0F;
+		this.cheek_l.yRot = 0.16720254234105678F;
+		this.cheek_l.zRot = 0.12217304763960307F;
+		this.cheek_l.setPos(cheek_l.getInitialPose().x, cheek_l.getInitialPose().y, cheek_l.getInitialPose().z);
+
+		this.cheek_l2.xRot = 0.0F;
+		this.cheek_l2.yRot = 0.24005433064855206F;
+		this.cheek_l2.zRot = 1.7453292519943296E-6F;
+		this.cheek_l2.setPos(cheek_l2.getInitialPose().x, cheek_l2.getInitialPose().y, cheek_l2.getInitialPose().z);
+
+		this.ear_r.xRot = -1.0327043370880369F;
+		this.ear_r.yRot = 1.4596223441013618F;
+		this.ear_r.zRot = -1.1730881501429486F;
+		this.ear_r.setPos(ear_r.getInitialPose().x, ear_r.getInitialPose().y, ear_r.getInitialPose().z);
+
+		this.ear_r2.xRot = 0.13962634015954636F;
+		this.ear_r2.yRot = 0.0F;
+		this.ear_r2.zRot = 0.0F;
+		this.ear_r2.setPos(ear_r2.getInitialPose().x, ear_r2.getInitialPose().y, ear_r2.getInitialPose().z);
+
+		this.ear_r3.xRot = 0.20053833105414848F;
+		this.ear_r3.yRot = 0.0F;
+		this.ear_r3.zRot = 0.0F;
+		this.ear_r3.setPos(ear_r3.getInitialPose().x, ear_r3.getInitialPose().y, ear_r3.getInitialPose().z);
+
+		this.ear_l.xRot = -1.0327043370880369F;
+		this.ear_l.yRot = -1.4596205987721098F;
+		this.ear_l.zRot = 1.1730898954722007F;
+		this.ear_l.setPos(ear_l.getInitialPose().x, ear_l.getInitialPose().y, ear_l.getInitialPose().z);
+
+		this.ear_l2.xRot = 0.13962634015954636F;
+		this.ear_l2.yRot = 0.0F;
+		this.ear_l2.zRot = 0.0F;
+		this.ear_l2.setPos(ear_l2.getInitialPose().x, ear_l2.getInitialPose().y, ear_l2.getInitialPose().z);
+
+		this.ear_l3.xRot = 0.20053833105414848F;
+		this.ear_l3.yRot = 0.0F;
+		this.ear_l3.zRot = 0.0F;
+		this.ear_l3.setPos(ear_l3.getInitialPose().x, ear_l3.getInitialPose().y, ear_l3.getInitialPose().z);
+
+		this.leg_r1.xRot = -0.03490658503988659F;
+		this.leg_r1.yRot = 0.0F;
+		this.leg_r1.zRot = 0.0F;
+		this.leg_r1.setPos(leg_r1.getInitialPose().x, leg_r1.getInitialPose().y, leg_r1.getInitialPose().z);
+
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = 0.0F;
+		this.leg_r2.zRot = 0.0F;
+		this.leg_r2.setPos(leg_r2.getInitialPose().x, leg_r2.getInitialPose().y, leg_r2.getInitialPose().z);
+
+		this.leg_l1.xRot = -0.03490658503988659F;
+		this.leg_l1.yRot = 0.0F;
+		this.leg_l1.zRot = 0.0F;
+		this.leg_l1.setPos(leg_l1.getInitialPose().x, leg_l1.getInitialPose().y, leg_l1.getInitialPose().z);
+
+		this.leg_l2.xRot = 0.0F;
+		this.leg_l2.yRot = 0.0F;
+		this.leg_l2.zRot = 0.0F;
+		this.leg_l2.setPos(leg_l2.getInitialPose().x, leg_l2.getInitialPose().y, leg_l2.getInitialPose().z);
+
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -819,7 +1802,7 @@ final class GeneratedLegacyMotion {
         }
         private void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, LegacyMotionContext entity) {
 
-		
+		setupAngles();
 
 		
 
@@ -905,6 +1888,97 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = 0.0F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.leg_l1.xRot = 0.0F;
+		this.leg_l1.yRot = 0.0F;
+		this.leg_l1.zRot = 0.0F;
+		this.leg_l2.xRot = 0.0F;
+		this.leg_l2.yRot = 0.0F;
+		this.leg_l2.zRot = 0.0F;
+		this.toes_l.xRot = 0.0F;
+		this.toes_l.yRot = 0.0F;
+		this.toes_l.zRot = 0.0F;
+		this.lower_body.xRot = 0.0F;
+		this.lower_body.yRot = 0.0F;
+		this.lower_body.zRot = 0.0F;
+		this.tail.xRot = -0.8730119465183116F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.tail2.xRot = 0.17864841157563557F;
+		this.tail2.yRot = 0.0F;
+		this.tail2.zRot = 0.0F;
+		this.tail3.xRot = 0.3103387396263637F;
+		this.tail3.yRot = 0.0F;
+		this.tail3.zRot = 0.0F;
+		this.back_leg_l1.xRot = 0.0F;
+		this.back_leg_l1.yRot = 0.0F;
+		this.back_leg_l1.zRot = 0.0F;
+		this.back_leg_l2.xRot = 0.0F;
+		this.back_leg_l2.yRot = 0.0F;
+		this.back_leg_l2.zRot = 0.0F;
+		this.back_toe_l.xRot = 0.0F;
+		this.back_toe_l.yRot = 0.0F;
+		this.back_toe_l.zRot = 0.0F;
+		this.back_leg_r1.xRot = 0.0F;
+		this.back_leg_r1.yRot = 0.0F;
+		this.back_leg_r1.zRot = 0.0F;
+		this.back_leg_r2.xRot = 0.0F;
+		this.back_leg_r2.yRot = 0.0F;
+		this.back_leg_r2.zRot = 0.0F;
+		this.back_toe_r.xRot = 0.0F;
+		this.back_toe_r.yRot = 0.0F;
+		this.back_toe_r.zRot = 0.0F;
+		this.neck1.xRot = -1.0096398110229319F;
+		this.neck1.yRot = 0.0F;
+		this.neck1.zRot = 0.0F;
+		this.head_base.xRot = 1.1054147537261205F;
+		this.head_base.yRot = 0.0F;
+		this.head_base.zRot = 0.0F;
+		this.head_front.xRot = -0.03422939729011279F;
+		this.head_front.yRot = 0.0F;
+		this.head_front.zRot = 0.0F;
+		this.nose.xRot = -0.091106186954104F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.gowl_l.xRot = 0.0F;
+		this.gowl_l.yRot = 0.0F;
+		this.gowl_l.zRot = 0.0F;
+		this.gowl_r.xRot = 0.0F;
+		this.gowl_r.yRot = 0.0F;
+		this.gowl_r.zRot = 0.0F;
+		this.jaw.xRot = -0.07672118325916674F;
+		this.jaw.yRot = 0.0F;
+		this.jaw.zRot = 0.0F;
+		this.ear_r.xRot = 1.5324287538483052F;
+		this.ear_r.yRot = -0.14514332592510046F;
+		this.ear_r.zRot = -1.6484931491059283F;
+		this.ear_r2.xRot = -1.7453292519943296E-6F;
+		this.ear_r2.yRot = 0.0F;
+		this.ear_r2.zRot = 1.7453292519943296E-6F;
+		this.ear_l.xRot = 1.5324235178605492F;
+		this.ear_l.yRot = 0.14514507125435244F;
+		this.ear_l.zRot = 1.6484914037766762F;
+		this.ear_l2.xRot = -1.7453292519943296E-6F;
+		this.ear_l2.yRot = 1.7453292519943296E-6F;
+		this.ear_l2.zRot = 0.0F;
+		this.head_top.xRot = 0.0F;
+		this.head_top.yRot = 0.0F;
+		this.head_top.zRot = 0.0F;
+		this.leg_r1.xRot = 0.0F;
+		this.leg_r1.yRot = 0.0F;
+		this.leg_r1.zRot = 0.0F;
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = 0.0F;
+		this.leg_r2.zRot = 0.0F;
+		this.toes_r.xRot = 0.0F;
+		this.toes_r.yRot = 0.0F;
+		this.toes_r.zRot = 0.0F;
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -933,7 +2007,7 @@ final class GeneratedLegacyMotion {
         }
         private void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, LegacyMotionContext entity) {
 
-		
+		setupAngles();
 
 		
 
@@ -1011,6 +2085,58 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = 0.0F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.tail.xRot = -0.6430019857149869F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.neck.xRot = -0.9424777960769379F;
+		this.neck.yRot = 0.0F;
+		this.neck.zRot = 0.0F;
+		this.pug_head.xRot = 0.9867323645905062F;
+		this.pug_head.yRot = 0.0F;
+		this.pug_head.zRot = 0.0F;
+		this.snout.xRot = 0.0F;
+		this.snout.yRot = 0.0F;
+		this.snout.zRot = 0.0F;
+		this.nose.xRot = -1.7453292519943296E-6F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.ear_l.xRot = -0.04002563573598596F;
+		this.ear_l.yRot = 0.0F;
+		this.ear_l.zRot = -0.43320991896676453F;
+		this.ear_l2.xRot = 0.0F;
+		this.ear_l2.yRot = 0.0F;
+		this.ear_l2.zRot = 0.0F;
+		this.ear_l3.xRot = 0.0F;
+		this.ear_l3.yRot = 0.0F;
+		this.ear_l3.zRot = 0.0F;
+		this.ear_r.xRot = -0.04002563573598596F;
+		this.ear_r.yRot = 1.7453292519943296E-6F;
+		this.ear_r.zRot = 0.43321166429601654F;
+		this.ear_r2.xRot = 0.0F;
+		this.ear_r2.yRot = 0.0F;
+		this.ear_r2.zRot = 0.0F;
+		this.ear_r3.xRot = 0.0F;
+		this.ear_r3.yRot = 0.0F;
+		this.ear_r3.zRot = 0.0F;
+		this.front_right.xRot = 0.0F;
+		this.front_right.yRot = 0.0F;
+		this.front_right.zRot = 0.0F;
+		this.front_left.xRot = 0.0F;
+		this.front_left.yRot = 0.0F;
+		this.front_left.zRot = 0.0F;
+		this.back_left.xRot = 0.0F;
+		this.back_left.yRot = 0.0F;
+		this.back_left.zRot = 0.0F;
+		this.back_right.xRot = 0.0F;
+		this.back_right.yRot = 0.0F;
+		this.back_right.zRot = 0.0F;
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -1036,7 +2162,7 @@ final class GeneratedLegacyMotion {
         }
         private void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, LegacyMotionContext entity) {
 
-		
+		setupAngles();
 
 		
 
@@ -1125,6 +2251,104 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = -0.06981317007977318F;
+		this.body.yRot = -0.0F;
+		this.body.zRot = -0.0F;
+		this.leg_l1.xRot = 0.06981317007977318F;
+		this.leg_l1.yRot = -0.0F;
+		this.leg_l1.zRot = -0.0F;
+		this.leg_l2.xRot = 0.0F;
+		this.leg_l2.yRot = -0.0F;
+		this.leg_l2.zRot = -0.0F;
+		this.toes_l.xRot = 0.0F;
+		this.toes_l.yRot = -0.0F;
+		this.toes_l.zRot = -0.0F;
+		this.lower_body.xRot = 0.0F;
+		this.lower_body.yRot = -0.0F;
+		this.lower_body.zRot = -0.0F;
+		this.tail.xRot = -0.6834220658619237F;
+		this.tail.yRot = -0.0F;
+		this.tail.zRot = -0.0F;
+		this.tail2.xRot = -0.40761990147402366F;
+		this.tail2.yRot = -0.0F;
+		this.tail2.zRot = -0.0F;
+		this.tail3.xRot = 0.08067609934418589F;
+		this.tail3.yRot = -0.0F;
+		this.tail3.zRot = -0.0F;
+		this.back_leg_l1.xRot = 0.06981317007977318F;
+		this.back_leg_l1.yRot = -0.0F;
+		this.back_leg_l1.zRot = -0.0F;
+		this.back_leg_l2.xRot = 0.0F;
+		this.back_leg_l2.yRot = -0.0F;
+		this.back_leg_l2.zRot = -0.0F;
+		this.back_toe_l.xRot = 0.0F;
+		this.back_toe_l.yRot = -0.0F;
+		this.back_toe_l.zRot = -0.0F;
+		this.back_leg_r1.xRot = 0.06981317007977318F;
+		this.back_leg_r1.yRot = -0.0F;
+		this.back_leg_r1.zRot = -0.0F;
+		this.back_leg_r2.xRot = 0.0F;
+		this.back_leg_r2.yRot = -0.0F;
+		this.back_leg_r2.zRot = -0.0F;
+		this.back_toe_r.xRot = 0.0F;
+		this.back_toe_r.yRot = -0.0F;
+		this.back_toe_r.zRot = -0.0F;
+		this.neck1.xRot = -0.8180236031049783F;
+		this.neck1.yRot = -0.0F;
+		this.neck1.zRot = -0.0F;
+		this.head_base.xRot = 1.1907142302588394F;
+		this.head_base.yRot = -0.0F;
+		this.head_base.zRot = -0.0F;
+		this.head_front.xRot = -0.17280330391070658F;
+		this.head_front.yRot = -0.0F;
+		this.head_front.zRot = -0.0F;
+		this.nose.xRot = -0.091106186954104F;
+		this.nose.yRot = -0.0F;
+		this.nose.zRot = -0.0F;
+		this.upper_jaw_detail.xRot = 0.2039696483635693F;
+		this.upper_jaw_detail.yRot = -0.0F;
+		this.upper_jaw_detail.zRot = -0.0F;
+		this.jaw.xRot = -0.2525770680316114F;
+		this.jaw.yRot = -0.0F;
+		this.jaw.zRot = -0.0F;
+		this.ear_l.xRot = -1.293639786907449F;
+		this.ear_l.yRot = -2.588148747782391F;
+		this.ear_l.zRot = 2.3736477827122884F;
+		this.ear_l2.xRot = 0.8103877876275032F;
+		this.ear_l2.yRot = -0.0F;
+		this.ear_l2.zRot = -0.0F;
+		this.ear_l1.xRot = -1.0111390488503949F;
+		this.ear_l1.yRot = 2.130956259563973F;
+		this.ear_l1.zRot = -1.9506096426261468F;
+		this.ear_l21.xRot = 1.054184104192331F;
+		this.ear_l21.yRot = -0.0F;
+		this.ear_l21.zRot = -0.0F;
+		this.cheek.xRot = -0.36139136557644985F;
+		this.cheek.yRot = -0.2775701829201702F;
+		this.cheek.zRot = -0.0F;
+		this.cheek1.xRot = 0.0F;
+		this.cheek1.yRot = -0.0F;
+		this.cheek1.zRot = -0.0F;
+		this.cheek11.xRot = -0.36139136557644985F;
+		this.cheek11.yRot = 0.2775701829201702F;
+		this.cheek11.zRot = 1.7453292519943296E-6F;
+		this.cheek111.xRot = 0.0F;
+		this.cheek111.yRot = 1.7453292519943296E-6F;
+		this.cheek111.zRot = 1.7453292519943296E-6F;
+		this.leg_r1.xRot = 0.06981317007977318F;
+		this.leg_r1.yRot = -0.0F;
+		this.leg_r1.zRot = -0.0F;
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = -0.0F;
+		this.leg_r2.zRot = -0.0F;
+		this.toes_r.xRot = 0.0F;
+		this.toes_r.yRot = -0.0F;
+		this.toes_r.zRot = -0.0F;
+
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 		LegacyMotionContext dog = (LegacyMotionContext) entity;
@@ -1154,7 +2378,7 @@ final class GeneratedLegacyMotion {
 
 		LegacyMotionContext dog = (LegacyMotionContext) entity;
 
-		
+		setupAngles();
 
 		
 
@@ -1238,6 +2462,82 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = 0.0F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.leg_r1.xRot = 0.0F;
+		this.leg_r1.yRot = 0.0F;
+		this.leg_r1.zRot = 0.0F;
+		this.toes_r.xRot = 0.0F;
+		this.toes_r.yRot = 0.0F;
+		this.toes_r.zRot = 0.0F;
+		this.leg_r11.xRot = 0.0F;
+		this.leg_r11.yRot = 0.0F;
+		this.leg_r11.zRot = 0.0F;
+		this.toes_r1.xRot = 0.0F;
+		this.toes_r1.yRot = 0.0F;
+		this.toes_r1.zRot = 0.0F;
+		this.lower_body.xRot = 0.0F;
+		this.lower_body.yRot = 0.0F;
+		this.lower_body.zRot = 0.0F;
+		this.tail.xRot = -0.4323512169747833F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.tail2.xRot = -0.2780745830739965F;
+		this.tail2.yRot = 0.0F;
+		this.tail2.zRot = 0.0F;
+		this.tail3.xRot = -0.29183650422597185F;
+		this.tail3.yRot = 0.0F;
+		this.tail3.zRot = 0.0F;
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = 0.0F;
+		this.leg_r2.zRot = 0.0F;
+		this.toes_r2.xRot = 0.0F;
+		this.toes_r2.yRot = 0.0F;
+		this.toes_r2.zRot = 0.0F;
+		this.leg_r21.xRot = 0.0F;
+		this.leg_r21.yRot = 0.0F;
+		this.leg_r21.zRot = 0.0F;
+		this.toes_r21.xRot = 0.0F;
+		this.toes_r21.yRot = 0.0F;
+		this.toes_r21.zRot = 0.0F;
+		this.neck.xRot = -0.7303504787895471F;
+		this.neck.yRot = 0.0F;
+		this.neck.zRot = 0.0F;
+		this.head_base.xRot = 0.6643194371988457F;
+		this.head_base.yRot = 0.0F;
+		this.head_base.zRot = 0.0F;
+		this.head_front.xRot = 0.04036772026937685F;
+		this.head_front.yRot = 0.0F;
+		this.head_front.zRot = 0.0F;
+		this.nose.xRot = 0.0F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.jaw.xRot = 0.26870740097854295F;
+		this.jaw.yRot = 0.0F;
+		this.jaw.zRot = 0.0F;
+		this.ear_r.xRot = -1.3181616628979693F;
+		this.ear_r.yRot = 1.9450786942265765F;
+		this.ear_r.zRot = -1.6712679505152022F;
+		this.ear_r2.xRot = 0.06981317007977318F;
+		this.ear_r2.yRot = 0.0F;
+		this.ear_r2.zRot = 0.0F;
+		this.ear_r3.xRot = 0.06981317007977318F;
+		this.ear_r3.yRot = 1.7453292519943296E-6F;
+		this.ear_r3.zRot = 0.0F;
+		this.ear_l.xRot = -1.3181634082272213F;
+		this.ear_l.yRot = -1.9450786942265765F;
+		this.ear_l.zRot = 1.6712696958444542F;
+		this.ear_l2.xRot = 0.06981317007977318F;
+		this.ear_l2.yRot = 0.0F;
+		this.ear_l2.zRot = 0.0F;
+		this.ear_l3.xRot = 0.06981317007977318F;
+		this.ear_l3.yRot = 0.0F;
+		this.ear_l3.zRot = 1.7453292519943296E-6F;
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -1264,7 +2564,7 @@ final class GeneratedLegacyMotion {
         }
         private void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, LegacyMotionContext entity) {
 
-		
+		setupAngles();
 
 		
 
@@ -1338,6 +2638,85 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = 0.0F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.body.setPos(body.getInitialPose().x, body.getInitialPose().y, body.getInitialPose().z);
+
+		this.leg1.xRot = 0.0F;
+		this.leg1.yRot = 0.0F;
+		this.leg1.zRot = 0.0F;
+		this.leg1.setPos(leg1.getInitialPose().x, leg1.getInitialPose().y, leg1.getInitialPose().z);
+
+		this.toe2.xRot = 0.0F;
+		this.toe2.yRot = 0.0F;
+		this.toe2.zRot = 0.0F;
+		this.toe2.setPos(toe2.getInitialPose().x, toe2.getInitialPose().y, toe2.getInitialPose().z);
+
+		this.leg2.xRot = 0.0F;
+		this.leg2.yRot = 0.0F;
+		this.leg2.zRot = 0.0F;
+		this.leg2.setPos(leg2.getInitialPose().x, leg2.getInitialPose().y, leg2.getInitialPose().z);
+
+		this.toe21.xRot = 0.0F;
+		this.toe21.yRot = 0.0F;
+		this.toe21.zRot = 0.0F;
+		this.toe21.setPos(toe21.getInitialPose().x, toe21.getInitialPose().y, toe21.getInitialPose().z);
+
+		this.leg3.xRot = 0.0F;
+		this.leg3.yRot = 0.0F;
+		this.leg3.zRot = 0.0F;
+		this.leg3.setPos(leg3.getInitialPose().x, leg3.getInitialPose().y, leg3.getInitialPose().z);
+
+		this.toe1.xRot = 0.0F;
+		this.toe1.yRot = 0.0F;
+		this.toe1.zRot = 0.0F;
+		this.toe1.setPos(toe1.getInitialPose().x, toe1.getInitialPose().y, toe1.getInitialPose().z);
+
+		this.leg4.xRot = 0.0F;
+		this.leg4.yRot = 0.0F;
+		this.leg4.zRot = 0.0F;
+		this.leg4.setPos(leg4.getInitialPose().x, leg4.getInitialPose().y, leg4.getInitialPose().z);
+
+		this.toe211.xRot = -1.7453292519943296E-6F;
+		this.toe211.yRot = 0.0F;
+		this.toe211.zRot = 0.0F;
+		this.toe211.setPos(toe211.getInitialPose().x, toe211.getInitialPose().y, toe211.getInitialPose().z);
+
+		this.head.xRot = 0.0F;
+		this.head.yRot = 0.0F;
+		this.head.zRot = 0.0F;
+		this.head.setPos(head.getInitialPose().x, head.getInitialPose().y, head.getInitialPose().z);
+
+		this.wolf_head.xRot = 0.0F;
+		this.wolf_head.yRot = 0.0F;
+		this.wolf_head.zRot = 0.0F;
+		this.wolf_head.setPos(wolf_head.getInitialPose().x, wolf_head.getInitialPose().y, wolf_head.getInitialPose().z);
+
+		this.ear1.xRot = 0.0F;
+		this.ear1.yRot = 0.0F;
+		this.ear1.zRot = 0.17453292519943295F;
+		this.ear1.setPos(ear1.getInitialPose().x, ear1.getInitialPose().y, ear1.getInitialPose().z);
+
+		this.ear2.xRot = 0.0F;
+		this.ear2.yRot = 0.0F;
+		this.ear2.zRot = -0.17453292519943295F;
+		this.ear2.setPos(ear2.getInitialPose().x, ear2.getInitialPose().y, ear2.getInitialPose().z);
+
+		this.nose.xRot = 0.0F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.nose.setPos(nose.getInitialPose().x, nose.getInitialPose().y, nose.getInitialPose().z);
+
+		this.tail.xRot = 0.9191165640389938F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.tail.setPos(tail.getInitialPose().x, tail.getInitialPose().y, tail.getInitialPose().z);
+
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -1360,7 +2739,7 @@ final class GeneratedLegacyMotion {
         }
         private void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, LegacyMotionContext entity) {
 
-		
+		setupAngles();
 
 		
 
@@ -1453,6 +2832,97 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = 0.03490658503988659F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.leg_l1.xRot = 0.0F;
+		this.leg_l1.yRot = 0.0F;
+		this.leg_l1.zRot = 0.0F;
+		this.leg_l2.xRot = 0.0F;
+		this.leg_l2.yRot = 0.0F;
+		this.leg_l2.zRot = 0.0F;
+		this.toe_l.xRot = 0.0F;
+		this.toe_l.yRot = 0.0F;
+		this.toe_l.zRot = 0.0F;
+		this.lower_body.xRot = -0.045553093477052F;
+		this.lower_body.yRot = 0.0F;
+		this.lower_body.zRot = 0.0F;
+		this.tail.xRot = -0.8651597102135892F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.tail2.xRot = 0.22758918913080856F;
+		this.tail2.yRot = 0.0F;
+		this.tail2.zRot = 0.0F;
+		this.tail3.xRot = 0.3186971214141646F;
+		this.tail3.yRot = 0.0F;
+		this.tail3.zRot = 0.0F;
+		this.back_leg_r1.xRot = 0.0F;
+		this.back_leg_r1.yRot = 0.0F;
+		this.back_leg_r1.zRot = 0.0F;
+		this.back_leg_r2.xRot = 0.0F;
+		this.back_leg_r2.yRot = 0.0F;
+		this.back_leg_r2.zRot = 0.0F;
+		this.back_toe_r.xRot = 0.0F;
+		this.back_toe_r.yRot = 0.0F;
+		this.back_toe_r.zRot = 0.0F;
+		this.back_leg_l1.xRot = 0.0F;
+		this.back_leg_l1.yRot = 0.0F;
+		this.back_leg_l1.zRot = 0.0F;
+		this.back_leg_l2.xRot = 0.0F;
+		this.back_leg_l2.yRot = 0.0F;
+		this.back_leg_l2.zRot = 0.0F;
+		this.back_toe_l.xRot = -1.7453292519943296E-6F;
+		this.back_toe_l.yRot = 0.0F;
+		this.back_toe_l.zRot = 0.0F;
+		this.neck1.xRot = -0.6694891024432529F;
+		this.neck1.yRot = 0.0F;
+		this.neck1.zRot = 0.0F;
+		this.head_base.xRot = 0.9358699795288874F;
+		this.head_base.yRot = 0.0F;
+		this.head_base.zRot = 0.0F;
+		this.head_front.xRot = -0.12792390752492439F;
+		this.head_front.yRot = 0.0F;
+		this.head_front.zRot = 0.0F;
+		this.nose.xRot = -0.091106186954104F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.upper_jaw_detail.xRot = 0.4820878646688657F;
+		this.upper_jaw_detail.yRot = 0.0F;
+		this.upper_jaw_detail.zRot = 0.0F;
+		this.jaw.xRot = -0.20524722937602918F;
+		this.jaw.yRot = 0.0F;
+		this.jaw.zRot = 0.0F;
+		this.chops_r.xRot = -1.3417148811536328F;
+		this.chops_r.yRot = -2.9124867733390016F;
+		this.chops_r.zRot = -1.9441431977475077F;
+		this.chops_l.xRot = -1.3417148811536328F;
+		this.chops_l.yRot = 2.9124867733390016F;
+		this.chops_l.zRot = 1.9441431977475077F;
+		this.ear_l.xRot = -1.1021789132929232F;
+		this.ear_l.yRot = -1.6230567205873627F;
+		this.ear_l.zRot = 1.520239374352377F;
+		this.ear_l2.xRot = 0.20943951023931956F;
+		this.ear_l2.yRot = 0.0F;
+		this.ear_l2.zRot = 0.0F;
+		this.ear_r.xRot = -1.1021789132929232F;
+		this.ear_r.yRot = 1.6230584659166147F;
+		this.ear_r.zRot = -1.520239374352377F;
+		this.ear_r2.xRot = 0.20943951023931956F;
+		this.ear_r2.yRot = 0.0F;
+		this.ear_r2.zRot = 0.0F;
+		this.leg_r1.xRot = 0.0F;
+		this.leg_r1.yRot = 0.0F;
+		this.leg_r1.zRot = 0.0F;
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = 0.0F;
+		this.leg_r2.zRot = 0.0F;
+		this.toe_r.xRot = 0.0F;
+		this.toe_r.yRot = 0.0F;
+		this.toe_r.zRot = 0.0F;
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -1483,7 +2953,7 @@ final class GeneratedLegacyMotion {
 
 		LegacyMotionContext dog = (LegacyMotionContext) entity;
 
-		
+		setupAngles();
 
 		
 
@@ -1570,6 +3040,91 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = -0.06981317007977318F;
+		this.body.yRot = -0.0F;
+		this.body.zRot = -0.0F;
+		this.leg_l1.xRot = 0.06981317007977318F;
+		this.leg_l1.yRot = -0.0F;
+		this.leg_l1.zRot = -0.0F;
+		this.leg_l2.xRot = 0.0F;
+		this.leg_l2.yRot = -0.0F;
+		this.leg_l2.zRot = -0.0F;
+		this.toes_l.xRot = 0.0F;
+		this.toes_l.yRot = -0.0F;
+		this.toes_l.zRot = -0.0F;
+		this.lower_body.xRot = 0.0F;
+		this.lower_body.yRot = -0.0F;
+		this.lower_body.zRot = -0.0F;
+		this.tail.xRot = -0.8730119465183116F;
+		this.tail.yRot = -0.0F;
+		this.tail.zRot = -0.0F;
+		this.tail2.xRot = -0.40761990147402366F;
+		this.tail2.yRot = -0.0F;
+		this.tail2.zRot = -0.0F;
+		this.tail3.xRot = 0.08067609934418589F;
+		this.tail3.yRot = -0.0F;
+		this.tail3.zRot = -0.0F;
+		this.back_leg_l1.xRot = 0.06981317007977318F;
+		this.back_leg_l1.yRot = -0.0F;
+		this.back_leg_l1.zRot = -0.0F;
+		this.back_leg_l2.xRot = 0.0F;
+		this.back_leg_l2.yRot = -0.0F;
+		this.back_leg_l2.zRot = -0.0F;
+		this.back_toe_l.xRot = 0.0F;
+		this.back_toe_l.yRot = -0.0F;
+		this.back_toe_l.zRot = -0.0F;
+		this.back_leg_r1.xRot = 0.06981317007977318F;
+		this.back_leg_r1.yRot = -0.0F;
+		this.back_leg_r1.zRot = -0.0F;
+		this.back_leg_r2.xRot = 0.0F;
+		this.back_leg_r2.yRot = -0.0F;
+		this.back_leg_r2.zRot = -0.0F;
+		this.back_toe_r.xRot = 0.0F;
+		this.back_toe_r.yRot = -0.0F;
+		this.back_toe_r.zRot = -0.0F;
+		this.neck1.xRot = -0.8180236031049783F;
+		this.neck1.yRot = -0.0F;
+		this.neck1.zRot = -0.0F;
+		this.head_base.xRot = 1.3328817698092894F;
+		this.head_base.yRot = -0.0F;
+		this.head_base.zRot = -0.0F;
+		this.head_front.xRot = -0.17280330391070658F;
+		this.head_front.yRot = -0.0F;
+		this.head_front.zRot = -0.0F;
+		this.nose.xRot = -0.091106186954104F;
+		this.nose.yRot = -0.0F;
+		this.nose.zRot = -0.0F;
+		this.upper_jaw_detail.xRot = 0.2039696483635693F;
+		this.upper_jaw_detail.yRot = -0.0F;
+		this.upper_jaw_detail.zRot = -0.0F;
+		this.jaw.xRot = -0.2525770680316114F;
+		this.jaw.yRot = -0.0F;
+		this.jaw.zRot = -0.0F;
+		this.ear_r.xRot = -1.293639786907449F;
+		this.ear_r.yRot = 2.588148747782391F;
+		this.ear_r.zRot = -2.3736477827122884F;
+		this.ear_r2.xRot = 0.06981317007977318F;
+		this.ear_r2.yRot = -0.0F;
+		this.ear_r2.zRot = -0.0F;
+		this.ear_l.xRot = -1.293639786907449F;
+		this.ear_l.yRot = -2.588148747782391F;
+		this.ear_l.zRot = 2.3736477827122884F;
+		this.ear_l2.xRot = 0.06981317007977318F;
+		this.ear_l2.yRot = -0.0F;
+		this.ear_l2.zRot = -0.0F;
+		this.leg_r1.xRot = 0.06981317007977318F;
+		this.leg_r1.yRot = -0.0F;
+		this.leg_r1.zRot = -0.0F;
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = -0.0F;
+		this.leg_r2.zRot = -0.0F;
+		this.toes_r.xRot = 0.0F;
+		this.toes_r.yRot = -0.0F;
+		this.toes_r.zRot = -0.0F;
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -1600,7 +3155,7 @@ final class GeneratedLegacyMotion {
 
 		LegacyMotionContext dog = (LegacyMotionContext) entity;
 
-		
+		setupAngles();
 
 		
 
@@ -1687,6 +3242,91 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = 0.0F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.leg_l1.xRot = 0.0F;
+		this.leg_l1.yRot = 0.0F;
+		this.leg_l1.zRot = 0.0F;
+		this.leg_l2.xRot = 0.0F;
+		this.leg_l2.yRot = 0.0F;
+		this.leg_l2.zRot = 0.0F;
+		this.toes_l.xRot = 0.0F;
+		this.toes_l.yRot = 0.0F;
+		this.toes_l.zRot = 0.0F;
+		this.lower_body.xRot = 0.0F;
+		this.lower_body.yRot = 0.0F;
+		this.lower_body.zRot = 0.0F;
+		this.tail.xRot = -0.8730119465183116F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.tail2.xRot = -0.40761990147402366F;
+		this.tail2.yRot = 0.0F;
+		this.tail2.zRot = 0.0F;
+		this.tail3.xRot = 0.08067609934418589F;
+		this.tail3.yRot = 0.0F;
+		this.tail3.zRot = 0.0F;
+		this.back_leg_l1.xRot = 0.0F;
+		this.back_leg_l1.yRot = 0.0F;
+		this.back_leg_l1.zRot = 0.0F;
+		this.back_leg_l2.xRot = 0.0F;
+		this.back_leg_l2.yRot = 0.0F;
+		this.back_leg_l2.zRot = 0.0F;
+		this.back_toe_l.xRot = 0.0F;
+		this.back_toe_l.yRot = 0.0F;
+		this.back_toe_l.zRot = 0.0F;
+		this.back_leg_r1.xRot = 0.0F;
+		this.back_leg_r1.yRot = 0.0F;
+		this.back_leg_r1.zRot = 0.0F;
+		this.back_leg_r2.xRot = 0.0F;
+		this.back_leg_r2.yRot = 0.0F;
+		this.back_leg_r2.zRot = 0.0F;
+		this.back_toe_r.xRot = 0.0F;
+		this.back_toe_r.yRot = 0.0F;
+		this.back_toe_r.zRot = 0.0F;
+		this.neck1.xRot = -1.144651500640205F;
+		this.neck1.yRot = 0.0F;
+		this.neck1.zRot = 0.0F;
+		this.head_base.xRot = 1.3738621006461162F;
+		this.head_base.yRot = 0.0F;
+		this.head_base.zRot = 0.0F;
+		this.head_front.xRot = -0.03422939729011279F;
+		this.head_front.yRot = 0.0F;
+		this.head_front.zRot = 0.0F;
+		this.nose.xRot = -0.091106186954104F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.upper_jaw_detail.xRot = 0.06293308216841154F;
+		this.upper_jaw_detail.yRot = 0.0F;
+		this.upper_jaw_detail.zRot = 0.0F;
+		this.jaw.xRot = -0.07672118325916674F;
+		this.jaw.yRot = 0.0F;
+		this.jaw.zRot = 0.0F;
+		this.ear_r.xRot = -1.293639786907449F;
+		this.ear_r.yRot = 2.588148747782391F;
+		this.ear_r.zRot = -2.3736477827122884F;
+		this.ear_r2.xRot = 0.06981317007977318F;
+		this.ear_r2.yRot = 0.0F;
+		this.ear_r2.zRot = 0.0F;
+		this.ear_l.xRot = -1.293639786907449F;
+		this.ear_l.yRot = -2.588148747782391F;
+		this.ear_l.zRot = 2.3736477827122884F;
+		this.ear_l2.xRot = 0.06981317007977318F;
+		this.ear_l2.yRot = 0.0F;
+		this.ear_l2.zRot = 0.0F;
+		this.leg_r1.xRot = 0.0F;
+		this.leg_r1.yRot = 0.0F;
+		this.leg_r1.zRot = 0.0F;
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = 0.0F;
+		this.leg_r2.zRot = 0.0F;
+		this.toes_r.xRot = 0.0F;
+		this.toes_r.yRot = 0.0F;
+		this.toes_r.zRot = 0.0F;
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -1717,7 +3357,7 @@ final class GeneratedLegacyMotion {
 
 		LegacyMotionContext dog = (LegacyMotionContext) entity;
 
-		
+		setupAngles();
 
 		
 
@@ -1809,6 +3449,170 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = 0.0F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.body.setPos(body.getInitialPose().x, body.getInitialPose().y, body.getInitialPose().z);
+
+		this.leg_l1.xRot = 0.0F;
+		this.leg_l1.yRot = 0.0F;
+		this.leg_l1.zRot = 0.0F;
+		this.leg_l1.setPos(leg_l1.getInitialPose().x, leg_l1.getInitialPose().y, leg_l1.getInitialPose().z);
+
+		this.leg_l2.xRot = 0.0F;
+		this.leg_l2.yRot = 0.0F;
+		this.leg_l2.zRot = 0.0F;
+		this.leg_l2.setPos(leg_l2.getInitialPose().x, leg_l2.getInitialPose().y, leg_l2.getInitialPose().z);
+
+		this.toes_l.xRot = 0.0F;
+		this.toes_l.yRot = 0.0F;
+		this.toes_l.zRot = 0.0F;
+		this.toes_l.setPos(toes_l.getInitialPose().x, toes_l.getInitialPose().y, toes_l.getInitialPose().z);
+
+		this.leg_r1.xRot = 0.0F;
+		this.leg_r1.yRot = 0.0F;
+		this.leg_r1.zRot = 0.0F;
+		this.leg_r1.setPos(leg_r1.getInitialPose().x, leg_r1.getInitialPose().y, leg_r1.getInitialPose().z);
+
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = 0.0F;
+		this.leg_r2.zRot = 0.0F;
+		this.leg_r2.setPos(leg_r2.getInitialPose().x, leg_r2.getInitialPose().y, leg_r2.getInitialPose().z);
+
+		this.toes_r.xRot = 0.0F;
+		this.toes_r.yRot = 0.0F;
+		this.toes_r.zRot = 0.0F;
+		this.toes_r.setPos(toes_r.getInitialPose().x, toes_r.getInitialPose().y, toes_r.getInitialPose().z);
+
+		this.lower_body.xRot = 0.03291167370485707F;
+		this.lower_body.yRot = 0.0F;
+		this.lower_body.zRot = 0.0F;
+		this.lower_body.setPos(lower_body.getInitialPose().x, lower_body.getInitialPose().y, lower_body.getInitialPose().z);
+
+		this.back_leg_l1.xRot = 0.3737500420098217F;
+		this.back_leg_l1.yRot = 0.0F;
+		this.back_leg_l1.zRot = 0.0F;
+		this.back_leg_l1.setPos(back_leg_l1.getInitialPose().x, back_leg_l1.getInitialPose().y, back_leg_l1.getInitialPose().z);
+
+		this.back_leg_l2.xRot = 0.8980190240408864F;
+		this.back_leg_l2.yRot = 0.0F;
+		this.back_leg_l2.zRot = 0.0F;
+		this.back_leg_l2.setPos(back_leg_l2.getInitialPose().x, back_leg_l2.getInitialPose().y, back_leg_l2.getInitialPose().z);
+
+		this.back_leg_l3.xRot = -1.3046842304140691F;
+		this.back_leg_l3.yRot = 0.0F;
+		this.back_leg_l3.zRot = 0.0F;
+		this.back_leg_l3.setPos(back_leg_l3.getInitialPose().x, back_leg_l3.getInitialPose().y, back_leg_l3.getInitialPose().z);
+
+		this.back_toe_l.xRot = 0.0F;
+		this.back_toe_l.yRot = 0.0F;
+		this.back_toe_l.zRot = 0.0F;
+		this.back_toe_l.setPos(back_toe_l.getInitialPose().x, back_toe_l.getInitialPose().y, back_toe_l.getInitialPose().z);
+
+		this.back_leg_r1.xRot = 0.3737517873390737F;
+		this.back_leg_r1.yRot = 0.0F;
+		this.back_leg_r1.zRot = 0.0F;
+		this.back_leg_r1.setPos(back_leg_r1.getInitialPose().x, back_leg_r1.getInitialPose().y, back_leg_r1.getInitialPose().z);
+
+		this.back_leg_r2.xRot = 0.8980190240408864F;
+		this.back_leg_r2.yRot = 0.0F;
+		this.back_leg_r2.zRot = 0.0F;
+		this.back_leg_r2.setPos(back_leg_r2.getInitialPose().x, back_leg_r2.getInitialPose().y, back_leg_r2.getInitialPose().z);
+
+		this.back_leg_r3.xRot = -1.3046842304140691F;
+		this.back_leg_r3.yRot = 0.0F;
+		this.back_leg_r3.zRot = 0.0F;
+		this.back_leg_r3.setPos(back_leg_r3.getInitialPose().x, back_leg_r3.getInitialPose().y, back_leg_r3.getInitialPose().z);
+
+		this.back_toe_r.xRot = 0.0F;
+		this.back_toe_r.yRot = 0.0F;
+		this.back_toe_r.zRot = 0.0F;
+		this.back_toe_r.setPos(back_toe_r.getInitialPose().x, back_toe_r.getInitialPose().y, back_toe_r.getInitialPose().z);
+
+		this.tail.xRot = -0.4668965188595071F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.tail.setPos(tail.getInitialPose().x, tail.getInitialPose().y, tail.getInitialPose().z);
+
+		this.tail2.xRot = 0.35078849037058435F;
+		this.tail2.yRot = 0.0F;
+		this.tail2.zRot = 0.0F;
+		this.tail2.setPos(tail2.getInitialPose().x, tail2.getInitialPose().y, tail2.getInitialPose().z);
+
+		this.neck.xRot = 0.0F;
+		this.neck.yRot = 0.0F;
+		this.neck.zRot = 0.0F;
+		this.neck.setPos(neck.getInitialPose().x, neck.getInitialPose().y, neck.getInitialPose().z);
+
+		this.neck1.xRot = -1.0039133857471385F;
+		this.neck1.yRot = 0.0F;
+		this.neck1.zRot = 0.0F;
+		this.neck1.setPos(neck1.getInitialPose().x, neck1.getInitialPose().y, neck1.getInitialPose().z);
+
+		this.neck2.xRot = 0.38586262701866236F;
+		this.neck2.yRot = 0.0F;
+		this.neck2.zRot = 0.0F;
+		this.neck2.setPos(neck2.getInitialPose().x, neck2.getInitialPose().y, neck2.getInitialPose().z);
+
+		this.head_base.xRot = 1.023461073369475F;
+		this.head_base.yRot = 0.0F;
+		this.head_base.zRot = 0.0F;
+		this.head_base.setPos(head_base.getInitialPose().x, head_base.getInitialPose().y, head_base.getInitialPose().z);
+
+		this.head_front.xRot = -0.17280330391070658F;
+		this.head_front.yRot = 0.0F;
+		this.head_front.zRot = 0.0F;
+		this.head_front.setPos(head_front.getInitialPose().x, head_front.getInitialPose().y, head_front.getInitialPose().z);
+
+		this.nose.xRot = 0.0F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.nose.setPos(nose.getInitialPose().x, nose.getInitialPose().y, nose.getInitialPose().z);
+
+		this.upper_jaw_detail.xRot = 0.21191962310640397F;
+		this.upper_jaw_detail.yRot = 0.0F;
+		this.upper_jaw_detail.zRot = 0.0F;
+		this.upper_jaw_detail.setPos(upper_jaw_detail.getInitialPose().x, upper_jaw_detail.getInitialPose().y, upper_jaw_detail.getInitialPose().z);
+
+		this.jaw.xRot = -0.2525770680316114F;
+		this.jaw.yRot = 0.0F;
+		this.jaw.zRot = 0.0F;
+		this.jaw.setPos(jaw.getInitialPose().x, jaw.getInitialPose().y, jaw.getInitialPose().z);
+
+		this.ear_r.xRot = -0.3815621357417483F;
+		this.ear_r.yRot = 2.6514989636420294F;
+		this.ear_r.zRot = -1.5488994259993758F;
+		this.ear_r.setPos(ear_r.getInitialPose().x, ear_r.getInitialPose().y, ear_r.getInitialPose().z);
+
+		this.ear_r2.xRot = 0.9210416622039436F;
+		this.ear_r2.yRot = 0.0F;
+		this.ear_r2.zRot = 0.0F;
+		this.ear_r2.setPos(ear_r2.getInitialPose().x, ear_r2.getInitialPose().y, ear_r2.getInitialPose().z);
+
+		this.ear_r3.xRot = 0.1620555663769255F;
+		this.ear_r3.yRot = 1.7453292519943296E-6F;
+		this.ear_r3.zRot = 0.0F;
+		this.ear_r3.setPos(ear_r3.getInitialPose().x, ear_r3.getInitialPose().y, ear_r3.getInitialPose().z);
+
+		this.ear_l.xRot = -0.3815621357417483F;
+		this.ear_l.yRot = -2.6514989636420294F;
+		this.ear_l.zRot = 1.5489011713286278F;
+		this.ear_l.setPos(ear_l.getInitialPose().x, ear_l.getInitialPose().y, ear_l.getInitialPose().z);
+
+		this.ear_l2.xRot = 0.9210416622039436F;
+		this.ear_l2.yRot = 0.0F;
+		this.ear_l2.zRot = 0.0F;
+		this.ear_l2.setPos(ear_l2.getInitialPose().x, ear_l2.getInitialPose().y, ear_l2.getInitialPose().z);
+
+		this.ear_l3.xRot = 0.1620555663769255F;
+		this.ear_l3.yRot = 0.0F;
+		this.ear_l3.zRot = 1.7453292519943296E-6F;
+		this.ear_l3.setPos(ear_l3.getInitialPose().x, ear_l3.getInitialPose().y, ear_l3.getInitialPose().z);
+
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -1836,7 +3640,7 @@ final class GeneratedLegacyMotion {
         }
         private void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, LegacyMotionContext entity) {
 
-		
+		setupAngles();
 
 		
 
@@ -1923,6 +3727,91 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = -0.06981317007977318F;
+		this.body.yRot = -0.0F;
+		this.body.zRot = -0.0F;
+		this.leg_l1.xRot = 0.06981317007977318F;
+		this.leg_l1.yRot = -0.0F;
+		this.leg_l1.zRot = -0.0F;
+		this.leg_l2.xRot = 0.0F;
+		this.leg_l2.yRot = -0.0F;
+		this.leg_l2.zRot = -0.0F;
+		this.toes_l.xRot = 0.0F;
+		this.toes_l.yRot = -0.0F;
+		this.toes_l.zRot = -0.0F;
+		this.lower_body.xRot = 0.06981317007977318F;
+		this.lower_body.yRot = -0.0F;
+		this.lower_body.zRot = -0.0F;
+		this.tail.xRot = -0.8493138659347327F;
+		this.tail.yRot = -0.0F;
+		this.tail.zRot = -0.0F;
+		this.tail2.xRot = -0.40761990147402366F;
+		this.tail2.yRot = -0.0F;
+		this.tail2.zRot = -0.0F;
+		this.tail3.xRot = 0.11862479327029861F;
+		this.tail3.yRot = -0.0F;
+		this.tail3.zRot = -0.0F;
+		this.back_leg_r1.xRot = 0.0F;
+		this.back_leg_r1.yRot = -0.0F;
+		this.back_leg_r1.zRot = -0.0F;
+		this.back_leg_r2.xRot = 0.0F;
+		this.back_leg_r2.yRot = -0.0F;
+		this.back_leg_r2.zRot = -0.0F;
+		this.back_toe_r.xRot = 0.0F;
+		this.back_toe_r.yRot = -0.0F;
+		this.back_toe_r.zRot = -0.0F;
+		this.back_leg_l1.xRot = 0.0F;
+		this.back_leg_l1.yRot = -0.0F;
+		this.back_leg_l1.zRot = -0.0F;
+		this.back_leg_l2.xRot = 0.0F;
+		this.back_leg_l2.yRot = -0.0F;
+		this.back_leg_l2.zRot = -0.0F;
+		this.back_toe_l.xRot = 0.0F;
+		this.back_toe_l.yRot = -0.0F;
+		this.back_toe_l.zRot = -0.0F;
+		this.neck1.xRot = -0.8264535433921109F;
+		this.neck1.yRot = -0.0F;
+		this.neck1.zRot = -0.0F;
+		this.head_base.xRot = 1.292103897165694F;
+		this.head_base.yRot = -0.0F;
+		this.head_base.zRot = -0.0F;
+		this.head_front.xRot = -0.17280330391070658F;
+		this.head_front.yRot = -0.0F;
+		this.head_front.zRot = -0.0F;
+		this.nose.xRot = -0.091106186954104F;
+		this.nose.yRot = -0.0F;
+		this.nose.zRot = -0.0F;
+		this.upper_jaw_detail.xRot = 0.2039696483635693F;
+		this.upper_jaw_detail.yRot = -0.0F;
+		this.upper_jaw_detail.zRot = -0.0F;
+		this.jaw.xRot = -0.2525770680316114F;
+		this.jaw.yRot = -0.0F;
+		this.jaw.zRot = -0.0F;
+		this.ear_r.xRot = -1.2936380415781972F;
+		this.ear_r.yRot = 2.588148747782391F;
+		this.ear_r.zRot = -2.356194490192345F;
+		this.ear_r2.xRot = 0.06981317007977318F;
+		this.ear_r2.yRot = -0.0F;
+		this.ear_r2.zRot = -0.0F;
+		this.ear_l.xRot = -1.2936380415781972F;
+		this.ear_l.yRot = -2.588148747782391F;
+		this.ear_l.zRot = 2.356194490192345F;
+		this.ear_l2.xRot = 0.06981317007977318F;
+		this.ear_l2.yRot = -0.0F;
+		this.ear_l2.zRot = -0.0F;
+		this.leg_r1.xRot = 0.06981317007977318F;
+		this.leg_r1.yRot = -0.0F;
+		this.leg_r1.zRot = -0.0F;
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = -0.0F;
+		this.leg_r2.zRot = -0.0F;
+		this.toes_r.xRot = 0.0F;
+		this.toes_r.yRot = -0.0F;
+		this.toes_r.zRot = -0.0F;
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -1953,7 +3842,7 @@ final class GeneratedLegacyMotion {
 
 		LegacyMotionContext dog = (LegacyMotionContext) entity;
 
-		
+		setupAngles();
 
 		
 
@@ -2040,6 +3929,91 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = -0.03490658503988659F;
+		this.body.yRot = -0.0F;
+		this.body.zRot = -0.0F;
+		this.leg_l1.xRot = 0.03490658503988659F;
+		this.leg_l1.yRot = -0.0F;
+		this.leg_l1.zRot = -0.0F;
+		this.leg_l2.xRot = 0.0F;
+		this.leg_l2.yRot = -0.0F;
+		this.leg_l2.zRot = -0.0F;
+		this.toes_l.xRot = 0.0F;
+		this.toes_l.yRot = -0.0F;
+		this.toes_l.zRot = -0.0F;
+		this.lower_body.xRot = 0.0F;
+		this.lower_body.yRot = -0.0F;
+		this.lower_body.zRot = -0.0F;
+		this.tail.xRot = -0.8730119465183116F;
+		this.tail.yRot = -0.0F;
+		this.tail.zRot = -0.0F;
+		this.tail2.xRot = -0.40761990147402366F;
+		this.tail2.yRot = -0.0F;
+		this.tail2.zRot = -0.0F;
+		this.tail3.xRot = 0.0F;
+		this.tail3.yRot = -0.0F;
+		this.tail3.zRot = -0.0F;
+		this.back_leg_l1.xRot = 0.03490658503988659F;
+		this.back_leg_l1.yRot = -0.0F;
+		this.back_leg_l1.zRot = -0.0F;
+		this.back_leg_l2.xRot = 0.0F;
+		this.back_leg_l2.yRot = -0.0F;
+		this.back_leg_l2.zRot = -0.0F;
+		this.back_toe_l.xRot = 0.0F;
+		this.back_toe_l.yRot = -0.0F;
+		this.back_toe_l.zRot = -0.0F;
+		this.back_leg_r1.xRot = 0.03490658503988659F;
+		this.back_leg_r1.yRot = -0.0F;
+		this.back_leg_r1.zRot = -0.0F;
+		this.back_leg_r2.xRot = 0.0F;
+		this.back_leg_r2.yRot = -0.0F;
+		this.back_leg_r2.zRot = -0.0F;
+		this.back_toe_r.xRot = 0.0F;
+		this.back_toe_r.yRot = -0.0F;
+		this.back_toe_r.zRot = -0.0F;
+		this.neck1.xRot = -0.8754030475935439F;
+		this.neck1.yRot = -0.0F;
+		this.neck1.zRot = -0.0F;
+		this.head_base.xRot = 1.3546861681544549F;
+		this.head_base.yRot = -0.0F;
+		this.head_base.zRot = -0.0F;
+		this.head_front.xRot = -0.12063017658084008F;
+		this.head_front.yRot = -0.0F;
+		this.head_front.zRot = -0.0F;
+		this.nose.xRot = -0.091106186954104F;
+		this.nose.yRot = -0.0F;
+		this.nose.zRot = -0.0F;
+		this.upper_jaw_detail.xRot = 0.2039696484F;
+		this.upper_jaw_detail.yRot = -0.0F;
+		this.upper_jaw_detail.zRot = -0.0F;
+		this.jaw.xRot = -0.08244411787645614F;
+		this.jaw.yRot = -0.0F;
+		this.jaw.zRot = -0.0F;
+		this.ear_l.xRot = 1.2217304763960306F;
+		this.ear_l.yRot = -1.1608184855014287F;
+		this.ear_l.zRot = 0.6063273821428301F;
+		this.ear_l2.xRot = 0.3490658503988659F;
+		this.ear_l2.yRot = -0.0F;
+		this.ear_l2.zRot = -0.0F;
+		this.ear_r.xRot = 1.2217304763960306F;
+		this.ear_r.yRot = 1.4166854991730493F;
+		this.ear_r.zRot = -0.3787364476827695F;
+		this.ear_r2.xRot = 0.3490658503988659F;
+		this.ear_r2.yRot = -0.0F;
+		this.ear_r2.zRot = -0.0F;
+		this.leg_r1.xRot = 0.03490658503988659F;
+		this.leg_r1.yRot = -0.0F;
+		this.leg_r1.zRot = -0.0F;
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = -0.0F;
+		this.leg_r2.zRot = -0.0F;
+		this.toes_r.xRot = 0.0F;
+		this.toes_r.yRot = -0.0F;
+		this.toes_r.zRot = -0.0F;
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -2068,7 +4042,7 @@ final class GeneratedLegacyMotion {
         }
         private void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, LegacyMotionContext entity) {
 
-		
+		setupAngles();
 
 		
 
@@ -2144,6 +4118,52 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = 0.0F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.back_right.xRot = 0.0F;
+		this.back_right.yRot = 0.0F;
+		this.back_right.zRot = 0.0F;
+		this.tail.xRot = 0.0F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.back_left.xRot = 0.0F;
+		this.back_left.yRot = 0.0F;
+		this.back_left.zRot = 0.0F;
+		this.upperbody.xRot = 0.0F;
+		this.upperbody.yRot = 0.0F;
+		this.upperbody.zRot = 0.0F;
+		this.front_right.xRot = 0.0F;
+		this.front_right.yRot = 0.0F;
+		this.front_right.zRot = 0.0F;
+		this.front_left.xRot = 0.0F;
+		this.front_left.yRot = 0.0F;
+		this.front_left.zRot = 0.0F;
+		this.neck_base.xRot = -0.030037116426822413F;
+		this.neck_base.yRot = 0.0F;
+		this.neck_base.zRot = 0.0F;
+		this.neck.xRot = -0.5546935615518298F;
+		this.neck.yRot = 0.0F;
+		this.neck.zRot = 0.0F;
+		this.pug_head.xRot = 0.6108652381980153F;
+		this.pug_head.yRot = 0.0F;
+		this.pug_head.zRot = 0.0F;
+		this.snout.xRot = 0.0F;
+		this.snout.yRot = 0.0F;
+		this.snout.zRot = 0.0F;
+		this.nose.xRot = 0.0F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.ear_l.xRot = 0.0F;
+		this.ear_l.yRot = 0.0F;
+		this.ear_l.zRot = -0.23574336739612609F;
+		this.ear_l1.xRot = 0.0F;
+		this.ear_l1.yRot = 1.7453292519943296E-6F;
+		this.ear_l1.zRot = 0.23574336739612609F;
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -2170,7 +4190,7 @@ final class GeneratedLegacyMotion {
         }
         private void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, LegacyMotionContext entity) {
 
-		
+		setupAngles();
 
 		
 
@@ -2266,6 +4286,121 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = 0.017453292519943295F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.leg_l1.xRot = -0.017453292519943295F;
+		this.leg_l1.yRot = 0.0F;
+		this.leg_l1.zRot = 0.0F;
+		this.leg_l2.xRot = 0.0F;
+		this.leg_l2.yRot = 0.0F;
+		this.leg_l2.zRot = 0.0F;
+		this.toes_l.xRot = 0.0F;
+		this.toes_l.yRot = 0.0F;
+		this.toes_l.zRot = 0.0F;
+		this.leg_l1_fluff.xRot = 0.0F;
+		this.leg_l1_fluff.yRot = 0.0F;
+		this.leg_l1_fluff.zRot = 0.0F;
+		this.lower_body.xRot = 0.0F;
+		this.lower_body.yRot = 0.0F;
+		this.lower_body.zRot = 0.0F;
+		this.tail.xRot = -0.8730119465183116F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.tail2.xRot = -0.3298340673711404F;
+		this.tail2.yRot = 0.0F;
+		this.tail2.zRot = 0.0F;
+		this.tail3.xRot = 0.0659280671648338F;
+		this.tail3.yRot = 0.0F;
+		this.tail3.zRot = 0.0F;
+		this.tail_fluff2.xRot = 0.11061896799140061F;
+		this.tail_fluff2.yRot = 0.0F;
+		this.tail_fluff2.zRot = 0.0F;
+		this.tail_fluff.xRot = 0.14362314414661337F;
+		this.tail_fluff.yRot = 0.0F;
+		this.tail_fluff.zRot = 0.0F;
+		this.back_leg_l1.xRot = -0.017453292519943295F;
+		this.back_leg_l1.yRot = 0.0F;
+		this.back_leg_l1.zRot = 0.0F;
+		this.back_leg_l2.xRot = 0.0F;
+		this.back_leg_l2.yRot = 0.0F;
+		this.back_leg_l2.zRot = 0.0F;
+		this.back_toe_l.xRot = 0.0F;
+		this.back_toe_l.yRot = 0.0F;
+		this.back_toe_l.zRot = 0.0F;
+		this.back_leg_l1_fluff.xRot = 0.04554262150154004F;
+		this.back_leg_l1_fluff.yRot = 0.0F;
+		this.back_leg_l1_fluff.zRot = 0.0F;
+		this.back_leg_r1.xRot = -0.017453292519943295F;
+		this.back_leg_r1.yRot = 0.0F;
+		this.back_leg_r1.zRot = 0.0F;
+		this.back_leg_r2.xRot = 0.0F;
+		this.back_leg_r2.yRot = 0.0F;
+		this.back_leg_r2.zRot = 0.0F;
+		this.back_toe_r.xRot = 0.0F;
+		this.back_toe_r.yRot = 0.0F;
+		this.back_toe_r.zRot = 0.0F;
+		this.back_leg_r1_fluff.xRot = 0.045553093477052F;
+		this.back_leg_r1_fluff.yRot = 0.0F;
+		this.back_leg_r1_fluff.zRot = 0.0F;
+		this.body_fluff.xRot = 0.0F;
+		this.body_fluff.yRot = 0.0F;
+		this.body_fluff.zRot = 0.0F;
+		this.neck1.xRot = -1.1313712903617803F;
+		this.neck1.yRot = 0.0F;
+		this.neck1.zRot = 0.0F;
+		this.head_base.xRot = 1.4867395246895976F;
+		this.head_base.yRot = 0.0F;
+		this.head_base.zRot = 0.0F;
+		this.head_front.xRot = -0.12063017658084008F;
+		this.head_front.yRot = 0.0F;
+		this.head_front.zRot = 0.0F;
+		this.nose.xRot = -0.091106186954104F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.upper_jaw_detail.xRot = 0.2039696483635693F;
+		this.upper_jaw_detail.yRot = 0.0F;
+		this.upper_jaw_detail.zRot = 0.0F;
+		this.jaw.xRot = -0.08244411787645614F;
+		this.jaw.yRot = 0.0F;
+		this.jaw.zRot = 0.0F;
+		this.ear_l.xRot = 1.2217304763960306F;
+		this.ear_l.yRot = -1.1608184855014287F;
+		this.ear_l.zRot = 0.6063273821428301F;
+		this.ear_l2.xRot = 0.3490658503988659F;
+		this.ear_l2.yRot = 0.0F;
+		this.ear_l2.zRot = 0.0F;
+		this.ear_r.xRot = 1.2217304763960306F;
+		this.ear_r.yRot = 1.4166854991730493F;
+		this.ear_r.zRot = -0.3787364476827695F;
+		this.ear_r2.xRot = 0.3490658503988659F;
+		this.ear_r2.yRot = 0.0F;
+		this.ear_r2.zRot = 0.0F;
+		this.head_base_fluff1.xRot = -0.20956866460396714F;
+		this.head_base_fluff1.yRot = 0.0F;
+		this.head_base_fluff1.zRot = 0.0F;
+		this.head_base_fluff2.xRot = -0.20956866460396714F;
+		this.head_base_fluff2.yRot = 0.0F;
+		this.head_base_fluff2.zRot = 0.0F;
+		this.leg_r1.xRot = -0.017453292519943295F;
+		this.leg_r1.yRot = 0.0F;
+		this.leg_r1.zRot = 0.0F;
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = 0.0F;
+		this.leg_r2.zRot = 0.0F;
+		this.toes_r.xRot = 0.0F;
+		this.toes_r.yRot = 0.0F;
+		this.toes_r.zRot = 0.0F;
+		this.leg_r1_fluff.xRot = 0.0F;
+		this.leg_r1_fluff.yRot = 0.0F;
+		this.leg_r1_fluff.zRot = 0.0F;
+		this.body_fluff1.xRot = 0.0F;
+		this.body_fluff1.yRot = 0.0F;
+		this.body_fluff1.zRot = 0.0F;
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -2296,7 +4431,7 @@ final class GeneratedLegacyMotion {
 
 		LegacyMotionContext dog = (LegacyMotionContext) entity;
 
-		
+		setupAngles();
 
 		
 
@@ -2368,6 +4503,46 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = 0.0F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.tail.xRot = 0.0F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.neck_base.xRot = 0.0F;
+		this.neck_base.yRot = 0.0F;
+		this.neck_base.zRot = -0.15707788735023767F;
+		this.neck.xRot = -0.6022712369611952F;
+		this.neck.yRot = -0.10910053154216555F;
+		this.neck.zRot = 0.19099487070424345F;
+		this.pug_head.xRot = 0.6108652381980153F;
+		this.pug_head.yRot = 0.0F;
+		this.pug_head.zRot = 0.0F;
+		this.ear1.xRot = 0.2617993877991494F;
+		this.ear1.yRot = 0.0F;
+		this.ear1.zRot = -0.17453292519943295F;
+		this.ear2.xRot = -0.17453292519943295F;
+		this.ear2.yRot = 0.0F;
+		this.ear2.zRot = -0.15707788735023767F;
+		this.nose.xRot = 0.0F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.back_right.xRot = 0.0F;
+		this.back_right.yRot = 0.0F;
+		this.back_right.zRot = 0.0F;
+		this.back_left.xRot = 0.0F;
+		this.back_left.yRot = 0.0F;
+		this.back_left.zRot = 0.0F;
+		this.front_right.xRot = 0.0F;
+		this.front_right.yRot = 0.0F;
+		this.front_right.zRot = 0.0F;
+		this.front_left.xRot = 0.0F;
+		this.front_left.yRot = 0.0F;
+		this.front_left.zRot = 0.0F;
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -2393,7 +4568,7 @@ final class GeneratedLegacyMotion {
         }
         private void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, LegacyMotionContext entity) {
 
-		
+		setupAngles();
 
 		
 
@@ -2481,6 +4656,100 @@ final class GeneratedLegacyMotion {
             setLivingAnimations(context, swing, amount, partial);
             setRotationAngles(swing, amount, age, yaw, pitch, 0.0625F, context);
         }
+        private void setupAngles() {
+
+		this.body.xRot = -0.06981317007977318F;
+		this.body.yRot = 0.0F;
+		this.body.zRot = 0.0F;
+		this.leg_l1.xRot = 0.06981317007977318F;
+		this.leg_l1.yRot = 0.0F;
+		this.leg_l1.zRot = 0.0F;
+		this.leg_l2.xRot = 0.0F;
+		this.leg_l2.yRot = 0.0F;
+		this.leg_l2.zRot = 0.0F;
+		this.toe_l.xRot = 0.0F;
+		this.toe_l.yRot = 0.0F;
+		this.toe_l.zRot = 0.0F;
+		this.lower_body.xRot = 0.06981317007977318F;
+		this.lower_body.yRot = 0.0F;
+		this.lower_body.zRot = 0.0F;
+		this.tail.xRot = -0.8493138659347327F;
+		this.tail.yRot = 0.0F;
+		this.tail.zRot = 0.0F;
+		this.tail2.xRot = -0.40761990147402366F;
+		this.tail2.yRot = 0.0F;
+		this.tail2.zRot = 0.0F;
+		this.tail3.xRot = 0.08067609934418589F;
+		this.tail3.yRot = 0.0F;
+		this.tail3.zRot = 0.0F;
+		this.tail4.xRot = -1.7453292519943296E-6F;
+		this.tail4.yRot = 0.0F;
+		this.tail4.zRot = 0.0F;
+		this.back_leg_r1.xRot = 0.0F;
+		this.back_leg_r1.yRot = 0.0F;
+		this.back_leg_r1.zRot = 0.0F;
+		this.back_leg_r2.xRot = 0.0F;
+		this.back_leg_r2.yRot = 0.0F;
+		this.back_leg_r2.zRot = 0.0F;
+		this.back_toe_r.xRot = 0.0F;
+		this.back_toe_r.yRot = 0.0F;
+		this.back_toe_r.zRot = 0.0F;
+		this.back_leg_l1.xRot = 0.0F;
+		this.back_leg_l1.yRot = 0.0F;
+		this.back_leg_l1.zRot = 0.0F;
+		this.back_leg_l2.xRot = 0.0F;
+		this.back_leg_l2.yRot = 0.0F;
+		this.back_leg_l2.zRot = 0.0F;
+		this.back_toe_l.xRot = 0.0F;
+		this.back_toe_l.yRot = 0.0F;
+		this.back_toe_l.zRot = 0.0F;
+		this.neck1.xRot = -0.5496041814530144F;
+		this.neck1.yRot = 0.0F;
+		this.neck1.zRot = 0.0F;
+		this.head_base.xRot = 1.0487683475233927F;
+		this.head_base.yRot = 0.0F;
+		this.head_base.zRot = 0.0F;
+		this.head_front.xRot = -0.17280330391070658F;
+		this.head_front.yRot = 0.0F;
+		this.head_front.zRot = 0.0F;
+		this.nose.xRot = -0.091106186954104F;
+		this.nose.yRot = 0.0F;
+		this.nose.zRot = 0.0F;
+		this.upper_jaw_detail.xRot = 0.2039696483635693F;
+		this.upper_jaw_detail.yRot = 0.0F;
+		this.upper_jaw_detail.zRot = 0.0F;
+		this.jaw.xRot = -0.2525770680316114F;
+		this.jaw.yRot = 0.0F;
+		this.jaw.zRot = 0.0F;
+		this.chops_r.xRot = -1.328134474243865F;
+		this.chops_r.yRot = -2.827960477664916F;
+		this.chops_r.zRot = -2.213908268252759F;
+		this.ear_r.xRot = -1.1145864589453507F;
+		this.ear_r.yRot = 2.1374366670766274F;
+		this.ear_r.zRot = -2.102786645436784F;
+		this.ear_r2.xRot = 0.3141592653589793F;
+		this.ear_r2.yRot = 0.0F;
+		this.ear_r2.zRot = 0.0F;
+		this.chops_l.xRot = -1.328134474243865F;
+		this.chops_l.yRot = 2.827960477664916F;
+		this.chops_l.zRot = 2.213908268252759F;
+		this.ear_l.xRot = -1.1145864589453507F;
+		this.ear_l.yRot = -2.1374366670766274F;
+		this.ear_l.zRot = 2.102786645436784F;
+		this.ear_l2.xRot = 0.3141592653589793F;
+		this.ear_l2.yRot = 0.0F;
+		this.ear_l2.zRot = 0.0F;
+		this.leg_r1.xRot = 0.06981317007977318F;
+		this.leg_r1.yRot = 0.0F;
+		this.leg_r1.zRot = 0.0F;
+		this.leg_r2.xRot = 0.0F;
+		this.leg_r2.yRot = 0.0F;
+		this.leg_r2.zRot = 0.0F;
+		this.toe_l1.xRot = 0.0F;
+		this.toe_l1.yRot = 0.0F;
+		this.toe_l1.zRot = 0.0F;
+
+        }
         private void setLivingAnimations(LegacyMotionContext entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 
 
@@ -2511,7 +4780,7 @@ final class GeneratedLegacyMotion {
 
 		LegacyMotionContext dog = (LegacyMotionContext) entity;
 
-		
+		setupAngles();
 
 		
 

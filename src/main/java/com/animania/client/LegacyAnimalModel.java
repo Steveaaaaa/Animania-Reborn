@@ -14,8 +14,6 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
-import org.joml.Quaternionf;
-import org.joml.Vector3f;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.TamableAnimal;
 
@@ -180,11 +178,22 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
                 && !key.startsWith("catsdogs/client/models/dogs/")) return;
         // ModelRendererAnimania used CraftStudio's Y-X-Z quaternion order.
         // ModelPart consumes Z-Y-X angles; convert after the original pose animation.
-        Quaternionf rotation = new Quaternionf();
-        Vector3f angles = new Vector3f();
+        // JOML 1.10.5's quaternion-to-ZYX getter has an incorrect X denominator.
+        // Decompose the original Y-X-Z matrix directly, including its singular pose.
         for (ModelPart part : parts.values()) {
-            rotation.rotationYXZ(part.yRot, part.xRot, part.zRot).getEulerAnglesZYX(angles);
-            part.setRotation(angles.x, angles.y, angles.z);
+            double sx = Math.sin(part.xRot), cx = Math.cos(part.xRot);
+            double sy = Math.sin(part.yRot), cy = Math.cos(part.yRot);
+            double sz = Math.sin(part.zRot), cz = Math.cos(part.zRot);
+            double m00 = cy * cz + sy * sx * sz;
+            double m10 = cx * sz;
+            double m21 = sy * sz + cy * sx * cz;
+            double m22 = cy * cx;
+            double horizontal = Math.hypot(m00, m10);
+            double x = horizontal > 1.0E-7 ? Math.atan2(m21, m22) : 0;
+            double y = Math.atan2(sy * cz - cy * sx * sz, horizontal);
+            double z = horizontal > 1.0E-7 ? Math.atan2(m10, m00)
+                    : Math.atan2(cy * sz - sy * sx * cz, cx * cz);
+            part.setRotation((float) x, (float) y, (float) z);
         }
     }
 
