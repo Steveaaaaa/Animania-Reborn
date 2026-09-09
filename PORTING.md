@@ -107,3 +107,12 @@ is not bundled. Do not substitute the NeoForge EMI jar.
 No GameTests or unit tests are used. Game behaviour, shader support and other mod
 combinations are checked manually. The optional resource inventory script is not
 part of the regular build.
+
+## Pixel art
+
+New pixel-art assets use a 16 x 16 canvas by default. Each pixel occupies one
+cell on a consistent grid. Use a compact palette, hard edges and deliberate
+clusters; avoid mixed pixel sizes, anti-aliasing, smooth gradients and dithering.
+Keep silhouettes readable at native size. Establish the shape and value contrast
+first, optionally in grayscale, then add color and sparse texture. Inspect the
+native-size result as well as a nearest-neighbor enlargement before shipping.
