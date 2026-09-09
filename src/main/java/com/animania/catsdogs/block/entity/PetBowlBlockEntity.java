@@ -123,6 +123,11 @@ public final class PetBowlBlockEntity extends BlockEntity {
 
     public boolean consumeFood(Animal animal) {
         if (food.isEmpty() || !animal.isFood(food)) return false;
+        if (level != null && !level.isClientSide()
+                && com.animania.common.config.LegacyItemMatcher.isFarmersDogFood(food)) {
+            net.minecraft.world.level.block.Block.popResource(level, worldPosition,
+                    new ItemStack(net.minecraft.world.item.Items.BOWL));
+        }
         food.shrink(1);
         if (food.isEmpty()) food = ItemStack.EMPTY;
         syncState();

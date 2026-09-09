@@ -277,7 +277,15 @@ public final class AnimalNeedsHandler {
                     return;
                 }
                 if (!animal.level().isClientSide()) {
-                    if (!event.getEntity().getAbilities().instabuild) held.shrink(1);
+                    if (!event.getEntity().getAbilities().instabuild) {
+                        boolean returnBowl = com.animania.common.config.LegacyItemMatcher.isFarmersDogFood(held);
+                        held.shrink(1);
+                        if (returnBowl) {
+                            ItemStack bowl = new ItemStack(net.minecraft.world.item.Items.BOWL);
+                            if (held.isEmpty()) event.getEntity().setItemInHand(event.getHand(), bowl);
+                            else if (!event.getEntity().addItem(bowl)) event.getEntity().drop(bowl, false);
+                        }
+                    }
                     LegacyAnimalNeeds.feed(animal, true, false);
                     animal.setData(ModAttachments.EATING_TICKS, 80);
                     showCareHearts(animal);

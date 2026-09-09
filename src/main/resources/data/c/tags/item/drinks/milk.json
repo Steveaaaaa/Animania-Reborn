@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "animania:holstein_bucket_milk",
+    "animania:friesian_bucket_milk",
+    "animania:jersey_bucket_milk",
+    "animania:goat_bucket_milk",
+    "animania:sheep_bucket_milk",
+    "animania:milk_bottle"
+  ]
+}

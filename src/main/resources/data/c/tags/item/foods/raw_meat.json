@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "animania:raw_prime_beef",
+    "animania:raw_prime_steak",
+    "animania:raw_prime_pork",
+    "animania:raw_prime_bacon",
+    "animania:raw_prime_chicken",
+    "animania:raw_prime_mutton",
+    "animania:raw_prime_chevon",
+    "animania:raw_prime_rabbit",
+    "animania:raw_prime_peacock"
+  ]
+}

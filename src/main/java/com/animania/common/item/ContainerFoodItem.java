@@ -49,6 +49,16 @@ public final class ContainerFoodItem extends Item {
     }
 
     @Override
+    public boolean hasCraftingRemainingItem(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public ItemStack getCraftingRemainingItem(ItemStack stack) {
+        return new ItemStack(container == Container.BOWL ? Items.BOWL : Items.GLASS_BOTTLE);
+    }
+
+    @Override
     public UseAnim getUseAnimation(ItemStack stack) {
         return container == Container.BOTTLE ? UseAnim.DRINK : UseAnim.EAT;
     }

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "ingredient": {
+    "item": "animania:brown_egg"
+  },
+  "result": {
+    "id": "farmersdelight:fried_egg",
+    "count": 1
+  },
+  "experience": 0.35,
+  "cookingtime": 100,
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ]
+}
