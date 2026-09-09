@@ -115,3 +115,19 @@ but animals only eat food appropriate to their species; hamster feeds also work
 in pet bowls. Existing configuration files do not need to be deleted. Additional
 feeds can be changed through the `animania:compat/farmersdelight/feed/<animal>`
 item tags. Onions are not included.
+
+### Cutting meat and cooking existing dishes
+
+A cutting board can turn one raw prime beef into four raw prime steaks, or one
+raw prime pork into four raw prime bacon. These are the original carving yields;
+there is no reverse recipe and the cuts retain their prime quality.
+
+The cooking pot can prepare plain, cheese, bacon, truffle and super omelettes,
+as well as chocolate truffles. Each recipe takes 200 ticks and produces one item
+with its existing nutrition and effects. Omelettes use two eggs plus the fillings
+from the original crafting recipe; bacon recipes accept cooked prime bacon or
+Farmer's Delight cooked bacon. These dishes do not require a serving container.
+
+Farmer's Delight cooked bacon also works in separate crafting recipes for bacon
+and super omelettes. Two Farmer's Delight fried eggs can be crafted into one
+plain omelette. The original recipes remain available without Farmer's Delight.
