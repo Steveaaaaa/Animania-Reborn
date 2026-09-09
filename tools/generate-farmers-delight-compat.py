@@ -173,3 +173,25 @@ recipe('omelette_from_fried_eggs', {
     'result': stack('animania:plain_omelette')
 })
 print('Generated Farmer\'s Delight compatibility for', 'NeoForge' if neo else 'Forge')
+
+# Each specialty dish keeps its livestock ingredients distinct.
+specialties = {
+    'chevon_stew': [[{'item': 'animania:raw_chevon'}, {'item': 'animania:raw_prime_chevon'}],
+                    {'item': 'farmersdelight:tomato'}, {'item': 'minecraft:carrot'},
+                    {'item': 'minecraft:potato'}, {'item': 'farmersdelight:onion'}],
+    'peacock_pilaf': [{'item': 'animania:raw_prime_peacock'}, {'item': 'animania:truffle'},
+                      {'item': 'farmersdelight:rice'}, {'item': 'farmersdelight:onion'},
+                      {'item': 'minecraft:carrot'}],
+    'three_cheese_pasta': [{'item': 'farmersdelight:raw_pasta'},
+                           [{'item': 'animania:' + breed + '_cheese_wedge'}
+                            for breed in ['holstein', 'friesian', 'jersey']],
+                           {'item': 'animania:goat_cheese_wedge'},
+                           {'item': 'animania:sheep_cheese_wedge'},
+                           {'tag': 'c:drinks/milk' if neo else 'forge:milk'}],
+}
+for dish, ingredients in specialties.items():
+    recipe('cooking/' + dish, {
+        'type': 'farmersdelight:cooking', 'ingredients': ingredients,
+        'result': stack('animania:' + dish), 'container': stack('minecraft:bowl'),
+        'cookingtime': 300, 'experience': 1.0, 'recipe_book_tab': 'meals'
+    })

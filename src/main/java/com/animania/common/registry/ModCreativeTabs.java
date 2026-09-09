@@ -21,6 +21,9 @@ public final class ModCreativeTabs {
                             ModItems.ITEMS.getEntries().forEach(item -> {
                                 if (item.get() != ModItems.CHEESE_SANDWICH.get()
                                         && item.get() != ModItems.TRUFFLE_RISOTTO.get()
+                                        && item.get() != ModItems.CHEVON_STEW.get()
+                                        && item.get() != ModItems.PEACOCK_PILAF.get()
+                                        && item.get() != ModItems.THREE_CHEESE_PASTA.get()
                                         || net.minecraftforge.fml.ModList.get().isLoaded("farmersdelight")) output.accept(item.get());
                             }))
                     .build()

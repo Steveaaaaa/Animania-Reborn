@@ -1,0 +1,45 @@
+{
+  "type": "farmersdelight:cooking",
+  "ingredients": [
+    {
+      "item": "farmersdelight:raw_pasta"
+    },
+    [
+      {
+        "item": "animania:holstein_cheese_wedge"
+      },
+      {
+        "item": "animania:friesian_cheese_wedge"
+      },
+      {
+        "item": "animania:jersey_cheese_wedge"
+      }
+    ],
+    {
+      "item": "animania:goat_cheese_wedge"
+    },
+    {
+      "item": "animania:sheep_cheese_wedge"
+    },
+    {
+      "tag": "forge:milk"
+    }
+  ],
+  "result": {
+    "item": "animania:three_cheese_pasta",
+    "count": 1
+  },
+  "container": {
+    "item": "minecraft:bowl",
+    "count": 1
+  },
+  "cookingtime": 300,
+  "experience": 1.0,
+  "recipe_book_tab": "meals",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "type": "farmersdelight:cooking",
+  "ingredients": [
+    [
+      {
+        "item": "animania:raw_chevon"
+      },
+      {
+        "item": "animania:raw_prime_chevon"
+      }
+    ],
+    {
+      "item": "farmersdelight:tomato"
+    },
+    {
+      "item": "minecraft:carrot"
+    },
+    {
+      "item": "minecraft:potato"
+    },
+    {
+      "item": "farmersdelight:onion"
+    }
+  ],
+  "result": {
+    "item": "animania:chevon_stew",
+    "count": 1
+  },
+  "container": {
+    "item": "minecraft:bowl",
+    "count": 1
+  },
+  "cookingtime": 300,
+  "experience": 1.0,
+  "recipe_book_tab": "meals",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ]
+}

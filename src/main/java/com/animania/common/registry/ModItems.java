@@ -94,6 +94,15 @@ public final class ModItems {
     public static final RegistryObject<ContainerFoodItem> TRUFFLE_RISOTTO = ITEMS.register("truffle_risotto",
             () -> new ContainerFoodItem(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder()
                     .nutrition(12).saturationMod(0.8F).build()), ContainerFoodItem.Container.BOWL));
+    public static final RegistryObject<ContainerFoodItem> CHEVON_STEW = ITEMS.register("chevon_stew",
+            () -> new ContainerFoodItem(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder()
+                    .nutrition(12).saturationMod(0.75F).build()), ContainerFoodItem.Container.BOWL));
+    public static final RegistryObject<ContainerFoodItem> PEACOCK_PILAF = ITEMS.register("peacock_pilaf",
+            () -> new ContainerFoodItem(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder()
+                    .nutrition(14).saturationMod(0.8F).build()), ContainerFoodItem.Container.BOWL));
+    public static final RegistryObject<ContainerFoodItem> THREE_CHEESE_PASTA = ITEMS.register("three_cheese_pasta",
+            () -> new ContainerFoodItem(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder()
+                    .nutrition(12).saturationMod(0.8F).build()), ContainerFoodItem.Container.BOWL));
     public static final RegistryObject<Item> TRUFFLE = food("truffle", 2, 0.7F);
     public static final RegistryObject<Item> PLAIN_OMELETTE = food("plain_omelette", 5, 0.6F);
     public static final RegistryObject<Item> CHEESE_OMELETTE = effectFood("cheese_omelette", 5, 0.7F,
