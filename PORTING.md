@@ -74,3 +74,12 @@ required. Normal development builds skip tests. Game behaviour and shader
 compatibility are checked manually. The optional `tools/verify-port.ps1` script
 checks resource and registration inventories; it is not a substitute for playing
 the game and is not run after every change.
+
+## Pixel art
+
+New pixel-art assets use a 16 x 16 canvas by default. Each pixel occupies one
+cell on a consistent grid. Use a compact palette, hard edges and deliberate
+clusters; avoid mixed pixel sizes, anti-aliasing, smooth gradients and dithering.
+Keep silhouettes readable at native size. Establish the shape and value contrast
+first, optionally in grayscale, then add color and sparse texture. Inspect the
+native-size result as well as a nearest-neighbor enlargement before shipping.
