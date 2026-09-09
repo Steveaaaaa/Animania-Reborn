@@ -131,3 +131,17 @@ Farmer's Delight cooked bacon. These dishes do not require a serving container.
 Farmer's Delight cooked bacon also works in separate crafting recipes for bacon
 and super omelettes. Two Farmer's Delight fried eggs can be crafted into one
 plain omelette. The original recipes remain available without Farmer's Delight.
+
+### Specialty meals
+
+These three cooking-pot recipes each make one serving in 300 ticks (15 seconds).
+Each requires a bowl, stacks to 16 and returns the bowl after eating.
+
+| Meal | Ingredients | Hunger restored |
+| --- | --- | --- |
+| Tomato Chevon Stew | Raw chevon (regular or prime), tomato, carrot, potato, onion | 12 |
+| Truffle Peacock Rice | Raw prime peacock, truffle, rice, onion, carrot | 14 |
+| Three Cheese Pasta | Raw pasta, one cow cheese wedge (Holstein, Friesian or Jersey), goat cheese wedge, sheep cheese wedge, milk | 12 |
+
+These are new port recipes, available with Farmer's Delight installed. They add
+no status effects and leave the original foods unchanged.
