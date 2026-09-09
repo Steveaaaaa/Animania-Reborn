@@ -1,0 +1,31 @@
+{
+  "type": "farmersdelight:cooking",
+  "ingredients": [
+    {
+      "tag": "forge:eggs"
+    },
+    {
+      "tag": "forge:eggs"
+    },
+    [
+      {
+        "item": "animania:cooked_prime_bacon"
+      },
+      {
+        "item": "farmersdelight:cooked_bacon"
+      }
+    ]
+  ],
+  "result": {
+    "item": "animania:bacon_omelette"
+  },
+  "cookingtime": 200,
+  "experience": 0.35,
+  "recipe_book_tab": "meals",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ]
+}

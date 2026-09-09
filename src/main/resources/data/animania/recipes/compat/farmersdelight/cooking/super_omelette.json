@@ -1,0 +1,37 @@
+{
+  "type": "farmersdelight:cooking",
+  "ingredients": [
+    {
+      "tag": "forge:eggs"
+    },
+    {
+      "tag": "forge:eggs"
+    },
+    [
+      {
+        "item": "animania:cooked_prime_bacon"
+      },
+      {
+        "item": "farmersdelight:cooked_bacon"
+      }
+    ],
+    {
+      "item": "animania:truffle"
+    },
+    {
+      "tag": "animania:cheese_wedges"
+    }
+  ],
+  "result": {
+    "item": "animania:super_omelette"
+  },
+  "cookingtime": 200,
+  "experience": 0.35,
+  "recipe_book_tab": "meals",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ]
+}

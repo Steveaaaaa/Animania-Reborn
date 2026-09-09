@@ -132,4 +132,44 @@ write(data / 'animania/tags' / tag_dir / 'compat/farmersdelight/slop_vegetables.
         {'id': 'farmersdelight:' + item, 'required': False}
         for item in ['cabbage', 'cabbage_leaf', 'tomato']]
 })
+# Preserve the original carving yields and the quality of the resulting cuts.
+for source_name in ['beef_cutting', 'pork_cutting']:
+    original = json.loads((data / 'animania' / recipe_dir / (source_name + '.json')).read_text())
+    source_item = next(i for i in original['ingredients'] if i.get('item') != 'animania:carving_knife')
+    result = original['result']
+    recipe('cutting/' + source_name, {
+        'type': 'farmersdelight:cutting', 'ingredients': [source_item],
+        'tool': {'tag': knife_tag},
+        'result': [{'item': result}] if neo else [result]
+    })
+
+plain_ingredients = json.loads((data / 'animania' / recipe_dir / 'plain_omelette.json').read_text())['ingredients']
+for dish in ['plain_omelette', 'cheese_omelette', 'bacon_omelette',
+             'truffle_omelette', 'super_omelette', 'chocolate_truffle']:
+    original = json.loads((data / 'animania' / recipe_dir / (dish + '.json')).read_text())
+    ingredients = []
+    for ingredient in original['ingredients']:
+        if ingredient.get('item') == 'animania:plain_omelette':
+            ingredients.extend(plain_ingredients)
+        elif ingredient.get('item') == 'animania:cooked_prime_bacon':
+            ingredients.append([ingredient, {'item': 'farmersdelight:cooked_bacon'}])
+        else:
+            ingredients.append(ingredient)
+    recipe('cooking/' + dish, {
+        'type': 'farmersdelight:cooking', 'ingredients': ingredients,
+        'result': original['result'], 'cookingtime': 200, 'experience': 0.35,
+        'recipe_book_tab': 'meals'
+    })
+
+for dish in ['bacon_omelette', 'super_omelette']:
+    original = json.loads((data / 'animania' / recipe_dir / (dish + '.json')).read_text())
+    original['ingredients'] = [
+        {'item': 'farmersdelight:cooked_bacon'} if ingredient.get('item') == 'animania:cooked_prime_bacon'
+        else ingredient for ingredient in original['ingredients']]
+    recipe(dish + '_from_delight_bacon', original)
+recipe('omelette_from_fried_eggs', {
+    'type': 'minecraft:crafting_shapeless',
+    'ingredients': [{'item': 'farmersdelight:fried_egg'}, {'item': 'farmersdelight:fried_egg'}],
+    'result': stack('animania:plain_omelette')
+})
 print('Generated Farmer\'s Delight compatibility for', 'NeoForge' if neo else 'Forge')
