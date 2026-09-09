@@ -24,8 +24,14 @@ public final class LegacyItemMatcher {
         // Keep straw usable even when an existing server config predates its
         // addition to the default trough food list.
         if ("trough".equals(listKey) && stack.is(ModItems.STRAW.get())) return true;
+        if (("dog".equals(listKey) || "petBowl".equals(listKey)) && isFarmersDogFood(stack)) return true;
         var configured = LegacyConfig.FOOD_LISTS.get(listKey);
         return configured != null && matches(stack, configured.get());
+    }
+
+    public static boolean isFarmersDogFood(ItemStack stack) {
+        return !stack.isEmpty() && BuiltInRegistries.ITEM.getKey(stack.getItem()).toString()
+                .equals("farmersdelight:dog_food");
     }
 
     public static boolean matches(ItemStack stack, List<? extends String> entries) {

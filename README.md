@@ -75,3 +75,24 @@ repository is hosted by capnkirok. Port maintained by
 This is an unofficial port and is not endorsed by the original team. Code and
 assets retain their original credits. The project is distributed under
 LGPL-3.0-only; see [NOTICE](NOTICE), [LICENSE](LICENSE) and [COPYING](COPYING).
+
+## Farmer's Delight
+
+Optional compatibility includes meat, milk and egg ingredient tags. Prime beef,
+pork, bacon, chicken and mutton work in recipes accepting their corresponding
+food tags; other prime meats also count as meat in generic recipes. Prime rabbit
+has a separate cooking-pot rabbit stew recipe. Recipes that explicitly require
+Farmer's Delight minced beef, patties or other processed cuts retain those inputs.
+
+- Cut any of the five cheese wheels on a cutting board with a knife to get four wedges.
+- Cook two truffles in a cooking pot for 200 ticks, then serve with a bowl.
+- Cook brown eggs into Farmer's Delight fried eggs, including on its stove.
+- Craft one Farmer's Delight straw into one Animania straw bedding. Existing nest
+  recipes can use that bedding. There is no reverse conversion.
+- Feed Farmer's Delight dog food to dogs by hand or place it in a pet bowl.
+  Hand-feeding returns the empty bowl; pet bowls drop it when a dog eats the food.
+  Removing uneaten food returns the original serving instead.
+
+Milk bottles return their glass bottles when used as crafting ingredients.
+These additions do not change hunger timers, breeding requirements or milk yields.
+Farmer's Delight is not required to load Animania Reborn.
