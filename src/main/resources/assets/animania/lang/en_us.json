@@ -684,5 +684,7 @@
   "message.animania.update_link": "the project page",
   "message.animania.update_hover": "Open the Animania project page",
   "death.attack.pepe": "%1$s was memed to death",
-  "death.attack.killer_rabbit": "%1$s didn't listen to the warnings"
+  "death.attack.killer_rabbit": "%1$s didn't listen to the warnings",
+  "item.animania.cheese_sandwich": "Cheese Sandwich",
+  "item.animania.truffle_risotto": "Truffle Risotto"
 }

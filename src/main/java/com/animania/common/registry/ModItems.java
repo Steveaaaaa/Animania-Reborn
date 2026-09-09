@@ -90,6 +90,10 @@ public final class ModItems {
     public static final DeferredItem<Item> RAW_CHEVON = rawFood("raw_chevon");
     public static final DeferredItem<Item> COOKED_CHEVON = effectFood("cooked_chevon", 5, 0.5F,
             new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 600, 0));
+    public static final DeferredItem<Item> CHEESE_SANDWICH = food("cheese_sandwich", 8, 0.7F);
+    public static final DeferredItem<ContainerFoodItem> TRUFFLE_RISOTTO = ITEMS.register("truffle_risotto",
+            () -> new ContainerFoodItem(new Item.Properties().stacksTo(16).food(new FoodProperties.Builder()
+                    .nutrition(12).saturationModifier(0.8F).build()), ContainerFoodItem.Container.BOWL));
     public static final DeferredItem<Item> TRUFFLE = food("truffle", 2, 0.7F);
     public static final DeferredItem<Item> PLAIN_OMELETTE = food("plain_omelette", 5, 0.6F);
     public static final DeferredItem<Item> CHEESE_OMELETTE = effectFood("cheese_omelette", 5, 0.7F,

@@ -18,7 +18,11 @@ public final class ModCreativeTabs {
                     .title(Component.translatable("itemGroup.animania.main"))
                     .icon(() -> ModItems.TROUGH.get().getDefaultInstance())
                     .displayItems((parameters, output) ->
-                            ModItems.ITEMS.getEntries().forEach(item -> output.accept(item.get())))
+                            ModItems.ITEMS.getEntries().forEach(item -> {
+                                if (item.get() != ModItems.CHEESE_SANDWICH.get()
+                                        && item.get() != ModItems.TRUFFLE_RISOTTO.get()
+                                        || net.neoforged.fml.ModList.get().isLoaded("farmersdelight")) output.accept(item.get());
+                            }))
                     .build()
     );
 

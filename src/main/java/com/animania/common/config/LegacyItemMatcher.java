@@ -18,6 +18,9 @@ public final class LegacyItemMatcher {
             "animania:prime_beef", "animania:raw_prime_beef",
             "animania:prime_steak", "animania:raw_prime_steak"
     );
+    private static final Map<String, net.minecraft.tags.TagKey<net.minecraft.world.item.Item>> COMPAT_FOODS =
+            new java.util.concurrent.ConcurrentHashMap<>();
+
     private LegacyItemMatcher() {}
 
     public static boolean matches(ItemStack stack, String listKey) {
@@ -25,6 +28,10 @@ public final class LegacyItemMatcher {
         // addition to the default trough food list.
         if ("trough".equals(listKey) && stack.is(ModItems.STRAW.get())) return true;
         if (("dog".equals(listKey) || "petBowl".equals(listKey)) && isFarmersDogFood(stack)) return true;
+        var extraFoods = COMPAT_FOODS.computeIfAbsent(listKey, key -> net.minecraft.tags.TagKey.create(
+                net.minecraft.core.registries.Registries.ITEM,
+                ResourceLocation.tryParse("animania:compat/farmersdelight/feed/" + key.toLowerCase(java.util.Locale.ROOT))));
+        if (stack.is(extraFoods)) return true;
         var configured = LegacyConfig.FOOD_LISTS.get(listKey);
         return configured != null && matches(stack, configured.get());
     }
