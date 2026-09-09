@@ -34,6 +34,7 @@ public final class ContainerFoodItem extends Item {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity living) {
         ItemStack result = super.finishUsingItem(stack, level, living);
+        com.animania.common.event.MealEffectHandler.onEaten(this, living);
         if (!level.isClientSide()) {
             if (clearsEffects) living.removeAllEffects();
             if (LegacyConfig.FOODS_GIVE_BONUS_EFFECTS.get()) {

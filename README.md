@@ -149,5 +149,32 @@ Each requires a bowl, stacks to 16 and returns the bowl after eating.
 | Truffle Peacock Rice | Raw prime peacock, truffle, rice, onion, carrot | 14 |
 | Three Cheese Pasta | Raw pasta, one cow cheese wedge (Holstein, Friesian or Jersey), goat cheese wedge, sheep cheese wedge, milk | 12 |
 
-These are new port recipes, available with Farmer's Delight installed. They add
-no status effects and leave the original foods unchanged.
+These are new port recipes, available with Farmer's Delight installed. The original foods remain unchanged.
+
+### Meal effects
+
+| Meal | Effects |
+| --- | --- |
+| Cheese Sandwich | Nourishment for 1 minute; Regeneration I for 10 seconds |
+| Truffle Risotto | Nourishment for 3 minutes; Resistance I for 90 seconds |
+| Three Cheese Pasta | Strength II, Haste II and Resistance I for 30 seconds |
+| Tomato Chevon Stew | Steady Steps for 3 minutes |
+| Truffle Peacock Rice | Composure for 4 minutes |
+
+Steady Steps earns one charge per block of cumulative uphill walking, up to
+three. Both movement samples must be grounded, so jumping, ladders, swimming,
+flying, sprinting and riding do not earn charges. The next damaging fall consumes
+all charges: each removes up to 2 points of remaining health damage, capped at
+50%. Charges are temporary and reset on eating another serving or reconnecting.
+
+Composure becomes ready after 10 seconds without taking health damage or
+attacking. A hit from another living entity consumes readiness, reduces remaining
+health damage by 40% (up to 6 points), and grants Speed II for 5 seconds. Any
+health damage or attack restarts preparation; environmental damage cannot trigger
+the defense. Arrows and thrown projectiles also interrupt preparation when fired.
+
+The custom effects appear in the status-effect display; action-bar messages
+announce charges, readiness and activation. Milk removes the effects. Repeated
+servings do not stack effect levels or add durations together. All meal bonuses
+respect the existing food bonus effects configuration. Nourishment is resolved
+from Farmer's Delight when present, without adding a required dependency.

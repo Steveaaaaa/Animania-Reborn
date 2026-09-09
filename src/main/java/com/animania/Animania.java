@@ -33,6 +33,7 @@ public final class Animania {
         ModEntities.register(modBus);
         ModSounds.register(modBus);
         ModItems.register(modBus);
+        com.animania.common.registry.ModMealEffects.register(modBus);
         ModVillagers.register(modBus);
         ModCreativeTabs.register(modBus);
         ModAttachments.register(modBus);

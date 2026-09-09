@@ -688,5 +688,21 @@
   "item.animania.truffle_risotto": "松露烩饭",
   "item.animania.chevon_stew": "番茄炖山羊肉",
   "item.animania.peacock_pilaf": "松露孔雀饭",
-  "item.animania.three_cheese_pasta": "三重奶酪意面"
+  "item.animania.three_cheese_pasta": "三重奶酪意面",
+  "effect.animania.steady_steps": "稳步登高",
+  "effect.animania.composure": "从容应对",
+  "effect.animania.composure_ready": "从容应对：已就绪",
+  "message.animania.meal.steps_start": "稳步登高：步行上坡可积累，最多 3 层",
+  "message.animania.meal.steps_charge": "稳步登高：%s/3 层",
+  "message.animania.meal.steps_used": "稳步已减轻本次摔伤，储备已消耗",
+  "message.animania.meal.composure_start": "从容应对：10 秒内不受伤、不攻击后就绪",
+  "message.animania.meal.composure_ready": "从容已就绪：可抵挡下一次生物攻击的部分伤害",
+  "message.animania.meal.composure_used": "从容已触发：减轻伤害，获得 5 秒速度 II",
+  "tooltip.animania.meal.cheese_sandwich": "滋养（1:00），生命恢复 I（0:10）",
+  "tooltip.animania.meal.truffle_risotto": "滋养（3:00），抗性提升 I（1:30）",
+  "tooltip.animania.meal.three_cheese_pasta": "力量 II、急迫 II、抗性提升 I（0:30）",
+  "tooltip.animania.meal.chevon_stew": "稳步登高（3:00）：步行上坡蓄力，最多 3 层",
+  "tooltip.animania.meal.chevon_stew.detail": "每层抵消至多 2 点摔伤，上限 50%；一次消耗全部层数。",
+  "tooltip.animania.meal.peacock_pilaf": "从容应对（4:00）：10 秒不受伤、不攻击后就绪",
+  "tooltip.animania.meal.peacock_pilaf.detail": "一次生物攻击减伤 40%（至多 6 点），速度 II 5 秒，随后重新准备。"
 }
