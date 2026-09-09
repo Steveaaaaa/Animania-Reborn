@@ -689,5 +689,21 @@
   "item.animania.truffle_risotto": "Truffle Risotto",
   "item.animania.chevon_stew": "Tomato Chevon Stew",
   "item.animania.peacock_pilaf": "Truffle Peacock Rice",
-  "item.animania.three_cheese_pasta": "Three Cheese Pasta"
+  "item.animania.three_cheese_pasta": "Three Cheese Pasta",
+  "effect.animania.steady_steps": "Steady Steps",
+  "effect.animania.composure": "Composure",
+  "effect.animania.composure_ready": "Composure: Ready",
+  "message.animania.meal.steps_start": "Steady Steps: walk uphill to store up to 3 charges",
+  "message.animania.meal.steps_charge": "Steady Steps: %s/3 charges",
+  "message.animania.meal.steps_used": "Steady Steps cushioned the fall; charges consumed",
+  "message.animania.meal.composure_start": "Composure: avoid damage and attacking for 10 seconds",
+  "message.animania.meal.composure_ready": "Composure ready: guard against one attack",
+  "message.animania.meal.composure_used": "Composure triggered: damage reduced, Speed II for 5 seconds",
+  "tooltip.animania.meal.cheese_sandwich": "Nourishment (1:00), Regeneration I (0:10)",
+  "tooltip.animania.meal.truffle_risotto": "Nourishment (3:00), Resistance I (1:30)",
+  "tooltip.animania.meal.three_cheese_pasta": "Strength II, Haste II, Resistance I (0:30)",
+  "tooltip.animania.meal.chevon_stew": "Steady Steps (3:00): walk uphill to store up to 3 charges",
+  "tooltip.animania.meal.chevon_stew.detail": "Each charge absorbs up to 2 fall damage; capped at 50%. Consumes all charges.",
+  "tooltip.animania.meal.peacock_pilaf": "Composure (4:00): ready after 10 seconds without damage or attacking",
+  "tooltip.animania.meal.peacock_pilaf.detail": "One attack: 40% less damage (max 6), Speed II for 5s; then recharge."
 }

@@ -21,6 +21,7 @@ public final class BonusFoodItem extends Item {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity living) {
         ItemStack result = super.finishUsingItem(stack, level, living);
+        com.animania.common.event.MealEffectHandler.onEaten(this, living);
         if (!level.isClientSide() && LegacyConfig.FOODS_GIVE_BONUS_EFFECTS.get()) {
             effects.forEach(effect -> living.addEffect(new MobEffectInstance(effect)));
         }
