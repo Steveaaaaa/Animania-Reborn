@@ -683,5 +683,7 @@
   "message.animania.update_notice": "已安装动物谷重生 %s。可前往%s查看发布和更新。",
   "message.animania.update_link": "项目页面",
   "message.animania.update_hover": "打开动物谷重生项目页面",
-  "death.attack.pepe": "%1$s 因玩梗而死"
+  "death.attack.pepe": "%1$s 因玩梗而死",
+  "item.animania.cheese_sandwich": "奶酪三明治",
+  "item.animania.truffle_risotto": "松露烩饭"
 }

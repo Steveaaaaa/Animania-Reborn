@@ -88,4 +88,48 @@ for method, time in [('smelting', 200), ('smoking', 100), ('campfire_cooking', 6
         'result': stack('farmersdelight:fried_egg') if neo else 'farmersdelight:fried_egg',
         'experience': 0.35, 'cookingtime': time
     })
+recipe('cheese_sandwich', {
+    'type': 'minecraft:crafting_shapeless',
+    'ingredients': [{'item': 'minecraft:bread'}, {'tag': 'animania:cheese_wedges'},
+                    {'item': 'farmersdelight:cabbage_leaf'}],
+    'result': stack('animania:cheese_sandwich')
+})
+recipe('cooking/truffle_risotto', {
+    'type': 'farmersdelight:cooking',
+    'ingredients': [{'item': 'farmersdelight:rice'}, {'item': 'animania:truffle'},
+                    {'tag': 'animania:cheese_wedges'},
+                    {'tag': 'c:drinks/milk' if neo else 'forge:milk'}],
+    'result': stack('animania:truffle_risotto'), 'container': stack('minecraft:bowl'),
+    'cookingtime': 200, 'experience': 1.0, 'recipe_book_tab': 'meals'
+})
+recipe('cooking/vegetable_slop', {
+    'type': 'farmersdelight:cooking',
+    'ingredients': [{'tag': 'animania:compat/farmersdelight/slop_vegetables'},
+                    {'tag': 'animania:compat/farmersdelight/slop_vegetables'},
+                    {'item': 'farmersdelight:rice'}, {'item': 'minecraft:water_bucket'}],
+    'result': stack('animania:bucket_slop'), 'container': stack('minecraft:bucket'),
+    'cookingtime': 200, 'experience': 0.35, 'recipe_book_tab': 'misc'
+})
+
+feeds = {
+    'cow': ['rice'], 'sheep': ['rice'], 'goat': ['rice'], 'horse': ['rice'],
+    'pig': ['cabbage', 'cabbage_leaf', 'tomato', 'rice'],
+    'rabbit': ['cabbage', 'cabbage_leaf'],
+    'chicken': ['rice', 'cabbage_seeds', 'tomato_seeds'],
+    'peacock': ['rice', 'cabbage_seeds', 'tomato_seeds'],
+    'hamster': ['rice', 'cabbage_seeds', 'tomato_seeds'],
+}
+feeds['trough'] = sorted(set(item for items in feeds.values() for item in items))
+feeds['petbowl'] = feeds['hamster']
+for animal, items in feeds.items():
+    write(data / 'animania/tags' / tag_dir / 'compat/farmersdelight/feed' / (animal + '.json'), {
+        'replace': False,
+        'values': [{'id': 'farmersdelight:' + item, 'required': False} for item in items]
+    })
+write(data / 'animania/tags' / tag_dir / 'compat/farmersdelight/slop_vegetables.json', {
+    'replace': False,
+    'values': ['minecraft:carrot', 'minecraft:potato', 'minecraft:beetroot'] + [
+        {'id': 'farmersdelight:' + item, 'required': False}
+        for item in ['cabbage', 'cabbage_leaf', 'tomato']]
+})
 print('Generated Farmer\'s Delight compatibility for', 'NeoForge' if neo else 'Forge')

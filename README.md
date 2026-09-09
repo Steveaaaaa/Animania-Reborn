@@ -96,3 +96,28 @@ Farmer's Delight minced beef, patties or other processed cuts retain those input
 Milk bottles return their glass bottles when used as crafting ingredients.
 These additions do not change hunger timers, breeding requirements or milk yields.
 Farmer's Delight is not required to load Animania Reborn.
+
+### More cooking and animal feeds
+
+Cheese Sandwich uses bread, any cheese wedge and a cabbage leaf. It restores
+8 hunger points. Truffle Risotto uses rice, a truffle, any cheese wedge and milk
+in a cooking pot (200 ticks), served with a bowl; it restores 12 hunger points.
+Both are new dishes added by this port and require Farmer's Delight to craft.
+
+Vegetable slop uses two servings of carrots, potatoes, beetroot, cabbage, cabbage
+leaves or tomatoes, plus rice and a water bucket. Cook for 200 ticks and serve
+with an empty bucket. The ingredient water bucket leaves its empty bucket in the
+pot's remainder output. The resulting slop uses the existing pig-feeding rules.
+
+| Animals | Additional Farmer's Delight feeds |
+| --- | --- |
+| Cows, sheep, goats, horses | Rice |
+| Pigs | Rice, cabbage, cabbage leaves, tomatoes |
+| Rabbits | Cabbage, cabbage leaves |
+| Chickens, peafowl, hamsters | Rice, cabbage seeds, tomato seeds |
+
+These foods work for hand-feeding and attraction. Troughs accept all listed feeds,
+but animals only eat food appropriate to their species; hamster feeds also work
+in pet bowls. Existing configuration files do not need to be deleted. Additional
+feeds can be changed through the `animania:compat/farmersdelight/feed/<animal>`
+item tags. Onions are not included.
