@@ -11,13 +11,21 @@ out = ['package com.animania.client;', 'import java.util.Map;',
        'switch (key) {']
 for p in sorted(root.rglob('Model*.java')):
     s = re.sub(r'/\*[\s\S]*?\*/|//[^\n]*', '', p.read_text(encoding='utf8'))
-    m = re.search(r'if\s*\(\s*isSleeping\s*\)', s)
-    if not m or 'sleepTimer' not in s:
+    pattern = r'if\s*\(\s*isSleeping\s*\)'
+    if p.parent.name == 'cow':
+        # Some cow models read the entity directly instead of using a local flag.
+        pattern = r'if\s*\(\s*(?:isSleeping|\w+\.getSleeping\(\))\s*\)'
+    body = None
+    for m in re.finditer(pattern, s):
+        a = s.index('{', m.end()); b = a + 1; depth = 1
+        while depth:
+            depth += (s[b] == '{') - (s[b] == '}'); b += 1
+        candidate = s[a+1:b-1]
+        if 'sleepTimer' in candidate and 'rotateAngle' in candidate:
+            body = candidate
+            break
+    if body is None:
         continue
-    a = s.index('{', m.end()); b = a + 1; depth = 1
-    while depth:
-        depth += (s[b] == '{') - (s[b] == '}'); b += 1
-    body = s[a+1:b-1]
     body = re.sub(r'(?:this\.)?\w+\.render\([^;]*;', '', body)
     body = re.sub(r'float sleepTimer\s*=[^;]*;', '', body)
     body = re.sub(r'(?:this\.)?(\w+)\.rotateAngle([XYZ])',
