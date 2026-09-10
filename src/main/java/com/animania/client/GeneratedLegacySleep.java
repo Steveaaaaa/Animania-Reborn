@@ -65,6 +65,30 @@ case "farm/client/model/cow/modelcalf" -> {
 				parts.get("Body").xRot = (float) Math.PI / 2F + (sleepTimer/3);
 			}
 return true; }
+case "farm/client/model/cow/modelcalfangus" -> {
+			parts.get("Leg0").xRot = sleepTimer * -1.8F;
+			parts.get("Leg1").xRot = sleepTimer * -1.8F;
+			parts.get("Leg2").xRot = sleepTimer * 1.7F;
+			parts.get("Leg3").xRot = sleepTimer * 1.75F;
+			parts.get("Head").yRot = sleepTimer * + 2.8F;
+			if (sleepTimer > -.28) {
+				parts.get("Body").xRot = (float) Math.PI / 2F - (sleepTimer/3);
+			} else {
+				parts.get("Body").xRot = (float) Math.PI / 2F + (sleepTimer/3);
+			}
+return true; }
+case "farm/client/model/cow/modelcalflonghorn" -> {
+			parts.get("Leg0").xRot = sleepTimer * -1.8F;
+			parts.get("Leg1").xRot = sleepTimer * -1.8F;
+			parts.get("Leg2").xRot = sleepTimer * 1.7F;
+			parts.get("Leg3").xRot = sleepTimer * 1.75F;
+			parts.get("Head").yRot = sleepTimer * + 2.8F;
+			if (sleepTimer > -.28) {
+				parts.get("Body").xRot = (float) Math.PI / 2F - (sleepTimer/3);
+			} else {
+				parts.get("Body").xRot = (float) Math.PI / 2F + (sleepTimer/3);
+			}
+return true; }
 case "farm/client/model/cow/modelcow" -> {
 			parts.get("leg1").xRot = sleepTimer * -1.8F;
 			parts.get("leg2").xRot = sleepTimer * -1.8F;
@@ -90,6 +114,18 @@ case "farm/client/model/cow/modelcowangus" -> {
 			}
 return true; }
 case "farm/client/model/cow/modelcowhereford" -> {
+			parts.get("leg1").xRot = sleepTimer * -1.8F;
+			parts.get("leg2").xRot = sleepTimer * -1.8F;
+			parts.get("leg3").xRot = sleepTimer * 1.7F;
+			parts.get("leg4").xRot = sleepTimer * 1.75F;
+			parts.get("head").yRot = sleepTimer * -2.8F;
+			if (sleepTimer > -.28) {
+				parts.get("body").xRot = (float) Math.PI / 2F - (sleepTimer/3);
+			} else {
+				parts.get("body").xRot = (float) Math.PI / 2F + (sleepTimer/3);
+			}
+return true; }
+case "farm/client/model/cow/modelcowlonghorn" -> {
 			parts.get("leg1").xRot = sleepTimer * -1.8F;
 			parts.get("leg2").xRot = sleepTimer * -1.8F;
 			parts.get("leg3").xRot = sleepTimer * 1.7F;
