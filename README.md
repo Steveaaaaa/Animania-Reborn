@@ -10,7 +10,7 @@ one mod, using the original 1.12 source, models, textures and sounds.
 - NeoForge 21.1.200 or newer
 - Java 21
 
-Place `animania-neoforge-1.21.1-0.1.2.jar` in your instance's `mods` folder and remove older
+Place `animania-neoforge-1.21.1-0.1.3.jar` in your instance's `mods` folder and remove older
 Animania Reborn jars before starting the game. Restart the game after updating.
 Jade, JEI and EMI are optional.
 
@@ -31,7 +31,7 @@ wagon pole and its horse, and peacocks closing their tail fans when asleep.
 See [PORTING.md](PORTING.md) for implementation notes and
 [SPECIAL_AI_PORT.md](SPECIAL_AI_PORT.md) for AI and animation references.
 
-Version 0.1.2 is still being checked in game. A successful build does not establish
+Version 0.1.3 is still being checked in game. A successful build does not establish
 compatibility with every shader pack or mod combination. When reporting a bug,
 include the mod versions, steps to reproduce it, and the crash report or relevant
 part of `latest.log`. Importing worlds from the original 1.12 mod is not supported.
