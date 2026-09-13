@@ -46,6 +46,11 @@ public final class AnimaniaHorse extends Horse {
                 : role() == FarmAnimalRole.MALE ? 0.85F : 0.72F;
     }
 
+    private double saddleSurfaceHeight() {
+        // LivingEntityRenderer translates by 1.501; Saddle's top is at model Y=-11.5.
+        return (1.501D + 11.5D / 16.0D) * legacyModelScale();
+    }
+
     @Override
     protected void positionRider(net.minecraft.world.entity.Entity passenger,
                                  net.minecraft.world.entity.Entity.MoveFunction callback) {
@@ -53,8 +58,12 @@ public final class AnimaniaHorse extends Horse {
         double seatOffset = 6.0D / 16.0D * legacyModelScale();
         net.minecraft.world.phys.Vec3 offset = new net.minecraft.world.phys.Vec3(0, 0, -seatOffset)
                 .yRot(-yBodyRot * ((float) Math.PI / 180.0F));
+        double heightCorrection = saddleSurfaceHeight() - getPassengersRidingOffset();
+        // Forge 1.20.1 adds -0.35 for players; the seated player attachment is 0.6 above its origin.
+        if (passenger instanceof Player) heightCorrection -= 0.6D + passenger.getMyRidingOffset();
+        double seatCorrection = heightCorrection;
         super.positionRider(passenger, (rider, x, y, z) ->
-                callback.accept(rider, x + offset.x, y, z + offset.z));
+                callback.accept(rider, x + offset.x, y + seatCorrection, z + offset.z));
     }
 
     public boolean isPullingVehicle() {
