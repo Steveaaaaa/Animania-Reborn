@@ -127,3 +127,10 @@ clusters; avoid mixed pixel sizes, anti-aliasing, smooth gradients and dithering
 Keep silhouettes readable at native size. Establish the shape and value contrast
 first, optionally in grayscale, then add color and sparse texture. Inspect the
 native-size result as well as a nearest-neighbor enlargement before shipping.
+
+## Build delivery
+
+After each build, copy the release JAR to the existing Minecraft-version folder
+under `Desktop/新建文件夹`: Forge builds go in `1.20.1`, and NeoForge builds go in
+`1.21.1`. These folders are named for Minecraft versions, not mod release numbers.
+Update the matching JAR filename while keeping older releases and unrelated files.

@@ -31,6 +31,8 @@ public final class TroughRenderer implements BlockEntityRenderer<TroughBlockEnti
             Animania.MOD_ID, "textures/entity/tileentities/block_trough.png");
     private static final ResourceLocation WHEAT_TEXTURE = new ResourceLocation(
             Animania.MOD_ID, "textures/entity/tileentities/wheat.png");
+    // Sprites are replaced on resource reload; weak keys do not retain old atlases.
+    private final java.util.Map<TextureAtlasSprite, Integer> foodColors = new java.util.WeakHashMap<>();
     private final LegacyAnimalModel<Entity> model = LegacyAnimalModel.load("base/client/models/modeltrough");
     private final LegacyAnimalModel<Entity> feedBase = LegacyAnimalModel.load(
             "base/client/models/modeltrough_feed_base");
@@ -85,12 +87,16 @@ public final class TroughRenderer implements BlockEntityRenderer<TroughBlockEnti
     private void renderFeed(TroughBlockEntity trough, PoseStack poseStack, MultiBufferSource buffers,
                             int level, int packedLight, int packedOverlay) {
         int visualLevel = Math.min(3, level);
+        boolean isWheat = trough.feed().is(net.minecraft.world.item.Items.WHEAT);
+        TextureAtlasSprite foodSprite = net.minecraft.client.Minecraft.getInstance().getItemRenderer()
+                .getModel(trough.feed(), trough.getLevel(), null, 0).getParticleIcon();
+        int foodColor = isWheat ? 0xFFA07C59 : foodColors.computeIfAbsent(foodSprite, TroughRenderer::averageFoodColor);
 
         poseStack.pushPose();
         applyLegacyTransform(poseStack, trough.getBlockState().getValue(TroughBlock.FACING));
         poseStack.translate(0, 0.17F * (3 - visualLevel), 0);
         feedBase.renderToBuffer(poseStack, buffers.getBuffer(RenderType.entityCutoutNoCull(TEXTURE)),
-                packedLight, packedOverlay, 0xFFA07C59);
+                packedLight, packedOverlay, foodColor);
         poseStack.popPose();
 
         poseStack.pushPose();
@@ -99,20 +105,37 @@ public final class TroughRenderer implements BlockEntityRenderer<TroughBlockEnti
         poseStack.mulPose(Axis.YP.rotationDegrees(-10));
         poseStack.scale(0.8F, 0.8F, 0.8F);
         poseStack.translate(0, 0.25F, -0.1F);
-        VertexConsumer wheat;
-        if (trough.feed().is(net.minecraft.world.item.Items.WHEAT)) {
-            wheat = buffers.getBuffer(RenderType.entityCutoutNoCull(WHEAT_TEXTURE));
+        VertexConsumer food;
+        if (isWheat) {
+            food = buffers.getBuffer(RenderType.entityCutoutNoCull(WHEAT_TEXTURE));
         } else {
-            TextureAtlasSprite foodSprite = net.minecraft.client.Minecraft.getInstance().getItemRenderer()
-                    .getModel(trough.feed(), trough.getLevel(), null, 0).getParticleIcon();
-            wheat = foodSprite.wrap(buffers.getBuffer(RenderType.entityCutoutNoCull(
+            food = foodSprite.wrap(buffers.getBuffer(RenderType.entityCutoutNoCull(
                     net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS)));
         }
-        feedFront.renderToBuffer(poseStack, wheat, packedLight, packedOverlay, 0xFFFFFFFF);
+        feedFront.renderToBuffer(poseStack, food, packedLight, packedOverlay, 0xFFFFFFFF);
         poseStack.mulPose(Axis.YP.rotationDegrees(180));
         poseStack.translate(-1.4F, -0.1F, 0);
-        feedBack.renderToBuffer(poseStack, wheat, packedLight, packedOverlay, 0xFFFFFFFF);
+        feedBack.renderToBuffer(poseStack, food, packedLight, packedOverlay, 0xFFFFFFFF);
         poseStack.popPose();
+    }
+
+    private static int averageFoodColor(TextureAtlasSprite sprite) {
+        var image = sprite.contents().getOriginalImage();
+        double red = 0, green = 0, blue = 0;
+        for (int y = 0; y < image.getHeight(); y++) {
+            for (int x = 0; x < image.getWidth(); x++) {
+                // NativeImage uses ABGR; transparent pixels contribute no color.
+                int pixel = image.getPixelRGBA(x, y);
+                double alpha = (pixel >>> 24) / 255.0D;
+                red += (pixel & 255) * alpha;
+                green += ((pixel >>> 8) & 255) * alpha;
+                blue += ((pixel >>> 16) & 255) * alpha;
+            }
+        }
+        double count = (double) image.getWidth() * image.getHeight();
+        // Match the original renderer, including transparent area and three brighten steps.
+        return new java.awt.Color((int) (red / count), (int) (green / count), (int) (blue / count))
+                .brighter().brighter().brighter().getRGB();
     }
 
     private static void applyLegacyTransform(PoseStack poseStack, Direction facing) {
