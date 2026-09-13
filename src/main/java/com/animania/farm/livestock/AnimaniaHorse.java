@@ -41,6 +41,22 @@ public final class AnimaniaHorse extends Horse {
     private boolean pregnant;
     private int gestation;
 
+    public float legacyModelScale() {
+        return role() == FarmAnimalRole.YOUNG ? 0.40F
+                : role() == FarmAnimalRole.MALE ? 0.85F : 0.72F;
+    }
+
+    @Override
+    protected void positionRider(net.minecraft.world.entity.Entity passenger,
+                                 net.minecraft.world.entity.Entity.MoveFunction callback) {
+        // The legacy Saddle seat is centered at model Z=6, behind the entity origin.
+        double seatOffset = 6.0D / 16.0D * legacyModelScale();
+        net.minecraft.world.phys.Vec3 offset = new net.minecraft.world.phys.Vec3(0, 0, -seatOffset)
+                .yRot(-yBodyRot * ((float) Math.PI / 180.0F));
+        super.positionRider(passenger, (rider, x, y, z) ->
+                callback.accept(rider, x + offset.x, y, z + offset.z));
+    }
+
     public boolean isPullingVehicle() {
         return !level().getEntitiesOfClass(com.animania.farm.vehicle.FarmVehicleEntity.class,
                 getBoundingBox().inflate(8.0D), vehicle -> vehicle.isPulledBy(this)).isEmpty();

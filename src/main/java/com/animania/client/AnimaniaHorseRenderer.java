@@ -39,8 +39,7 @@ public final class AnimaniaHorseRenderer extends MobRenderer<AnimaniaHorse, Lega
 
     @Override
     protected void scale(AnimaniaHorse horse, PoseStack poseStack, float partialTick) {
-        float scale = horse.role() == FarmAnimalRole.YOUNG ? 0.40F
-                : horse.role() == FarmAnimalRole.MALE ? 0.85F : 0.72F;
+        float scale = horse.legacyModelScale();
         poseStack.scale(scale, scale, scale);
         LegacySleepAnimation.transform(horse, poseStack, partialTick);
     }
