@@ -130,6 +130,15 @@ public final class TroughBlock extends BaseEntityBlock {
                 || !(level.getBlockEntity(pos) instanceof TroughBlockEntity trough)) {
             return InteractionResult.FAIL;
         }
+        if (stack.is(Items.BUCKET) && (trough.water() >= 1000 || trough.slop() >= 1000)) {
+            if (!level.isClientSide()) {
+                ItemStack filled = new ItemStack(trough.water() >= 1000 ? Items.WATER_BUCKET : ModItems.SLOP_BUCKET.get());
+                trough.automationFluids().drain(1000, net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
+                player.setItemInHand(hand, net.minecraft.world.item.ItemUtils.createFilledResult(stack, player, filled));
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide());
+        }
+
         if (stack.is(Items.WATER_BUCKET)) {
             if (state.getValue(CONTENT) == TroughContent.FEED
                     || trough.water() >= 1000) {
@@ -271,7 +280,7 @@ public final class TroughBlock extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return state.getValue(PART) == TroughPart.MAIN ? new TroughBlockEntity(pos, state) : null;
+        return new TroughBlockEntity(pos, state);
     }
 
     public static Direction extensionDirection(BlockState state) {

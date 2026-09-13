@@ -29,6 +29,7 @@ public final class AnimaniaGoatRenderer extends MobRenderer<AnimaniaGoat, Legacy
         String name = "model" + role + breed;
         model = models.computeIfAbsent(name,
                 key -> LegacyAnimalModel.load("farm/client/model/goats/" + key));
+        model.setWoolTint(goat.isAngoraSheared() ? 0xFFFFFFFF : 0xFF000000 | dyeRgb(goat.woolDye()));
         super.render(goat, entityYaw, partialTick, poseStack, buffer, packedLight);
     }
 
@@ -83,4 +84,9 @@ public final class AnimaniaGoatRenderer extends MobRenderer<AnimaniaGoat, Legacy
             case PYGMY -> 0x2B2E2E;
         };
     }
+    private static int dyeRgb(net.minecraft.world.item.DyeColor color) {
+        float[] rgb = net.minecraft.world.entity.animal.Sheep.getColorArray(color);
+        return ((int)(rgb[0] * 255) << 16) | ((int)(rgb[1] * 255) << 8) | (int)(rgb[2] * 255);
+    }
+
 }

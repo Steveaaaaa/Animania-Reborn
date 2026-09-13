@@ -62,7 +62,13 @@ public final class AnimaniaPeafowl extends Chicken {
 
     @Override
     protected SoundEvent getAmbientSound() {
+        if (com.animania.common.registry.ModAttachments.getData(this, com.animania.common.registry.ModAttachments.SLEEPING)) return null;
         return ModSounds.PEAFOWL_AMBIENT.get();
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.PEAFOWL_HURT.get();
     }
 
     @Override
@@ -89,7 +95,7 @@ public final class AnimaniaPeafowl extends Chicken {
             growIntoAdult();
             return;
         }
-        if (role() == PeafowlRole.PEAHEN) {
+        if (role() == PeafowlRole.PEAHEN && !isBaby()) {
             if (layTimer > -1) layTimer--;
             else lookingForNest = true;
         }
@@ -120,7 +126,7 @@ public final class AnimaniaPeafowl extends Chicken {
     }
 
     public boolean isLookingForNest() {
-        return role() == PeafowlRole.PEAHEN && lookingForNest;
+        return role() == PeafowlRole.PEAHEN && !isBaby() && lookingForNest;
     }
 
     public boolean canUseNest(BlockPos pos) {

@@ -21,6 +21,60 @@ public final class NaturalSpawnConfigHandler {
     private NaturalSpawnConfigHandler() {}
 
     @SubscribeEvent
+    public static void replaceStructureAnimal(MobSpawnEvent.FinalizeSpawn event) {
+        EntityType<?> original = event.getEntity().getType();
+        boolean villageCat = original == EntityType.CAT && LegacyConfig.REPLACE_VANILLA_OCELOTS.get();
+        if (event.getSpawnType() != MobSpawnType.STRUCTURE
+                && !(villageCat && (event.getSpawnType() == MobSpawnType.EVENT
+                || event.getSpawnType() == MobSpawnType.NATURAL))) return;
+        if (!villageCat && !replacedVanillaType(original) || event.getEntity().hasCustomName()) return;
+        java.util.Map<String, ? extends java.util.function.Supplier<? extends EntityType<?>>> types;
+        if (original == EntityType.COW || original == EntityType.MOOSHROOM) types = ModEntities.ALL_COWS;
+        else if (original == EntityType.PIG) types = ModEntities.ALL_PIGS;
+        else if (original == EntityType.SHEEP) types = ModEntities.ALL_SHEEP;
+        else if (original == EntityType.CHICKEN) types = ModEntities.ALL_CHICKENS;
+        else if (original == EntityType.HORSE) types = ModEntities.ALL_HORSES;
+        else if (original == EntityType.RABBIT) types = ModEntities.ALL_RABBITS;
+        else if (original == EntityType.WOLF) types = ModEntities.ALL_DOGS;
+        else if (original == EntityType.OCELOT || villageCat) types = ModEntities.ALL_CATS;
+        else return;
+        java.util.List<EntityType<?>> candidates = new java.util.ArrayList<>();
+        var biome = event.getLevel().getBiome(event.getEntity().blockPosition());
+        for (var holder : types.values()) {
+            EntityType<?> type = holder.get();
+            String key = biomeConfigKey(type);
+            String path = entityPath(type);
+            if (villageCat) {
+                if (!path.startsWith("queen_") || path.equals("queen_ocelot")) continue;
+            } else {
+                if (key == null) continue;
+                if (original == EntityType.WOLF && !path.equals("female_wolf")) continue;
+                if (original == EntityType.OCELOT && !path.equals("queen_ocelot")) continue;
+                var filter = LegacyConfig.BIOME_TYPES.get(key);
+                if (filter != null && !LegacyBiomeMatcher.matches(biome, filter.get())) continue;
+            }
+            String group = spawnGroup(type);
+            if (LegacyConfig.SPAWN_ENABLED.containsKey(group) && !LegacyConfig.SPAWN_ENABLED.get(group).get()) continue;
+            if (isFarm(type) && !AnimaniaConfig.ENABLE_FARM_SPAWNS.get()
+                    || isExtra(type) && !AnimaniaConfig.ENABLE_EXTRA_SPAWNS.get()
+                    || isPetWildlife(type) && !AnimaniaConfig.ENABLE_PET_WILDLIFE_SPAWNS.get()) continue;
+            candidates.add(type);
+        }
+        if (candidates.isEmpty()) return;
+        Entity replacement = candidates.get(event.getEntity().getRandom().nextInt(candidates.size()))
+                .create(event.getLevel().getLevel());
+        if (!(replacement instanceof net.minecraft.world.entity.Mob mob)) return;
+        mob.moveTo(event.getX(), event.getY(), event.getZ(), event.getEntity().getYRot(), event.getEntity().getXRot());
+        // Initialize one replacement without creating a second family inside the structure.
+        mob.finalizeSpawn(event.getLevel(), event.getDifficulty(), MobSpawnType.CONVERSION, null, null);
+        if (mob instanceof net.minecraft.world.entity.AgeableMob young
+                && event.getEntity() instanceof net.minecraft.world.entity.AgeableMob originalAnimal)
+            young.setAge(originalAnimal.getAge());
+        mob.setPersistenceRequired();
+        if (event.getLevel().addFreshEntity(mob)) event.setSpawnCancelled(true);
+    }
+
+    @SubscribeEvent
     public static void checkPlacement(MobSpawnEvent.SpawnPlacementCheck event) {
         if (event.getSpawnType() != MobSpawnType.NATURAL && event.getSpawnType() != MobSpawnType.CHUNK_GENERATION) return;
         EntityType<?> type = event.getEntityType();

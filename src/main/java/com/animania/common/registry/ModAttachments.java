@@ -27,6 +27,7 @@ public final class ModAttachments {
     private static <T> Key<T> key(String id, T initial, boolean persistent, boolean sync) {
         Key<T> key = new Key<>(id, initial, persistent, sync); KEYS.add(key); return key;
     }
+    public static final Key<Integer> WOOL_DYE = key("wool_dye", 0, true, true);
     public static final Key<Boolean> FIGHTING = key("fighting", false, false, true);
     public static final Key<String> RIVAL = key("rival", "", false, true);
     public static final Key<Integer> HUNGER = key("hunger", MAX_NEED, true, false);

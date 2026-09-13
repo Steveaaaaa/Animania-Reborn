@@ -75,11 +75,21 @@ public final class AnimaniaHorse extends Horse {
 
     @Override
     public boolean isFood(ItemStack stack) {
-        return com.animania.common.config.LegacyItemMatcher.matches(stack, "horse");
+        return com.animania.common.config.LegacyItemMatcher.matches(stack, "horse")
+                || stack.is(net.minecraft.world.item.Items.GOLDEN_APPLE)
+                || stack.is(net.minecraft.world.item.Items.ENCHANTED_GOLDEN_APPLE)
+                || stack.is(net.minecraft.world.item.Items.GOLDEN_CARROT);
+    }
+
+    public void applyFeedEffects(Player player, ItemStack food) {
+        // The common feeding event consumes the item after the horse has applied
+        // vanilla healing, growth and temper changes.
+        handleEating(player, food);
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
+        if (com.animania.common.registry.ModAttachments.getData(this, com.animania.common.registry.ModAttachments.SLEEPING)) return null;
         return ModSounds.HORSE_AMBIENT.get();
     }
 

@@ -610,7 +610,7 @@
         0
       ],
       "rotation": [
-        1.297424e-8,
+        1.297424e-08,
         0,
         0
       ],
@@ -648,7 +648,7 @@
         0
       ],
       "rotation": [
-        1.020954e-8,
+        1.020954e-08,
         0,
         0
       ],
@@ -686,7 +686,7 @@
         0
       ],
       "rotation": [
-        7.444835e-9,
+        7.444835e-09,
         0,
         0
       ],
@@ -724,7 +724,7 @@
         0
       ],
       "rotation": [
-        4.680133e-9,
+        4.680133e-09,
         0,
         0
       ],
@@ -1420,7 +1420,7 @@
       "pivot": [
         0,
         0,
-        -6.000000000172534e-7
+        -6.000000000172534e-07
       ],
       "offset": [
         0,
@@ -1457,5 +1457,15 @@
     "parentlessCount": 19,
     "renderedRootCount": 19,
     "staticRotations": 62
-  }
+  },
+  "woolParts": [
+    "BackLegWool_L",
+    "BackLegWool_R",
+    "FrontLegWool_L",
+    "FrontLegWool_R",
+    "Wool1",
+    "Wool2",
+    "WoolHead",
+    "WoolNeck"
+  ]
 }

@@ -2,7 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const workspace = process.cwd();
-const sourceRoot = path.join(workspace, '.upstream-animania', 'src', 'main', 'java', 'com', 'animania', 'addons');
+const sourceRoot = path.join(workspace, '.upstream-animania', 'src', 'main', 'java', 'com', 'animania',
+  ...(process.argv.includes('--nest-only') ? ['client', 'models'] : ['addons']));
 const outputRoot = path.join(workspace, 'src', 'main', 'resources', 'assets', 'animania', 'legacy_models');
 
 function number(expression, variables = {}) {
@@ -154,6 +155,9 @@ function convert(file) {
   const relative = path.relative(sourceRoot, file).replaceAll('\\', '/').replace(/\.java$/, '').toLowerCase();
   const data = {
     source: relative, textureWidth, textureHeight, roots,
+    woolParts: [...source.matchAll(/(?:this\.)?(\w+)\s*=\s*new\s+ModelRendererColored/g)].map(match => match[1])
+      .concat(relative.includes('/goats/') && relative.includes('angora')
+        ? [...nodes.keys()].filter(name => /wool/i.test(name)) : []),
     nodes: [...nodes.values()],
     audit: {
       nodeCount: nodes.size,
@@ -190,12 +194,22 @@ function walk(directory) {
     else if (/^Model.*\.java$/.test(entry.name) && entry.name !== 'ModelRendererBall.java') files.push(full);
   }
 }
-walk(sourceRoot);
+if (process.argv.includes('--nest-only')) files.push(path.join(sourceRoot, 'ModelNest.java'));
+else walk(sourceRoot);
 let converted = 0, nodes = 0, boxes = 0, edges = 0;
 for (const file of files) {
   if (process.argv.includes('--sheep-only') && !file.includes(`${path.sep}sheep${path.sep}`)) continue;
   const data = convert(file);
   if (!data) continue;
+  if (process.argv.includes('--nest-only')) {
+    for (const [name, prefix] of [['white', 'Egg'], ['brown', 'BEgg'], ['blue', 'BlEgg'], ['peacock_white', 'WEgg']]) {
+      for (let count = 1; count <= 3; count++) {
+        const eggs = {...data, roots: data.nodes.filter(node =>
+          new RegExp(`^${prefix}[1-${count}][abc]?$`).test(node.name)).map(node => node.name)};
+        fs.writeFileSync(path.join(outputRoot, `nest_${name}_${count}.json`), JSON.stringify(eggs, null, 2) + '\n');
+      }
+    }
+  }
   converted++;
   nodes += data.audit.nodeCount;
   boxes += data.audit.boxCount;

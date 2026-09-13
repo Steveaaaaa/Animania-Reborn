@@ -923,5 +923,12 @@
     "parentlessCount": 11,
     "renderedRootCount": 11,
     "staticRotations": 33
-  }
+  },
+  "woolParts": [
+    "NeckWool",
+    "NeckWool2",
+    "WoolBody1",
+    "WoolBody2",
+    "WoolHips"
+  ]
 }

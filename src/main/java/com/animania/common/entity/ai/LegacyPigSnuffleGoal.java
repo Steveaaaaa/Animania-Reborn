@@ -58,6 +58,12 @@ public final class LegacyPigSnuffleGoal extends Goal {
             eatingTimer = 0;
             return;
         }
+        if (eatingTimer == 4 && !LegacyAnimalNeeds.isFed(pig)) {
+            pig.level().levelEvent(2001, below, Block.getId(pig.level().getBlockState(below)));
+            if (com.animania.common.config.LegacyConfig.PLANTS_REMOVED_AFTER_EATING.get())
+                pig.level().setBlock(below, Blocks.DIRT.defaultBlockState(), 2);
+            LegacyAnimalNeeds.setFed(pig, true);
+        }
         var biome = pig.level().getBiome(below);
         boolean forest = biome.is(BiomeTags.IS_FOREST) || biome.is(net.minecraft.tags.BiomeTags.IS_FOREST);
         if (eatingTimer > 80 && forest && pig.role() != FarmAnimalRole.YOUNG

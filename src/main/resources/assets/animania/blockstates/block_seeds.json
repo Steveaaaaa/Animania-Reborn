@@ -1,7 +1,16 @@
 {
   "variants": {
-    "": {
+    "seed=0": {
       "model": "animania:block/block_seeds"
+    },
+    "seed=1": {
+      "model": "animania:block/block_seeds_1"
+    },
+    "seed=2": {
+      "model": "animania:block/block_seeds_2"
+    },
+    "seed=3": {
+      "model": "animania:block/block_seeds_3"
     }
   }
 }

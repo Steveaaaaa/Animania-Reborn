@@ -38,16 +38,16 @@ public final class ModCapabilities {
                 else if (block instanceof NestBlockEntity nest) handler = nest.items();
                 else if (block instanceof CheeseMoldBlockEntity mold) handler = mold.items();
                 else if (LegacyConfig.ALLOW_TROUGH_AUTOMATION.get()) {
-                    if (block instanceof TroughBlockEntity trough && trough.water() == 0 && trough.slop() == 0) handler = trough.automationItems();
-                    else if (block instanceof PetBowlBlockEntity bowl && bowl.water() == 0) handler = bowl.automationItems();
+                    if (block instanceof TroughBlockEntity trough) handler = trough.automationItems();
+                    else if (block instanceof PetBowlBlockEntity bowl) handler = bowl.automationItems();
                 }
             }
             if (cap == ForgeCapabilities.FLUID_HANDLER) {
                 if (block instanceof HiveBlockEntity hive) handler = hive.tank();
                 else if (block instanceof CheeseMoldBlockEntity mold && !mold.isReady()) handler = mold.fluids();
                 else if (LegacyConfig.ALLOW_TROUGH_AUTOMATION.get()) {
-                    if (block instanceof TroughBlockEntity trough && trough.feed().isEmpty()) handler = trough.automationFluids();
-                    else if (block instanceof PetBowlBlockEntity bowl && bowl.food().isEmpty()) handler = bowl.automationFluids();
+                    if (block instanceof TroughBlockEntity trough) handler = trough.automationFluids();
+                    else if (block instanceof PetBowlBlockEntity bowl) handler = bowl.automationFluids();
                 }
             }
             if (handler == null) return LazyOptional.empty();

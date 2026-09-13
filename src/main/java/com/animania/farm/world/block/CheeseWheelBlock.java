@@ -15,7 +15,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class CheeseWheelBlock extends Block {
     public static final IntegerProperty BITES = IntegerProperty.create("bites", 0, 3);
-    private static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 8, 15);
+    private static final VoxelShape[] SHAPES = {
+        net.minecraft.world.phys.shapes.Shapes.or(Block.box(1.0, 0.0, 1.0, 8.0, 8.0, 8.0), Block.box(8.0, 0.0, 1.0, 15.0, 8.0, 8.0), Block.box(1.0, 0.0, 8.0, 8.0, 8.0, 15.0), Block.box(8.0, 0.0, 8.0, 15.0, 8.0, 15.0)),
+        net.minecraft.world.phys.shapes.Shapes.or(Block.box(1.0, 0.0, 1.0, 8.0, 8.0, 8.0), Block.box(8.0, 0.0, 1.0, 15.0, 8.0, 8.0), Block.box(1.0, 0.0, 8.0, 8.0, 8.0, 15.0)),
+        net.minecraft.world.phys.shapes.Shapes.or(Block.box(1.0, 0.0, 1.0, 8.0, 8.0, 8.0), Block.box(8.0, 0.0, 1.0, 15.0, 8.0, 8.0)),
+        Block.box(1.0, 0.0, 1.0, 8.0, 8.0, 8.0)
+    };
 
     public CheeseWheelBlock(Properties properties) {
         super(properties);
@@ -29,7 +34,7 @@ public final class CheeseWheelBlock extends Block {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        return SHAPES[state.getValue(BITES)];
     }
 
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,

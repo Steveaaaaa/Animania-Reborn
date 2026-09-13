@@ -75,8 +75,11 @@ public final class LegacyFindWaterGoal extends LegacySearchBlockGoal {
     protected void onArriveAtDestination() {
         if (seekingBlockPos == null) return;
         int amount = profile.halfWater() ? 50 : 100;
-        boolean providerConsumed = TroughBlock.consumeWater(level, seekingBlockPos, amount)
-                || PetBowlBlock.consumeWater(level, seekingBlockPos, amount);
+        boolean bird = waterAnimal instanceof com.animania.farm.chicken.AnimaniaChicken
+                || waterAnimal instanceof com.animania.extra.peafowl.AnimaniaPeafowl;
+        boolean providerConsumed = bird
+                ? TroughBlock.hasWater(level, seekingBlockPos, amount) || PetBowlBlock.hasWater(level, seekingBlockPos, amount)
+                : TroughBlock.consumeWater(level, seekingBlockPos, amount) || PetBowlBlock.consumeWater(level, seekingBlockPos, amount);
         boolean consumed = providerConsumed;
         if (!consumed && shouldMoveToSecondary(seekingBlockPos)) {
             consumed = true;

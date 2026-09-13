@@ -47,7 +47,9 @@ public final class LegacyInteractionHandler {
         var level = event.getLevel();
         BlockPos support = event.getPos();
         BlockPos place = support.above();
-        var seedState = ModBlocks.SEEDS.get().defaultBlockState();
+        var seedState = ModBlocks.SEEDS.get().defaultBlockState().setValue(
+                com.animania.common.world.block.GroundCoverBlock.SEED,
+                com.animania.common.world.block.GroundCoverBlock.seedType(stack));
         if (level.getBlockState(support).is(Blocks.FARMLAND) || !level.getBlockState(place).canBeReplaced()
                 || !seedState.canSurvive(level, place)) return;
         if (!level.isClientSide()) {

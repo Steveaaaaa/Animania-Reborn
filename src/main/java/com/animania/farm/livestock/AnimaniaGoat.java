@@ -40,6 +40,15 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import javax.annotation.Nullable;
 
 public final class AnimaniaGoat extends Goat {
+    public net.minecraft.world.item.DyeColor woolDye() {
+        return net.minecraft.world.item.DyeColor.byId(ModAttachments.getData(this, ModAttachments.WOOL_DYE));
+    }
+
+    private ItemStack dyedWool(int count) {
+        return new ItemStack(net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
+                new ResourceLocation("minecraft", woolDye().getName() + "_wool")), count);
+    }
+
     private static final int GESTATION_TICKS = 20_000;
     private static final EntityDataAccessor<Boolean> ANGORA_SHEARED =
             SynchedEntityData.defineId(AnimaniaGoat.class, EntityDataSerializers.BOOLEAN);
@@ -123,6 +132,7 @@ public final class AnimaniaGoat extends Goat {
 
     @Override
     protected SoundEvent getAmbientSound() {
+        if (com.animania.common.registry.ModAttachments.getData(this, com.animania.common.registry.ModAttachments.SLEEPING)) return null;
         return role() == FarmAnimalRole.YOUNG ? ModSounds.KID_AMBIENT.get() : ModSounds.GOAT_AMBIENT.get();
     }
 
@@ -196,6 +206,7 @@ public final class AnimaniaGoat extends Goat {
         adult.setCustomName(getCustomName());
         adult.setCustomNameVisible(isCustomNameVisible());
         com.animania.common.entity.LegacyAnimalNeeds.copyState(this, adult);
+            ModAttachments.setData(adult, ModAttachments.WOOL_DYE, ModAttachments.getData(this, ModAttachments.WOOL_DYE));
     }
 
     public void childMatured() {
@@ -249,7 +260,7 @@ public final class AnimaniaGoat extends Goat {
         ItemStack stack = player.getItemInHand(hand);
         if (stack.is(Items.SHEARS) && breed() == GoatBreed.ANGORA && role() != FarmAnimalRole.YOUNG && woolRegrowth == 0) {
             if (!level().isClientSide()) {
-                spawnAtLocation(new ItemStack(Items.WHITE_WOOL, 2 + random.nextInt(2)));
+                spawnAtLocation(dyedWool(2 + random.nextInt(2)));
                 stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
                 woolRegrowth = com.animania.common.config.LegacyConfig.WOOL_REGROWTH_TIMER.get();
                 entityData.set(ANGORA_SHEARED, true);

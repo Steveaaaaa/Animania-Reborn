@@ -1188,7 +1188,7 @@
       "pivot": [
         0,
         0,
-        -6.000000000172534e-7
+        -6.000000000172534e-07
       ],
       "offset": [
         0,
@@ -1225,5 +1225,15 @@
     "parentlessCount": 16,
     "renderedRootCount": 14,
     "staticRotations": 49
-  }
+  },
+  "woolParts": [
+    "BackLegWool_L",
+    "BackLegWool_R",
+    "FrontLegWool_L",
+    "FrontLegWool_R",
+    "Wool1",
+    "Wool2",
+    "WoolHead",
+    "WoolNeck"
+  ]
 }

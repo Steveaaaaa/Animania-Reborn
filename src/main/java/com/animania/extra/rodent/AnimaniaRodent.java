@@ -95,6 +95,7 @@ public final class AnimaniaRodent extends TamableAnimal {
 
     @Override
     protected SoundEvent getAmbientSound() {
+        if (com.animania.common.registry.ModAttachments.getData(this, com.animania.common.registry.ModAttachments.SLEEPING)) return null;
         if (kind == Kind.HAMSTER) return ModSounds.HAMSTER_AMBIENT.get();
         if (kind.isFerret()) return ModSounds.FERRET_AMBIENT.get();
         return ModSounds.HEDGEHOG_AMBIENT.get();

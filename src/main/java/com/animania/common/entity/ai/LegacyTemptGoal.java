@@ -100,7 +100,7 @@ public final class LegacyTemptGoal extends Goal {
         Player nearest = null;
         double nearestDistance = 100.0D;
         for (Player candidate : mob.level().players()) {
-            if (!candidate.isAlive() || candidate.isSpectator()) continue;
+            if (!candidate.isAlive() || candidate.isSpectator() || !isTempting(candidate)) continue;
             double distance = mob.distanceToSqr(candidate);
             if (distance < nearestDistance) {
                 nearest = candidate;

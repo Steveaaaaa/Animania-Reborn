@@ -32,8 +32,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
     private static final Gson GSON = new Gson();
     private static final Map<String, LegacyAnimalModel<?>> CACHE = new ConcurrentHashMap<>();
-    private static final float LEGACY_PLANE_HALF_THICKNESS = 0.01F;
 
+    private final java.util.Set<String> woolParts;
+    private int woolTint = 0xFFFFFFFF;
+    public void setWoolTint(int color) { woolTint = color; }
     private final String key;
     private final GeneratedLegacyMotion.Motion motion;
     private float partialTick;
@@ -44,6 +46,7 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
 
     private LegacyAnimalModel(String key, ModelData data) {
         this.key = key;
+        woolParts = data.woolParts == null ? java.util.Set.of() : java.util.Set.copyOf(data.woolParts);
         MeshDefinition mesh = new MeshDefinition();
         Map<String, NodeData> nodes = new HashMap<>();
         for (NodeData node : data.nodes) nodes.put(node.name, node);
@@ -115,24 +118,15 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
             float width = box.size[0];
             float height = box.size[1];
             float depth = box.size[2];
-            // Legacy models used zero-sized cubes as double-sided feather and
-            // crest planes. Modern entityCutoutNoCull emits two coplanar faces,
-            // which fight in the depth buffer. A 0.02-pixel slab preserves the
-            // silhouette and UVs while separating the two faces imperceptibly.
-            if (width == 0 && box.deformation == 0) {
-                x -= LEGACY_PLANE_HALF_THICKNESS;
-                width = LEGACY_PLANE_HALF_THICKNESS * 2;
+            // A single uncullable face preserves the original plane UVs. Giving
+            // it thickness stretches the atlas coordinates into neighbouring pixels.
+            if (box.deformation == 0 && (width == 0 || height == 0 || depth == 0)) {
+                net.minecraft.core.Direction face = width == 0 ? net.minecraft.core.Direction.EAST
+                        : height == 0 ? net.minecraft.core.Direction.UP : net.minecraft.core.Direction.SOUTH;
+                cubes.addBox(x, y, z, width, height, depth, java.util.Set.of(face));
+            } else {
+                cubes.addBox(x, y, z, width, height, depth, new CubeDeformation(box.deformation));
             }
-            if (height == 0 && box.deformation == 0) {
-                y -= LEGACY_PLANE_HALF_THICKNESS;
-                height = LEGACY_PLANE_HALF_THICKNESS * 2;
-            }
-            if (depth == 0 && box.deformation == 0) {
-                z -= LEGACY_PLANE_HALF_THICKNESS;
-                depth = LEGACY_PLANE_HALF_THICKNESS * 2;
-            }
-            cubes.addBox(x, y, z, width, height, depth,
-                    new CubeDeformation(box.deformation));
         }
         PartPose pose = PartPose.offsetAndRotation(node.pivot[0] + parentOffset[0],
                 node.pivot[1] + parentOffset[1], node.pivot[2] + parentOffset[2],
@@ -171,6 +165,9 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
         applyModestySetting();
         animate(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         restorePetRotationOrder();
+        if (entity instanceof com.animania.farm.livestock.AnimaniaHorse horse) {
+            setVisible(horse.isSaddled(), "Footstrap", "Footstrap2", "Saddle", "Saddle2", "Saddle3", "Saddle4", "Saddle5", "Saddle6", "Saddle7", "SaddleBase", "SaddleBase2", "SaddleBase3", "SaddleHump", "SaddleHump2", "Strap1", "Strap2", "Strap3", "foot1", "foot1a", "foot2", "foot2a", "foot3", "foot3a", "foot4", "foot4a");
+        }
     }
 
     private void restorePetRotationOrder() {
@@ -246,29 +243,46 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
             LegacyPose.load(key, "sleeping").blend(parts, LegacySleepAnimation.petBlend(entity, partialTick));
     }
 
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int light, int overlay, int color) {
-        renderToBuffer(poseStack, consumer, light, overlay, ((color >> 16) & 255) / 255F,
-                ((color >> 8) & 255) / 255F, (color & 255) / 255F, ((color >>> 24) & 255) / 255F);
-    }
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int light, int overlay,
             float red, float green, float blue, float alpha) {
+        renderToBuffer(poseStack, consumer, light, overlay, ((int)(alpha * 255) << 24)
+                | ((int)(red * 255) << 16) | ((int)(green * 255) << 8) | (int)(blue * 255));
+    }
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer consumer, int light, int overlay, int color) {
+        if (woolTint == 0xFFFFFFFF || woolParts.isEmpty()) {
+            renderRoots(poseStack, consumer, light, overlay, color);
+            return;
+        }
+        // Keep each part's transform in both passes; skipDraw affects its cubes, not its children.
+        Map<ModelPart, Boolean> previous = new HashMap<>();
+        parts.values().forEach(part -> previous.put(part, part.skipDraw));
+        try {
+            parts.forEach((name, part) -> part.skipDraw = previous.get(part) || woolParts.contains(name));
+            renderRoots(poseStack, consumer, light, overlay, color);
+            parts.forEach((name, part) -> part.skipDraw = previous.get(part) || !woolParts.contains(name));
+            renderRoots(poseStack, consumer, light, overlay, (color & 0xFF000000) | (woolTint & 0xFFFFFF));
+        } finally { previous.forEach((part, skip) -> part.skipDraw = skip); }
+    }
+
+    private void renderRoots(PoseStack poseStack, VertexConsumer consumer, int light, int overlay, int color) {
         for (String rootName : rootNames) {
             ModelPart part = parts.get(rootName);
             if (part == null) continue;
             float scale = rootScales.getOrDefault(rootName, 1.0F);
             if (Math.abs(scale - 1.0F) < 0.00001F) {
-                part.render(poseStack, consumer, light, overlay, red, green, blue, alpha);
+                part.render(poseStack, consumer, light, overlay, ((color >> 16) & 255) / 255F, ((color >> 8) & 255) / 255F, (color & 255) / 255F, ((color >>> 24) & 255) / 255F);
             } else {
                 poseStack.pushPose();
                 poseStack.scale(scale, scale, scale);
-                part.render(poseStack, consumer, light, overlay, red, green, blue, alpha);
+                part.render(poseStack, consumer, light, overlay, ((color >> 16) & 255) / 255F, ((color >> 8) & 255) / 255F, (color & 255) / 255F, ((color >>> 24) & 255) / 255F);
                 poseStack.popPose();
             }
         }
     }
 
     private static final class ModelData {
+        List<String> woolParts;
         int textureWidth;
         int textureHeight;
         List<String> roots;

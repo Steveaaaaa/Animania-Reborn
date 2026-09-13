@@ -97,7 +97,7 @@ public final class AnimaniaChicken extends Chicken {
     }
 
     public boolean isLookingForNest() {
-        return role() == ChickenRole.HEN && lookingForNest;
+        return role() == ChickenRole.HEN && !isBaby() && lookingForNest;
     }
 
     public boolean canUseNest(BlockPos pos) {
@@ -132,6 +132,7 @@ public final class AnimaniaChicken extends Chicken {
     }
 
     private void tickCrow() {
+        if (ModAttachments.getData(this, ModAttachments.SLEEPING)) return;
         long time = level().getDayTime() % 23999L;
         if (crowTimer > 0) crowTimer--;
         if (crowTimer == 0 && (time > 23250L || time < 500L)) {
@@ -206,6 +207,7 @@ public final class AnimaniaChicken extends Chicken {
 
     @Override
     protected SoundEvent getAmbientSound() {
+        if (com.animania.common.registry.ModAttachments.getData(this, com.animania.common.registry.ModAttachments.SLEEPING)) return null;
         return ModSounds.CHICKEN_AMBIENT.get();
     }
 

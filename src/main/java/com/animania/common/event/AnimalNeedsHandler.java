@@ -132,8 +132,7 @@ public final class AnimalNeedsHandler {
                     || animal instanceof com.animania.catsdogs.dog.AnimaniaDog ? 1.5D : 1.0D;
             float startDistance = animal instanceof com.animania.catsdogs.cat.AnimaniaCat
                     || animal instanceof com.animania.catsdogs.dog.AnimaniaDog ? 5.0F : 10.0F;
-            float stopDistance = animal instanceof com.animania.catsdogs.cat.AnimaniaCat
-                    || animal instanceof com.animania.catsdogs.dog.AnimaniaDog ? 30.0F : 2.0F;
+            float stopDistance = 2.0F;
             pathfinder.goalSelector.addGoal(4,
                     new com.animania.common.entity.ai.LegacyFollowOwnerGoal(tame, followSpeed,
                             startDistance, stopDistance));
@@ -251,7 +250,10 @@ public final class AnimalNeedsHandler {
             ItemStack held = event.getEntity().getItemInHand(event.getHand());
             if (!animal.level().isClientSide() && isWaterContainer(held)
                     && !ModAttachments.getData(animal, ModAttachments.SLEEPING)) {
-                if (!event.getEntity().getAbilities().instabuild) emptyOneWaterContainer(event, held);
+                if (!event.getEntity().getAbilities().instabuild
+                        && !(animal instanceof com.animania.farm.chicken.AnimaniaChicken)
+                        && !(animal instanceof com.animania.extra.peafowl.AnimaniaPeafowl))
+                    emptyOneWaterContainer(event, held);
                 LegacyAnimalNeeds.water(animal);
                 ModAttachments.setData(animal, ModAttachments.EATING_TICKS, 40);
                 showCareHearts(animal);
@@ -270,6 +272,25 @@ public final class AnimalNeedsHandler {
                 event.setCanceled(true);
                 return;
             }
+            if (held.getItem() instanceof net.minecraft.world.item.DyeItem dye
+                    && (animal instanceof com.animania.farm.livestock.AnimaniaSheep
+                    || animal instanceof com.animania.farm.livestock.AnimaniaGoat)) {
+                boolean dyeable = animal instanceof com.animania.farm.livestock.AnimaniaSheep sheep
+                        && sheep.getColor() == net.minecraft.world.item.DyeColor.WHITE && !sheep.isSheared()
+                        && sheep.breed() != com.animania.farm.livestock.SheepBreed.JACOB
+                        || animal instanceof com.animania.farm.livestock.AnimaniaGoat goat
+                        && goat.breed() == com.animania.farm.livestock.GoatBreed.ANGORA && !goat.isAngoraSheared();
+                if (dyeable && !animal.isBaby() && ModAttachments.getData(animal, ModAttachments.WOOL_DYE) != dye.getDyeColor().getId()) {
+                    if (!animal.level().isClientSide()) {
+                        ModAttachments.setData(animal, ModAttachments.WOOL_DYE, dye.getDyeColor().getId());
+                        if (!event.getEntity().getAbilities().instabuild) held.shrink(1);
+                        animal.playSound(net.minecraft.sounds.SoundEvents.DYE_USE, 1.0F, 1.0F);
+                    }
+                    event.setCancellationResult(InteractionResult.sidedSuccess(animal.level().isClientSide()));
+                } else event.setCancellationResult(InteractionResult.PASS);
+                event.setCanceled(true);
+                return;
+            }
             if (animal.isFood(held)) {
                 if (ModAttachments.getData(animal, ModAttachments.SLEEPING)) {
                     event.setCancellationResult(InteractionResult.sidedSuccess(animal.level().isClientSide()));
@@ -277,6 +298,8 @@ public final class AnimalNeedsHandler {
                     return;
                 }
                 if (!animal.level().isClientSide()) {
+                    if (animal instanceof com.animania.farm.livestock.AnimaniaHorse horse)
+                        horse.applyFeedEffects(event.getEntity(), held);
                     if (!event.getEntity().getAbilities().instabuild) {
                         boolean returnBowl = com.animania.common.config.LegacyItemMatcher.isFarmersDogFood(held);
                         held.shrink(1);
@@ -337,6 +360,13 @@ public final class AnimalNeedsHandler {
 
     @SubscribeEvent
     public static void onLivingFall(net.minecraftforge.event.entity.living.LivingFallEvent event) {
+        if (event.getEntity() instanceof com.animania.farm.chicken.AnimaniaChicken
+                || event.getEntity() instanceof com.animania.extra.peafowl.AnimaniaPeafowl
+                || event.getEntity() instanceof com.animania.catsdogs.cat.AnimaniaCat) {
+            event.setDamageMultiplier(0);
+            return;
+        }
+
         if (event.getEntity() instanceof Animal animal && AnimalInformation.isAnimaniaAnimal(animal)
                 && animal.getLeashHolder() != null) {
             event.setDamageMultiplier(event.getDamageMultiplier()

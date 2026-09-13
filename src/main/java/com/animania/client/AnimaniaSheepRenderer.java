@@ -30,6 +30,7 @@ public final class AnimaniaSheepRenderer extends MobRenderer<AnimaniaSheep, Lega
         };
         model = models.computeIfAbsent(name,
                 key -> LegacyAnimalModel.load("farm/client/model/sheep/" + key));
+        model.setWoolTint(sheep.isSheared() || sheep.getColor() != DyeColor.WHITE ? 0xFFFFFFFF : 0xFF000000 | dyeRgb(sheep.woolDye()));
         super.render(sheep, yaw, partialTick, poseStack, buffers, light);
     }
 
@@ -80,4 +81,9 @@ public final class AnimaniaSheepRenderer extends MobRenderer<AnimaniaSheep, Lega
                     : sheep.getColor() == DyeColor.BROWN ? 0x5A463A : 0xD8D8D8;
         };
     }
+    private static int dyeRgb(net.minecraft.world.item.DyeColor color) {
+        float[] rgb = net.minecraft.world.entity.animal.Sheep.getColorArray(color);
+        return ((int)(rgb[0] * 255) << 16) | ((int)(rgb[1] * 255) << 8) | (int)(rgb[2] * 255);
+    }
+
 }

@@ -99,7 +99,15 @@ public final class TroughRenderer implements BlockEntityRenderer<TroughBlockEnti
         poseStack.mulPose(Axis.YP.rotationDegrees(-10));
         poseStack.scale(0.8F, 0.8F, 0.8F);
         poseStack.translate(0, 0.25F, -0.1F);
-        VertexConsumer wheat = buffers.getBuffer(RenderType.entityCutoutNoCull(WHEAT_TEXTURE));
+        VertexConsumer wheat;
+        if (trough.feed().is(net.minecraft.world.item.Items.WHEAT)) {
+            wheat = buffers.getBuffer(RenderType.entityCutoutNoCull(WHEAT_TEXTURE));
+        } else {
+            TextureAtlasSprite foodSprite = net.minecraft.client.Minecraft.getInstance().getItemRenderer()
+                    .getModel(trough.feed(), trough.getLevel(), null, 0).getParticleIcon();
+            wheat = foodSprite.wrap(buffers.getBuffer(RenderType.entityCutoutNoCull(
+                    net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS)));
+        }
         feedFront.renderToBuffer(poseStack, wheat, packedLight, packedOverlay, 0xFFFFFFFF);
         poseStack.mulPose(Axis.YP.rotationDegrees(180));
         poseStack.translate(-1.4F, -0.1F, 0);
@@ -164,7 +172,7 @@ public final class TroughRenderer implements BlockEntityRenderer<TroughBlockEnti
         vertex(poseStack, consumer, x1, y, z1, color, u0, v0, packedLight, packedOverlay);
     }
 
-    private static void vertex(PoseStack poseStack, VertexConsumer consumer, float x, float y, float z,
+    static void vertex(PoseStack poseStack, VertexConsumer consumer, float x, float y, float z,
                                int color, float u, float v, int light, int overlay) {
         consumer.vertex(poseStack.last().pose(), x, y, z)
                 .color(color)

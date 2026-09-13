@@ -82,6 +82,12 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
 
     @Override
     public void registerClient(IWailaClientRegistration registration) {
+        registration.addTooltipCollectedCallback((tooltip, accessor) -> {
+            if (accessor instanceof EntityAccessor entityAccessor
+                    && (entityAccessor.getEntity() instanceof AnimaniaChicken
+                    || entityAccessor.getEntity() instanceof AnimaniaPeafowl))
+                tooltip.remove(snownee.jade.api.Identifiers.MC_CHICKEN_EGG);
+        });
         registration.registerEntityComponent(AnimalProvider.INSTANCE, Animal.class);
         registration.registerBlockComponent(TroughProvider.INSTANCE, TroughBlock.class);
         registration.registerBlockComponent(PetBowlProvider.INSTANCE, PetBowlBlock.class);
@@ -124,11 +130,11 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
             }
 
             if (supportsMilk(animal)) data.putBoolean("Milkable", saved.getBoolean("HasKids"));
-            if (animal instanceof AnimaniaChicken chicken && chicken.role() == ChickenRole.HEN) {
+            if (animal instanceof AnimaniaChicken chicken && chicken.role() == ChickenRole.HEN && !chicken.isBaby()) {
                 data.putBoolean("EggLayer", true);
                 data.putInt("EggTimer", Math.max(0, saved.getInt("EggLayTime")));
                 data.putBoolean("LookingForNest", saved.getBoolean("LookingForNest"));
-            } else if (animal instanceof AnimaniaPeafowl peafowl && peafowl.role() == PeafowlRole.PEAHEN) {
+            } else if (animal instanceof AnimaniaPeafowl peafowl && peafowl.role() == PeafowlRole.PEAHEN && !peafowl.isBaby()) {
                 data.putBoolean("EggLayer", true);
                 data.putInt("EggTimer", Math.max(0, saved.getInt("LaidTimer")));
                 data.putBoolean("LookingForNest", saved.getBoolean("LookingForNest"));
