@@ -1,1 +1,16 @@
-{ "multipart": [{ "apply": { "model": "animania:block/cheese_goat" } }] }
+{
+  "variants": {
+    "bites=0": {
+      "model": "animania:block/goat_cheese_4"
+    },
+    "bites=1": {
+      "model": "animania:block/goat_cheese_3"
+    },
+    "bites=2": {
+      "model": "animania:block/goat_cheese_2"
+    },
+    "bites=3": {
+      "model": "animania:block/goat_cheese_1"
+    }
+  }
+}

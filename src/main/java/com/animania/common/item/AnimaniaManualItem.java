@@ -16,6 +16,17 @@ public final class AnimaniaManualItem extends WrittenBookItem {
     }
 
     @Override
+    public net.minecraft.world.InteractionResultHolder<ItemStack> use(net.minecraft.world.level.Level level,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (!stack.has(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT))
+            stack.set(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT,
+                    getDefaultInstance().get(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT));
+        if (level.isClientSide()) com.animania.client.ManualScreen.open(stack);
+        return net.minecraft.world.InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
+    }
+
+    @Override
     public ItemStack getDefaultInstance() {
         ItemStack stack = super.getDefaultInstance();
         List<Filterable<Component>> pages = List.of(

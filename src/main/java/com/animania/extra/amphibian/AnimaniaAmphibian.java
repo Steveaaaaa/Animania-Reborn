@@ -166,6 +166,7 @@ public final class AnimaniaAmphibian extends Frog {
 
     @Override
     protected SoundEvent getAmbientSound() {
+        if (getData(com.animania.common.registry.ModAttachments.SLEEPING)) return null;
         return switch (kind) {
             case FROG -> ModSounds.FROG_AMBIENT.get();
             case DART_FROG -> ModSounds.DART_FROG_AMBIENT.get();

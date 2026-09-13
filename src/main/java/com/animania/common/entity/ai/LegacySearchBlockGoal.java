@@ -45,10 +45,11 @@ abstract class LegacySearchBlockGoal extends Goal {
         if (++blacklistTimer > 10) {
             nonValidPositions.clear();
             blacklistTimer = 0;
+            oldBlockPos = null;
             seekingBlockPos = null;
         }
         BlockPos origin = animal.blockPosition();
-        if (origin.equals(oldBlockPos)) return false;
+        if (origin.equals(oldBlockPos) && blacklistTimer < 10) return false;
         oldBlockPos = origin;
 
         int searchRange = fixedSearchRange > 0 ? fixedSearchRange : LegacyConfig.AI_BLOCK_SEARCH_RANGE.get();
@@ -90,19 +91,25 @@ abstract class LegacySearchBlockGoal extends Goal {
         return false;
     }
 
+    private boolean reachable(BlockPos target) {
+        if (animal.distanceToSqr(target.getX() + 0.5D, target.getY(), target.getZ() + 0.5D) <= 2.5D) return true;
+        var path = animal.getNavigation().createPath(target, 1);
+        return path != null && path.canReach();
+    }
+
     private BlockPos findReachableDestination(BlockPos target) {
         if (offsets == DestinationOffsets.NONE || level.getBlockState(target).getCollisionShape(level, target).isEmpty()) {
-            return animal.getNavigation().createPath(target, 0) != null ? target : null;
+            return reachable(target) ? target : null;
         }
         if (offsets == DestinationOffsets.UP) {
             BlockPos above = target.above();
-            return animal.getNavigation().createPath(above, 0) != null ? above : null;
+            return reachable(above) ? above : null;
         }
         Direction[] directions = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
         int start = animal.getRandom().nextInt(directions.length);
         for (int i = 0; i < directions.length; i++) {
             BlockPos adjacent = target.relative(directions[(start + i) % directions.length]);
-            if (animal.getNavigation().createPath(adjacent, 0) != null) return adjacent;
+            if (reachable(adjacent)) return adjacent;
         }
         return null;
     }

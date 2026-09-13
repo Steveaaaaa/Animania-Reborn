@@ -78,10 +78,19 @@ public final class LegacyGoalRegistration {
                 : hamster ? 5 : chicken ? 6 : hedgehog ? 13 : 12;
         double wanderSpeed = pet || ferret ? 1.2D : rabbit ? 1.8D : hamster ? 1.1D : 1.0D;
         animal.goalSelector.addGoal(wanderPriority, new WaterAvoidingRandomStrollGoal(animal, wanderSpeed) {
+            private boolean busy() {
+                return animal.isVehicle() || animal.goalSelector.getAvailableGoals().stream().anyMatch(goal ->
+                        goal.isRunning() && (goal.getGoal() instanceof LegacyGrazeGoal
+                        || goal.getGoal() instanceof LegacyPigSnuffleGoal || goal.getGoal() instanceof LegacyTemptGoal)) || animal.getData(ModAttachments.EATING_TICKS) > 0
+                        || animal.level().players().stream().anyMatch(player -> !player.isSpectator()
+                        && player.distanceToSqr(animal) < 100
+                        && (animal.isFood(player.getMainHandItem()) || animal.isFood(player.getOffhandItem())));
+            }
+            @Override public boolean canContinueToUse() { return !busy() && super.canContinueToUse(); }
             @Override public boolean canUse() {
                 return !animal.getData(ModAttachments.SLEEPING)
                         && (!(animal instanceof AnimaniaHorse h) || h.level().isDay() && !h.isPullingVehicle())
-                        && super.canUse();
+                        && !busy() && super.canUse();
             }
         });
         int panicPriority = horse || goat ? 0 : cow || chicken || hamster ? 1 : peafowl ? 2

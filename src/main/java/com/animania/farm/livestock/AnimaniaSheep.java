@@ -43,6 +43,15 @@ import java.util.Comparator;
 import java.util.EnumSet;
 
 public final class AnimaniaSheep extends Sheep {
+    public net.minecraft.world.item.DyeColor woolDye() {
+        return net.minecraft.world.item.DyeColor.byId(getData(ModAttachments.WOOL_DYE));
+    }
+
+    private ItemStack dyedWool(int count) {
+        return new ItemStack(net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
+                ResourceLocation.fromNamespaceAndPath("minecraft", woolDye().getName() + "_wool")), count);
+    }
+
     private static final int GESTATION_TICKS = 20_000;
     private boolean pregnant;
     private boolean milkable;
@@ -84,6 +93,7 @@ public final class AnimaniaSheep extends Sheep {
 
     @Override
     protected SoundEvent getAmbientSound() {
+        if (getData(com.animania.common.registry.ModAttachments.SLEEPING)) return null;
         return role() == FarmAnimalRole.YOUNG ? ModSounds.LAMB_AMBIENT.get() : ModSounds.SHEEP_AMBIENT.get();
     }
 
@@ -117,6 +127,7 @@ public final class AnimaniaSheep extends Sheep {
             adult.setColor(getColor());
             adult.setSheared(isSheared());
             com.animania.common.entity.LegacyAnimalNeeds.copyState(this, adult);
+            adult.setData(ModAttachments.WOOL_DYE, getData(ModAttachments.WOOL_DYE));
             server.addFreshEntity(adult);
             discard();
         }
@@ -223,6 +234,7 @@ public final class AnimaniaSheep extends Sheep {
     }
 
     private ItemStack breedWool() {
+        if (getColor() == DyeColor.WHITE && woolDye() != DyeColor.WHITE) return dyedWool(1);
         String type = switch (breed()) {
             case DORSET -> getColor() == DyeColor.BROWN ? "dorset_brown" : null;
             case FRIESIAN -> getColor() == DyeColor.BLACK ? "friesian_black"

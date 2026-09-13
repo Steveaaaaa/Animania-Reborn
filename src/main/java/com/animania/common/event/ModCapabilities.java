@@ -28,16 +28,12 @@ public final class ModCapabilities {
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.CHEESE_MOLD.get(),
                 (mold, side) -> mold.isReady() ? null : mold.fluids());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.TROUGH.get(),
-                (trough, side) -> LegacyConfig.ALLOW_TROUGH_AUTOMATION.get()
-                        && trough.water() == 0 && trough.slop() == 0 ? trough.automationItems() : null);
+                (trough, side) -> LegacyConfig.ALLOW_TROUGH_AUTOMATION.get() ? trough.automationItems() : null);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.TROUGH.get(),
-                (trough, side) -> LegacyConfig.ALLOW_TROUGH_AUTOMATION.get()
-                        && trough.feed().isEmpty() ? trough.automationFluids() : null);
+                (trough, side) -> LegacyConfig.ALLOW_TROUGH_AUTOMATION.get() ? trough.automationFluids() : null);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.PET_BOWL.get(),
-                (bowl, side) -> LegacyConfig.ALLOW_TROUGH_AUTOMATION.get()
-                        && bowl.water() == 0 ? bowl.automationItems() : null);
+                (bowl, side) -> LegacyConfig.ALLOW_TROUGH_AUTOMATION.get() ? bowl.automationItems() : null);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.PET_BOWL.get(),
-                (bowl, side) -> LegacyConfig.ALLOW_TROUGH_AUTOMATION.get()
-                        && bowl.food().isEmpty() ? bowl.automationFluids() : null);
+                (bowl, side) -> LegacyConfig.ALLOW_TROUGH_AUTOMATION.get() ? bowl.automationFluids() : null);
     }
 }

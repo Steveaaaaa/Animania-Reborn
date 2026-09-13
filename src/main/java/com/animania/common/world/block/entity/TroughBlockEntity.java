@@ -101,19 +101,27 @@ public final class TroughBlockEntity extends BlockEntity {
     }
 
     public ItemStack feed() {
-        return feed;
+        return storage().feed;
     }
 
     public int water() {
-        return water;
+        return storage().water;
     }
 
     public int slop() {
-        return slop;
+        return storage().slop;
     }
 
-    public IItemHandler automationItems() { return automationItems; }
-    public IFluidHandler automationFluids() { return automationFluids; }
+    private TroughBlockEntity storage() {
+        if (level != null && getBlockState().getValue(TroughBlock.PART)
+                == com.animania.common.world.block.TroughPart.EXTENSION
+                && level.getBlockEntity(TroughBlock.mainPos(getBlockState(), worldPosition))
+                instanceof TroughBlockEntity main) return main;
+        return this;
+    }
+
+    public IItemHandler automationItems() { return storage().automationItems; }
+    public IFluidHandler automationFluids() { return storage().automationFluids; }
 
     public boolean addFeed(ItemStack stack, int portions) {
         if (water > 0 || slop > 0 || portions <= 0

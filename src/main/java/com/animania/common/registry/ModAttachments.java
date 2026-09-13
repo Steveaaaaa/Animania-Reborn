@@ -16,6 +16,8 @@ public final class ModAttachments {
     private static final DeferredRegister<AttachmentType<?>> ATTACHMENTS =
             DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, Animania.MOD_ID);
 
+    public static final Supplier<AttachmentType<Integer>> WOOL_DYE = ATTACHMENTS.register(
+            "wool_dye", () -> AttachmentType.builder(() -> 0).serialize(Codec.intRange(0, 15)).sync(ByteBufCodecs.VAR_INT).build());
     public static final Supplier<AttachmentType<Boolean>> FIGHTING = ATTACHMENTS.register(
             "fighting", () -> AttachmentType.builder(() -> false).sync(ByteBufCodecs.BOOL).build());
     public static final Supplier<AttachmentType<String>> RIVAL = ATTACHMENTS.register(

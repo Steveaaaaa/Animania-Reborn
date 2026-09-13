@@ -27,6 +27,7 @@ public final class ClientModEvents {
         event.registerBlockEntityRenderer(ModBlockEntities.PET_PROP.get(), PetPropRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.PET_BOWL.get(), PetBowlRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.TROUGH.get(), TroughRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.NEST.get(), NestRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.HIVE.get(), HiveRenderer::new);
         ModEntities.ALL_CHICKENS.values().forEach(type ->
                 event.registerEntityRenderer(type.get(), AnimaniaChickenRenderer::new));

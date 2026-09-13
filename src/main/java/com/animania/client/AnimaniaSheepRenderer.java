@@ -30,6 +30,7 @@ public final class AnimaniaSheepRenderer extends MobRenderer<AnimaniaSheep, Lega
         };
         model = models.computeIfAbsent(name,
                 key -> LegacyAnimalModel.load("farm/client/model/sheep/" + key));
+        model.setWoolTint(sheep.isSheared() || sheep.getColor() != DyeColor.WHITE ? 0xFFFFFFFF : 0xFF000000 | net.minecraft.world.entity.animal.Sheep.getColor(sheep.woolDye()));
         super.render(sheep, yaw, partialTick, poseStack, buffers, light);
     }
 

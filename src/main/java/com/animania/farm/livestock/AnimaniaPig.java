@@ -123,6 +123,7 @@ public final class AnimaniaPig extends Pig {
 
     @Override
     protected SoundEvent getAmbientSound() {
+        if (getData(com.animania.common.registry.ModAttachments.SLEEPING)) return null;
         return switch (role()) {
             case YOUNG -> ModSounds.PIGLET_AMBIENT.get();
             case MALE -> ModSounds.HOG_AMBIENT.get();

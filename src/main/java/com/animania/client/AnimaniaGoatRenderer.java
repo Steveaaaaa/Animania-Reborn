@@ -29,6 +29,7 @@ public final class AnimaniaGoatRenderer extends MobRenderer<AnimaniaGoat, Legacy
         String name = "model" + role + breed;
         model = models.computeIfAbsent(name,
                 key -> LegacyAnimalModel.load("farm/client/model/goats/" + key));
+        model.setWoolTint(goat.isAngoraSheared() ? 0xFFFFFFFF : 0xFF000000 | net.minecraft.world.entity.animal.Sheep.getColor(goat.woolDye()));
         super.render(goat, entityYaw, partialTick, poseStack, buffer, packedLight);
     }
 

@@ -1,0 +1,2518 @@
+{
+  "source": "modelnest",
+  "textureWidth": 128,
+  "textureHeight": 64,
+  "roots": [
+    "BlEgg1",
+    "BlEgg1a",
+    "BlEgg1b",
+    "BlEgg1c",
+    "BlEgg2",
+    "BlEgg2a",
+    "BlEgg2b",
+    "BlEgg2c"
+  ],
+  "nodes": [
+    {
+      "name": "Nest1",
+      "u": 0,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        0,
+        22,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3,
+            -2,
+            -8
+          ],
+          "size": [
+            6,
+            4,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Fluff3",
+      "u": -16,
+      "v": 38,
+      "mirror": false,
+      "pivot": [
+        0,
+        21.5,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        1.133858,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -8,
+            0,
+            -8
+          ],
+          "size": [
+            16,
+            0,
+            16
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Fluff1",
+      "u": -16,
+      "v": 38,
+      "mirror": false,
+      "pivot": [
+        0,
+        22.5,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -8,
+            0,
+            -8
+          ],
+          "size": [
+            16,
+            0,
+            16
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Nest2",
+      "u": 0,
+      "v": 7,
+      "mirror": false,
+      "pivot": [
+        0,
+        22,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3,
+            -2,
+            5
+          ],
+          "size": [
+            6,
+            4,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Nest3",
+      "u": 0,
+      "v": 14,
+      "mirror": false,
+      "pivot": [
+        0,
+        22,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        1.570796,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3,
+            -2,
+            5
+          ],
+          "size": [
+            6,
+            4,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Nest4",
+      "u": 19,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        0,
+        22,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        -1.570796,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3,
+            -2,
+            5
+          ],
+          "size": [
+            6,
+            4,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Nest5",
+      "u": 18,
+      "v": 7,
+      "mirror": false,
+      "pivot": [
+        0,
+        21.9,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        -0.7853982,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3.5,
+            -2,
+            5
+          ],
+          "size": [
+            7,
+            4,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Nest6",
+      "u": 18,
+      "v": 14,
+      "mirror": false,
+      "pivot": [
+        0,
+        21.9,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0.7853982,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3.5,
+            -2,
+            5
+          ],
+          "size": [
+            7,
+            4,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Nest7",
+      "u": 18,
+      "v": 20,
+      "mirror": false,
+      "pivot": [
+        0,
+        21.9,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        2.356194,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3.5,
+            -2,
+            5
+          ],
+          "size": [
+            7,
+            4,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Nest8",
+      "u": 41,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        0,
+        21.9,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        -2.356194,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -3.5,
+            -2,
+            5
+          ],
+          "size": [
+            7,
+            4,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Block",
+      "u": 13,
+      "v": 8,
+      "mirror": false,
+      "pivot": [
+        0,
+        22.5,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -5.5,
+            -1.5,
+            -5.5
+          ],
+          "size": [
+            11,
+            3,
+            11
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Fluff2",
+      "u": -16,
+      "v": 38,
+      "mirror": false,
+      "pivot": [
+        0,
+        23.8,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0.5906957,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -8,
+            0,
+            -8
+          ],
+          "size": [
+            16,
+            0,
+            16
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Fluff4",
+      "u": 18,
+      "v": 38,
+      "mirror": false,
+      "pivot": [
+        0,
+        19.7,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -8,
+            0,
+            -8
+          ],
+          "size": [
+            16,
+            0,
+            16
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Fluff5",
+      "u": 18,
+      "v": 38,
+      "mirror": false,
+      "pivot": [
+        0,
+        19.65,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0.3574434,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -8,
+            0,
+            -8
+          ],
+          "size": [
+            16,
+            0,
+            16
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null,
+      "renderScale": 1
+    },
+    {
+      "name": "Feather1",
+      "u": 62,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        3,
+        60,
+        2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.2803867,
+        0.5182232,
+        0.04484942
+      ],
+      "boxes": [
+        {
+          "from": [
+            -6.5,
+            0,
+            -20
+          ],
+          "size": [
+            13,
+            0,
+            40
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Feather2",
+      "u": 62,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        2,
+        60,
+        -2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.2142004,
+        2.028859,
+        -0.122275
+      ],
+      "boxes": [
+        {
+          "from": [
+            -6.6,
+            0,
+            -20
+          ],
+          "size": [
+            13,
+            0,
+            40
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Feather3",
+      "u": 62,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        -4,
+        60.75,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.4055626,
+        -1.776956,
+        -0.1216153
+      ],
+      "boxes": [
+        {
+          "from": [
+            -6.4,
+            0,
+            -20
+          ],
+          "size": [
+            13,
+            0,
+            40
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Feather4",
+      "u": 62,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        -1,
+        60,
+        -4
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.2880184,
+        -2.569335,
+        0.1257959
+      ],
+      "boxes": [
+        {
+          "from": [
+            -6.5,
+            0.01,
+            -20
+          ],
+          "size": [
+            13,
+            0,
+            40
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Feather5",
+      "u": 62,
+      "v": 0,
+      "mirror": false,
+      "pivot": [
+        -1,
+        60,
+        4
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.2764485,
+        -0.3568929,
+        0.1771393
+      ],
+      "boxes": [
+        {
+          "from": [
+            -6.5,
+            0.01,
+            -20
+          ],
+          "size": [
+            13,
+            0,
+            40
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Egg1",
+      "u": 68,
+      "v": 2,
+      "mirror": false,
+      "pivot": [
+        -2.5,
+        20.5,
+        1
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2400439,
+        0.1601751,
+        -0.1941436
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            -1.5,
+            -1.5
+          ],
+          "size": [
+            3,
+            3,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Egg1a",
+      "u": 71,
+      "v": 4,
+      "mirror": false,
+      "pivot": [
+        -2.768189,
+        18.83211,
+        1.45686
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2400439,
+        0.1601751,
+        -0.1941436
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Egg1b",
+      "u": 72,
+      "v": 3,
+      "mirror": false,
+      "pivot": [
+        -2.845569,
+        18.35441,
+        1.582717
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2400439,
+        0.1601751,
+        -0.1941436
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Egg1c",
+      "u": 71,
+      "v": 6,
+      "mirror": false,
+      "pivot": [
+        -2.270879,
+        21.92846,
+        0.6037322
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2400439,
+        0.1601751,
+        -0.1941436
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Egg2",
+      "u": 73,
+      "v": 4,
+      "mirror": false,
+      "pivot": [
+        0,
+        20.5,
+        -2.25
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.666733e-8,
+        -0.3777635,
+        -1.277677
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            -1.5,
+            -1.5
+          ],
+          "size": [
+            3,
+            3,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Egg2a",
+      "u": 73,
+      "v": 3,
+      "mirror": false,
+      "pivot": [
+        -1.557231,
+        19.99435,
+        -2.867943
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.666733e-8,
+        -0.3777635,
+        -1.277677
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Egg2b",
+      "u": 75,
+      "v": 6,
+      "mirror": false,
+      "pivot": [
+        -2.000357,
+        19.84989,
+        -3.049029
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.666733e-8,
+        -0.3777635,
+        -1.277677
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Egg2c",
+      "u": 78,
+      "v": 2,
+      "mirror": false,
+      "pivot": [
+        1.336568,
+        20.93341,
+        -1.724865
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.666733e-8,
+        -0.3777635,
+        -1.277677
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Egg3",
+      "u": 76,
+      "v": 3,
+      "mirror": false,
+      "pivot": [
+        2,
+        20.5,
+        2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.7743126,
+        0.2888342,
+        0.5073518
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            -1.5,
+            -1.5
+          ],
+          "size": [
+            3,
+            3,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Egg3a",
+      "u": 77,
+      "v": 6,
+      "mirror": false,
+      "pivot": [
+        3.119674,
+        19.40652,
+        2.783019
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.7743126,
+        0.2888342,
+        0.5073518
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Egg3b",
+      "u": 78,
+      "v": 4,
+      "mirror": false,
+      "pivot": [
+        3.438589,
+        19.09068,
+        3.003399
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.7743126,
+        0.2888342,
+        0.5073518
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "Egg3c",
+      "u": 75,
+      "v": 2,
+      "mirror": false,
+      "pivot": [
+        1.039286,
+        21.43386,
+        1.3255
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.7743126,
+        0.2888342,
+        0.5073518
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BEgg1",
+      "u": 68,
+      "v": 22,
+      "mirror": false,
+      "pivot": [
+        -2.5,
+        20.5,
+        1
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2400439,
+        0.1601751,
+        -0.1941436
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            -1.5,
+            -1.5
+          ],
+          "size": [
+            3,
+            3,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BEgg1a",
+      "u": 71,
+      "v": 24,
+      "mirror": false,
+      "pivot": [
+        -2.768189,
+        18.83211,
+        1.45686
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2400439,
+        0.1601751,
+        -0.1941436
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BEgg1b",
+      "u": 72,
+      "v": 23,
+      "mirror": false,
+      "pivot": [
+        -2.845569,
+        18.35441,
+        1.582717
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2400439,
+        0.1601751,
+        -0.1941436
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BEgg1c",
+      "u": 71,
+      "v": 26,
+      "mirror": false,
+      "pivot": [
+        -2.270879,
+        21.92846,
+        0.6037322
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2400439,
+        0.1601751,
+        -0.1941436
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BEgg2",
+      "u": 73,
+      "v": 24,
+      "mirror": false,
+      "pivot": [
+        0,
+        20.5,
+        -2.25
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.666733e-8,
+        -0.3777635,
+        -1.277677
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            -1.5,
+            -1.5
+          ],
+          "size": [
+            3,
+            3,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BEgg2a",
+      "u": 73,
+      "v": 23,
+      "mirror": false,
+      "pivot": [
+        -1.557231,
+        19.99435,
+        -2.867943
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.666733e-8,
+        -0.3777635,
+        -1.277677
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BEgg2b",
+      "u": 75,
+      "v": 26,
+      "mirror": false,
+      "pivot": [
+        -2.000357,
+        19.84989,
+        -3.049029
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.666733e-8,
+        -0.3777635,
+        -1.277677
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BEgg2c",
+      "u": 78,
+      "v": 22,
+      "mirror": false,
+      "pivot": [
+        1.336568,
+        20.93341,
+        -1.724865
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.666733e-8,
+        -0.3777635,
+        -1.277677
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BEgg3",
+      "u": 76,
+      "v": 23,
+      "mirror": false,
+      "pivot": [
+        2,
+        20.5,
+        2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.7743126,
+        0.2888342,
+        0.5073518
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            -1.5,
+            -1.5
+          ],
+          "size": [
+            3,
+            3,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BEgg3a",
+      "u": 77,
+      "v": 26,
+      "mirror": false,
+      "pivot": [
+        3.119674,
+        19.40652,
+        2.783019
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.7743126,
+        0.2888342,
+        0.5073518
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BEgg3b",
+      "u": 78,
+      "v": 24,
+      "mirror": false,
+      "pivot": [
+        3.438589,
+        19.09068,
+        3.003399
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.7743126,
+        0.2888342,
+        0.5073518
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BEgg3c",
+      "u": 75,
+      "v": 22,
+      "mirror": false,
+      "pivot": [
+        1.039286,
+        21.43386,
+        1.3255
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.7743126,
+        0.2888342,
+        0.5073518
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BlEgg1",
+      "u": 68,
+      "v": 32,
+      "mirror": false,
+      "pivot": [
+        -2.5,
+        20.5,
+        1
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2400439,
+        0.1601751,
+        -0.1941436
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            -1.5,
+            -1.5
+          ],
+          "size": [
+            3,
+            3,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BlEgg1a",
+      "u": 71,
+      "v": 34,
+      "mirror": false,
+      "pivot": [
+        -2.768189,
+        18.83211,
+        1.45686
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2400439,
+        0.1601751,
+        -0.1941436
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BlEgg1b",
+      "u": 72,
+      "v": 33,
+      "mirror": false,
+      "pivot": [
+        -2.845569,
+        18.35441,
+        1.582717
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2400439,
+        0.1601751,
+        -0.1941436
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BlEgg1c",
+      "u": 71,
+      "v": 36,
+      "mirror": false,
+      "pivot": [
+        -2.270879,
+        21.92846,
+        0.6037322
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2400439,
+        0.1601751,
+        -0.1941436
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BlEgg2",
+      "u": 73,
+      "v": 34,
+      "mirror": false,
+      "pivot": [
+        0,
+        20.5,
+        -2.25
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.666733e-8,
+        -0.3777635,
+        -1.277677
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            -1.5,
+            -1.5
+          ],
+          "size": [
+            3,
+            3,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BlEgg2a",
+      "u": 73,
+      "v": 33,
+      "mirror": false,
+      "pivot": [
+        -1.557231,
+        19.99435,
+        -2.867943
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.666733e-8,
+        -0.3777635,
+        -1.277677
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BlEgg2b",
+      "u": 75,
+      "v": 36,
+      "mirror": false,
+      "pivot": [
+        -2.000357,
+        19.84989,
+        -3.049029
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.666733e-8,
+        -0.3777635,
+        -1.277677
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BlEgg2c",
+      "u": 78,
+      "v": 32,
+      "mirror": false,
+      "pivot": [
+        1.336568,
+        20.93341,
+        -1.724865
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.666733e-8,
+        -0.3777635,
+        -1.277677
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BlEgg3",
+      "u": 76,
+      "v": 33,
+      "mirror": false,
+      "pivot": [
+        2,
+        20.5,
+        2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.7743126,
+        0.2888342,
+        0.5073518
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            -1.5,
+            -1.5
+          ],
+          "size": [
+            3,
+            3,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BlEgg3a",
+      "u": 77,
+      "v": 36,
+      "mirror": false,
+      "pivot": [
+        3.119674,
+        19.40652,
+        2.783019
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.7743126,
+        0.2888342,
+        0.5073518
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BlEgg3b",
+      "u": 78,
+      "v": 34,
+      "mirror": false,
+      "pivot": [
+        3.438589,
+        19.09068,
+        3.003399
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.7743126,
+        0.2888342,
+        0.5073518
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "BlEgg3c",
+      "u": 75,
+      "v": 32,
+      "mirror": false,
+      "pivot": [
+        1.039286,
+        21.43386,
+        1.3255
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.7743126,
+        0.2888342,
+        0.5073518
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "WEgg1",
+      "u": 68,
+      "v": 42,
+      "mirror": false,
+      "pivot": [
+        -2.5,
+        20.5,
+        1
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2400439,
+        0.1601751,
+        -0.1941436
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            -1.5,
+            -1.5
+          ],
+          "size": [
+            3,
+            3,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "WEgg1a",
+      "u": 71,
+      "v": 44,
+      "mirror": false,
+      "pivot": [
+        -2.768189,
+        18.83211,
+        1.45686
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2400439,
+        0.1601751,
+        -0.1941436
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "WEgg1b",
+      "u": 72,
+      "v": 43,
+      "mirror": false,
+      "pivot": [
+        -2.845569,
+        18.35441,
+        1.582717
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2400439,
+        0.1601751,
+        -0.1941436
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "WEgg1c",
+      "u": 71,
+      "v": 46,
+      "mirror": false,
+      "pivot": [
+        -2.270879,
+        21.92846,
+        0.6037322
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2400439,
+        0.1601751,
+        -0.1941436
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "WEgg2",
+      "u": 73,
+      "v": 44,
+      "mirror": false,
+      "pivot": [
+        0,
+        20.5,
+        -2.25
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.666733e-8,
+        -0.3777635,
+        -1.277677
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            -1.5,
+            -1.5
+          ],
+          "size": [
+            3,
+            3,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "WEgg2a",
+      "u": 73,
+      "v": 43,
+      "mirror": false,
+      "pivot": [
+        -1.557231,
+        19.99435,
+        -2.867943
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.666733e-8,
+        -0.3777635,
+        -1.277677
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "WEgg2b",
+      "u": 75,
+      "v": 46,
+      "mirror": false,
+      "pivot": [
+        -2.000357,
+        19.84989,
+        -3.049029
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.666733e-8,
+        -0.3777635,
+        -1.277677
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "WEgg2c",
+      "u": 78,
+      "v": 42,
+      "mirror": false,
+      "pivot": [
+        1.336568,
+        20.93341,
+        -1.724865
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1.666733e-8,
+        -0.3777635,
+        -1.277677
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "WEgg3",
+      "u": 76,
+      "v": 43,
+      "mirror": false,
+      "pivot": [
+        2,
+        20.5,
+        2
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.7743126,
+        0.2888342,
+        0.5073518
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            -1.5,
+            -1.5
+          ],
+          "size": [
+            3,
+            3,
+            3
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "WEgg3a",
+      "u": 77,
+      "v": 46,
+      "mirror": false,
+      "pivot": [
+        3.119674,
+        19.40652,
+        2.783019
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.7743126,
+        0.2888342,
+        0.5073518
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "WEgg3b",
+      "u": 78,
+      "v": 44,
+      "mirror": false,
+      "pivot": [
+        3.438589,
+        19.09068,
+        3.003399
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.7743126,
+        0.2888342,
+        0.5073518
+      ],
+      "boxes": [
+        {
+          "from": [
+            -0.5,
+            -0.5,
+            -0.5
+          ],
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    },
+    {
+      "name": "WEgg3c",
+      "u": 75,
+      "v": 42,
+      "mirror": false,
+      "pivot": [
+        1.039286,
+        21.43386,
+        1.3255
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.7743126,
+        0.2888342,
+        0.5073518
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1,
+            -0.5,
+            -1
+          ],
+          "size": [
+            2,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": null
+    }
+  ],
+  "audit": {
+    "nodeCount": 67,
+    "boxCount": 67,
+    "edgeCount": 0,
+    "parentlessCount": 67,
+    "renderedRootCount": 14,
+    "staticRotations": 168
+  }
+}

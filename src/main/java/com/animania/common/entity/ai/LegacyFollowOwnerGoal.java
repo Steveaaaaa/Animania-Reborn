@@ -38,7 +38,7 @@ public final class LegacyFollowOwnerGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return owner != null && owner.isAlive() && !pet.getNavigation().isDone() && !pet.isInSittingPose()
+        return owner != null && owner.isAlive() && !pet.isInSittingPose()
                 && !pet.getData(ModAttachments.SLEEPING)
                 && pet.distanceToSqr(owner) > stopDistance * stopDistance;
     }
@@ -56,9 +56,10 @@ public final class LegacyFollowOwnerGoal extends Goal {
         pet.getLookControl().setLookAt(owner, 10.0F, pet.getMaxHeadXRot());
         if (--recalc > 0) return;
         recalc = 10;
-        if (!pet.getNavigation().moveTo(owner, speed) && !pet.isLeashed() && !pet.isPassenger()
-                && LegacyConfig.TAMED_ANIMALS_TELEPORT.get() && pet.distanceToSqr(owner) >= 144.0D)
-            tryTeleportNearOwner();
+        if (!pet.isLeashed() && !pet.isPassenger()
+                && LegacyConfig.TAMED_ANIMALS_TELEPORT.get() && pet.distanceToSqr(owner) >= 144.0D
+                && tryTeleportNearOwner()) return;
+        pet.getNavigation().moveTo(owner, speed);
     }
 
     @Override
@@ -80,6 +81,10 @@ public final class LegacyFollowOwnerGoal extends Goal {
                     || !pet.level().getBlockState(pos.above()).getCollisionShape(pet.level(), pos.above()).isEmpty()) {
                 continue;
             }
+            if (!pet.level().getFluidState(pos).isEmpty()
+                    || !pet.level().noCollision(pet, pet.getBoundingBox().move(
+                            pos.getX() + 0.5D - pet.getX(), pos.getY() - pet.getY(),
+                            pos.getZ() + 0.5D - pet.getZ()))) continue;
             pet.teleportTo(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D);
             pet.getNavigation().stop();
             return true;

@@ -74,6 +74,7 @@ public final class AnimaniaRabbit extends Rabbit {
 
     @Override
     protected SoundEvent getAmbientSound() {
+        if (getData(com.animania.common.registry.ModAttachments.SLEEPING)) return null;
         return ModSounds.RABBIT_AMBIENT.get();
     }
 

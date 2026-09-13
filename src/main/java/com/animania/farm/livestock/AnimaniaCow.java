@@ -71,6 +71,7 @@ public final class AnimaniaCow extends Cow {
 
     @Override
     protected SoundEvent getAmbientSound() {
+        if (getData(com.animania.common.registry.ModAttachments.SLEEPING)) return null;
         return switch (role()) {
             case YOUNG -> ModSounds.CALF_AMBIENT.get();
             case MALE -> ModSounds.BULL_AMBIENT.get();

@@ -34,7 +34,7 @@ The main conversion tools are:
 These tools overwrite their outputs. Review resource changes after regeneration;
 converted assets include fixes made during game testing. The Java model converter
 also accepts `--sheep-only --add-missing-nodes` to add missing sheep parts without
-replacing existing geometry.
+replacing existing geometry. `--nest-only` exports the original nest egg models.
 
 Model parts are instantiated even when the original renderer does not draw them.
 For example, the peacock animation writes to the detached `FeatherD1` part.
@@ -67,7 +67,18 @@ The original settings are grouped into `animania-server.toml`,
   remains 2.5 blocks. The traces follow both the vehicle pitch and horse body.
 - CraftStudio faces with reversed winding are submitted in the corrected order,
   with UV associations preserved. This addresses dark wagon canopy panels under
-  shaders. Thin slabs replace zero-thickness feather planes to reduce depth flicker.
+  shaders. Feather planes use one uncullable face with the original UV coordinates;
+  adding thickness shifted UVs into adjacent pixels and caused pale outlines.
+- Birds drink from troughs, bowls and held water containers without reducing their water level. The 1.12
+  code consumed 50 mB per drink; natural water blocks remain intact in both versions.
+- Angora goats support wool dyeing. The old goat interaction accepted dye clicks
+  but did not apply a color. Sheep retain separate natural coat and wool dye colors.
+- Hungry pigs can finish snuffling by eating grass when they have not found food.
+  The original snuffling goal only fed them from truffles.
+- Distant pets can teleport even when navigation returns an incomplete path.
+  Wandering no longer interrupts feeding or active food following.
+- Village structure animals use the configured biome breeds and replacement
+  switches. Named animals and player-created vanilla animals are not converted.
 
 For a version-range-only metadata edit, no Java changes or verification are
 required. Normal development builds skip tests. Game behaviour and shader
