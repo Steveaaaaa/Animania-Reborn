@@ -27,3 +27,9 @@ LICENSE contains LGPLv3; COPYING contains the incorporated GPLv3 terms.
 Simmental textures reuse the original Jersey cattle textures from Animania
 1.4.4, upstream commit 48129f3d. These assets retain the original authorship
 and license; Simmental is an addition made by this port.
+
+Fighting cattle textures are the Angus textures from Animania 0.9.8 BETA,
+CurseForge file 2383989, credited in its metadata to RazzleberryFox,
+Purplicious_Cow and cy4n. Original JAR SHA-256:
+f8a9b60302b1bcb327ea8028181b4908f5a08bf214d39ea529ace55569a5dbbe.
+Source: https://mediafilez.forgecdn.net/files/2383/989/animania-1.10-0.9.8%20BETA.jar

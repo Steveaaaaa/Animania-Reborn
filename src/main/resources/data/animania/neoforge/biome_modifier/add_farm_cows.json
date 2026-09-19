@@ -5,6 +5,7 @@
   "default_probability": 9,
   "family_group": "cows",
   "spawners": [
+    { "type": "animania:cow_fighting", "weight": 9, "minCount": 2, "maxCount": 2 },
     { "type": "animania:cow_simmental", "weight": 9, "minCount": 2, "maxCount": 2 },
     { "type": "animania:cow_angus", "weight": 9, "minCount": 2, "maxCount": 2 },
     { "type": "animania:cow_friesian", "weight": 9, "minCount": 2, "maxCount": 2 },

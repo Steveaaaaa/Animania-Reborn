@@ -45,6 +45,12 @@ final class LegacyMotionContext {
             String role = switch (cow.role()) { case MALE -> "Bull"; case FEMALE -> "Cow"; case YOUNG -> "Calf"; };
             return legacyType.equals("Entity" + role + "Jersey");
         }
+        // Fighting cattle use the horned ModelBull/ModelCow/ModelCalf animation families.
+        if (entity instanceof com.animania.farm.livestock.AnimaniaCow cow
+                && cow.breed() == com.animania.farm.livestock.CowBreed.FIGHTING) {
+            String role = switch (cow.role()) { case MALE -> "Bull"; case FEMALE -> "Cow"; case YOUNG -> "Calf"; };
+            return legacyType.equals("Entity" + role + "Holstein");
+        }
         if (legacyType.equals("EntityHedgehogBase"))
             return entity instanceof AnimaniaRodent rodent && rodent.kind().isHedgehog();
         return legacyType.substring("Entity".length()).equalsIgnoreCase(
