@@ -710,5 +710,11 @@
   "entity.animania.cow_simmental": "西门塔尔母牛",
   "item.animania.entity_egg_cow_simmental": "西门塔尔母牛刷怪蛋",
   "entity.animania.calf_simmental": "西门塔尔幼牛",
-  "item.animania.entity_egg_calf_simmental": "西门塔尔幼牛刷怪蛋"
+  "item.animania.entity_egg_calf_simmental": "西门塔尔幼牛刷怪蛋",
+  "entity.animania.bull_fighting": "斗牛品种公牛",
+  "item.animania.entity_egg_bull_fighting": "斗牛品种公牛刷怪蛋",
+  "entity.animania.cow_fighting": "斗牛品种母牛",
+  "item.animania.entity_egg_cow_fighting": "斗牛品种母牛刷怪蛋",
+  "entity.animania.calf_fighting": "斗牛品种幼牛",
+  "item.animania.entity_egg_calf_fighting": "斗牛品种幼牛刷怪蛋"
 }

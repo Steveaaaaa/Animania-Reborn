@@ -190,3 +190,16 @@ Simmental cows spawn in plains and hills, configurable through `cowSimmental`
 in the farm biome settings. They follow the existing care, breeding and growth
 rules, provide ordinary milk under the existing lactation conditions, and use the
 prime beef loot table as adults. All three roles have separate spawn eggs.
+
+## Fighting cattle
+
+Fighting cattle are a separate beef breed using the horned Angus appearance from
+Animania 0.9.8 BETA. Bull, cow and calf textures come unchanged from CurseForge
+file 2383989. That release uses ModelBull, ModelCow and ModelCalf, with adult
+scales of 1.4 for bulls and 1.34 for cows. This port uses those model families
+with the existing 1.12 animation and animal-care systems.
+
+They spawn in savannas by default (`cowFighting` in the farm biome settings),
+have separate bull, cow and calf spawn eggs, and drop prime beef as adults.
+Breeding, growth and bull behaviour follow the existing cattle rules. The breed
+name does not enable additional fighting AI. Existing Angus cattle are unchanged.

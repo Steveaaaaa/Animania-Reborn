@@ -203,6 +203,7 @@ public final class LegacyConfig {
         addBiome(farm, "chickenOrpington", "JUNGLE", "SWAMP");
         addBiome(farm, "chickenWyandotte", "FOREST");
         addBiome(farm, "chickenRhodeIslandRed", "FOREST");
+        addBiome(farm, "cowFighting", "SAVANNA");
         addBiome(farm, "cowSimmental", "PLAINS", "HILLS");
         addBiome(farm, "cowHolstein", "FOREST"); addBiome(farm, "cowFriesian", "PLAINS");
         addBiome(farm, "cowAngus", "JUNGLE", "MESA", "SWAMP"); addBiome(farm, "cowHereford", "MOUNTAIN", "HILLS");

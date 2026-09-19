@@ -47,7 +47,7 @@ public final class AnimaniaCowRenderer extends MobRenderer<AnimaniaCow, LegacyAn
             scale = switch (cow.breed()) {
                 case FRIESIAN, HOLSTEIN -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.30F : 1.24F;
                 case LONGHORN, HIGHLAND -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.50F : 1.44F;
-                case ANGUS, HEREFORD, JERSEY, SIMMENTAL -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.40F : 1.34F;
+                case ANGUS, HEREFORD, JERSEY, SIMMENTAL, FIGHTING -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.40F : 1.34F;
                 case MOOSHROOM -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.30F : 1.34F;
             };
         }
@@ -74,7 +74,7 @@ public final class AnimaniaCowRenderer extends MobRenderer<AnimaniaCow, LegacyAn
 
     private static int leftEyelidColor(AnimaniaCow cow) {
         return switch (cow.breed()) {
-            case ANGUS -> 0x333333; case FRIESIAN -> 0x463930; case HEREFORD, LONGHORN -> 0xDEDEDE;
+            case ANGUS, FIGHTING -> 0x333333; case FRIESIAN -> 0x463930; case HEREFORD, LONGHORN -> 0xDEDEDE;
             case HOLSTEIN -> 0x1C242B; case HIGHLAND -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.YOUNG
                     ? 0x5B2F1B : 0x130D0A;
             case JERSEY -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.YOUNG ? 0x7C632D : 0x3B2603;

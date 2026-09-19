@@ -711,5 +711,11 @@
   "entity.animania.cow_simmental": "Simmental Cow",
   "item.animania.entity_egg_cow_simmental": "Simmental Cow Spawn Egg",
   "entity.animania.calf_simmental": "Simmental Calf",
-  "item.animania.entity_egg_calf_simmental": "Simmental Calf Spawn Egg"
+  "item.animania.entity_egg_calf_simmental": "Simmental Calf Spawn Egg",
+  "entity.animania.bull_fighting": "Fighting Bull",
+  "item.animania.entity_egg_bull_fighting": "Fighting Bull Spawn Egg",
+  "entity.animania.cow_fighting": "Fighting Cow",
+  "item.animania.entity_egg_cow_fighting": "Fighting Cow Spawn Egg",
+  "entity.animania.calf_fighting": "Fighting Calf",
+  "item.animania.entity_egg_calf_fighting": "Fighting Calf Spawn Egg"
 }
