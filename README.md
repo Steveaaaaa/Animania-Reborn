@@ -178,3 +178,15 @@ announce charges, readiness and activation. Milk removes the effects. Repeated
 servings do not stack effect levels or add durations together. All meal bonuses
 respect the existing food bonus effects configuration. Nourishment is resolved
 from Farmer's Delight when present, without adding a required dependency.
+
+## Simmental cattle
+
+Simmental is a new dual-purpose breed using the original Jersey bull, cow and
+calf textures from Animania 1.4.4 (upstream commit `48129f3d`). The Hereford adult
+models and standard calf model match that release's Jersey renderers. It retains
+Jersey animation branches, including grazing and sleeping, without replacing Jersey.
+
+Simmental cows spawn in plains and hills, configurable through `cowSimmental`
+in the farm biome settings. They follow the existing care, breeding and growth
+rules, provide ordinary milk under the existing lactation conditions, and use the
+prime beef loot table as adults. All three roles have separate spawn eggs.

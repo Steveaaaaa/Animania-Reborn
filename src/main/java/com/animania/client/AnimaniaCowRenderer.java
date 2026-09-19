@@ -26,7 +26,7 @@ public final class AnimaniaCowRenderer extends MobRenderer<AnimaniaCow, LegacyAn
         String role = switch (cow.role()) { case YOUNG -> "calf"; case FEMALE -> "cow"; case MALE -> "bull"; };
         String variant = switch (cow.breed()) {
             case ANGUS -> "angus";
-            case HEREFORD, JERSEY -> "hereford";
+            case HEREFORD, JERSEY, SIMMENTAL -> "hereford";
             case LONGHORN, HIGHLAND -> "longhorn";
             default -> "";
         };
@@ -47,7 +47,7 @@ public final class AnimaniaCowRenderer extends MobRenderer<AnimaniaCow, LegacyAn
             scale = switch (cow.breed()) {
                 case FRIESIAN, HOLSTEIN -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.30F : 1.24F;
                 case LONGHORN, HIGHLAND -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.50F : 1.44F;
-                case ANGUS, HEREFORD, JERSEY -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.40F : 1.34F;
+                case ANGUS, HEREFORD, JERSEY, SIMMENTAL -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.40F : 1.34F;
                 case MOOSHROOM -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.30F : 1.34F;
             };
         }
@@ -79,6 +79,7 @@ public final class AnimaniaCowRenderer extends MobRenderer<AnimaniaCow, LegacyAn
                     ? 0x5B2F1B : 0x130D0A;
             case JERSEY -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.YOUNG ? 0x7C632D : 0x3B2603;
             case MOOSHROOM -> 0xAB0F0F;
+            case SIMMENTAL -> 0xE8E0C6;
         };
     }
 

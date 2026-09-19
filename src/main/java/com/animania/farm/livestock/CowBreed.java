@@ -10,7 +10,8 @@ public enum CowBreed implements StringRepresentable {
     LONGHORN("longhorn", true),
     HIGHLAND("highland", true),
     JERSEY("jersey", true),
-    MOOSHROOM("mooshroom", false);
+    MOOSHROOM("mooshroom", false),
+    SIMMENTAL("simmental", true);
 
     private final String id;
     private final boolean prime;

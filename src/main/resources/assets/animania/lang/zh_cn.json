@@ -704,5 +704,11 @@
   "tooltip.animania.meal.chevon_stew": "稳步登高（3:00）：步行上坡蓄力，最多 3 层",
   "tooltip.animania.meal.chevon_stew.detail": "每层抵消至多 2 点摔伤，上限 50%；一次消耗全部层数。",
   "tooltip.animania.meal.peacock_pilaf": "从容应对（4:00）：10 秒不受伤、不攻击后就绪",
-  "tooltip.animania.meal.peacock_pilaf.detail": "一次生物攻击减伤 40%（至多 6 点），速度 II 5 秒，随后重新准备。"
+  "tooltip.animania.meal.peacock_pilaf.detail": "一次生物攻击减伤 40%（至多 6 点），速度 II 5 秒，随后重新准备。",
+  "entity.animania.bull_simmental": "西门塔尔公牛",
+  "item.animania.entity_egg_bull_simmental": "西门塔尔公牛刷怪蛋",
+  "entity.animania.cow_simmental": "西门塔尔母牛",
+  "item.animania.entity_egg_cow_simmental": "西门塔尔母牛刷怪蛋",
+  "entity.animania.calf_simmental": "西门塔尔幼牛",
+  "item.animania.entity_egg_calf_simmental": "西门塔尔幼牛刷怪蛋"
 }

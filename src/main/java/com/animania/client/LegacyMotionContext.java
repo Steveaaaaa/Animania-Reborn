@@ -39,6 +39,12 @@ final class LegacyMotionContext {
         return !getSleeping() && entity instanceof AnimaniaRodent rodent ? rodent.getInterestedAngle(partial) : 0;
     }
     boolean isType(String legacyType) {
+        // Simmental uses the original Jersey model and its breed-specific animation branches.
+        if (entity instanceof com.animania.farm.livestock.AnimaniaCow cow
+                && cow.breed() == com.animania.farm.livestock.CowBreed.SIMMENTAL) {
+            String role = switch (cow.role()) { case MALE -> "Bull"; case FEMALE -> "Cow"; case YOUNG -> "Calf"; };
+            return legacyType.equals("Entity" + role + "Jersey");
+        }
         if (legacyType.equals("EntityHedgehogBase"))
             return entity instanceof AnimaniaRodent rodent && rodent.kind().isHedgehog();
         return legacyType.substring("Entity".length()).equalsIgnoreCase(

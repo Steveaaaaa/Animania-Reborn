@@ -23,3 +23,7 @@ resource-pack compatibility where practical. New implementation code is also
 distributed under LGPL-3.0-only.
 
 LICENSE contains LGPLv3; COPYING contains the incorporated GPLv3 terms.
+
+Simmental textures reuse the original Jersey cattle textures from Animania
+1.4.4, upstream commit 48129f3d. These assets retain the original authorship
+and license; Simmental is an addition made by this port.
