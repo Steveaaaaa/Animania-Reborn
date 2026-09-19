@@ -705,5 +705,11 @@
   "tooltip.animania.meal.chevon_stew": "Steady Steps (3:00): walk uphill to store up to 3 charges",
   "tooltip.animania.meal.chevon_stew.detail": "Each charge absorbs up to 2 fall damage; capped at 50%. Consumes all charges.",
   "tooltip.animania.meal.peacock_pilaf": "Composure (4:00): ready after 10 seconds without damage or attacking",
-  "tooltip.animania.meal.peacock_pilaf.detail": "One attack: 40% less damage (max 6), Speed II for 5s; then recharge."
+  "tooltip.animania.meal.peacock_pilaf.detail": "One attack: 40% less damage (max 6), Speed II for 5s; then recharge.",
+  "entity.animania.bull_simmental": "Simmental Bull",
+  "item.animania.entity_egg_bull_simmental": "Simmental Bull Spawn Egg",
+  "entity.animania.cow_simmental": "Simmental Cow",
+  "item.animania.entity_egg_cow_simmental": "Simmental Cow Spawn Egg",
+  "entity.animania.calf_simmental": "Simmental Calf",
+  "item.animania.entity_egg_calf_simmental": "Simmental Calf Spawn Egg"
 }

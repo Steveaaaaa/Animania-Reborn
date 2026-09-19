@@ -101,3 +101,15 @@ After each build, copy the release JAR to the existing Minecraft-version folder
 under `Desktop/新建文件夹`: Forge builds go in `1.20.1`, and NeoForge builds go in
 `1.21.1`. These folders are named for Minecraft versions, not mod release numbers.
 Update the matching JAR filename while keeping older releases and unrelated files.
+
+## Simmental cattle
+
+Simmental is a new dual-purpose breed using the original Jersey bull, cow and
+calf textures from Animania 1.4.4 (upstream commit `48129f3d`). The Hereford adult
+models and standard calf model match that release's Jersey renderers. It retains
+Jersey animation branches, including grazing and sleeping, without replacing Jersey.
+
+Simmental cows spawn in plains and hills, configurable through `cowSimmental`
+in the farm biome settings. They follow the existing care, breeding and growth
+rules, provide ordinary milk under the existing lactation conditions, and use the
+prime beef loot table as adults. All three roles have separate spawn eggs.
