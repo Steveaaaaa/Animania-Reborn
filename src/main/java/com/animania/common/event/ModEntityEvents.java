@@ -32,6 +32,16 @@ public final class ModEntityEvents {
 
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
+        ModEntities.AXOLOTL_BREEDS.values().forEach(type -> event.put(type.get(),
+                net.minecraft.world.entity.animal.axolotl.Axolotl.createAttributes().build()));
+        ModEntities.BEE_BREEDS.values().forEach(type ->
+                event.put(type.get(), net.minecraft.world.entity.animal.Bee.createAttributes().build()));
+        ModEntities.MODERN_FOX_BREEDS.values().forEach(type ->
+                event.put(type.get(), net.minecraft.world.entity.animal.Fox.createAttributes().build()));
+        ModEntities.MOUNTAIN_GOAT_BREEDS.values().forEach(type ->
+                event.put(type.get(), net.minecraft.world.entity.animal.goat.Goat.createAttributes().build()));
+        event.put(ModEntities.MODERN_FOX.get(), net.minecraft.world.entity.animal.Fox.createAttributes().build());
+        event.put(ModEntities.MOUNTAIN_GOAT.get(), net.minecraft.world.entity.animal.goat.Goat.createAttributes().build());
         ModEntities.ALL_CHICKENS.values().forEach(type ->
                 event.put(type.get(), AnimaniaChicken.createAttributes()
                         .add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE, 2.0D).build()));
@@ -155,9 +165,12 @@ public final class ModEntityEvents {
             }
         });
         ModEntities.ALL_DOGS.forEach((name, type) -> {
-            if (name.equals("female_fox") || name.equals("female_wolf")) {
+            if (name.equals("female_fox") || name.startsWith("female_")
+                    && com.animania.catsdogs.dog.DogBreed.fromPath(name).isWolf()) {
                 event.register(type.get(), SpawnPlacements.Type.ON_GROUND,
-                        Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules,
+                        Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, com.animania.catsdogs.dog.DogBreed.fromPath(name).isNewWolf()
+                                ? com.animania.catsdogs.dog.AnimaniaDog::checkWolfSpawnRules
+                                : Animal::checkAnimalSpawnRules,
                         SpawnPlacementRegisterEvent.Operation.REPLACE);
             }
         });

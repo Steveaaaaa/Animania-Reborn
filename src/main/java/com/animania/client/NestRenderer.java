@@ -20,12 +20,14 @@ public final class NestRenderer implements BlockEntityRenderer<NestBlockEntity> 
         if (count == 0) return;
         NestBreed breed = nest.getBlockState().getValue(NestBlock.BREED);
         String color = breed == NestBreed.PEACOCK_WHITE ? "peacock_white"
-                : breed.peafowlBreed() != null ? "blue" : breed == NestBreed.LEGHORN ? "white" : "brown";
-        LegacyAnimalModel<Entity> eggs = LegacyAnimalModel.load("nest_" + color + "_" + count);
+                : breed.peafowlBreed() != null ? "blue" : breed.chickenBreed() == null ? "white" : breed.chickenBreed().eggColor();
+        boolean blueChicken = breed.chickenBreed() == com.animania.farm.chicken.ChickenBreed.COLD;
+        var texture = blueChicken ? ResourceLocation.tryParse("animania:textures/entity/tileentities/block_nest_chicken_blue.png") : TEXTURE;
+        LegacyAnimalModel<Entity> eggs = LegacyAnimalModel.load("nest_" + (blueChicken ? "white" : color) + "_" + count);
         poses.pushPose();
         poses.translate(0.5D, 1.5D, 0.5D);
         poses.scale(-1, -1, 1);
-        eggs.renderToBuffer(poses, buffers.getBuffer(RenderType.entityCutoutNoCull(TEXTURE)), light, overlay, 0xFFFFFFFF);
+        eggs.renderToBuffer(poses, buffers.getBuffer(RenderType.entityCutoutNoCull(texture)), light, overlay, 0xFFFFFFFF);
         poses.popPose();
     }
 }

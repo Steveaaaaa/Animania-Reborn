@@ -8,7 +8,13 @@ public enum SheepBreed implements StringRepresentable {
     FRIESIAN("friesian", false),
     JACOB("jacob", false),
     MERINO("merino", false),
-    SUFFOLK("suffolk", true);
+    SUFFOLK("suffolk", true),
+    FLECKED("flecked", false),
+    FUZZY("fuzzy", false),
+    INKY("inky", false),
+    LONG_NOSED("long_nosed", true),
+    PATCHED("patched", false),
+    ROCKY("rocky", false);
 
     private final String id;
     private final boolean prime;
@@ -21,6 +27,17 @@ public enum SheepBreed implements StringRepresentable {
     @Override
     public String getSerializedName() {
         return id;
+    }
+
+    public boolean isEarthBreed() {
+        return switch (this) {
+            case FLECKED, FUZZY, INKY, LONG_NOSED, PATCHED, ROCKY -> true;
+            default -> false;
+        };
+    }
+
+    public boolean hasPatternedWool() {
+        return this == FLECKED || this == INKY || this == LONG_NOSED || this == ROCKY;
     }
 
     public boolean isPrime() {

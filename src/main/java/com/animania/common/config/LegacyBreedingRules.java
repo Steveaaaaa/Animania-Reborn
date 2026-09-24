@@ -11,7 +11,7 @@ public final class LegacyBreedingRules {
     private LegacyBreedingRules() {}
 
     public static boolean isReady(Animal animal) {
-        return animal.getAge() == 0 && !AnimalInformation.isSterilized(animal)
+        return com.animania.common.entity.HusbandryMood.breedingAllowed(animal) && animal.getAge() == 0 && ModAttachments.getData(animal, ModAttachments.RECOVERY) == 0 && !AnimalInformation.isSterilized(animal)
                 && com.animania.common.entity.LegacyAnimalNeeds.isFed(animal)
                 && com.animania.common.entity.LegacyAnimalNeeds.isWatered(animal)
                 && (!LegacyConfig.FEED_TO_BREED.get() || ModAttachments.getData(animal, ModAttachments.HAND_FED))
@@ -26,16 +26,11 @@ public final class LegacyBreedingRules {
             int count = level.getEntitiesOfClass(first.getClass(), first.getBoundingBox().inflate(radius)).size();
             if (count + 1 >= LegacyConfig.ENTITY_BREEDING_LIMIT.get()) return false;
         }
+        if (!AnimalInformation.formsPairBond(first) && !AnimalInformation.formsPairBond(second)) return true;
         String firstMate = ModAttachments.getData(first, ModAttachments.LAST_MATE);
         String secondMate = ModAttachments.getData(second, ModAttachments.LAST_MATE);
-        if (!LegacyConfig.MALES_MATE_MULTIPLE_FEMALES.get()) {
-            return (firstMate.isEmpty() || firstMate.equals(second.getUUID().toString()))
-                    && (secondMate.isEmpty() || secondMate.equals(first.getUUID().toString()));
-        }
-        Animal female = AnimalInformation.gender(first) == AnimalInformation.Gender.FEMALE ? first : second;
-        Animal male = female == first ? second : first;
-        String femaleMate = ModAttachments.getData(female, ModAttachments.LAST_MATE);
-        return femaleMate.isEmpty() || femaleMate.equals(male.getUUID().toString());
+        return (firstMate.isEmpty() || firstMate.equals(second.getUUID().toString()))
+                && (secondMate.isEmpty() || secondMate.equals(first.getUUID().toString()));
     }
 
     public static int litterSize(RandomSource random) {

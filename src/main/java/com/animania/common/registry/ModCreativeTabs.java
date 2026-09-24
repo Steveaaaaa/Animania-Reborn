@@ -19,6 +19,8 @@ public final class ModCreativeTabs {
                     .icon(() -> ModItems.TROUGH.get().getDefaultInstance())
                     .displayItems((parameters, output) ->
                             ModItems.ITEMS.getEntries().forEach(item -> {
+                                String path = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item.get()).getPath();
+                                if (path.equals("entity_egg_modern_fox") || path.equals("entity_egg_mountain_goat")) return;
                                 if (item.get() != ModItems.CHEESE_SANDWICH.get()
                                         && item.get() != ModItems.TRUFFLE_RISOTTO.get()
                                         && item.get() != ModItems.CHEVON_STEW.get()

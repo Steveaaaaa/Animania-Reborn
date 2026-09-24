@@ -88,7 +88,7 @@ public final class LegacyFindWaterGoal extends LegacySearchBlockGoal {
             }
         }
         if (!consumed) return;
-        if (providerConsumed) LegacyAnimalNeeds.water(waterAnimal);
+        if (providerConsumed) { LegacyAnimalNeeds.water(waterAnimal); com.animania.common.entity.HusbandryMood.caredFor(waterAnimal); }
         else LegacyAnimalNeeds.setWatered(waterAnimal, true);
         if (profile.automaticEatAnimation()) ModAttachments.setData(waterAnimal, ModAttachments.EATING_TICKS, 80);
         waterFindTimer = 0;

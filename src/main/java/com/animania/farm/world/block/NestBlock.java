@@ -132,7 +132,7 @@ public final class NestBlock extends BaseEntityBlock {
             if ((breed != null || peafowl != null) && state.getValue(EGGS) > 0) {
                 ItemStack eggs = new ItemStack(peafowl != null
                                 ? peafowl == PeafowlBreed.BLUE ? ModItems.PEACOCK_EGG_BLUE.get() : ModItems.PEACOCK_EGG_WHITE.get()
-                                : breed.laysBrownEggs() ? ModItems.BROWN_EGG.get() : Items.EGG,
+                                : breed.eggItem(),
                         state.getValue(EGGS));
                 Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.25, pos.getZ() + 0.5, eggs);
             }
@@ -148,15 +148,18 @@ public final class NestBlock extends BaseEntityBlock {
         if ((breed == null && peafowlBreed == null)
                 || random.nextInt(LegacyConfig.EGG_HATCH_CHANCE.get()) != 0) return;
 
+        NestBreed sireBreed = level.getBlockEntity(pos) instanceof com.animania.farm.world.block.entity.NestBlockEntity clutch
+                ? clutch.fatherBreed() : NestBreed.EMPTY;
         if (peafowlBreed != null) {
             List<AnimaniaPeafowl> males = level.getEntitiesOfClass(AnimaniaPeafowl.class,
                     SHAPE.bounds().move(pos).inflate(4.0), bird -> bird.role() == PeafowlRole.PEACOCK);
-            if (males.isEmpty()) return;
-            PeafowlBreed childBreed = random.nextBoolean() ? peafowlBreed : males.get(0).breed();
+            if (males.isEmpty() && sireBreed.peafowlBreed() == null) return;
+            PeafowlBreed childBreed = random.nextBoolean() ? peafowlBreed : sireBreed.peafowlBreed() != null ? sireBreed.peafowlBreed() : males.get(0).breed();
             AnimaniaPeafowl chick = ModEntities.peafowl(PeafowlRole.PEACHICK, childBreed).create(level);
             if (chick != null) {
                 chick.moveTo(pos.getX() + 0.5, pos.getY() + 0.3, pos.getZ() + 0.5,
                         random.nextFloat() * 360.0F, 0.0F);
+                if (level.getBlockEntity(pos) instanceof com.animania.farm.world.block.entity.NestBlockEntity nest) nest.recordHatchling(chick);
                 level.addFreshEntity(chick);
                 consumeEgg(level, pos, state);
             }
@@ -166,15 +169,16 @@ public final class NestBlock extends BaseEntityBlock {
         List<AnimaniaChicken> roosters = level.getEntitiesOfClass(AnimaniaChicken.class,
                 SHAPE.bounds().move(pos).inflate(3.0),
                 chicken -> chicken.role() == ChickenRole.ROOSTER);
-        if (roosters.isEmpty()) {
+        if (roosters.isEmpty() && sireBreed.chickenBreed() == null) {
             return;
         }
 
-        ChickenBreed childBreed = random.nextBoolean() ? breed : roosters.get(0).breed();
+        ChickenBreed childBreed = random.nextBoolean() ? breed : sireBreed.chickenBreed() != null ? sireBreed.chickenBreed() : roosters.get(0).breed();
         AnimaniaChicken chick = ModEntities.chicken(ChickenRole.CHICK, childBreed).create(level);
         if (chick != null) {
             chick.moveTo(pos.getX() + 0.5, pos.getY() + 0.3, pos.getZ() + 0.5, random.nextFloat() * 360.0F, 0.0F);
-            level.addFreshEntity(chick);
+            if (level.getBlockEntity(pos) instanceof com.animania.farm.world.block.entity.NestBlockEntity nest) nest.recordHatchling(chick);
+                level.addFreshEntity(chick);
             consumeEgg(level, pos, state);
         }
     }
@@ -193,7 +197,7 @@ public final class NestBlock extends BaseEntityBlock {
         if (breed == null && peafowl == null) return ItemStack.EMPTY;
         return new ItemStack(peafowl != null
                 ? peafowl == PeafowlBreed.BLUE ? ModItems.PEACOCK_EGG_BLUE.get() : ModItems.PEACOCK_EGG_WHITE.get()
-                : breed.laysBrownEggs() ? ModItems.BROWN_EGG.get() : Items.EGG, state.getValue(EGGS));
+                : breed.eggItem(), state.getValue(EGGS));
     }
 
     public static void consumeEggs(Level level, BlockPos pos, int amount) {

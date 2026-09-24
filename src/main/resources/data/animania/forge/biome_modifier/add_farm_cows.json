@@ -5,47 +5,105 @@
   "default_probability": 9,
   "family_group": "cows",
   "spawners": [
-    { "type": "animania:cow_fighting", "weight": 9, "minCount": 2, "maxCount": 2 },
-    { "type": "animania:cow_simmental", "weight": 9, "minCount": 2, "maxCount": 2 },
+    {
+      "type": "animania:cow_fighting",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:cow_simmental",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 2
+    },
     {
       "type": "animania:cow_angus",
-      "weight": 9,
+      "weight": 5,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:cow_friesian",
-      "weight": 9,
+      "weight": 5,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:cow_hereford",
-      "weight": 9,
+      "weight": 5,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:cow_holstein",
-      "weight": 9,
+      "weight": 5,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:cow_longhorn",
-      "weight": 9,
+      "weight": 5,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:cow_highland",
-      "weight": 9,
+      "weight": 5,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:cow_jersey",
-      "weight": 9,
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:cow_umbra",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:cow_wooly",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:cow_warm",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:cow_pinto",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:cow_albino",
+      "weight": 1,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:cow_norwegian_red",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:cow_cream",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:cow_cookie",
+      "weight": 5,
       "minCount": 2,
       "maxCount": 2
     }

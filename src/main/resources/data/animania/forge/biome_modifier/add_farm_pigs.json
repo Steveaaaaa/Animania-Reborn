@@ -7,37 +7,55 @@
   "spawners": [
     {
       "type": "animania:sow_duroc",
-      "weight": 9,
+      "weight": 6,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:sow_hampshire",
-      "weight": 9,
+      "weight": 6,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:sow_large_black",
-      "weight": 9,
+      "weight": 6,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:sow_large_white",
-      "weight": 9,
+      "weight": 6,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:sow_old_spot",
-      "weight": 9,
+      "weight": 6,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:sow_yorkshire",
-      "weight": 4,
+      "weight": 3,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:sow_mottled",
+      "weight": 6,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:sow_piebald",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:sow_pink_footed",
+      "weight": 5,
       "minCount": 2,
       "maxCount": 2
     }

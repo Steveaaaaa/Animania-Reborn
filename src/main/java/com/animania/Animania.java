@@ -38,7 +38,7 @@ public final class Animania {
         ModCreativeTabs.register(modBus);
         ModAttachments.register(modBus);
         ModWorldgen.register(modBus);
-        container.registerConfig(ModConfig.Type.SERVER, AnimaniaConfig.SPEC, "animania-modern-server.toml");
+        container.registerConfig(ModConfig.Type.COMMON, AnimaniaConfig.SPEC, "animania-modern-server.toml");
         LegacyConfig.register(container);
 
         LOGGER.info("Loading Animania Reborn for Forge 1.20.1");

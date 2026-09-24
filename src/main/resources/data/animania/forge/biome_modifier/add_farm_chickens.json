@@ -7,31 +7,67 @@
   "spawners": [
     {
       "type": "animania:hen_leghorn",
-      "weight": 9,
+      "weight": 5,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:hen_orpington",
-      "weight": 9,
+      "weight": 5,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:hen_plymouth_rock",
-      "weight": 9,
+      "weight": 5,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:hen_rhode_island_red",
-      "weight": 9,
+      "weight": 5,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:hen_wyandotte",
-      "weight": 9,
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:hen_amber",
+      "weight": 4,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:hen_bronzed",
+      "weight": 4,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:hen_gold_crested",
+      "weight": 3,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:hen_midnight",
+      "weight": 3,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:hen_cold",
+      "weight": 3,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:hen_warm",
+      "weight": 3,
       "minCount": 2,
       "maxCount": 2
     }

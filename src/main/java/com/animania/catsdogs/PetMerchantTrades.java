@@ -36,6 +36,11 @@ public final class PetMerchantTrades {
         addCat(event, 3, CatBreed.EXOTIC, 15, 25);
         addCat(event, 2, CatBreed.TABBY, 15, 25);
         addCat(event, 3, CatBreed.SIAMESE, 25, 35);
+        for (CatBreed breed : new CatBreed[]{CatBreed.ALL_BLACK, CatBreed.TUXEDO, CatBreed.RED_TABBY,
+                CatBreed.BRITISH_SHORTHAIR, CatBreed.CALICO, CatBreed.PERSIAN, CatBreed.WHITE, CatBreed.JELLIE}) {
+            addCat(event, breed == CatBreed.PERSIAN || breed == CatBreed.BRITISH_SHORTHAIR ? 3 : 2,
+                    breed, 15, 25);
+        }
 
         addDog(event, 1, DogBreed.BLOOD_HOUND, 15, 30);
         addDog(event, 2, DogBreed.CHIHUAHUA, 20, 30);

@@ -38,7 +38,7 @@ public final class LegacyFollowParentGoal extends Goal {
     }
 
     public static boolean supports(Animal animal) {
-        return animal instanceof AnimaniaCow || animal instanceof AnimaniaGoat
+        return com.animania.common.entity.FamilyLifecycle.bird(animal) || animal instanceof com.animania.extra.rodent.AnimaniaRodent || animal instanceof com.animania.modern.ModernAnimal || animal instanceof AnimaniaCow || animal instanceof AnimaniaGoat
                 || animal instanceof AnimaniaHorse || animal instanceof AnimaniaPig
                 || animal instanceof AnimaniaSheep || animal instanceof AnimaniaRabbit
                 || animal instanceof AnimaniaCat || animal instanceof AnimaniaDog;
@@ -48,8 +48,12 @@ public final class LegacyFollowParentGoal extends Goal {
     public boolean canUse() {
         if (++firingDelay <= LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get()) return false;
         firingDelay = 0;
-        if (!child.isBaby() || !(child.level() instanceof ServerLevel server)) return false;
-        if (!child.level().isDay() || ModAttachments.getData(child, ModAttachments.SLEEPING)) return false;
+        if (!child.isBaby() || com.animania.common.entity.FamilyLifecycle.staysNearBirthplace(child) || !(child.level() instanceof ServerLevel server)) return false;
+        boolean inactiveTime = child instanceof com.animania.extra.rodent.AnimaniaRodent
+                || LegacySleepGoal.nocturnalWildCatOrFox(child)
+                ? LegacySleepGoal.shouldSleepNow(child) : !child.level().isDay();
+        if (inactiveTime || ModAttachments.getData(child, ModAttachments.SLEEPING)) return false;
+        if (child instanceof net.minecraft.world.entity.TamableAnimal pet && pet.isOrderedToSit()) return false;
         String parentId = ModAttachments.getData(child, ModAttachments.PARENT);
         if (parentId.isBlank()) return false;
         Entity found;
@@ -69,6 +73,8 @@ public final class LegacyFollowParentGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
+        if (ModAttachments.getData(child, ModAttachments.SLEEPING) || child.hurtTime > 0 || child.isLeashed()
+                || child instanceof net.minecraft.world.entity.TamableAnimal pet && pet.isOrderedToSit()) return false;
         if (!child.isBaby() || parent == null || !parent.isAlive() || !sameBreed(child, parent)) return false;
         double distance = child.distanceToSqr(parent);
         return distance >= 9.0D && distance <= 256.0D;
@@ -94,6 +100,10 @@ public final class LegacyFollowParentGoal extends Goal {
     }
 
     private static boolean sameBreed(Animal child, Animal parent) {
+        if (child instanceof com.animania.extra.rodent.AnimaniaRodent a
+                && parent instanceof com.animania.extra.rodent.AnimaniaRodent b) return a.sameSpecies(b);
+        if (ModAttachments.getData(child, ModAttachments.PARENT).equals(parent.getUUID().toString())) return child.getClass() == parent.getClass();
+        if (child instanceof com.animania.modern.ModernAnimal) return child.getClass() == parent.getClass();
         if (child instanceof AnimaniaCow a && parent instanceof AnimaniaCow b) return a.breed() == b.breed();
         if (child instanceof AnimaniaGoat a && parent instanceof AnimaniaGoat b) return a.breed() == b.breed();
         if (child instanceof AnimaniaPig a && parent instanceof AnimaniaPig b) return a.breed() == b.breed();

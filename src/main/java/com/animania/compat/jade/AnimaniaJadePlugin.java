@@ -111,9 +111,24 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
             if (!(accessor.getEntity() instanceof Animal animal) || !AnimalInformation.isAnimaniaAnimal(animal)) return;
 
             data.putBoolean("AnimaniaAnimal", true);
+            HusbandryMoodTooltip.write(data, animal);
+            data.putBoolean("HungerDisabled", LegacyConfig.AMBIANCE_MODE.get()
+                    || com.animania.common.config.AnimalNeedsExclusions.hunger(animal));
+            data.putBoolean("ThirstDisabled", LegacyConfig.AMBIANCE_MODE.get()
+                    || com.animania.common.config.AnimalNeedsExclusions.thirst(animal));
+            if (animal instanceof com.animania.modern.ModernBee bee) {
+                data.putBoolean("Bee", true);
+                data.putBoolean("Nectar", bee.hasNectar());
+                data.putBoolean("Angry", bee.isAngry());
+                data.putBoolean("ReturningToHive", bee.isReturningToFarmHive());
+                return;
+            }
+            if (animal instanceof com.animania.modern.ModernFox fox) data.putString("Coat", "fox." + fox.coatName());
+            else if (animal instanceof com.animania.modern.MountainGoat goat) data.putString("Coat", "mountain_goat." + goat.coatName());
             data.putBoolean("Fed", ModAttachments.getData(animal, ModAttachments.FED));
             data.putBoolean("Watered", ModAttachments.getData(animal, ModAttachments.WATERED));
             data.putBoolean("Sleeping", ModAttachments.getData(animal, ModAttachments.SLEEPING));
+            data.putInt("FarmActivity", ModAttachments.getData(animal, ModAttachments.FARM_ACTIVITY));
             data.putString("Gender", AnimalInformation.gender(animal).name().toLowerCase());
             data.putBoolean("Sterilized", AnimalInformation.isSterilized(animal));
 
@@ -132,10 +147,14 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
             if (supportsMilk(animal)) data.putBoolean("Milkable", saved.getBoolean("HasKids"));
             if (animal instanceof AnimaniaChicken chicken && chicken.role() == ChickenRole.HEN && !chicken.isBaby()) {
                 data.putBoolean("EggLayer", true);
-                data.putInt("EggTimer", Math.max(0, saved.getInt("EggLayTime")));
+                boolean eggTimerActive = com.animania.common.config.LegacyConfig.CHICKENS_DROP_EGGS.get()
+                        && chicken.isAlive() && !chicken.isChickenJockey();
+                data.putBoolean("EggTimerActive", eggTimerActive);
+                if (eggTimerActive) data.putInt("EggTimer", Math.max(0, saved.getInt("EggLayTime")));
                 data.putBoolean("LookingForNest", saved.getBoolean("LookingForNest"));
             } else if (animal instanceof AnimaniaPeafowl peafowl && peafowl.role() == PeafowlRole.PEAHEN && !peafowl.isBaby()) {
                 data.putBoolean("EggLayer", true);
+                data.putBoolean("EggTimerActive", true);
                 data.putInt("EggTimer", Math.max(0, saved.getInt("LaidTimer")));
                 data.putBoolean("LookingForNest", saved.getBoolean("LookingForNest"));
             }
@@ -168,7 +187,10 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
                 }
             }
 
-            addRelationship(data, animal, "Mate", ModAttachments.getData(animal, ModAttachments.LAST_MATE), false);
+            if (AnimalInformation.formsPairBond(animal))
+                addRelationship(data, animal, "Mate", ModAttachments.getData(animal, ModAttachments.LAST_MATE), false);
+            data.putInt("Recovery", ModAttachments.getData(animal, ModAttachments.RECOVERY));
+            data.putBoolean("NursingYoung", com.animania.common.entity.FamilyLifecycle.milkDependent(animal));
             addRelationship(data, animal, "Parent", ModAttachments.getData(animal, ModAttachments.PARENT), true);
         }
 
@@ -192,20 +214,29 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
         public void appendTooltip(ITooltip tooltip, EntityAccessor accessor, IPluginConfig config) {
             CompoundTag data = accessor.getServerData();
             if (!data.getBoolean("AnimaniaAnimal")) return;
+            HusbandryMoodTooltip.append(data, tooltip);
 
-            boolean fed = data.getBoolean("Fed");
-            boolean watered = data.getBoolean("Watered");
-            if (!LegacyConfig.AMBIANCE_MODE.get()) {
+            if (data.getBoolean("Bee")) {
+                tooltip.add(Component.translatable(data.getBoolean("Nectar")
+                        ? "jade.animania.bee_nectar" : "jade.animania.bee_foraging"));
+                if (data.getBoolean("ReturningToHive")) tooltip.add(Component.translatable("jade.animania.bee_returning"));
+                if (data.getBoolean("Angry")) tooltip.add(Component.translatable("jade.animania.bee_angry"));
+                return;
+            }
+            boolean fed = data.getBoolean("HungerDisabled") || data.getBoolean("Fed");
+            boolean watered = data.getBoolean("ThirstDisabled") || data.getBoolean("Watered");
+            if (data.getBoolean("HungerDisabled")) tooltip.add(Component.translatable("jade.animania.hunger_disabled"));
+            if (data.getBoolean("ThirstDisabled")) tooltip.add(Component.translatable("jade.animania.thirst_disabled"));
+            if (!data.getBoolean("HungerDisabled") || !data.getBoolean("ThirstDisabled")) {
                 tooltip.add(Component.translatable(fed && watered ? "jade.animania.fed"
                         : fed ? "jade.animania.thirsty"
                         : watered ? "jade.animania.hungry" : "jade.animania.hungry_thirsty"));
             }
+            if (data.contains("Coat")) tooltip.add(Component.translatable("variant.animania." + data.getString("Coat")));
             if (data.getBoolean("Sleeping")) tooltip.add(Component.translatable("jade.animania.sleeping"));
-            if (!accessor.getPlayer().isShiftKeyDown()) {
-                tooltip.add(Component.translatable("jade.animania.hold_shift").withStyle(ChatFormatting.DARK_GRAY));
-                return;
-            }
-
+            int activity = data.getInt("FarmActivity");
+            if (activity >= 1 && activity <= 21)
+                tooltip.add(Component.translatable("jade.animania.activity." + activity));
             String gender = data.getString("Gender");
             if (!gender.equals("none")) {
                 ChatFormatting color = gender.equals("male") ? ChatFormatting.AQUA
@@ -225,6 +256,8 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
             } else if (data.getBoolean("ParentMissing")) {
                 tooltip.add(Component.translatable("jade.animania.parent_missing"));
             }
+            if (data.getInt("Recovery") > 0) tooltip.add(Component.translatable("jade.animania.recovery", (data.getInt("Recovery") + 19) / 20));
+            if (data.getBoolean("NursingYoung")) tooltip.add(Component.translatable("jade.animania.nursing_young"));
             if (data.getBoolean("Fertile")) tooltip.add(Component.translatable("jade.animania.fertile"));
             if (data.getBoolean("SupportsPregnancy") && data.getBoolean("Pregnant")) {
                 tooltip.add(Component.translatable("jade.animania.pregnant", data.getInt("Gestation")));
@@ -233,7 +266,9 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
             if (data.getBoolean("EggLayer")) {
                 tooltip.add(data.getBoolean("LookingForNest")
                         ? Component.translatable("jade.animania.looking_for_nest")
-                        : Component.translatable("jade.animania.egg_timer", data.getInt("EggTimer")));
+                        : data.getBoolean("EggTimerActive")
+                        ? Component.translatable("jade.animania.egg_timer", data.getInt("EggTimer"))
+                        : Component.translatable("jade.animania.egg_preparing"));
             }
             if (data.getBoolean("WoolAnimal")) {
                 int timer = data.getInt("WoolRegrowth");
@@ -258,6 +293,8 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
         }
 
         private static boolean supportsPregnancy(Animal animal) {
+            if (animal instanceof com.animania.extra.rodent.AnimaniaRodent rodent) return !rodent.isBaby() && rodent.isFemale();
+            if (animal instanceof com.animania.modern.ModernAnimal modern) return !animal.isBaby() && modern.isFemale();
             return animal instanceof AnimaniaCow cow && cow.role() == FarmAnimalRole.FEMALE
                     || animal instanceof AnimaniaGoat goat && goat.role() == FarmAnimalRole.FEMALE
                     || animal instanceof AnimaniaPig pig && pig.role() == FarmAnimalRole.FEMALE
@@ -269,6 +306,7 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
         }
 
         private static boolean supportsMilk(Animal animal) {
+            if (animal instanceof com.animania.modern.MountainGoat goat) return !animal.isBaby() && goat.isFemale();
             return animal instanceof AnimaniaCow cow && cow.role() == FarmAnimalRole.FEMALE
                     || animal instanceof AnimaniaGoat goat && goat.role() == FarmAnimalRole.FEMALE
                     || animal instanceof AnimaniaSheep sheep && sheep.role() == FarmAnimalRole.FEMALE;
@@ -422,6 +460,8 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
         @Override
         public void appendServerData(CompoundTag data, BlockAccessor accessor) {
             if (accessor.getBlockEntity() instanceof HiveBlockEntity hive) {
+                data.putInt("Bees", hive.colony().count());
+                data.putInt("KnownFlowers", hive.colony().knownFlowerCount());
                 data.putInt("Honey", hive.honeyAmount());
                 data.putInt("NextHoney", hive.nextHoney());
             }
@@ -432,6 +472,8 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
             CompoundTag data = accessor.getServerData();
             if (data.contains("Honey")) tooltip.add(Component.translatable("jade.animania.hive",
                     data.getInt("Honey"), HiveBlockEntity.CAPACITY, data.getInt("NextHoney")));
+            if (data.getInt("KnownFlowers") > 0) tooltip.add(Component.translatable("jade.animania.hive_flowers", data.getInt("KnownFlowers")));
+            if (data.contains("Bees")) tooltip.add(Component.translatable("message.animania.hive_bees", data.getInt("Bees")));
         }
 
         @Override public ResourceLocation getUid() { return HIVE; }

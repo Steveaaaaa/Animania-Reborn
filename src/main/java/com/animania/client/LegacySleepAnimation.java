@@ -55,7 +55,10 @@ public final class LegacySleepAnimation {
     /** Original preRenderScale transforms, applied after each renderer's scale. */
     static void transform(net.minecraft.world.entity.animal.Animal animal,
                           com.mojang.blaze3d.vertex.PoseStack pose, float partial) {
-        if (!ModAttachments.getData(animal, ModAttachments.SLEEPING)) return;
+        boolean resting = ModAttachments.getData(animal, ModAttachments.FARM_ACTIVITY) == com.animania.common.entity.ai.FarmActivityGoal.RUMINATE
+                || ModAttachments.getData(animal, ModAttachments.FARM_ACTIVITY) == com.animania.common.entity.ai.FarmActivityGoal.PET_REST;
+        if (!ModAttachments.getData(animal, ModAttachments.SLEEPING) && !resting) return;
+        float restBlend = resting ? FarmActivityAnimation.blend(animal, partial) : 1;
         float base;
         if (animal instanceof com.animania.farm.livestock.AnimaniaCow cow) {
             base = cow.role() == com.animania.farm.livestock.FarmAnimalRole.YOUNG ? 1.15F : 1.85F;
@@ -77,9 +80,9 @@ public final class LegacySleepAnimation {
             }
             base = 1.45F;
         } else return;
-        pose.translate(-0.25F, animal.getBbHeight() - base - timer(animal, partial), -0.25F);
-        pose.mulPose(com.mojang.math.Axis.ZP.rotationDegrees(6));
-        if (animal instanceof com.animania.catsdogs.cat.AnimaniaCat) pose.translate(0, animal.isBaby() ? 1 : 0.6, 0);
+        pose.translate(-0.25F * restBlend, (animal.getBbHeight() - base - (resting ? -0.55F : timer(animal, partial))) * restBlend, -0.25F * restBlend);
+        pose.mulPose(com.mojang.math.Axis.ZP.rotationDegrees(6 * restBlend));
+        if (animal instanceof com.animania.catsdogs.cat.AnimaniaCat) pose.translate(0, (animal.isBaby() ? 1 : 0.6) * restBlend, 0);
         if (animal instanceof com.animania.catsdogs.dog.AnimaniaDog) pose.translate(0, -0.3, 0);
     }
 }

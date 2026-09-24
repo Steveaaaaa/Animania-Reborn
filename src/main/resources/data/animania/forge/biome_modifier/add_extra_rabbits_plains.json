@@ -7,13 +7,25 @@
   "spawners": [
     {
       "type": "animania:doe_dutch",
-      "weight": 4,
+      "weight": 2,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:doe_lop",
-      "weight": 4,
+      "weight": 2,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:doe_black_and_white",
+      "weight": 2,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:doe_vested",
+      "weight": 2,
       "minCount": 2,
       "maxCount": 2
     }

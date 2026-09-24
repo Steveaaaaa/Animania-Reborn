@@ -148,7 +148,8 @@ public final class AnimaniaPig extends Pig {
     }
 
     private void tickMudAndTruffles() {
-        boolean inMud = isMud(level(), blockPosition());
+        boolean inMud = ModAttachments.getData(this, ModAttachments.FARM_ACTIVITY) == com.animania.common.entity.ai.FarmActivityGoal.WALLOW
+                && (isMud(level(), blockPosition()) || isMud(level(), blockPosition().below()));
         boolean wasInMud = isInMud();
         entityData.set(IN_MUD, inMud);
         if (inMud) {
@@ -156,7 +157,6 @@ public final class AnimaniaPig extends Pig {
             if (!wasInMud) splashTimer = 1.0F;
             splashTimer = Math.max(0.0F, splashTimer - 0.045F);
             if (splashTimer <= 0.0F) entityData.set(MUD_AMOUNT, 1.0F);
-            refreshPlay();
             addEffect(new net.minecraft.world.effect.MobEffectInstance(
                     net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN, 2, 4, false, false));
         } else if (isInWaterOrRain()) {
@@ -169,7 +169,6 @@ public final class AnimaniaPig extends Pig {
                 entityData.set(MUD_AMOUNT, Math.max(0.0F, mudAmount() - 0.0025F));
         }
         entityData.set(SPLASH_TIMER, splashTimer);
-        if (mudAmount() > 0.0F) refreshPlay();
         if (!com.animania.common.config.LegacyConfig.AMBIANCE_MODE.get()
                 && playedTicks > -1 && --playedTicks == 0) played = false;
 

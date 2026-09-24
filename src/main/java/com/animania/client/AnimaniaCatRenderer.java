@@ -19,11 +19,15 @@ public final class AnimaniaCatRenderer extends MobRenderer<AnimaniaCat, LegacyAn
     @Override
     public void render(AnimaniaCat cat, float yaw, float partialTick, PoseStack poseStack,
                        net.minecraft.client.renderer.MultiBufferSource buffers, int light) {
-        String breed = cat.breed() == com.animania.catsdogs.cat.CatBreed.NORWEGIAN ? "ragdoll"
-                : cat.breed().getSerializedName().replace("_", "");
-        String name = "modelcat" + breed;
-        model = models.computeIfAbsent(name,
-                key -> LegacyAnimalModel.load("catsdogs/client/models/cats/" + key));
+        String name = cat.breed().modelName();
+        if (cat.breed().isVanillaAddition()) {
+            String variant = "cats/" + cat.breed().getSerializedName();
+            model = models.computeIfAbsent(variant, key -> LegacyAnimalModel.loadVariant(
+                    "catsdogs/client/models/cats/" + name, variant));
+        } else {
+            model = models.computeIfAbsent(name,
+                    key -> LegacyAnimalModel.load("catsdogs/client/models/cats/" + key));
+        }
         super.render(cat, yaw, partialTick, poseStack, buffers, light);
     }
 
@@ -38,11 +42,15 @@ public final class AnimaniaCatRenderer extends MobRenderer<AnimaniaCat, LegacyAn
                 case RAGDOLL -> 0.655F; case AMERICAN_SHORTHAIR -> 0.635F; case ASIATIC -> 0.765F;
                 case EXOTIC -> 0.585F; case NORWEGIAN -> 0.575F; case OCELOT -> 0.82F;
                 case SIAMESE -> 0.555F; case TABBY -> 0.68F;
+                case PERSIAN -> 0.585F; case BRITISH_SHORTHAIR -> 0.635F;
+                default -> 0.68F;
             };
             case TOM -> switch (cat.breed()) {
                 case RAGDOLL -> 0.67F; case AMERICAN_SHORTHAIR -> 0.65F; case ASIATIC -> 0.78F;
                 case EXOTIC -> 0.60F; case NORWEGIAN -> 0.59F; case OCELOT -> 0.85F;
                 case SIAMESE -> 0.57F; case TABBY -> 0.70F;
+                case PERSIAN -> 0.60F; case BRITISH_SHORTHAIR -> 0.65F;
+                default -> 0.70F;
             };
         };
         poseStack.scale(scale, scale, scale);

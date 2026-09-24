@@ -21,6 +21,7 @@ public final class AnimaniaSheepRenderer extends MobRenderer<AnimaniaSheep, Lega
     public void render(AnimaniaSheep sheep, float yaw, float partialTick, PoseStack poseStack,
                        net.minecraft.client.renderer.MultiBufferSource buffers, int light) {
         String name = switch (sheep.breed()) {
+            case FLECKED, FUZZY, INKY, LONG_NOSED, PATCHED, ROCKY -> "modelmerinoewe";
             case DORPER -> "modeldorpersheep";
             case DORSET -> sheep.role() == FarmAnimalRole.MALE ? "modeldorsetram" : "modeldorsetewe";
             case FRIESIAN -> "modelfriesiansheep";
@@ -28,8 +29,14 @@ public final class AnimaniaSheepRenderer extends MobRenderer<AnimaniaSheep, Lega
             case MERINO -> sheep.role() == FarmAnimalRole.MALE ? "modelmerinoram" : "modelmerinoewe";
             case SUFFOLK -> sheep.role() == FarmAnimalRole.MALE ? "modelsuffolkram" : "modelsuffolkewe";
         };
-        model = models.computeIfAbsent(name,
-                key -> LegacyAnimalModel.load("farm/client/model/sheep/" + key));
+        if (sheep.breed().isEarthBreed()) {
+            String variant = "sheep/" + sheep.breed().getSerializedName();
+            model = models.computeIfAbsent(variant, ignored -> LegacyAnimalModel.loadVariant(
+                    "farm/client/model/sheep/" + name, variant));
+        } else {
+            model = models.computeIfAbsent(name,
+                    key -> LegacyAnimalModel.load("farm/client/model/sheep/" + key));
+        }
         model.setWoolTint(sheep.isSheared() || sheep.getColor() != DyeColor.WHITE ? 0xFFFFFFFF : 0xFF000000 | dyeRgb(sheep.woolDye()));
         super.render(sheep, yaw, partialTick, poseStack, buffers, light);
     }
@@ -40,14 +47,17 @@ public final class AnimaniaSheepRenderer extends MobRenderer<AnimaniaSheep, Lega
             case FEMALE -> switch (sheep.breed()) {
                 case DORPER -> 0.60F; case DORSET -> 0.58F; case FRIESIAN -> 0.61F;
                 case JACOB -> 0.48F; case MERINO -> 0.53F; case SUFFOLK -> 0.64F;
+                default -> 0.56F;
             };
             case MALE -> switch (sheep.breed()) {
                 case DORPER -> 0.68F; case DORSET -> 0.62F; case FRIESIAN -> 0.65F;
                 case JACOB -> 0.52F; case MERINO -> 0.56F; case SUFFOLK -> 0.68F;
+                default -> 0.61F;
             };
             case YOUNG -> switch (sheep.breed()) {
                 case DORPER, DORSET -> 0.30F; case FRIESIAN -> 0.33F;
                 case JACOB -> 0.22F; case MERINO -> 0.24F; case SUFFOLK -> 0.32F;
+                default -> 0.27F;
             };
         };
         poseStack.scale(scale, scale, scale);
@@ -59,6 +69,7 @@ public final class AnimaniaSheepRenderer extends MobRenderer<AnimaniaSheep, Lega
         String color = sheep.getColor() == DyeColor.BLACK ? "black"
                 : sheep.getColor() == DyeColor.BROWN ? "brown" : "white";
         String texture = switch (sheep.breed()) {
+            case FLECKED, FUZZY, INKY, LONG_NOSED, PATCHED, ROCKY -> "sheep_" + sheep.breed().getSerializedName();
             case DORPER -> "sheep_dorper";
             case DORSET -> "sheep_dorset_" + color + "_" + (sheep.role() == FarmAnimalRole.MALE ? "ram" : "ewe");
             case FRIESIAN -> "sheep_friesian_" + color + (sheep.role() == FarmAnimalRole.MALE ? "_ram" : "");
@@ -76,6 +87,8 @@ public final class AnimaniaSheepRenderer extends MobRenderer<AnimaniaSheep, Lega
 
     private static int eyelidColor(AnimaniaSheep sheep) {
         return switch (sheep.breed()) {
+            case FLECKED -> 0xE4DED0; case FUZZY -> 0x45362C; case INKY -> 0xA9967A;
+            case LONG_NOSED -> 0x3C302A; case PATCHED -> 0x343331; case ROCKY -> 0x686862;
             case DORPER -> 0x222222; case JACOB -> 0x353535; case SUFFOLK -> 0x1D1D1D;
             case DORSET, FRIESIAN, MERINO -> sheep.getColor() == DyeColor.BLACK ? 0x202020
                     : sheep.getColor() == DyeColor.BROWN ? 0x5A463A : 0xD8D8D8;

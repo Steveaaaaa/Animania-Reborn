@@ -19,6 +19,12 @@ public final class LegacySleepGoal extends LegacySearchBlockGoal {
     private final Block preferred;
     private final Block backup;
     private int delay;
+    private int roostTravel;
+
+    private boolean roostingBird() {
+        return sleeper instanceof com.animania.farm.chicken.AnimaniaChicken
+                || sleeper instanceof com.animania.extra.peafowl.AnimaniaPeafowl;
+    }
 
     public LegacySleepGoal(PathfinderMob mob, Animal sleeper) {
         super(mob, 0.8D, DestinationOffsets.UP);
@@ -37,6 +43,8 @@ public final class LegacySleepGoal extends LegacySearchBlockGoal {
             return false;
         }
         if (ModAttachments.getData(sleeper, ModAttachments.SLEEPING)) return false;
+        if (roostingBird() && (sleeper.hurtTime > 0 || sleeper.getTarget() != null
+                || sleeper.isOnFire() || sleeper.isInWaterOrBubble() || FarmHerdGoal.hasFoodLure(sleeper))) return false;
         return shouldSleepNow(sleeper) && !sleeper.level().isRainingAt(sleeper.blockPosition())
                 && sleeper.getRandom().nextInt(3) == 0 && searchForDestination();
     }
@@ -59,29 +67,68 @@ public final class LegacySleepGoal extends LegacySearchBlockGoal {
     @Override
     public boolean canContinueToUse() {
         return super.canContinueToUse() && !ModAttachments.getData(sleeper, ModAttachments.SLEEPING)
-                && shouldSleepNow(sleeper);
+                && shouldSleepNow(sleeper) && (!roostingBird() || roostTravel < 240
+                    && sleeper.hurtTime == 0 && sleeper.getTarget() == null && !sleeper.isOnFire()
+                    && !sleeper.isInWaterOrBubble() && !FarmHerdGoal.hasFoodLure(sleeper));
+    }
+
+    private boolean clearRoost(BlockPos pos) {
+        var box = sleeper.getBoundingBox().move(pos.getX() + 0.5 - sleeper.getX(),
+                pos.getY() + 1 - sleeper.getY(), pos.getZ() + 0.5 - sleeper.getZ());
+        return level.getBlockState(pos).isFaceSturdy(level, pos, net.minecraft.core.Direction.UP)
+                && level.getFluidState(pos.above()).isEmpty() && !level.isRainingAt(pos.above())
+                && level.noCollision(sleeper, box);
+    }
+
+    @Override public void start() {
+        roostTravel = 0;
+        super.start();
+    }
+
+    @Override public void tick() {
+        if (!roostingBird()) { super.tick(); return; }
+        if (seekingBlockPos == null) return;
+        roostTravel++;
+        double dx = sleeper.getX() - seekingBlockPos.getX() - 0.5;
+        double dz = sleeper.getZ() - seekingBlockPos.getZ() - 0.5;
+        // The generic search accepts a wide radius; a bird must actually reach its perch.
+        if (dx * dx + dz * dz < 0.36 && Math.abs(sleeper.getY() - seekingBlockPos.getY() - 1) < 0.35
+                && sleeper.onGround()) onArriveAtDestination();
+        else if (roostTravel % 20 == 0) sleeper.getNavigation().moveTo(
+                seekingBlockPos.getX() + 0.5, seekingBlockPos.getY() + 1, seekingBlockPos.getZ() + 0.5, 0.8);
     }
 
     @Override
     protected boolean shouldMoveTo(BlockPos pos) {
+        if (roostingBird()) {
+            var state = level.getBlockState(pos);
+            return (state.is(net.minecraft.tags.BlockTags.LOGS) || state.is(net.minecraft.tags.BlockTags.PLANKS))
+                    && clearRoost(pos)
+                    && !level.isRainingAt(pos.above())
+                    && level.getBlockState(pos.below()).getCollisionShape(level, pos.below()).isEmpty()
+                    && level.getEntitiesOfClass(Animal.class, new net.minecraft.world.phys.AABB(pos.above()).inflate(0.3),
+                        other -> other != sleeper).isEmpty();
+        }
         return preferred != Blocks.AIR && level.getBlockState(pos).is(preferred);
     }
 
     @Override
     protected boolean hasSecondaryTarget() {
-        return backup != Blocks.AIR;
+        return roostingBird() || backup != Blocks.AIR;
     }
 
     @Override
     protected boolean shouldMoveToSecondary(BlockPos pos) {
-        return level.getBlockState(pos).is(backup);
+        return (level.getBlockState(pos).is(backup)
+                || roostingBird() && level.getBlockState(pos).is(preferred))
+                && (!roostingBird() || clearRoost(pos));
     }
 
     @Override
     protected boolean targetStillValid() {
         if (seekingBlockPos == null) return false;
         Block block = level.getBlockState(seekingBlockPos).getBlock();
-        return block == preferred || block == backup;
+        return shouldMoveTo(seekingBlockPos) || shouldMoveToSecondary(seekingBlockPos);
     }
 
     @Override
@@ -91,21 +138,33 @@ public final class LegacySleepGoal extends LegacySearchBlockGoal {
         delay = 0;
     }
 
+    public static boolean nocturnalWildCatOrFox(Animal animal) {
+        return animal instanceof com.animania.catsdogs.cat.AnimaniaCat cat
+                    && cat.breed() == com.animania.catsdogs.cat.CatBreed.OCELOT
+                || animal instanceof com.animania.catsdogs.dog.AnimaniaDog dog
+                    && dog.breed() == com.animania.catsdogs.dog.DogBreed.FOX;
+    }
+
     public static boolean shouldSleepNow(Animal animal) {
         long time = animal.level().getDayTime() % 24_000L;
+        if (nocturnalWildCatOrFox(animal)) return time >= 2_000L && time < 10_000L;
         if (animal instanceof AnimaniaRodent rodent
                 && (rodent.kind() == AnimaniaRodent.Kind.HAMSTER || rodent.kind().isHedgehog())) {
             return time < 13_000L;
         }
         if (animal instanceof com.animania.extra.rabbit.AnimaniaRabbit) {
-            return time > 20_000L || time > 10_000L && time < 15_000L;
+            return time >= 2_000L && time < 10_000L || time >= 17_000L && time < 20_000L;
+        }
+        if (animal instanceof AnimaniaRodent rodent && rodent.kind().isFerret()) {
+            long phase = Math.floorMod(time + Math.floorMod(animal.getUUID().getLeastSignificantBits(), 6000L), 6000L);
+            return phase < 4500L;
         }
         return time >= 13_000L;
     }
 
     private static String bedKey(Animal animal) {
         if (animal instanceof com.animania.farm.livestock.AnimaniaCow) return "cow";
-        if (animal instanceof com.animania.farm.livestock.AnimaniaGoat) return "goat";
+        if (animal instanceof com.animania.farm.livestock.AnimaniaGoat || animal instanceof com.animania.modern.MountainGoat) return "goat";
         if (animal instanceof com.animania.farm.livestock.AnimaniaHorse) return "horse";
         if (animal instanceof com.animania.farm.livestock.AnimaniaPig) return "pig";
         if (animal instanceof com.animania.farm.livestock.AnimaniaSheep) return "sheep";

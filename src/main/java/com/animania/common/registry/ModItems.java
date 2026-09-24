@@ -65,6 +65,8 @@ public final class ModItems {
     public static final RegistryObject<BlockItem> DOG_PILLOW = blockItem("dog_pillow", ModBlocks.DOG_PILLOW);
     public static final RegistryObject<BlockItem> LITTER_BOX = blockItem("litter_box", ModBlocks.LITTER_BOX);
 
+    public static final RegistryObject<Item> BLUE_EGG = ITEMS.register("blue_egg",
+            () -> new com.animania.farm.item.BlueEggItem(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> BROWN_EGG = ITEMS.register(
             "brown_egg",
             () -> new BrownEggItem(new Item.Properties().stacksTo(16))
@@ -200,7 +202,32 @@ public final class ModItems {
     public static final RegistryObject<AnimaniaManualItem> MANUAL = ITEMS.register("animania_manual",
             () -> new AnimaniaManualItem(new Item.Properties().stacksTo(1)));
 
+    public static final Map<String, net.minecraftforge.registries.RegistryObject<net.minecraft.world.item.MobBucketItem>> AXOLOTL_BUCKETS = new LinkedHashMap<>();
     static {
+        ModEntities.AXOLOTL_BREEDS.forEach((breed, type) -> {
+            ITEMS.register("entity_egg_" + breed + "_axolotl", () -> new AnimaniaSpawnEggItem(type,
+                    switch (breed) { case "wild" -> 0x81644A; case "gold" -> 0xE5BD50; case "cyan" -> 0xB7DFDD;
+                        case "blue" -> 0x7473B6; default -> 0xE8A9BC; }, 0xA64870, new Item.Properties()));
+            AXOLOTL_BUCKETS.put(breed, ITEMS.register(breed + "_axolotl_bucket",
+                    () -> new net.minecraft.world.item.MobBucketItem(type, () -> net.minecraft.world.level.material.Fluids.WATER, () -> net.minecraft.sounds.SoundEvents.BUCKET_EMPTY_AXOLOTL,
+                            new Item.Properties().stacksTo(1))));
+        });
+        ModEntities.BEE_BREEDS.forEach((breed, type) -> ITEMS.register("entity_egg_" + breed + "_bee",
+                () -> new AnimaniaSpawnEggItem(type, switch (breed) {
+                    case "dark" -> 0x705A42; case "pale" -> 0xE4D3A2; default -> 0xDBA03A;
+                }, 0x382C22, new Item.Properties())));
+        ModEntities.MODERN_FOX_BREEDS.forEach((breed, type) -> ITEMS.register("entity_egg_" + breed + "_fox",
+                () -> new AnimaniaSpawnEggItem(type, switch (breed) {
+                    case "silver" -> 0x40424C; case "cross" -> 0xB1612D; case "snow" -> 0xEDF0EC; default -> 0xCC6920;
+                }, 0xEEE8DA, new Item.Properties())));
+        ModEntities.MOUNTAIN_GOAT_BREEDS.forEach((breed, type) -> ITEMS.register("entity_egg_" + breed + "_mountain_goat",
+                () -> new AnimaniaSpawnEggItem(type, switch (breed) {
+                    case "cream" -> 0xE5D2AC; case "slate" -> 0x595E66; default -> 0xEAE7DE;
+                }, 0x574F47, new Item.Properties())));
+        ITEMS.register("entity_egg_modern_fox", () -> new AnimaniaSpawnEggItem(ModEntities.MODERN_FOX,
+                0xD78332, 0xEEEEEE, new Item.Properties()));
+        ITEMS.register("entity_egg_mountain_goat", () -> new AnimaniaSpawnEggItem(ModEntities.MOUNTAIN_GOAT,
+                0xE5E0D7, 0x8C8176, new Item.Properties()));
         for (MilkType type : MilkType.values()) {
             MILK_BUCKETS.put(type, ITEMS.register(type.getSerializedName() + "_bucket_milk",
                     () -> new BucketItem(ModFluids.milk(type).source(),
@@ -213,6 +240,8 @@ public final class ModItems {
             CHEESE_WEDGES.put(type, effectFood(type.getSerializedName() + "_cheese_wedge", 3, 0.9F,
                     cheeseEffect));
         }
+        ModBlocks.patternedBeds().forEach((name, block) -> ITEMS.register("bed_" + name,
+                () -> new net.minecraft.world.item.BedItem(block.get(), new Item.Properties().stacksTo(1))));
         ModBlocks.animaniaWool().forEach((name, block) -> ANIMANIA_WOOL.put(name,
                 blockItem("wool_" + name, block)));
         for (PeafowlBreed breed : PeafowlBreed.values()) {

@@ -7,19 +7,43 @@
   "spawners": [
     {
       "type": "animania:doe_cottontail",
-      "weight": 8,
+      "weight": 4,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:doe_new_zealand",
-      "weight": 8,
+      "weight": 4,
       "minCount": 2,
       "maxCount": 2
     },
     {
       "type": "animania:doe_lop",
-      "weight": 4,
+      "weight": 2,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:doe_bold_striped",
+      "weight": 3,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:doe_freckled",
+      "weight": 3,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:doe_harelequin",
+      "weight": 2,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:doe_muddy_foot",
+      "weight": 2,
       "minCount": 2,
       "maxCount": 2
     }

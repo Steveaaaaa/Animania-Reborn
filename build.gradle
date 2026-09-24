@@ -36,6 +36,6 @@ tasks.named('processResources', ProcessResources).configure {
 }
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8'; options.compilerArgs += ['-Xmaxerrs', '1000'] }
 tasks.named('jar', Jar).configure {
-    from(project.files('LICENSE', 'COPYING', 'NOTICE')) { into 'META-INF' }
+    from(project.files('LICENSE', 'COPYING', 'NOTICE', 'AUDIO_CREDITS.md')) { into 'META-INF' }
     finalizedBy 'reobfJar'
 }

@@ -1,0 +1,15 @@
+{
+  "type": "animania:legacy_add_spawns",
+  "biomes": "#animania:wolf_ashen_habitats",
+  "probability_group": "dogs",
+  "default_probability": 5,
+  "family_group": "dogs",
+  "spawners": [
+    {
+      "type": "animania:female_wolf_ashen",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 2
+    }
+  ]
+}

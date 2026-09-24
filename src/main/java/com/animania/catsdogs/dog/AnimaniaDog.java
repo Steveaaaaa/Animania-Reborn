@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import com.animania.common.entity.AnimalInformation;
 import com.animania.common.registry.ModAttachments;
 import com.animania.common.registry.ModEntities;
+import com.animania.common.registry.ModSounds;
 import com.animania.common.registry.ModItems;
 import com.animania.extra.rodent.AnimaniaRodent;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -57,6 +58,8 @@ public final class AnimaniaDog extends TamableAnimal {
     private static final int GESTATION_TICKS = 12_000;
     private static final EntityDataAccessor<Integer> VARIANT =
             SynchedEntityData.defineId(AnimaniaDog.class, EntityDataSerializers.INT);
+    private int nextHowlTick = 600;
+    private int vocalizationEndTick;
     private boolean pregnant;
     private int gestation;
     @Nullable private DogBreed mateBreed;
@@ -69,6 +72,56 @@ public final class AnimaniaDog extends TamableAnimal {
 
     private String entityPath() {
         return BuiltInRegistries.ENTITY_TYPE.getKey(getType()).getPath();
+    }
+
+    public static boolean checkWolfSpawnRules(EntityType<AnimaniaDog> type,
+            net.minecraft.world.level.LevelAccessor level, MobSpawnType reason,
+            net.minecraft.core.BlockPos pos, net.minecraft.util.RandomSource random) {
+        return level.getBlockState(pos.below()).is(net.minecraft.tags.BlockTags.WOLVES_SPAWNABLE_ON)
+                && isBrightEnoughToSpawn(level, pos);
+    }
+
+    @Override
+    protected net.minecraft.sounds.SoundEvent getAmbientSound() {
+        if (ModAttachments.getData(this, ModAttachments.SLEEPING)) return null;
+        if (tickCount < vocalizationEndTick) return null;
+        if (breed() == DogBreed.FOX) return ModSounds.FOX_AMBIENT.get();
+        boolean wolf = breed().isWolf();
+        if (getTarget() != null && getTarget().isAlive())
+            return (wolf ? ModSounds.WOLF_GROWL : ModSounds.DOG_GROWL).get();
+        if (isTame() && (getHealth() < getMaxHealth() * 0.5F
+                || !com.animania.common.entity.LegacyAnimalNeeds.isFed(this)))
+            return (wolf ? ModSounds.WOLF_WHINE : ModSounds.DOG_WHINE).get();
+        if (wolf && !isBaby() && tickCount >= nextHowlTick && onGround()
+                && !isInWaterOrBubble() && getNavigation().isDone()
+                && getHealth() >= getMaxHealth() * 0.75F
+                && com.animania.common.entity.LegacyAnimalNeeds.isFed(this)
+                && random.nextInt(8) == 0) {
+            nextHowlTick = tickCount + 1200 + random.nextInt(1200);
+            vocalizationEndTick = tickCount + 240;
+            return ModSounds.WOLF_HOWL.get();
+        }
+        return (wolf ? ModSounds.WOLF_AMBIENT : ModSounds.DOG_AMBIENT).get();
+    }
+
+    @Override
+    protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource source) {
+        if (breed() == DogBreed.FOX) return ModSounds.FOX_HURT.get();
+        return (breed().isWolf() ? ModSounds.WOLF_HURT : ModSounds.DOG_HURT).get();
+    }
+
+    @Override
+    protected net.minecraft.sounds.SoundEvent getDeathSound() {
+        if (breed() == DogBreed.FOX) return ModSounds.FOX_DEATH.get();
+        return (breed().isWolf() ? ModSounds.WOLF_DEATH : ModSounds.DOG_DEATH).get();
+    }
+
+    @Override
+    protected float getSoundVolume() { return 0.4F; }
+
+    @Override
+    protected void playStepSound(net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
+        if (!ModAttachments.getData(this, ModAttachments.SLEEPING)) playSound(net.minecraft.sounds.SoundEvents.WOLF_STEP, 0.02F, 1.5F);
     }
 
     public DogBreed breed() {
@@ -118,7 +171,7 @@ public final class AnimaniaDog extends TamableAnimal {
                 entity -> !isTame()));
         targetSelector.addGoal(6, new com.animania.common.entity.ai.LegacyNearestAttackableTargetGoal<>(this, Rabbit.class, true,
                 entity -> !isTame()));
-        if (breed() == DogBreed.FOX || breed() == DogBreed.WOLF) {
+        if (breed() == DogBreed.FOX || breed().isWolf()) {
             targetSelector.addGoal(5, new com.animania.common.entity.ai.LegacyNearestAttackableTargetGoal<>(this,
                     com.animania.extra.peafowl.AnimaniaPeafowl.class, true,
                     entity -> !isTame() && entity instanceof com.animania.extra.peafowl.AnimaniaPeafowl bird
@@ -206,6 +259,7 @@ public final class AnimaniaDog extends TamableAnimal {
     @Override
     public boolean canMate(Animal other) {
         if (!(other instanceof AnimaniaDog dog) || other == this || isBaby() || dog.isBaby()) return false;
+        if ((breed() == DogBreed.FOX) != (dog.breed() == DogBreed.FOX)) return false;
         if (AnimalInformation.isSterilized(this) || AnimalInformation.isSterilized(dog)) return false;
         AnimaniaDog female = role() == DogRole.FEMALE ? this : dog.role() == DogRole.FEMALE ? dog : null;
         boolean opposite = role() != dog.role() && role() != DogRole.PUPPY && dog.role() != DogRole.PUPPY;
@@ -215,7 +269,7 @@ public final class AnimaniaDog extends TamableAnimal {
 
     @Override
     public void spawnChildFromBreeding(ServerLevel level, Animal mate) {
-        if (!(mate instanceof AnimaniaDog dog)) return;
+        if (!(mate instanceof AnimaniaDog dog) || !canMate(dog)) return;
         AnimaniaDog female = role() == DogRole.FEMALE ? this : dog;
         AnimaniaDog male = female == this ? dog : this;
         AnimalInformation.recordMating(this, dog);
@@ -286,6 +340,8 @@ public final class AnimaniaDog extends TamableAnimal {
     @Override
     @Nullable
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob parent) {
+        if (!(parent instanceof AnimaniaDog partner)
+                || (breed() == DogBreed.FOX) != (partner.breed() == DogBreed.FOX)) return null;
         DogBreed childBreed = parent instanceof AnimaniaDog dog && random.nextBoolean() ? dog.breed() : breed();
         return ModEntities.dog(DogRole.PUPPY, childBreed).create(level);
     }

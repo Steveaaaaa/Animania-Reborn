@@ -1,7 +1,6 @@
 package com.animania.common.event;
 
 import com.animania.Animania;
-import com.animania.common.config.AnimaniaConfig;
 import com.animania.common.config.LegacyConfig;
 import com.animania.common.entity.AnimalInformation;
 import com.animania.common.entity.LegacyAnimalNeeds;
@@ -57,12 +56,16 @@ public final class AnimalNeedsHandler {
     }
 
     public static void onAnimalTick(Animal animal) {
-        if (animal.level().isClientSide()
-                || LegacyAnimalNeeds.profile(animal) == null) return;
-        maintainSleeping(animal);
+        if (animal.level().isClientSide()) return;
+        com.animania.common.entity.HusbandryMood.tick(animal);
+        if (LegacyAnimalNeeds.profile(animal) == null) return;
+        if (animal instanceof com.animania.modern.ModernAxolotl axolotl) { axolotl.tickCare(); return; }
+        if (animal instanceof com.animania.modern.ModernFox fox) ModAttachments.setData(animal, ModAttachments.SLEEPING, fox.isSleeping());
+        else maintainSleeping(animal);
         int eating = ModAttachments.getData(animal, ModAttachments.EATING_TICKS);
         if (eating > 0) ModAttachments.setData(animal, ModAttachments.EATING_TICKS, eating - 1);
         LegacyAnimalNeeds.tick(animal);
+        com.animania.common.entity.FamilyLifecycle.tick(animal);
         LegacyGrowth.tick(animal);
         LegacyReproduction.tickFertility(animal);
         LegacyReproduction.tickMateReset(animal);
@@ -77,12 +80,18 @@ public final class AnimalNeedsHandler {
         if (event.getLevel().isClientSide() || !(event.getEntity() instanceof Animal animal)
                 || !GOALS_INSTALLED.add(animal)) return;
         PathfinderMob pathfinder = animal;
+        if (animal instanceof com.animania.modern.ModernAxolotl) return;
         LegacyAnimalNeeds.Profile profile = LegacyAnimalNeeds.profile(animal);
         if (profile == null) return;
+        if (animal instanceof com.animania.modern.ModernAnimal) {
+            com.animania.modern.ModernGoals.install(animal, profile);
+            return;
+        }
         pathfinder.goalSelector.removeAllGoals(goal -> goal instanceof net.minecraft.world.entity.ai.goal.TemptGoal);
         pathfinder.goalSelector.removeAllGoals(goal -> goal instanceof net.minecraft.world.entity.ai.goal.BreedGoal);
         if (LegacyFollowParentGoal.supports(animal)
-                && AnimalInformation.gender(animal) == AnimalInformation.Gender.YOUNG) {
+                && (AnimalInformation.gender(animal) == AnimalInformation.Gender.YOUNG
+                    || animal instanceof com.animania.extra.rodent.AnimaniaRodent)) {
             pathfinder.goalSelector.removeAllGoals(
                     goal -> goal instanceof net.minecraft.world.entity.ai.goal.FollowParentGoal);
             pathfinder.goalSelector.addGoal(1, new LegacyFollowParentGoal(pathfinder, animal, 1.1D));
@@ -105,9 +114,8 @@ public final class AnimalNeedsHandler {
                 && peafowl.role() == com.animania.extra.peafowl.PeafowlRole.PEAHEN) {
             pathfinder.goalSelector.addGoal(6, new LegacyFindNestGoal(pathfinder, animal));
         }
-        if (AnimalInformation.gender(animal) == AnimalInformation.Gender.MALE
-                && !(animal instanceof com.animania.farm.chicken.AnimaniaChicken)
-                && !(animal instanceof com.animania.extra.peafowl.AnimaniaPeafowl)) {
+        if ((AnimalInformation.gender(animal) == AnimalInformation.Gender.MALE
+                || animal instanceof com.animania.extra.rodent.AnimaniaRodent)) {
             pathfinder.goalSelector.addGoal(8, new LegacyMateGoal(pathfinder, animal, 1.0D));
         }
         if (animal instanceof com.animania.catsdogs.cat.AnimaniaCat cat
@@ -223,6 +231,10 @@ public final class AnimalNeedsHandler {
             pathfinder.goalSelector.addGoal(11, new LegacyPigSnuffleGoal(pig));
         }
         com.animania.common.entity.ai.LegacyGoalRegistration.restore(animal);
+        pathfinder.goalSelector.addGoal(4, new com.animania.common.entity.ai.NursingPauseGoal(animal));
+        pathfinder.goalSelector.addGoal(6, new com.animania.common.entity.ai.FamilyCareGoal(animal));
+        if (com.animania.common.entity.FamilyLifecycle.bird(animal))
+            pathfinder.goalSelector.addGoal(7, new com.animania.common.entity.ai.BroodNestGoal(animal));
     }
 
     private static void maintainSleeping(Animal animal) {
@@ -243,11 +255,31 @@ public final class AnimalNeedsHandler {
 
     @SubscribeEvent
     public static void onInspectAnimal(PlayerInteractEvent.EntityInteract event) {
+        if (event.getTarget() instanceof com.animania.modern.ModernAxolotl) return;
         if (!event.getTarget().level().isClientSide() && event.getTarget() instanceof Animal animal
                 && LegacyAnimalNeeds.profile(animal) != null) LegacyAnimalNeeds.setInteracted(animal, true);
 
         if (event.getTarget() instanceof Animal animal && LegacyAnimalNeeds.profile(animal) != null) {
             ItemStack held = event.getEntity().getItemInHand(event.getHand());
+            if (animal instanceof com.animania.modern.ModernAnimal modern && held.isEmpty()
+                    && event.getEntity().isShiftKeyDown()) {
+                if (!animal.level().isClientSide()) {
+                    var gender = AnimalInformation.gender(animal).name().toLowerCase(java.util.Locale.ROOT);
+                    var info = animal.getName().copy().append(": ")
+                            .append(Component.translatable("jade.animania.gender." + gender));
+                    String coat = animal instanceof com.animania.modern.ModernFox fox ? "fox." + fox.coatName()
+                            : "mountain_goat." + ((com.animania.modern.MountainGoat) animal).coatName();
+                    info.append(" - ").append(Component.translatable("variant.animania." + coat));
+                    if (!animal.isBaby() && modern.isFemale()) info.append(" - ").append(Component.translatable(
+                            modern.care().pregnant() ? "message.animania.pregnant"
+                                    : modern.care().hasMilk() ? "message.animania.milkable" : "message.animania.not_pregnant",
+                            modern.care().gestation()));
+                    event.getEntity().displayClientMessage(info, true);
+                }
+                event.setCancellationResult(InteractionResult.sidedSuccess(animal.level().isClientSide()));
+                event.setCanceled(true);
+                return;
+            }
             if (!animal.level().isClientSide() && isWaterContainer(held)
                     && !ModAttachments.getData(animal, ModAttachments.SLEEPING)) {
                 if (!event.getEntity().getAbilities().instabuild
@@ -255,6 +287,7 @@ public final class AnimalNeedsHandler {
                         && !(animal instanceof com.animania.extra.peafowl.AnimaniaPeafowl))
                     emptyOneWaterContainer(event, held);
                 LegacyAnimalNeeds.water(animal);
+                com.animania.common.entity.HusbandryMood.caredFor(animal);
                 ModAttachments.setData(animal, ModAttachments.EATING_TICKS, 40);
                 showCareHearts(animal);
                 event.setCancellationResult(InteractionResult.SUCCESS);
@@ -275,6 +308,12 @@ public final class AnimalNeedsHandler {
             if (held.getItem() instanceof net.minecraft.world.item.DyeItem dye
                     && (animal instanceof com.animania.farm.livestock.AnimaniaSheep
                     || animal instanceof com.animania.farm.livestock.AnimaniaGoat)) {
+                if (animal instanceof com.animania.farm.livestock.AnimaniaSheep patterned
+                        && patterned.breed().hasPatternedWool()) {
+                    event.setCancellationResult(InteractionResult.PASS);
+                    event.setCanceled(true);
+                    return;
+                }
                 boolean dyeable = animal instanceof com.animania.farm.livestock.AnimaniaSheep sheep
                         && sheep.getColor() == net.minecraft.world.item.DyeColor.WHITE && !sheep.isSheared()
                         && sheep.breed() != com.animania.farm.livestock.SheepBreed.JACOB
@@ -310,6 +349,7 @@ public final class AnimalNeedsHandler {
                         }
                     }
                     LegacyAnimalNeeds.feed(animal, true, false);
+                    if (animal instanceof com.animania.modern.ModernAnimal modern) modern.care().fedBy(event.getEntity());
                     ModAttachments.setData(animal, ModAttachments.EATING_TICKS, 80);
                     showCareHearts(animal);
                     if (animal instanceof TamableAnimal tame && !tame.isTame()) {
@@ -346,16 +386,20 @@ public final class AnimalNeedsHandler {
             return;
         }
 
-        if (!event.getEntity().level().isClientSide()
-                && AnimaniaConfig.SHOW_NEEDS_ON_EMPTY_HAND.get()
-                && event.getTarget() instanceof Animal animal
-                && event.getEntity().getItemInHand(event.getHand()).isEmpty()) {
-            event.getEntity().displayClientMessage(Component.translatable(
-                    "message.animania.animal_needs",
-                    animal.getName(),
-                    ModAttachments.getData(animal, ModAttachments.HUNGER),
-                    ModAttachments.getData(animal, ModAttachments.THIRST)), true);
-        }
+
+    }
+
+    @SubscribeEvent
+    public static void onAnimalHeal(net.minecraftforge.event.entity.living.LivingHealEvent event) {
+        if (event.getEntity() instanceof Animal animal && !animal.level().isClientSide()
+                && com.animania.common.entity.HusbandryMood.effect(animal) < 0)
+            event.setAmount(event.getAmount() * 0.5F);
+    }
+
+    @SubscribeEvent
+    public static void onAnimalDeath(net.minecraftforge.event.entity.living.LivingDeathEvent event) {
+        if (event.getEntity() instanceof Animal animal && AnimalInformation.isAnimaniaAnimal(animal))
+            com.animania.common.entity.FamilyUpdates.died(animal);
     }
 
     @SubscribeEvent

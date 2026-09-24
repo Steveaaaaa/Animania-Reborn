@@ -7,37 +7,73 @@
   "spawners": [
     {
       "type": "animania:ewe_dorper",
-      "weight": 8,
+      "weight": 4,
       "minCount": 2,
       "maxCount": 3
     },
     {
       "type": "animania:ewe_dorset",
-      "weight": 8,
+      "weight": 4,
       "minCount": 2,
       "maxCount": 3
     },
     {
       "type": "animania:ewe_friesian",
-      "weight": 8,
+      "weight": 4,
       "minCount": 2,
       "maxCount": 3
     },
     {
       "type": "animania:ewe_jacob",
-      "weight": 8,
+      "weight": 4,
       "minCount": 2,
       "maxCount": 3
     },
     {
       "type": "animania:ewe_merino",
-      "weight": 8,
+      "weight": 4,
       "minCount": 2,
       "maxCount": 3
     },
     {
       "type": "animania:ewe_suffolk",
-      "weight": 8,
+      "weight": 4,
+      "minCount": 2,
+      "maxCount": 3
+    },
+    {
+      "type": "animania:ewe_flecked",
+      "weight": 4,
+      "minCount": 2,
+      "maxCount": 3
+    },
+    {
+      "type": "animania:ewe_fuzzy",
+      "weight": 4,
+      "minCount": 2,
+      "maxCount": 3
+    },
+    {
+      "type": "animania:ewe_inky",
+      "weight": 4,
+      "minCount": 2,
+      "maxCount": 3
+    },
+    {
+      "type": "animania:ewe_long_nosed",
+      "weight": 4,
+      "minCount": 2,
+      "maxCount": 3
+    },
+    {
+      "type": "animania:ewe_patched",
+      "weight": 4,
+      "minCount": 2,
+      "maxCount": 3
+    },
+    {
+      "type": "animania:ewe_rocky",
+      "weight": 4,
       "minCount": 2,
       "maxCount": 3
     }

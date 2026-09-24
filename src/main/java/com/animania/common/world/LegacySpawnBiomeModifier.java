@@ -40,9 +40,22 @@ public record LegacySpawnBiomeModifier(HolderSet<Biome> biomes, List<SpawnerData
         int configured = probabilityValue == null ? defaultProbability : probabilityValue.get();
         if (configured <= 0) return;
 
+        long breedWeight = 0;
         for (SpawnerData source : spawners) {
+            if (source.type == com.animania.common.registry.ModEntities.dog(
+                    com.animania.catsdogs.dog.DogRole.FEMALE, com.animania.catsdogs.dog.DogBreed.WOLF)
+                    && com.animania.catsdogs.dog.DogBreed.hasNewWolfHabitat(biome)) continue;
             int weight;
-            if ("amphibians".equals(probabilityGroup)) {
+            if ("chickens".equals(probabilityGroup) || "pigs".equals(probabilityGroup)
+                    || "rabbits".equals(probabilityGroup) || "cows".equals(probabilityGroup)
+                    || "sheep".equals(probabilityGroup) || "ferrets".equals(probabilityGroup)) {
+                // Divide the existing spawn budget between breeds without rounding every entry up.
+                long before = breedWeight * configured / Math.max(1, defaultProbability);
+                breedWeight += source.getWeight().asInt();
+                weight = (int) Math.min(Integer.MAX_VALUE,
+                        breedWeight * configured / Math.max(1, defaultProbability) - before);
+                if (weight == 0) continue;
+            } else if ("amphibians".equals(probabilityGroup)) {
                 weight = configured + 10;
             } else {
                 weight = Math.max(1, source.getWeight().asInt() * configured / Math.max(1, defaultProbability));

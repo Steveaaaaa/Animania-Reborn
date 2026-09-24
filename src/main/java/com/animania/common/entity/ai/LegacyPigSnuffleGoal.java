@@ -32,7 +32,10 @@ public final class LegacyPigSnuffleGoal extends Goal {
     @Override
     public boolean canUse() {
         BlockPos below = pig.blockPosition().below();
-        return !AnimaniaPig.isMud(pig.level(), below)
+        return pig.level().getBlockState(below).is(Blocks.GRASS_BLOCK)
+                && pig.onGround() && pig.hurtTime == 0 && pig.getTarget() == null
+                && !LegacySleepGoal.shouldSleepNow(pig)
+                && !AnimaniaPig.isMud(pig.level(), below)
                 && !ModAttachments.getData(pig, ModAttachments.SLEEPING)
                 && !LegacyAnimalNeeds.isFed(pig)
                 && pig.getRandom().nextInt(120) == 50;
@@ -40,7 +43,8 @@ public final class LegacyPigSnuffleGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return eatingTimer > 0;
+        return eatingTimer > 0 && pig.hurtTime == 0 && pig.getTarget() == null
+                && !ModAttachments.getData(pig, ModAttachments.SLEEPING) && !LegacySleepGoal.shouldSleepNow(pig);
     }
 
     @Override
@@ -53,6 +57,10 @@ public final class LegacyPigSnuffleGoal extends Goal {
     @Override
     public void tick() {
         eatingTimer = Math.max(0, eatingTimer - 1);
+        if (eatingTimer > 4 && ModAttachments.getData(pig, ModAttachments.EATING_TICKS) < 10)
+            ModAttachments.setData(pig, ModAttachments.EATING_TICKS, 40);
+        if (eatingTimer > 4 && eatingTimer % 16 == 0)
+            pig.level().levelEvent(2001, pig.blockPosition().below(), Block.getId(pig.level().getBlockState(pig.blockPosition().below())));
         BlockPos below = pig.blockPosition().below();
         if (!pig.level().getBlockState(below).is(Blocks.GRASS_BLOCK)) {
             eatingTimer = 0;
@@ -65,7 +73,7 @@ public final class LegacyPigSnuffleGoal extends Goal {
             LegacyAnimalNeeds.setFed(pig, true);
         }
         var biome = pig.level().getBiome(below);
-        boolean forest = biome.is(BiomeTags.IS_FOREST) || biome.is(net.minecraft.tags.BiomeTags.IS_FOREST);
+        boolean forest = biome.is(BiomeTags.IS_FOREST);
         if (eatingTimer > 80 && forest && pig.role() != FarmAnimalRole.YOUNG
                 && pig.getLeashHolder() instanceof Player) {
             pig.level().levelEvent(2001, below, Block.getId(pig.level().getBlockState(below)));
@@ -88,6 +96,7 @@ public final class LegacyPigSnuffleGoal extends Goal {
     @Override
     public void stop() {
         eatingTimer = 0;
+        ModAttachments.setData(pig, ModAttachments.EATING_TICKS, 0);
         spawned = false;
         eaten = false;
     }

@@ -7,7 +7,13 @@
   "spawners": [
     {
       "type": "animania:doe_jack",
-      "weight": 8,
+      "weight": 4,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:doe_desert",
+      "weight": 4,
       "minCount": 2,
       "maxCount": 2
     }

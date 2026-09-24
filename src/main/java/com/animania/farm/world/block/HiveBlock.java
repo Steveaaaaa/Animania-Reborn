@@ -44,6 +44,14 @@ public final class HiveBlock extends BaseEntityBlock {
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
+    @Override
+    public void onRemove(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+                         BlockState replacement, boolean moving) {
+        if (!state.is(replacement.getBlock()) && level.getBlockEntity(pos) instanceof HiveBlockEntity hive)
+            hive.colony().releaseAll();
+        super.onRemove(state, level, pos, replacement, moving);
+    }
+
     public boolean isWild() {
         return wild;
     }
@@ -103,7 +111,8 @@ public final class HiveBlock extends BaseEntityBlock {
                                                 Player player, BlockHitResult hit) {
         if (!level.isClientSide() && level.getBlockEntity(pos) instanceof HiveBlockEntity hive) {
             player.displayClientMessage(Component.translatable("message.animania.hive_status",
-                    hive.honeyAmount(), HiveBlockEntity.CAPACITY, hive.nextHoney()), true);
+                    hive.honeyAmount(), HiveBlockEntity.CAPACITY, hive.nextHoney())
+                    .append(Component.translatable("message.animania.hive_bees", hive.colony().count())), true);
         }
         return InteractionResult.sidedSuccess(level.isClientSide());
     }

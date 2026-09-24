@@ -22,6 +22,13 @@ public final class ClientModEvents {
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(ModEntities.BLUE_EGG.get(), net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
+        ModEntities.AXOLOTL_BREEDS.values().forEach(type -> event.registerEntityRenderer(type.get(), ModernAxolotlRenderer::new));
+        ModEntities.BEE_BREEDS.values().forEach(type -> event.registerEntityRenderer(type.get(), ModernBeeRenderer::new));
+        ModEntities.MODERN_FOX_BREEDS.values().forEach(type -> event.registerEntityRenderer(type.get(), ModernFoxRenderer::new));
+        ModEntities.MOUNTAIN_GOAT_BREEDS.values().forEach(type -> event.registerEntityRenderer(type.get(), MountainGoatRenderer::new));
+        event.registerEntityRenderer(ModEntities.MODERN_FOX.get(), ModernFoxRenderer::new);
+        event.registerEntityRenderer(ModEntities.MOUNTAIN_GOAT.get(), com.animania.client.MountainGoatRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.HAMSTER_WHEEL.get(), HamsterWheelRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.PET_PROP.get(), PetPropRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.PET_BOWL.get(), PetBowlRenderer::new);

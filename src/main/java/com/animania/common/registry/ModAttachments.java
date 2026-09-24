@@ -27,6 +27,24 @@ public final class ModAttachments {
     private static <T> Key<T> key(String id, T initial, boolean persistent, boolean sync) {
         Key<T> key = new Key<>(id, initial, persistent, sync); KEYS.add(key); return key;
     }
+    public static final Key<String> NURSING_ID = key("nursing_id", "", true, false);
+    public static final Key<String> NURSING_YOUNG = key("nursing_young", "", true, false);
+    public static final Key<Integer> RECOVERY = key("recovery", 0, true, false);
+    public static final Key<Integer> CARE_COOLDOWN = key("care_cooldown", 0, true, false);
+    public static final Key<Integer> FERTILIZED_TIMER = key("fertilized_timer", 0, true, false);
+    public static final Key<String> LAST_SIRE = key("last_sire", "", true, false);
+    public static final Key<String> FATHER = key("father", "", true, false);
+    public static final Key<Integer> CARE_LEASE = key("care_lease", 0, true, false);
+    public static final Key<Integer> MOOD_SCORE = key("mood_score", 50, true, false);
+    public static final Key<Long> MOOD_CALENDAR = key("mood_calendar", -1L, true, false);
+    public static final Key<Integer> MOOD_GRACE = key("mood_grace", 0, true, false);
+    public static final Key<Integer> MOOD_MISSING = key("mood_missing", 0, true, false);
+    public static final Key<Integer> MILK_REST = key("milk_rest", 0, true, false);
+    public static final Key<Integer> MOOD_ENROLLED = key("mood_enrolled", 0, true, false);
+    public static final Key<Integer> FAMILY_POSE = key("family_pose", 0, false, true);
+    public static final Key<Integer> FAMILY_POSE_TTL = key("family_pose_ttl", 0, false, false);
+    public static final Key<Integer> FARM_ACTIVITY = key("farm_activity", 0, false, true);
+    public static final Key<Integer> FARM_ACTIVITY_START = key("farm_activity_start", 0, false, true);
     public static final Key<Integer> WOOL_DYE = key("wool_dye", 0, true, true);
     public static final Key<Boolean> FIGHTING = key("fighting", false, false, true);
     public static final Key<String> RIVAL = key("rival", "", false, true);
@@ -61,12 +79,14 @@ public final class ModAttachments {
         CompoundTag tag = data(entity, key);
         if (!tag.contains(key.id())) return key.initial();
         Object value = key.initial() instanceof Boolean ? tag.getBoolean(key.id())
-                : key.initial() instanceof Integer ? tag.getInt(key.id()) : tag.getString(key.id());
+                : key.initial() instanceof Integer ? tag.getInt(key.id())
+                : key.initial() instanceof Long ? tag.getLong(key.id()) : tag.getString(key.id());
         return (T) value;
     }
     private static <T> void put(CompoundTag tag, Key<T> key, T value) {
         if (value instanceof Boolean v) tag.putBoolean(key.id(), v);
         else if (value instanceof Integer v) tag.putInt(key.id(), v);
+        else if (value instanceof Long v) tag.putLong(key.id(), v);
         else tag.putString(key.id(), (String)value);
     }
     public static <T> void setData(Entity entity, Key<T> key, T value) {

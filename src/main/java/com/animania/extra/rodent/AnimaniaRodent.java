@@ -56,16 +56,94 @@ public final class AnimaniaRodent extends TamableAnimal {
     private float interest, previousInterest;
     public static final int NO_BALL = -2;
     private final Kind kind;
+    private static final EntityDataAccessor<Boolean> FEMALE =
+            SynchedEntityData.defineId(AnimaniaRodent.class, EntityDataSerializers.BOOLEAN);
+    private boolean pregnant;
+    private int gestation;
+    private Kind mateKind;
+    private int mateColor;
 
     public AnimaniaRodent(EntityType<? extends TamableAnimal> type, Level level, Kind kind) {
         super(type, level);
         this.kind = kind;
+        entityData.set(FEMALE, random.nextBoolean());
         registerKindGoals();
         if (kind == Kind.HAMSTER) {
             getAttribute(Attributes.MAX_HEALTH).setBaseValue(10);
             setHealth(10);
         }
         setPersistenceRequired();
+    }
+
+    public boolean isFemale() { return entityData.get(FEMALE); }
+
+    public boolean sameSpecies(AnimaniaRodent other) {
+        return kind == other.kind || kind.isFerret() && other.kind.isFerret()
+                || kind.isHedgehog() && other.kind.isHedgehog();
+    }
+
+    @Override
+    public boolean canMate(net.minecraft.world.entity.animal.Animal other) {
+        if (!(other instanceof AnimaniaRodent rodent) || other == this
+                || !sameSpecies(rodent) || isFemale() == rodent.isFemale()
+                || isBaby() || rodent.isBaby() || isPassenger() || rodent.isPassenger()
+                || isOrderedToSit() || rodent.isOrderedToSit() || isInBall() || rodent.isInBall()) return false;
+        AnimaniaRodent mother = isFemale() ? this : rodent;
+        return !mother.pregnant && com.animania.common.config.LegacyBreedingRules.canMate(this, rodent);
+    }
+
+    @Override
+    public void spawnChildFromBreeding(ServerLevel level, net.minecraft.world.entity.animal.Animal mate) {
+        if (!(mate instanceof AnimaniaRodent rodent) || !canMate(rodent)) return;
+        AnimaniaRodent mother = isFemale() ? this : rodent;
+        AnimaniaRodent father = mother == this ? rodent : this;
+        com.animania.common.entity.AnimalInformation.recordMating(this, rodent);
+        mother.pregnant = true;
+        mother.gestation = com.animania.common.config.LegacyConfig.GESTATION_TIMER.get() + random.nextInt(200);
+        mother.mateKind = father.kind;
+        mother.mateColor = father.color();
+        com.animania.common.entity.LegacyReproduction.conceived(mother);
+        setAge(6000);
+        rodent.setAge(6000);
+        resetLove();
+        rodent.resetLove();
+        level.broadcastEntityEvent(mother, (byte) 18);
+    }
+
+    private AnimaniaRodent createYoung(ServerLevel level, Kind childKind, int childColor) {
+        AnimaniaRodent child = com.animania.common.registry.ModEntities.ALL_RODENTS.get(childKind.entityId()).get().create(level);
+        if (child == null) return null;
+        child.setBaby(true);
+        child.entityData.set(COLOR, childKind == Kind.HAMSTER ? childColor : 0);
+        com.animania.common.entity.AnimalInformation.recordParent(child, this);
+        com.animania.common.entity.LegacyAnimalNeeds.setInteracted(child,
+                com.animania.common.entity.LegacyAnimalNeeds.isInteracted(this));
+        if (isTame() && getOwnerUUID() != null) {
+            child.setOwnerUUID(getOwnerUUID());
+            child.setTame(true);
+        }
+        return child;
+    }
+
+    private void tickPregnancy() {
+        if (level().isClientSide() || !pregnant || !isFemale()) return;
+        com.animania.common.entity.LegacyReproduction.wakeForBirth(this, --gestation);
+        if (gestation > 0 || !(level() instanceof ServerLevel server)) return;
+        if (!com.animania.common.config.LegacyBreedingRules.shouldLosePregnancy(this, random)) {
+            int litter = com.animania.common.config.LegacyBreedingRules.litterSize(random);
+            for (int i = 0; i < litter; i++) {
+                boolean paternal = mateKind != null && random.nextBoolean();
+                AnimaniaRodent child = createYoung(server, paternal ? mateKind : kind, paternal ? mateColor : color());
+                if (child != null) {
+                    child.moveTo(getX() + (random.nextDouble()-.5)*.5, getY(),
+                            getZ() + (random.nextDouble()-.5)*.5, getYRot(), 0);
+                    server.addFreshEntity(child);
+                }
+            }
+        }
+        pregnant = false;
+        mateKind = null;
+        com.animania.common.entity.LegacyReproduction.completedPregnancy(this);
     }
 
     public Kind kind() {
@@ -110,12 +188,14 @@ public final class AnimaniaRodent extends TamableAnimal {
 
     @Override
     protected SoundEvent getDeathSound() {
-        return kind == Kind.HAMSTER ? ModSounds.HAMSTER_DEATH.get() : super.getDeathSound();
+        if (kind == Kind.HAMSTER) return ModSounds.HAMSTER_DEATH.get();
+        return (kind.isFerret() ? ModSounds.FERRET_DEATH : ModSounds.HEDGEHOG_DEATH).get();
     }
 
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        entityData.define(FEMALE, false);
         entityData.define(COLOR, 0);
         entityData.define(BALL_COLOR, NO_BALL);
         entityData.define(FOOD_STACK, 0);
@@ -147,9 +227,11 @@ public final class AnimaniaRodent extends TamableAnimal {
 
     @Override public void aiStep() {
         super.aiStep();
+        tickPregnancy();
         if (kind != Kind.HAMSTER || level().isClientSide()) return;
         if (getHealth() < 10) { eatStoredFood(); eatCount = 5000; }
-        if (!isHamsterStanding() && !isInSittingPose() && !ModAttachments.getData(this, ModAttachments.SLEEPING)) {
+        if (!isHamsterStanding() && !isInSittingPose() && !ModAttachments.getData(this, ModAttachments.SLEEPING)
+                && ModAttachments.getData(this, ModAttachments.FARM_ACTIVITY) == 0) {
             if (random.nextInt(20) == 0 && random.nextInt(20) == 0) {
                 entityData.set(STANDING, true);
                 standCount = 30;
@@ -220,7 +302,7 @@ public final class AnimaniaRodent extends TamableAnimal {
     @Override
     public boolean isFood(ItemStack stack) {
         String key = kind == Kind.HAMSTER ? "hamster"
-                : kind == Kind.FERRET_GREY || kind == Kind.FERRET_WHITE ? "ferret" : "hedgehog";
+                : kind.isFerret() ? "ferret" : "hedgehog";
         return com.animania.common.config.LegacyItemMatcher.matches(stack, key);
     }
 
@@ -298,7 +380,9 @@ public final class AnimaniaRodent extends TamableAnimal {
     @Override
     @Nullable
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
-        return null;
+        AnimaniaRodent parent = otherParent instanceof AnimaniaRodent rodent && sameSpecies(rodent)
+                && random.nextBoolean() ? rodent : this;
+        return createYoung(level, parent.kind, parent.color());
     }
 
     @Override
@@ -307,11 +391,27 @@ public final class AnimaniaRodent extends TamableAnimal {
         tag.putInt("foodStackCount", getFoodStackCount());
         tag.putInt("ColorNumber", color());
         tag.putInt("BallColor", ballColor());
+        tag.putBoolean("RodentFemale", isFemale());
+        tag.putBoolean("Pregnant", pregnant);
+        tag.putInt("Gestation", gestation);
+        if (mateKind != null) tag.putString("MateKind", mateKind.name());
+        tag.putInt("MateColor", mateColor);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        entityData.set(FEMALE, tag.contains("RodentFemale") ? tag.getBoolean("RodentFemale")
+                : (getUUID().getLeastSignificantBits() & 1L) == 0);
+        pregnant = isFemale() && !isBaby() && tag.getBoolean("Pregnant");
+        gestation = Math.max(0, tag.getInt("Gestation"));
+        mateKind = null;
+        try {
+            Kind savedKind = Kind.valueOf(tag.getString("MateKind"));
+            if (kind == savedKind || kind.isFerret() && savedKind.isFerret()
+                    || kind.isHedgehog() && savedKind.isHedgehog()) mateKind = savedKind;
+        } catch (IllegalArgumentException ignored) { }
+        mateColor = Math.floorMod(tag.getInt("MateColor"), Kind.HAMSTER_COLORS.length);
         entityData.set(FOOD_STACK, Math.max(0, Math.min(5, tag.getInt("foodStackCount"))));
         entityData.set(COLOR, kind == Kind.HAMSTER
                 ? Math.floorMod(tag.getInt("ColorNumber"), Kind.HAMSTER_COLORS.length) : 0);
@@ -324,7 +424,9 @@ public final class AnimaniaRodent extends TamableAnimal {
         HEDGEHOG("hedgehog", Items.CARROT),
         HEDGEHOG_ALBINO("hedgehog_white", Items.CARROT),
         FERRET_GREY("ferret_grey", Items.CHICKEN),
-        FERRET_WHITE("ferret_white", Items.CHICKEN);
+        FERRET_WHITE("ferret_white", Items.CHICKEN),
+        FERRET_CINNAMON("ferret_cinnamon", Items.CHICKEN),
+        FERRET_SABLE("ferret_sable", Items.CHICKEN);
 
         private static final String[] HAMSTER_COLORS =
                 {"black", "brown", "darkbrown", "darkgray", "gray", "plum", "tarou", "white", "gold"};
@@ -336,12 +438,14 @@ public final class AnimaniaRodent extends TamableAnimal {
             this.food = food;
         }
 
+        public String entityId() { return this == HEDGEHOG_ALBINO ? "hedgehog_albino" : texture; }
+
         public boolean isHedgehog() {
             return this == HEDGEHOG || this == HEDGEHOG_ALBINO;
         }
 
         public boolean isFerret() {
-            return this == FERRET_GREY || this == FERRET_WHITE;
+            return this == FERRET_GREY || this == FERRET_WHITE || this == FERRET_CINNAMON || this == FERRET_SABLE;
         }
     }
 }

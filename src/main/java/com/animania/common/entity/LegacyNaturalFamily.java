@@ -40,7 +40,8 @@ public final class LegacyNaturalFamily {
         companion.moveTo(female.getX(), female.getY(), female.getZ(), female.getYRot(), 0.0F);
         if (chooser == 0) {
             // The old implementation assigned the female to the newly spawned male.
-            ModAttachments.setData(companion, ModAttachments.LAST_MATE, female.getUUID().toString());
+            if (AnimalInformation.formsPairBond(companion))
+                ModAttachments.setData(companion, ModAttachments.LAST_MATE, female.getUUID().toString());
         } else {
             AnimalInformation.recordParent(companion, female);
         }
