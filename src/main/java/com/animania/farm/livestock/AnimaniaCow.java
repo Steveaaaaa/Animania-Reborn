@@ -36,7 +36,10 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
 
-public final class AnimaniaCow extends Cow {
+public final class AnimaniaCow extends Cow implements net.minecraft.world.entity.Shearable {
+    private static final net.minecraft.network.syncher.EntityDataAccessor<Boolean> COAT_SHEARED =
+            net.minecraft.network.syncher.SynchedEntityData.defineId(AnimaniaCow.class, net.minecraft.network.syncher.EntityDataSerializers.BOOLEAN);
+    private int coatRegrowth;
     private static final int GESTATION_TICKS = 20_000;
     private boolean pregnant;
     private boolean milkable;
@@ -46,6 +49,33 @@ public final class AnimaniaCow extends Cow {
     public AnimaniaCow(EntityType<? extends Cow> type, Level level) {
         super(type, level);
         if (role() == FarmAnimalRole.YOUNG) setBaby(true);
+    }
+
+    @Override
+    protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(COAT_SHEARED, false);
+    }
+
+    public boolean isCoatSheared() {
+        return breed().hasWoolCoat() && entityData.get(COAT_SHEARED);
+    }
+
+    @Override
+    public boolean readyForShearing() {
+        return isAlive() && breed().hasWoolCoat() && role() != FarmAnimalRole.YOUNG
+                && !isBaby() && !isCoatSheared();
+    }
+
+    @Override
+    public void shear(net.minecraft.sounds.SoundSource category) {
+        if (level().isClientSide() || !readyForShearing()) return;
+        level().playSound(null, this, SoundEvents.SHEEP_SHEAR, category, 1.0F, 1.0F);
+        entityData.set(COAT_SHEARED, true);
+        coatRegrowth = Math.max(1, com.animania.common.config.LegacyConfig.WOOL_REGROWTH_TIMER.get());
+        spawnAtLocation(new ItemStack(breed() == CowBreed.UMBRA ? Items.BLACK_WOOL : Items.BROWN_WOOL,
+                1 + random.nextInt(2)));
+        gameEvent(net.minecraft.world.level.gameevent.GameEvent.SHEAR);
     }
 
     private String entityPath() {
@@ -92,6 +122,9 @@ public final class AnimaniaCow extends Cow {
     @Override
     public void aiStep() {
         super.aiStep();
+        if (!level().isClientSide() && coatRegrowth > 0 && wellCaredFor() && (coatRegrowth = Math.max(0, coatRegrowth - com.animania.common.entity.HusbandryMood.work(this))) == 0) {
+            entityData.set(COAT_SHEARED, false);
+        }
         if (!level().isClientSide() && role() == FarmAnimalRole.YOUNG && !isBaby()) {
             growIntoAdult();
         } else if (!level().isClientSide() && role() == FarmAnimalRole.FEMALE && pregnant) {
@@ -194,8 +227,15 @@ public final class AnimaniaCow extends Cow {
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+        if (stack.is(Items.SHEARS) && readyForShearing()) {
+            if (!level().isClientSide()) {
+                shear(net.minecraft.sounds.SoundSource.PLAYERS);
+                stack.hurtAndBreak(1, player, getSlotForHand(hand));
+            }
+            return InteractionResult.sidedSuccess(level().isClientSide());
+        }
         if (stack.is(Items.BUCKET)) {
-            if (role() == FarmAnimalRole.FEMALE && milkable && wellCaredFor() && !isBaby()) {
+            if (role() == FarmAnimalRole.FEMALE && milkable && wellCaredFor() && !isBaby() && com.animania.common.entity.HusbandryMood.milkReady(this)) {
                 if (!level().isClientSide()) {
                     ItemStack milk = switch (breed()) {
                         case HOLSTEIN -> new ItemStack(ModItems.milkBucket(MilkType.HOLSTEIN).get());
@@ -204,8 +244,7 @@ public final class AnimaniaCow extends Cow {
                         default -> Items.MILK_BUCKET.getDefaultInstance();
                     };
                     player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, milk));
-                    com.animania.common.entity.LegacyAnimalNeeds.setWatered(this, false);
-                    milkable = false;
+                    com.animania.common.entity.HusbandryMood.afterMilking(this);
                 }
                 player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
                 return InteractionResult.sidedSuccess(level().isClientSide());
@@ -239,6 +278,7 @@ public final class AnimaniaCow extends Cow {
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        tag.putInt("CoatRegrowth", coatRegrowth);
         tag.putBoolean("Pregnant", pregnant);
         tag.putBoolean("HasKids", milkable);
         tag.putInt("Gestation", gestation);
@@ -248,6 +288,8 @@ public final class AnimaniaCow extends Cow {
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        coatRegrowth = breed().hasWoolCoat() ? Math.max(0, tag.getInt("CoatRegrowth")) : 0;
+        entityData.set(COAT_SHEARED, coatRegrowth > 0);
         pregnant = tag.getBoolean("Pregnant");
         milkable = tag.getBoolean("HasKids");
         gestation = tag.getInt("Gestation");

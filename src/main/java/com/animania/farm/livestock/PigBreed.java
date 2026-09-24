@@ -8,7 +8,10 @@ public enum PigBreed implements StringRepresentable {
     LARGE_BLACK("large_black", true),
     LARGE_WHITE("large_white", false),
     OLD_SPOT("old_spot", true),
-    YORKSHIRE("yorkshire", false);
+    YORKSHIRE("yorkshire", false),
+    MOTTLED("mottled", false),
+    PIEBALD("piebald", false),
+    PINK_FOOTED("pink_footed", false);
 
     private final String id;
     private final boolean prime;

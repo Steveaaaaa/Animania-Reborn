@@ -34,6 +34,12 @@ public final class AnimaniaChickenRenderer extends MobRenderer<AnimaniaChicken, 
             case HEN -> henModel;
             case ROOSTER -> roosterModel;
         };
+        if (chicken.breed() == com.animania.farm.chicken.ChickenBreed.COLD
+                || chicken.breed() == com.animania.farm.chicken.ChickenBreed.GOLD_CRESTED) {
+            String base = "farm/client/model/chicken/model" + chicken.role().name().toLowerCase(java.util.Locale.ROOT);
+            model = LegacyAnimalModel.loadVariant(base, "chicken/" + chicken.breed().getSerializedName()
+                    + "_" + chicken.role().name().toLowerCase(java.util.Locale.ROOT));
+        }
         super.render(chicken, entityYaw, partialTick, poseStack, buffer, packedLight);
     }
 
@@ -69,6 +75,12 @@ public final class AnimaniaChickenRenderer extends MobRenderer<AnimaniaChicken, 
 
     private static int eyelidColor(AnimaniaChicken chicken) {
         return switch (chicken.breed()) {
+            case AMBER -> 0xE6B844;
+            case BRONZED -> 0xB47743;
+            case GOLD_CRESTED -> 0xE0B44B;
+            case MIDNIGHT -> 0x2A3249;
+            case COLD -> 0x707C95;
+            case WARM -> 0xDFB55C;
             case LEGHORN -> chicken.role() == com.animania.farm.chicken.ChickenRole.CHICK ? 0xFACA65 : 0xF2F2F2;
             case PLYMOUTH_ROCK -> chicken.role() == com.animania.farm.chicken.ChickenRole.CHICK ? 0xD2D7E2 : 0xA29497;
             case RHODE_ISLAND_RED, ORPINGTON -> chicken.role() == com.animania.farm.chicken.ChickenRole.CHICK

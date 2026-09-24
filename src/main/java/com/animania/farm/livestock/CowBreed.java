@@ -12,7 +12,15 @@ public enum CowBreed implements StringRepresentable {
     JERSEY("jersey", true),
     MOOSHROOM("mooshroom", false),
     SIMMENTAL("simmental", true),
-    FIGHTING("fighting", true);
+    FIGHTING("fighting", true),
+    UMBRA("umbra", true),
+    WOOLY("wooly", true),
+    WARM("warm", true),
+    PINTO("pinto", false),
+    ALBINO("albino", false),
+    NORWEGIAN_RED("norwegian_red", false),
+    CREAM("cream", false),
+    COOKIE("cookie", true);
 
     private final String id;
     private final boolean prime;
@@ -25,6 +33,10 @@ public enum CowBreed implements StringRepresentable {
     @Override
     public String getSerializedName() {
         return id;
+    }
+
+    public boolean hasWoolCoat() {
+        return this == UMBRA || this == WOOLY;
     }
 
     public boolean isPrime() {

@@ -96,14 +96,14 @@ public final class AnimaniaPeafowl extends Chicken {
             return;
         }
         if (role() == PeafowlRole.PEAHEN && !isBaby()) {
-            if (layTimer > -1) layTimer--;
+            if (layTimer > -1) layTimer = Math.max(-1, layTimer - com.animania.common.entity.HusbandryMood.work(this));
             else lookingForNest = true;
         }
         if (role() == PeafowlRole.PEACOCK) {
             boolean femaleNearby = !level().getEntitiesOfClass(AnimaniaPeafowl.class,
                     getBoundingBox().inflate(8.0D), bird -> bird.role() == PeafowlRole.PEAHEN).isEmpty();
             entityData.set(DISPLAYING, level().isDay() && femaleNearby);
-            if (com.animania.common.config.LegacyConfig.BIRDS_DROP_FEATHERS.get() && --featherTimer <= 0) {
+            if (com.animania.common.config.LegacyConfig.BIRDS_DROP_FEATHERS.get() && (featherTimer -= com.animania.common.entity.HusbandryMood.work(this)) <= 0) {
                 spawnAtLocation(ModItems.peacockFeather(breed()).get());
                 int timer = com.animania.common.config.LegacyConfig.FEATHER_TIMER.get();
                 featherTimer = timer + random.nextInt(Math.max(1, timer / 2));
@@ -136,6 +136,7 @@ public final class AnimaniaPeafowl extends Chicken {
 
     public boolean layEggInNest(BlockPos pos) {
         if (canUseNest(pos) && NestBlock.tryInsertPeafowl(level(), pos, breed())) {
+            if (level().getBlockEntity(pos) instanceof com.animania.farm.world.block.entity.NestBlockEntity nest) nest.rememberMother(this);
             lookingForNest = false;
             layTimer = com.animania.common.config.LegacyConfig.LAID_TIMER.get() + random.nextInt(100);
             playSound(SoundEvents.CHICKEN_EGG, 1.0F, 1.0F);

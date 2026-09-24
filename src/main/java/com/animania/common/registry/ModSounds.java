@@ -64,6 +64,33 @@ public final class ModSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> SHEARS = sound("shears");
     public static final DeferredHolder<SoundEvent, SoundEvent> ZAP = sound("zap");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> CAT_AMBIENT = sound("cat_ambient");
+    public static final DeferredHolder<SoundEvent, SoundEvent> CAT_PURR = sound("cat_purr");
+    public static final DeferredHolder<SoundEvent, SoundEvent> CAT_HISS = sound("cat_hiss");
+    public static final DeferredHolder<SoundEvent, SoundEvent> CAT_HURT = sound("cat_hurt");
+    public static final DeferredHolder<SoundEvent, SoundEvent> CAT_DEATH = sound("cat_death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> OCELOT_AMBIENT = sound("ocelot_ambient");
+    public static final DeferredHolder<SoundEvent, SoundEvent> OCELOT_HURT = sound("ocelot_hurt");
+    public static final DeferredHolder<SoundEvent, SoundEvent> OCELOT_DEATH = sound("ocelot_death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> DOG_AMBIENT = sound("dog_ambient");
+    public static final DeferredHolder<SoundEvent, SoundEvent> DOG_GROWL = sound("dog_growl");
+    public static final DeferredHolder<SoundEvent, SoundEvent> DOG_WHINE = sound("dog_whine");
+    public static final DeferredHolder<SoundEvent, SoundEvent> DOG_HURT = sound("dog_hurt");
+    public static final DeferredHolder<SoundEvent, SoundEvent> DOG_DEATH = sound("dog_death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> WOLF_AMBIENT = sound("wolf_ambient");
+    public static final DeferredHolder<SoundEvent, SoundEvent> WOLF_HOWL = sound("wolf_howl");
+    public static final DeferredHolder<SoundEvent, SoundEvent> WOLF_GROWL = sound("wolf_growl");
+    public static final DeferredHolder<SoundEvent, SoundEvent> WOLF_WHINE = sound("wolf_whine");
+    public static final DeferredHolder<SoundEvent, SoundEvent> WOLF_HURT = sound("wolf_hurt");
+    public static final DeferredHolder<SoundEvent, SoundEvent> WOLF_DEATH = sound("wolf_death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> FOX_AMBIENT = sound("fox_ambient");
+    public static final DeferredHolder<SoundEvent, SoundEvent> FOX_HURT = sound("fox_hurt");
+    public static final DeferredHolder<SoundEvent, SoundEvent> FOX_DEATH = sound("fox_death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> FERRET_DEATH = sound("ferret_death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> HEDGEHOG_DEATH = sound("hedgehog_death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> AMPHIBIAN_HURT = sound("amphibian_hurt");
+    public static final DeferredHolder<SoundEvent, SoundEvent> AMPHIBIAN_DEATH = sound("amphibian_death");
+
     private static DeferredHolder<SoundEvent, SoundEvent> sound(String name) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID, name);
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));

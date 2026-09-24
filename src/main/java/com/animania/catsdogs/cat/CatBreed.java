@@ -10,7 +10,15 @@ public enum CatBreed implements StringRepresentable {
     NORWEGIAN("norwegian"),
     OCELOT("ocelot"),
     SIAMESE("siamese"),
-    TABBY("tabby");
+    TABBY("tabby"),
+    ALL_BLACK("all_black"),
+    TUXEDO("tuxedo"),
+    RED_TABBY("red_tabby"),
+    BRITISH_SHORTHAIR("british_shorthair"),
+    CALICO("calico"),
+    PERSIAN("persian"),
+    WHITE("white"),
+    JELLIE("jellie");
 
     private final String id;
 
@@ -23,8 +31,29 @@ public enum CatBreed implements StringRepresentable {
         return id;
     }
 
+    public boolean isVanillaAddition() {
+        return switch (this) {
+            case ALL_BLACK, TUXEDO, RED_TABBY, BRITISH_SHORTHAIR, CALICO, PERSIAN, WHITE, JELLIE -> true;
+            default -> false;
+        };
+    }
+
+    public String modelName() {
+        return switch (this) {
+            case NORWEGIAN -> "modelcatragdoll";
+            case ALL_BLACK, TUXEDO, RED_TABBY, CALICO, WHITE, JELLIE -> "modelcattabby";
+            case BRITISH_SHORTHAIR -> "modelcatamericanshorthair";
+            case PERSIAN -> "modelcatexotic";
+            default -> "modelcat" + id.replace("_", "");
+        };
+    }
+
     public static CatBreed fromPath(String path) {
-        for (CatBreed breed : values()) if (path.endsWith(breed.id)) return breed;
-        return RAGDOLL;
+        CatBreed result = null;
+        for (CatBreed breed : values()) {
+            if ((path.equals(breed.id) || path.endsWith("_" + breed.id))
+                    && (result == null || breed.id.length() > result.id.length())) result = breed;
+        }
+        return result == null ? RAGDOLL : result;
     }
 }

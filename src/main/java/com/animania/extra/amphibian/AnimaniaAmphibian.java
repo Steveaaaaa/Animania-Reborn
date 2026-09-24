@@ -79,6 +79,16 @@ public final class AnimaniaAmphibian extends Frog {
             goalSelector.addGoal(6, new net.minecraft.world.entity.ai.goal.AvoidEntityGoal<>(this,
                     com.animania.farm.chicken.AnimaniaChicken.class, 10, 3.0D, 3.5D));
         }
+        for (var wrapped : java.util.List.copyOf(goalSelector.getAvailableGoals())) {
+            var goal = wrapped.getGoal();
+            int priority = goal instanceof net.minecraft.world.entity.ai.goal.AvoidEntityGoal ? 2
+                    : goal instanceof net.minecraft.world.entity.ai.goal.RandomStrollGoal ? 8
+                    : goal instanceof net.minecraft.world.entity.ai.goal.LookAtPlayerGoal ? 9 : wrapped.getPriority();
+            if (priority != wrapped.getPriority()) {
+                goalSelector.removeGoal(goal); goalSelector.addGoal(priority, goal);
+            }
+        }
+        goalSelector.addGoal(3, new AmphibianHabitatGoal(this));
     }
 
     @Override protected net.minecraft.world.entity.ai.navigation.PathNavigation createNavigation(Level level) {
@@ -92,6 +102,16 @@ public final class AnimaniaAmphibian extends Frog {
 
     @Override protected void customServerAiStep() {
         // Do not tick FrogAi: 1.12 amphibians have no tongue hunting or long-jump brain.
+        int activity = getData(com.animania.common.registry.ModAttachments.FARM_ACTIVITY);
+        if (!pepeGoalsInstalled && (activity == com.animania.common.entity.ai.FarmActivityGoal.SHORE_REST
+                || activity == com.animania.common.entity.ai.FarmActivityGoal.SHELTER)) {
+            navigation.stop();
+            setJumping(false);
+            ((LegacyFrogJumpControl) jumpControl).cancel();
+            jumpTicks = jumpDuration = 0;
+            wasOnGround = onGround();
+            return;
+        }
         if (landingDelay > 0) --landingDelay;
         if (onGround()) {
             if (!wasOnGround) {
@@ -139,6 +159,7 @@ public final class AnimaniaAmphibian extends Frog {
         private boolean canJump;
         private LegacyFrogJumpControl() { super(AnimaniaAmphibian.this); }
         private boolean requested() { return jump; }
+        private void cancel() { jump = false; canJump = false; }
         @Override public void tick() { if (jump) { startLegacyJump(); jump = false; } }
     }
     private final class LegacyFrogMoveControl extends net.minecraft.world.entity.ai.control.MoveControl {
@@ -154,6 +175,16 @@ public final class AnimaniaAmphibian extends Frog {
             super.setWantedPosition(x, y, z, speed);
             if (speed > 0) nextJumpSpeed = speed + random.nextFloat() / 25;
         }
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource source) {
+        return ModSounds.AMPHIBIAN_HURT.get();
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.AMPHIBIAN_DEATH.get();
     }
 
     public Kind kind() {
@@ -198,7 +229,7 @@ public final class AnimaniaAmphibian extends Frog {
         super.aiStep();
         squishAmount = (onGround() ? -0.5F : 0.5F) * 0.6F;
         if (!level().isClientSide()) {
-            if (poisonHarvestCooldown > 0) poisonHarvestCooldown--;
+            if (poisonHarvestCooldown > 0) poisonHarvestCooldown = Math.max(0, poisonHarvestCooldown - com.animania.common.entity.HusbandryMood.work(this));
             if (!pepeGoalsInstalled && kind == Kind.FROG && hasCustomName()
                     && getName().getString().equals("Pepe")) installPepeGoals();
         }
@@ -206,6 +237,7 @@ public final class AnimaniaAmphibian extends Frog {
 
     private void installPepeGoals() {
         pepeGoalsInstalled = true;
+        setData(com.animania.common.registry.ModAttachments.FARM_ACTIVITY, 0);
         goalSelector.removeAllGoals(goal -> true);
         goalSelector.addGoal(4, new net.minecraft.world.entity.ai.goal.LookAtPlayerGoal(this, Player.class, 10));
         goalSelector.addGoal(5, new net.minecraft.world.entity.ai.goal.RandomStrollGoal(this, 0.6D));
@@ -235,6 +267,7 @@ public final class AnimaniaAmphibian extends Frog {
         ItemStack held = player.getItemInHand(hand);
         if (kind == Kind.DART_FROG && held.is(Items.ARROW) && poisonHarvestCooldown == 0) {
             if (!level().isClientSide()) {
+                com.animania.common.entity.HusbandryMood.caredFor(this);
                 poisonHarvestCooldown = 800;
                 ItemStack poisonedArrow = PotionContents.createItemStack(Items.TIPPED_ARROW, Potions.POISON);
                 if (!player.isCreative()) held.shrink(1);

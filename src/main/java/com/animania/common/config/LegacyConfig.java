@@ -151,7 +151,7 @@ public final class LegacyConfig {
         SALT_LICK_MAX_USES = integer(base, "saltLickMaxUses", 200, 1, 1_000_000, "Maximum salt lick uses");
         FOOD_LISTS.put("slop", strings(base, "slopIngredients", List.of("minecraft:carrot", "minecraft:beetroot", "minecraft:potato", "minecraft:poisonous_potato", "minecraft:bread"), "Ingredients used to make slop"));
         ENTITY_BREEDING_LIMIT = integer(base, "entityBreedingLimit", 15, 0, 10_000, "Nearby same-type breeding limit");
-        MALES_MATE_MULTIPLE_FEMALES = bool(base, "malesMateMultipleFemales", false, "Allow males to have multiple mates");
+        MALES_MATE_MULTIPLE_FEMALES = bool(base, "malesMateMultipleFemales", false, "Legacy compatibility option. Pair bonds now follow species: livestock are unpaired; wolves and foxes form pairs.");
         BIRTH_MULTIPLE_CHANCE = decimal(base, "birthMultipleChance", 0.1, 0, 1, "Geometric chance of additional offspring");
         ANIMAL_LOSS_CHANCE = decimal(base, "animalLossChance", 0, 0, 1, "Chance poorly cared-for pregnant animals lose the pregnancy");
         base.pop();
@@ -191,7 +191,7 @@ public final class LegacyConfig {
         REPLACE_VANILLA_PIGS = bool(farm, "replaceVanillaPigs", true, "Remove naturally spawning vanilla pigs");
         REPLACE_VANILLA_CHICKENS = bool(farm, "replaceVanillaChickens", true, "Remove naturally spawning vanilla chickens");
         REPLACE_VANILLA_SHEEP = bool(farm, "replaceVanillaSheep", true, "Remove naturally spawning vanilla sheep");
-        REPLACE_VANILLA_HORSES = bool(farm, "replaceVanillaHorses", false, "Remove naturally spawning vanilla horses");
+        REPLACE_VANILLA_HORSES = bool(farm, "replaceVanillaHorses", true, "Remove naturally spawning vanilla horses");
         addSpawnGroup(farm, "chickens", true, 9, 40, 2);
         addSpawnGroup(farm, "cows", true, 9, 40, 2);
         addSpawnGroup(farm, "pigs", true, 9, 40, 2);
@@ -200,9 +200,23 @@ public final class LegacyConfig {
         addSpawnGroup(farm, "sheep", true, 8, 40, 3);
         addBiome(farm, "chickenPlymouthRock", "MOUNTAIN");
         addBiome(farm, "chickenLeghorn", "PLAINS");
+        addBiome(farm, "chickenAmber", "PLAINS", "FOREST");
+        addBiome(farm, "chickenBronzed", "FOREST");
+        addBiome(farm, "chickenGoldCrested", "JUNGLE");
+        addBiome(farm, "chickenMidnight", "SWAMP");
+        addBiome(farm, "chickenCold", "SNOWY", "CONIFEROUS");
+        addBiome(farm, "chickenWarm", "SAVANNA");
         addBiome(farm, "chickenOrpington", "JUNGLE", "SWAMP");
         addBiome(farm, "chickenWyandotte", "FOREST");
         addBiome(farm, "chickenRhodeIslandRed", "FOREST");
+        addBiome(farm, "cowUmbra", "CONIFEROUS", "MOUNTAIN");
+        addBiome(farm, "cowWooly", "SNOWY", "MOUNTAIN");
+        addBiome(farm, "cowWarm", "SAVANNA", "MESA");
+        addBiome(farm, "cowPinto", "PLAINS");
+        addBiome(farm, "cowAlbino", "PLAINS", "FOREST");
+        addBiome(farm, "cowNorwegianRed", "PLAINS", "FOREST");
+        addBiome(farm, "cowCream", "PLAINS");
+        addBiome(farm, "cowCookie", "FOREST", "HILLS");
         addBiome(farm, "cowFighting", "SAVANNA");
         addBiome(farm, "cowSimmental", "PLAINS", "HILLS");
         addBiome(farm, "cowHolstein", "FOREST"); addBiome(farm, "cowFriesian", "PLAINS");
@@ -210,6 +224,9 @@ public final class LegacyConfig {
         addBiome(farm, "cowHighland", "MOUNTAIN", "HILLS"); addBiome(farm, "cowJersey", "WASTELAND", "SWAMP");
         addBiome(farm, "cowLonghorn", "SAVANNA"); addBiome(farm, "cowMooshroom", "MUSHROOM", "MAGICAL");
         addBiome(farm, "draftHorse", "PLAINS", "SAVANNA", "MESA");
+        addBiome(farm, "pigMottled", "FOREST");
+        addBiome(farm, "pigPiebald", "PLAINS", "FOREST");
+        addBiome(farm, "pigPinkFooted", "FOREST");
         addBiome(farm, "pigYorkshire", "PLAINS"); addBiome(farm, "pigOldSpot", "FOREST");
         addBiome(farm, "pigLargeBlack", "SWAMP", "DENSE"); addBiome(farm, "pigLargeWhite", "FOREST");
         addBiome(farm, "pigDuroc", "JUNGLE"); addBiome(farm, "pigHampshire", "MOUNTAIN", "HILLS");
@@ -217,6 +234,12 @@ public final class LegacyConfig {
         addBiome(farm, "goatFainting", "PLAINS"); addBiome(farm, "goatKiko", "MOUNTAIN", "HILLS");
         addBiome(farm, "goatKinder", "SAVANNA", "MESA"); addBiome(farm, "goatNigerianDwarf", "SANDY");
         addBiome(farm, "goatPygmy", "SAVANNA", "MESA");
+        addBiome(farm, "sheepFlecked", "FOREST");
+        addBiome(farm, "sheepFuzzy", "COLD", "HILLS");
+        addBiome(farm, "sheepInky", "PLAINS");
+        addBiome(farm, "sheepLongNosed", "MOUNTAIN", "HILLS");
+        addBiome(farm, "sheepPatched", "PLAINS");
+        addBiome(farm, "sheepRocky", "MOUNTAIN", "HILLS");
         addBiome(farm, "sheepDorset", "HILLS"); addBiome(farm, "sheepFriesian", "PLAINS");
         addBiome(farm, "sheepJacob", "FOREST"); addBiome(farm, "sheepMerino", "PLAINS");
         addBiome(farm, "sheepSuffolk", "SAVANNA", "MESA"); addBiome(farm, "sheepDorper", "SAVANNA");
@@ -260,7 +283,16 @@ public final class LegacyConfig {
         addBiome(extra, "toad", "SWAMP", "FOREST"); addBiome(extra, "frog", "SWAMP", "RIVER");
         addBiome(extra, "dartFrog", "JUNGLE", "FOREST"); addBiome(extra, "hamster", "BEACH", "SANDY");
         addBiome(extra, "ferretGray", "SAVANNA"); addBiome(extra, "ferretWhite", "SAVANNA");
+        addBiome(extra, "ferretCinnamon", "SAVANNA"); addBiome(extra, "ferretSable", "FOREST");
         addBiome(extra, "hedgehog", "FOREST"); addBiome(extra, "hedgehogAlbino", "SWAMP");
+        addBiome(extra, "rabbitDesert", "SANDY");
+        addBiome(extra, "rabbitBlackAndWhite", "PLAINS");
+        addBiome(extra, "rabbitSaltAndPepper", "MOUNTAIN", "HILLS");
+        addBiome(extra, "rabbitVested", "PLAINS");
+        addBiome(extra, "rabbitBoldStriped", "FOREST");
+        addBiome(extra, "rabbitFreckled", "FOREST");
+        addBiome(extra, "rabbitHarelequin", "FOREST");
+        addBiome(extra, "rabbitMuddyFoot", "FOREST");
         addBiome(extra, "rabbitCottontail", "FOREST"); addBiome(extra, "rabbitChinchilla", "SAVANNA");
         addBiome(extra, "rabbitDutch", "PLAINS"); addBiome(extra, "rabbitHavana", "MOUNTAIN", "HILLS");
         addBiome(extra, "rabbitJack", "SAVANNA", "SANDY"); addBiome(extra, "rabbitNewZealand", "FOREST");
@@ -285,6 +317,14 @@ public final class LegacyConfig {
         FOOD_LISTS.put("petBowl", strings(pets, "petBowlFood", List.of("minecraft:fish", "listAllbeefraw", "animania:hamster_food"), "Items accepted by pet bowls"));
         addBeds(pets, "dog", "animania:dog_pillow", "animania:block_straw");
         addBiome(pets, "wolf", "MOUNTAIN", "FOREST", "SNOWY", "COLD");
+        addBiome(pets, "wolfAshen", "FOREST", "SNOWY", "COLD");
+        addBiome(pets, "wolfBlack", "FOREST", "SNOWY", "COLD");
+        addBiome(pets, "wolfChestnut", "FOREST", "SNOWY", "COLD");
+        addBiome(pets, "wolfRusty", "JUNGLE");
+        addBiome(pets, "wolfSpotted", "SAVANNA");
+        addBiome(pets, "wolfStriped", "MESA");
+        addBiome(pets, "wolfSnowy", "FOREST", "SNOWY", "COLD");
+        addBiome(pets, "wolfWoods", "FOREST", "SNOWY", "COLD");
         addBiome(pets, "fox", "FOREST", "SNOWY", "COLD");
         addBiome(pets, "ocelot", "HOT", "JUNGLE", "SAVANNA");
         REPLACE_VANILLA_WOLVES = bool(pets, "replaceVanillaWolves", true, "Replace naturally spawning vanilla wolves");
@@ -296,10 +336,10 @@ public final class LegacyConfig {
     private LegacyConfig() {}
 
     public static void register(ModContainer container) {
-        container.registerConfig(ModConfig.Type.SERVER, BASE_SPEC, "animania-server.toml");
-        container.registerConfig(ModConfig.Type.SERVER, FARM_SPEC, "animania_farm-server.toml");
-        container.registerConfig(ModConfig.Type.SERVER, EXTRA_SPEC, "animania_extra-server.toml");
-        container.registerConfig(ModConfig.Type.SERVER, CATSDOGS_SPEC, "animania_cats_dogs-server.toml");
+        container.registerConfig(ModConfig.Type.COMMON, BASE_SPEC, "animania-server.toml");
+        container.registerConfig(ModConfig.Type.COMMON, FARM_SPEC, "animania_farm-server.toml");
+        container.registerConfig(ModConfig.Type.COMMON, EXTRA_SPEC, "animania_extra-server.toml");
+        container.registerConfig(ModConfig.Type.COMMON, CATSDOGS_SPEC, "animania_cats_dogs-server.toml");
     }
 
     private static ModConfigSpec.BooleanValue bool(ModConfigSpec.Builder b, String key, boolean value, String comment) {

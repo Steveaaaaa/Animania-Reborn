@@ -55,7 +55,8 @@ public final class LegacyGrazeGoal extends LegacySearchBlockGoal {
 
     @Override
     public boolean canContinueToUse() {
-        return eatingTimer > 0 || super.canContinueToUse();
+        return !grazer.getData(ModAttachments.SLEEPING) && grazer.hurtTime == 0
+                && grazer.getTarget() == null && (eatingTimer > 0 || super.canContinueToUse());
     }
 
     @Override
@@ -67,6 +68,8 @@ public final class LegacyGrazeGoal extends LegacySearchBlockGoal {
         }
         animal.getNavigation().stop();
         eatingTimer--;
+        if (eatingTimer > 4 && grazer.getData(ModAttachments.EATING_TICKS) < 10)
+            grazer.setData(ModAttachments.EATING_TICKS, 40);
         if (consumesGrass && eatingTimer == 4 && seekingBlockPos != null && shouldMoveTo(seekingBlockPos)) {
             var oldState = level.getBlockState(seekingBlockPos);
             level.levelEvent(2001, seekingBlockPos, Block.getId(oldState));
@@ -81,6 +84,7 @@ public final class LegacyGrazeGoal extends LegacySearchBlockGoal {
     public void stop() {
         super.stop();
         eatingTimer = 0;
+        grazer.setData(ModAttachments.EATING_TICKS, 0);
     }
 
     @Override

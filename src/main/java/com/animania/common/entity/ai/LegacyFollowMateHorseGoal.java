@@ -18,6 +18,7 @@ public final class LegacyFollowMateHorseGoal extends Goal {
 
     @Override
     public boolean canUse() {
+        if (!com.animania.common.entity.AnimalInformation.formsPairBond(stallion)) return false;
         if (++delay <= LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get()) return false;
         if (!stallion.level().isDay() || stallion.getData(ModAttachments.SLEEPING)
                 || stallion.role() != FarmAnimalRole.MALE) {

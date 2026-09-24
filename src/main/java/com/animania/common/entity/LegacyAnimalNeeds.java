@@ -3,6 +3,7 @@ package com.animania.common.entity;
 import com.animania.catsdogs.cat.AnimaniaCat;
 import com.animania.catsdogs.dog.AnimaniaDog;
 import com.animania.common.config.LegacyConfig;
+import com.animania.common.config.AnimalNeedsExclusions;
 import com.animania.common.registry.ModAttachments;
 import com.animania.extra.peafowl.AnimaniaPeafowl;
 import com.animania.extra.rabbit.AnimaniaRabbit;
@@ -30,8 +31,9 @@ public final class LegacyAnimalNeeds {
     }
 
     public static Profile profile(Animal animal) {
+        if (animal instanceof com.animania.modern.ModernAxolotl) return new Profile(3, 2, 1.0D, true, FoodBlockMode.NONE, false, 1, 1, 100);
         if (animal instanceof AnimaniaCow) return new Profile(3, 2, 1.0D, false, FoodBlockMode.DEFAULT, true, 1, 1, 100);
-        if (animal instanceof AnimaniaGoat) return new Profile(3, 2, 1.0D, false, FoodBlockMode.DEFAULT, true, 1, 1, 100);
+        if (animal instanceof AnimaniaGoat || animal instanceof com.animania.modern.MountainGoat) return new Profile(3, 2, 1.0D, false, FoodBlockMode.DEFAULT, true, 1, 1, 100);
         if (animal instanceof AnimaniaHorse) return new Profile(1, 1, 1.0D, false, FoodBlockMode.DEFAULT, true, 1, 1, 100);
         if (animal instanceof AnimaniaPig) return new Profile(3, 3, 1.0D, false, FoodBlockMode.DEFAULT, true, 1, 1, 100);
         if (animal instanceof AnimaniaSheep) return new Profile(3, 2, 1.0D, false, FoodBlockMode.DEFAULT, true, 1, 1, 100);
@@ -39,7 +41,7 @@ public final class LegacyAnimalNeeds {
         if (animal instanceof AnimaniaRabbit) return new Profile(3, 2, 1.4D, true, FoodBlockMode.RABBIT, true, 1, 1, 100);
         if (animal instanceof AnimaniaPeafowl) return new Profile(1, 1, 1.0D, true, FoodBlockMode.SEEDS, false, 2, 2, 100);
         if (animal instanceof AnimaniaCat) return new Profile(3, 1, 1.0D, true, FoodBlockMode.NONE, true, 1, 1, 100);
-        if (animal instanceof AnimaniaDog) return new Profile(3, 1, 1.0D, true, FoodBlockMode.NONE, true, 1, 1, 100);
+        if (animal instanceof AnimaniaDog || animal instanceof com.animania.modern.ModernFox) return new Profile(3, 1, 1.0D, true, FoodBlockMode.NONE, true, 1, 1, 100);
         if (animal instanceof AnimaniaRodent rodent) {
             if (rodent.kind() == AnimaniaRodent.Kind.HAMSTER) {
                 return new Profile(3, 3, 1.0D, true, FoodBlockMode.NONE, false, 1, 4, 200);
@@ -59,26 +61,31 @@ public final class LegacyAnimalNeeds {
 
         if (animal.isLeashed() && !isInteracted(animal)) setInteracted(animal, true);
 
-        if (LegacyConfig.AMBIANCE_MODE.get()) {
-            setFed(animal, true);
-            setWatered(animal, true);
+        boolean noHunger = LegacyConfig.AMBIANCE_MODE.get() || AnimalNeedsExclusions.hunger(animal);
+        boolean noThirst = LegacyConfig.AMBIANCE_MODE.get() || AnimalNeedsExclusions.thirst(animal);
+        if (noHunger) {
+            if (!animal.getData(ModAttachments.FED)) setFed(animal, true);
         } else {
             int fedTimer = animal.getData(ModAttachments.FED_TIMER);
             if (fedTimer > -1 && (!LegacyConfig.REQUIRE_ANIMAL_INTERACTION_FOR_AI.get() || isInteracted(animal))) {
-                fedTimer--;
-                animal.setData(ModAttachments.FED_TIMER, fedTimer);
+                animal.setData(ModAttachments.FED_TIMER, --fedTimer);
                 if (fedTimer == 0) setFed(animal, false);
             }
-
+        }
+        if (noThirst) {
+            if (!animal.getData(ModAttachments.WATERED)) setWatered(animal, true);
+        } else {
             int wateredTimer = animal.getData(ModAttachments.WATERED_TIMER);
             if (wateredTimer > -1) {
-                wateredTimer--;
-                animal.setData(ModAttachments.WATERED_TIMER, wateredTimer);
-                if (wateredTimer == 0
-                        && (!LegacyConfig.REQUIRE_ANIMAL_INTERACTION_FOR_AI.get() || isInteracted(animal))) {
+                animal.setData(ModAttachments.WATERED_TIMER, --wateredTimer);
+                if (wateredTimer == 0 && (!LegacyConfig.REQUIRE_ANIMAL_INTERACTION_FOR_AI.get() || isInteracted(animal)))
                     setWatered(animal, false);
-                }
             }
+        }
+        if (noHunger && noThirst) {
+            if (animal.getData(ModAttachments.STARVATION_TIMER) != 0) animal.setData(ModAttachments.STARVATION_TIMER, 0);
+            syncCompatibilityValues(animal);
+            return;
         }
 
         boolean fed = isFed(animal);
@@ -134,11 +141,13 @@ public final class LegacyAnimalNeeds {
     }
 
     public static boolean isFed(Animal animal) {
-        return animal.getData(ModAttachments.FED);
+        return LegacyConfig.AMBIANCE_MODE.get() || AnimalNeedsExclusions.hunger(animal)
+                || animal.getData(ModAttachments.FED);
     }
 
     public static boolean isWatered(Animal animal) {
-        return animal.getData(ModAttachments.WATERED);
+        return LegacyConfig.AMBIANCE_MODE.get() || AnimalNeedsExclusions.thirst(animal)
+                || animal.getData(ModAttachments.WATERED);
     }
 
     public static boolean isInteracted(Animal animal) {
@@ -150,6 +159,7 @@ public final class LegacyAnimalNeeds {
     }
 
     public static void setFed(Animal animal, boolean fed) {
+        fed |= LegacyConfig.AMBIANCE_MODE.get() || AnimalNeedsExclusions.hunger(animal);
         if (fed) {
             animal.setData(ModAttachments.FED_TIMER,
                     LegacyConfig.FEED_TIMER.get() + animal.getRandom().nextInt(100));
@@ -159,6 +169,7 @@ public final class LegacyAnimalNeeds {
     }
 
     public static void setWatered(Animal animal, boolean watered) {
+        watered |= LegacyConfig.AMBIANCE_MODE.get() || AnimalNeedsExclusions.thirst(animal);
         if (watered) {
             animal.setData(ModAttachments.WATERED_TIMER,
                     LegacyConfig.WATER_TIMER.get() + animal.getRandom().nextInt(100));
@@ -175,7 +186,7 @@ public final class LegacyAnimalNeeds {
         }
         if (handFed && animal instanceof AnimaniaRodent rodent) rodent.storeHamsterFood();
         if (handFed) animal.setData(ModAttachments.HAND_FED, true);
-        if (handFed) setInteracted(animal, true);
+        if (handFed) { setInteracted(animal, true); HusbandryMood.caredFor(animal); }
     }
 
     public static void water(Animal animal) {
@@ -185,6 +196,7 @@ public final class LegacyAnimalNeeds {
 
     /** Preserve the complete legacy husbandry state when a child entity is replaced by its adult entity. */
     public static void copyState(Animal from, Animal to) {
+        HusbandryMood.copy(from, to);
         to.setData(ModAttachments.NEEDS_INITIALIZED, from.getData(ModAttachments.NEEDS_INITIALIZED));
         to.setData(ModAttachments.FED, from.getData(ModAttachments.FED));
         to.setData(ModAttachments.WATERED, from.getData(ModAttachments.WATERED));
@@ -198,11 +210,15 @@ public final class LegacyAnimalNeeds {
         to.setData(ModAttachments.THIRST, from.getData(ModAttachments.THIRST));
         to.setData(ModAttachments.LAST_MATE, from.getData(ModAttachments.LAST_MATE));
         to.setData(ModAttachments.PARENT, from.getData(ModAttachments.PARENT));
+        to.setData(ModAttachments.FATHER, from.getData(ModAttachments.FATHER));
+        to.setData(ModAttachments.NURSING_ID, from.getData(ModAttachments.NURSING_ID));
     }
 
     private static void syncCompatibilityValues(Animal animal) {
-        animal.setData(ModAttachments.HUNGER, isFed(animal) ? ModAttachments.MAX_NEED : 0);
-        animal.setData(ModAttachments.THIRST, isWatered(animal) ? ModAttachments.MAX_NEED : 0);
+        if (animal.getData(ModAttachments.HUNGER) != (isFed(animal) ? ModAttachments.MAX_NEED : 0))
+            animal.setData(ModAttachments.HUNGER, isFed(animal) ? ModAttachments.MAX_NEED : 0);
+        if (animal.getData(ModAttachments.THIRST) != (isWatered(animal) ? ModAttachments.MAX_NEED : 0))
+            animal.setData(ModAttachments.THIRST, isWatered(animal) ? ModAttachments.MAX_NEED : 0);
     }
 
     public enum FoodBlockMode {

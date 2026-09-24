@@ -38,6 +38,11 @@ public final class AnimalInformation {
     }
 
     public static Gender gender(Animal animal) {
+        if (animal instanceof com.animania.modern.ModernAxolotl) return animal.isBaby() ? Gender.YOUNG : Gender.NONE;
+        if (animal instanceof com.animania.modern.ModernAnimal modern)
+            return animal.isBaby() ? Gender.YOUNG : modern.isFemale() ? Gender.FEMALE : Gender.MALE;
+        if (animal instanceof com.animania.extra.rodent.AnimaniaRodent rodent)
+            return rodent.isBaby() ? Gender.YOUNG : rodent.isFemale() ? Gender.FEMALE : Gender.MALE;
         if (animal instanceof AnimaniaCow cow) return farmGender(cow.role());
         if (animal instanceof AnimaniaGoat goat) return farmGender(goat.role());
         if (animal instanceof AnimaniaPig pig) return farmGender(pig.role());
@@ -100,13 +105,32 @@ public final class AnimalInformation {
         return canBeSterilized(animal) && animal.getData(ModAttachments.STERILIZED);
     }
 
+    /** Social pair bonds apply to wild canids, not to livestock or domestic pets. */
+    public static boolean formsPairBond(Animal animal) {
+        return animal instanceof com.animania.modern.ModernFox
+                || animal instanceof AnimaniaDog dog && (dog.breed().isWolf()
+                || dog.breed() == com.animania.catsdogs.dog.DogBreed.FOX);
+    }
+
     public static void recordMating(Animal first, Animal second) {
-        first.setData(ModAttachments.LAST_MATE, second.getUUID().toString());
-        second.setData(ModAttachments.LAST_MATE, first.getUUID().toString());
+        first.setData(ModAttachments.LAST_MATE, formsPairBond(first) ? second.getUUID().toString() : "");
+        second.setData(ModAttachments.LAST_MATE, formsPairBond(second) ? first.getUUID().toString() : "");
         com.animania.common.config.LegacyBreedingRules.recordConception(first, second);
+        Animal mother = gender(first) == Gender.FEMALE ? first : second;
+        Animal father = mother == first ? second : first;
+        mother.setData(ModAttachments.LAST_SIRE, father.getUUID().toString());
+        if (FamilyLifecycle.bird(mother)) mother.setData(ModAttachments.FERTILIZED_TIMER, 12000);
     }
 
     public static void recordParent(Animal child, Animal parent) {
+        HusbandryMood.inherit(child, parent);
         child.setData(ModAttachments.PARENT, parent.getUUID().toString());
+        child.setData(ModAttachments.FATHER, parent.getData(ModAttachments.LAST_SIRE));
+        if (FamilyLifecycle.mammal(child)) {
+            child.setData(ModAttachments.NURSING_ID, child.getUUID().toString());
+            java.util.Set<String> young = new java.util.LinkedHashSet<>(java.util.Arrays.asList(parent.getData(ModAttachments.NURSING_YOUNG).split(",")));
+            young.remove(""); young.add(child.getUUID().toString());
+            parent.setData(ModAttachments.NURSING_YOUNG, String.join(",", young));
+        }
     }
 }

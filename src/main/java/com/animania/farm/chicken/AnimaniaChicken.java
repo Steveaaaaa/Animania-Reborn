@@ -74,8 +74,15 @@ public final class AnimaniaChicken extends Chicken {
         ChickenRole role = role();
         if (!level().isClientSide()) {
             if (role == ChickenRole.HEN && !isBaby()) {
+                if (eggTime > 1) eggTime = Math.max(2, eggTime + 1 - com.animania.common.entity.HusbandryMood.work(this));
                 if (!com.animania.common.config.LegacyConfig.CHICKENS_DROP_EGGS.get()) eggTime = 1000;
-                if (nestLayTimer > -1) nestLayTimer--;
+                else if (isAlive() && !isChickenJockey() && eggTime <= 1) {
+                    playSound(SoundEvents.CHICKEN_EGG, 1.0F, 1.0F);
+                    spawnAtLocation(breed().eggItem());
+                    gameEvent(net.minecraft.world.level.gameevent.GameEvent.ENTITY_PLACE);
+                    eggTime = random.nextInt(6000) + 6000;
+                }
+                if (nestLayTimer > -1) nestLayTimer = Math.max(-1, nestLayTimer - com.animania.common.entity.HusbandryMood.work(this));
                 else lookingForNest = true;
             } else if (role != ChickenRole.HEN) {
                 lookingForNest = false;
@@ -107,6 +114,7 @@ public final class AnimaniaChicken extends Chicken {
 
     public boolean layEggInNest(BlockPos pos) {
         if (canUseNest(pos) && NestBlock.tryInsert(level(), pos, breed())) {
+            if (level().getBlockEntity(pos) instanceof com.animania.farm.world.block.entity.NestBlockEntity nest) nest.rememberMother(this);
             playSound(SoundEvents.CHICKEN_EGG, 1.0F, 1.0F);
             lookingForNest = false;
             nestLayTimer = com.animania.common.config.LegacyConfig.LAID_TIMER.get() + random.nextInt(100);

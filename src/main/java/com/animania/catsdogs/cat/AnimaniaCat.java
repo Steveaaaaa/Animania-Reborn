@@ -3,6 +3,7 @@ package com.animania.catsdogs.cat;
 import com.animania.common.entity.AnimalInformation;
 import com.animania.common.registry.ModAttachments;
 import com.animania.common.registry.ModEntities;
+import com.animania.common.registry.ModSounds;
 import com.animania.extra.rodent.AnimaniaRodent;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -63,6 +64,34 @@ public final class AnimaniaCat extends TamableAnimal {
 
     private String entityPath() {
         return BuiltInRegistries.ENTITY_TYPE.getKey(getType()).getPath();
+    }
+
+    @Override
+    protected net.minecraft.sounds.SoundEvent getAmbientSound() {
+        if (getData(ModAttachments.SLEEPING)) return null;
+        if (getTarget() != null && getTarget().isAlive()) return ModSounds.CAT_HISS.get();
+        if (breed() == CatBreed.OCELOT) return ModSounds.OCELOT_AMBIENT.get();
+        if (isTame() && isInSittingPose() && com.animania.common.entity.LegacyAnimalNeeds.isFed(this)
+                && random.nextInt(3) == 0) return ModSounds.CAT_PURR.get();
+        return ModSounds.CAT_AMBIENT.get();
+    }
+
+    @Override
+    protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource source) {
+        return (breed() == CatBreed.OCELOT ? ModSounds.OCELOT_HURT : ModSounds.CAT_HURT).get();
+    }
+
+    @Override
+    protected net.minecraft.sounds.SoundEvent getDeathSound() {
+        return (breed() == CatBreed.OCELOT ? ModSounds.OCELOT_DEATH : ModSounds.CAT_DEATH).get();
+    }
+
+    @Override
+    protected float getSoundVolume() { return 0.4F; }
+
+    @Override
+    protected void playStepSound(net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
+        if (!getData(ModAttachments.SLEEPING)) playSound(net.minecraft.sounds.SoundEvents.WOLF_STEP, 0.02F, 1.5F);
     }
 
     public CatBreed breed() {

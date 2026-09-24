@@ -28,6 +28,13 @@ public final class HiveBlockEntity extends BlockEntity {
     public static final int CAPACITY = 5_000;
     private final FluidTank tank;
     private int nextHoney = 400;
+    private final com.animania.modern.HiveColony colony = new com.animania.modern.HiveColony(this);
+    public com.animania.modern.HiveColony colony() { return colony; }
+    public void acceptNectar() { acceptNectar(100); }
+    public void acceptNectar(int percent) {
+        tank.fill(new FluidStack(ModFluids.HONEY.source(), Math.max(1, AnimaniaConfig.HIVE_HONEY_PER_CYCLE.get() * percent / 100)),
+                IFluidHandler.FluidAction.EXECUTE);
+    }
 
     public HiveBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.HIVE.get(), pos, state);
@@ -46,6 +53,7 @@ public final class HiveBlockEntity extends BlockEntity {
             level.destroyBlock(pos, false);
             return;
         }
+        hive.colony.tick();
         if (--hive.nextHoney <= 0) {
             boolean wild = state.is(ModBlocks.WILD_HIVE.get());
             hive.nextHoney = (wild ? LegacyConfig.HIVE_WILD_HONEY_RATE.get()
@@ -78,6 +86,7 @@ public final class HiveBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
+        colony.save(tag);
         tag.putInt("NextHoney", nextHoney);
         tag.put("HoneyTank", tank.writeToNBT(registries, new CompoundTag()));
     }
@@ -85,6 +94,7 @@ public final class HiveBlockEntity extends BlockEntity {
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
+        colony.load(tag);
         nextHoney = tag.contains("NextHoney") ? Math.max(1, tag.getInt("NextHoney")) : 400;
         if (tag.contains("HoneyTank")) tank.readFromNBT(registries, tag.getCompound("HoneyTank"));
     }

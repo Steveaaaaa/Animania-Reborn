@@ -44,6 +44,11 @@ public final class ModEntities {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(Registries.ENTITY_TYPE, Animania.MOD_ID);
 
+    public static final DeferredHolder<EntityType<?>, EntityType<com.animania.farm.chicken.BlueEggProjectile>> BLUE_EGG = ENTITY_TYPES.register("blue_egg",
+            () -> EntityType.Builder.<com.animania.farm.chicken.BlueEggProjectile>of(
+                    com.animania.farm.chicken.BlueEggProjectile::new, MobCategory.MISC)
+                    .sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build("blue_egg"));
+
     private static final Map<ChickenRole, Map<ChickenBreed, DeferredHolder<EntityType<?>, EntityType<AnimaniaChicken>>>> CHICKENS =
             new EnumMap<>(ChickenRole.class);
     public static final Map<String, DeferredHolder<EntityType<?>, EntityType<AnimaniaChicken>>> ALL_CHICKENS =
@@ -79,7 +84,55 @@ public final class ModEntities {
             new EnumMap<>(DogRole.class);
     public static final Map<String, DeferredHolder<EntityType<?>, EntityType<AnimaniaDog>>> ALL_DOGS = new LinkedHashMap<>();
 
+    public static final DeferredHolder<EntityType<?>, EntityType<com.animania.modern.ModernFox>> MODERN_FOX = ENTITY_TYPES.register("modern_fox",
+            () -> EntityType.Builder.<com.animania.modern.ModernFox>of(com.animania.modern.ModernFox::new, MobCategory.CREATURE)
+                    .sized(0.6F, 0.7F).clientTrackingRange(10).build("modern_fox"));
+    public static final DeferredHolder<EntityType<?>, EntityType<com.animania.modern.MountainGoat>> MOUNTAIN_GOAT = ENTITY_TYPES.register("mountain_goat",
+            () -> EntityType.Builder.<com.animania.modern.MountainGoat>of(com.animania.modern.MountainGoat::new, MobCategory.CREATURE)
+                    .sized(0.9F, 1.3F).clientTrackingRange(10).build("mountain_goat"));
+
+    public static final Map<String, DeferredHolder<EntityType<?>, EntityType<com.animania.modern.ModernFox>>> MODERN_FOX_BREEDS = new LinkedHashMap<>();
+    public static final Map<String, DeferredHolder<EntityType<?>, EntityType<com.animania.modern.MountainGoat>>> MOUNTAIN_GOAT_BREEDS = new LinkedHashMap<>();
+
+    public static EntityType<com.animania.modern.ModernFox> modernFox(String breed) {
+        return MODERN_FOX_BREEDS.get(breed).get();
+    }
+    public static EntityType<com.animania.modern.MountainGoat> mountainGoat(String breed) {
+        return MOUNTAIN_GOAT_BREEDS.get(breed).get();
+    }
+
+    public static final Map<String, DeferredHolder<EntityType<?>, EntityType<com.animania.modern.ModernBee>>> BEE_BREEDS = new LinkedHashMap<>();
+
+    public static final Map<String, DeferredHolder<EntityType<?>, EntityType<com.animania.modern.ModernAxolotl>>> AXOLOTL_BREEDS = new LinkedHashMap<>();
     static {
+        for (var variant : net.minecraft.world.entity.animal.axolotl.Axolotl.Variant.values()) {
+            String name = variant.getName() + "_axolotl";
+            AXOLOTL_BREEDS.put(variant.getName(), ENTITY_TYPES.register(name,
+                    () -> EntityType.Builder.<com.animania.modern.ModernAxolotl>of(
+                            (type, level) -> new com.animania.modern.ModernAxolotl(type, level, variant), MobCategory.AXOLOTLS)
+                            .sized(0.75F, 0.42F).clientTrackingRange(10).build(name)));
+        }
+        for (String breed : new String[]{"amber", "dark", "pale"}) {
+            String name = breed + "_bee";
+            BEE_BREEDS.put(breed, ENTITY_TYPES.register(name,
+                    () -> EntityType.Builder.<com.animania.modern.ModernBee>of(
+                            (type, level) -> new com.animania.modern.ModernBee(type, level, breed), MobCategory.CREATURE)
+                            .sized(0.7F, 0.6F).clientTrackingRange(8).build(name)));
+        }
+        for (String breed : new String[]{"red", "silver", "cross", "snow"}) {
+            String name = breed + "_fox";
+            MODERN_FOX_BREEDS.put(breed, ENTITY_TYPES.register(name,
+                    () -> EntityType.Builder.<com.animania.modern.ModernFox>of(
+                            (type, level) -> new com.animania.modern.ModernFox(type, level, breed), MobCategory.CREATURE)
+                            .sized(0.6F, 0.7F).clientTrackingRange(10).build(name)));
+        }
+        for (String breed : new String[]{"white", "cream", "slate"}) {
+            String name = breed + "_mountain_goat";
+            MOUNTAIN_GOAT_BREEDS.put(breed, ENTITY_TYPES.register(name,
+                    () -> EntityType.Builder.<com.animania.modern.MountainGoat>of(
+                            (type, level) -> new com.animania.modern.MountainGoat(type, level, breed), MobCategory.CREATURE)
+                            .sized(0.9F, 1.3F).clientTrackingRange(10).build(name)));
+        }
         for (ChickenRole role : ChickenRole.values()) {
             CHICKENS.put(role, new EnumMap<>(ChickenBreed.class));
             for (ChickenBreed breed : ChickenBreed.values()) {
@@ -105,6 +158,8 @@ public final class ModEntities {
         registerRodent("hedgehog_albino", AnimaniaRodent.Kind.HEDGEHOG_ALBINO, 0.5F, 0.5F);
         registerRodent("ferret_grey", AnimaniaRodent.Kind.FERRET_GREY, 0.75F, 0.4F);
         registerRodent("ferret_white", AnimaniaRodent.Kind.FERRET_WHITE, 0.75F, 0.4F);
+        registerRodent("ferret_cinnamon", AnimaniaRodent.Kind.FERRET_CINNAMON, 0.75F, 0.4F);
+        registerRodent("ferret_sable", AnimaniaRodent.Kind.FERRET_SABLE, 0.75F, 0.4F);
         for (RabbitRole role : RabbitRole.values()) {
             RABBITS.put(role, new EnumMap<>(RabbitBreed.class));
             for (RabbitBreed breed : RabbitBreed.values()) registerRabbit(role, breed);

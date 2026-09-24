@@ -32,7 +32,10 @@ public final class LegacyPigSnuffleGoal extends Goal {
     @Override
     public boolean canUse() {
         BlockPos below = pig.blockPosition().below();
-        return !AnimaniaPig.isMud(pig.level(), below)
+        return pig.level().getBlockState(below).is(Blocks.GRASS_BLOCK)
+                && pig.onGround() && pig.hurtTime == 0 && pig.getTarget() == null
+                && !LegacySleepGoal.shouldSleepNow(pig)
+                && !AnimaniaPig.isMud(pig.level(), below)
                 && !pig.getData(ModAttachments.SLEEPING)
                 && !LegacyAnimalNeeds.isFed(pig)
                 && pig.getRandom().nextInt(120) == 50;
@@ -40,7 +43,8 @@ public final class LegacyPigSnuffleGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return eatingTimer > 0;
+        return eatingTimer > 0 && pig.hurtTime == 0 && pig.getTarget() == null
+                && !pig.getData(ModAttachments.SLEEPING) && !LegacySleepGoal.shouldSleepNow(pig);
     }
 
     @Override
@@ -53,6 +57,10 @@ public final class LegacyPigSnuffleGoal extends Goal {
     @Override
     public void tick() {
         eatingTimer = Math.max(0, eatingTimer - 1);
+        if (eatingTimer > 4 && pig.getData(ModAttachments.EATING_TICKS) < 10)
+            pig.setData(ModAttachments.EATING_TICKS, 40);
+        if (eatingTimer > 4 && eatingTimer % 16 == 0)
+            pig.level().levelEvent(2001, pig.blockPosition().below(), Block.getId(pig.level().getBlockState(pig.blockPosition().below())));
         BlockPos below = pig.blockPosition().below();
         if (!pig.level().getBlockState(below).is(Blocks.GRASS_BLOCK)) {
             eatingTimer = 0;
@@ -88,6 +96,7 @@ public final class LegacyPigSnuffleGoal extends Goal {
     @Override
     public void stop() {
         eatingTimer = 0;
+        pig.setData(ModAttachments.EATING_TICKS, 0);
         spawned = false;
         eaten = false;
     }

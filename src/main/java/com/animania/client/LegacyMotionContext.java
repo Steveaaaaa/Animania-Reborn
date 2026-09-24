@@ -39,6 +39,33 @@ final class LegacyMotionContext {
         return !getSleeping() && entity instanceof AnimaniaRodent rodent ? rodent.getInterestedAngle(partial) : 0;
     }
     boolean isType(String legacyType) {
+        if (entity instanceof com.animania.farm.livestock.AnimaniaSheep sheep && sheep.breed().isEarthBreed()) {
+            // The hornless model uses the ewe animation family for both adults.
+            return legacyType.equals(sheep.isBaby() ? "EntityLambMerino" : "EntityEweMerino");
+        }
+        if (entity instanceof com.animania.farm.livestock.AnimaniaCow cow) {
+            String family = switch (cow.breed()) {
+                case UMBRA, WOOLY -> "Highland";
+                case WARM -> "Longhorn";
+                case COOKIE -> "Angus";
+                case PINTO, ALBINO, NORWEGIAN_RED, CREAM -> "Holstein";
+                default -> null;
+            };
+            if (family != null) {
+                String role = switch (cow.role()) { case MALE -> "Bull"; case FEMALE -> "Cow"; case YOUNG -> "Calf"; };
+                return legacyType.equals("Entity" + role + family);
+            }
+        }
+        if (entity instanceof com.animania.farm.livestock.AnimaniaPig pig
+                && switch (pig.breed()) { case MOTTLED, PIEBALD, PINK_FOOTED -> true; default -> false; }) {
+            String role = switch (pig.role()) { case MALE -> "Hog"; case FEMALE -> "Sow"; case YOUNG -> "Piglet"; };
+            return legacyType.equals("Entity" + role + "Yorkshire");
+        }
+        if (entity instanceof AnimaniaChicken chicken
+                && switch (chicken.breed()) {
+                    case AMBER, BRONZED, GOLD_CRESTED, MIDNIGHT, COLD, WARM -> true;
+                    default -> false;
+                }) return legacyType.equals("EntityRoosterLeghorn");
         // Simmental uses the original Jersey model and its breed-specific animation branches.
         if (entity instanceof com.animania.farm.livestock.AnimaniaCow cow
                 && cow.breed() == com.animania.farm.livestock.CowBreed.SIMMENTAL) {
@@ -51,6 +78,9 @@ final class LegacyMotionContext {
             String role = switch (cow.role()) { case MALE -> "Bull"; case FEMALE -> "Cow"; case YOUNG -> "Calf"; };
             return legacyType.equals("Entity" + role + "Holstein");
         }
+        if (entity instanceof AnimaniaRodent rodent
+                && (rodent.kind() == AnimaniaRodent.Kind.FERRET_CINNAMON || rodent.kind() == AnimaniaRodent.Kind.FERRET_SABLE))
+            return legacyType.equals("EntityFerretGrey");
         if (legacyType.equals("EntityHedgehogBase"))
             return entity instanceof AnimaniaRodent rodent && rodent.kind().isHedgehog();
         return legacyType.substring("Entity".length()).equalsIgnoreCase(

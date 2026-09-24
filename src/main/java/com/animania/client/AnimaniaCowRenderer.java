@@ -15,9 +15,11 @@ public final class AnimaniaCowRenderer extends MobRenderer<AnimaniaCow, LegacyAn
         super(context, LegacyAnimalModel.load("farm/client/model/cow/modelcow"), 0.7F);
         models.put("modelcow", model);
         addLayer(new CowMushroomLayer(this, context.getBlockRenderDispatcher()));
-        addLayer(new LegacyBlinkLayer<>(this, cow -> "cows/" + switch (cow.role()) {
+        addLayer(new LegacyBlinkLayer<>(this, cow -> "cows/" + (cow.breed().hasWoolCoat() ? switch (cow.role()) {
+            case YOUNG -> "calf_wool_blink"; case FEMALE -> "cow_wool_blink"; case MALE -> "bull_wool_blink";
+        } : switch (cow.role()) {
             case YOUNG -> "calf_blink"; case FEMALE -> "cow_blink"; case MALE -> "bull_blink";
-        }, AnimaniaCowRenderer::leftEyelidColor, AnimaniaCowRenderer::rightEyelidColor, false));
+        }), AnimaniaCowRenderer::leftEyelidColor, AnimaniaCowRenderer::rightEyelidColor, false));
     }
 
     @Override
@@ -25,15 +27,21 @@ public final class AnimaniaCowRenderer extends MobRenderer<AnimaniaCow, LegacyAn
                        MultiBufferSource buffer, int packedLight) {
         String role = switch (cow.role()) { case YOUNG -> "calf"; case FEMALE -> "cow"; case MALE -> "bull"; };
         String variant = switch (cow.breed()) {
-            case ANGUS -> "angus";
+            case ANGUS, COOKIE -> "angus";
             case HEREFORD, JERSEY, SIMMENTAL -> "hereford";
-            case LONGHORN, HIGHLAND -> "longhorn";
+            case LONGHORN, HIGHLAND, WARM, UMBRA, WOOLY -> "longhorn";
             default -> "";
         };
         if (cow.role() == com.animania.farm.livestock.FarmAnimalRole.YOUNG && variant.equals("hereford")) variant = "";
         String name = "model" + role + variant;
-        model = models.computeIfAbsent(name,
-                key -> LegacyAnimalModel.load("farm/client/model/cow/" + key));
+        if (cow.breed().hasWoolCoat()) {
+            String base = "farm/client/model/cow/" + name;
+            String coat = "cow/" + cow.breed().getSerializedName() + "_" + role;
+            model = models.computeIfAbsent(coat, ignored -> LegacyAnimalModel.loadVariant(base, coat));
+        } else {
+            model = models.computeIfAbsent(name,
+                    key -> LegacyAnimalModel.load("farm/client/model/cow/" + key));
+        }
         shadowRadius = cow.role() == com.animania.farm.livestock.FarmAnimalRole.YOUNG ? 0.45F : 0.7F;
         super.render(cow, entityYaw, partialTick, poseStack, buffer, packedLight);
     }
@@ -45,9 +53,9 @@ public final class AnimaniaCowRenderer extends MobRenderer<AnimaniaCow, LegacyAn
             scale = 1.0F;
         } else {
             scale = switch (cow.breed()) {
-                case FRIESIAN, HOLSTEIN -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.30F : 1.24F;
-                case LONGHORN, HIGHLAND -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.50F : 1.44F;
-                case ANGUS, HEREFORD, JERSEY, SIMMENTAL, FIGHTING -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.40F : 1.34F;
+                case FRIESIAN, HOLSTEIN, PINTO, ALBINO, NORWEGIAN_RED, CREAM -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.30F : 1.24F;
+                case LONGHORN, HIGHLAND, WARM, UMBRA, WOOLY -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.50F : 1.44F;
+                case ANGUS, HEREFORD, JERSEY, SIMMENTAL, FIGHTING, COOKIE -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.40F : 1.34F;
                 case MOOSHROOM -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.30F : 1.34F;
             };
         }
@@ -69,7 +77,7 @@ public final class AnimaniaCowRenderer extends MobRenderer<AnimaniaCow, LegacyAn
                     "textures/entity/cows/" + role + "_purplicious.png");
         }
         return ResourceLocation.fromNamespaceAndPath(Animania.MOD_ID,
-                "textures/entity/cows/" + role + "_" + cow.breed().getSerializedName() + ".png");
+                "textures/entity/cows/" + role + "_" + cow.breed().getSerializedName() + (cow.isCoatSheared() ? "_sheared" : "") + ".png");
     }
 
     private static int leftEyelidColor(AnimaniaCow cow) {
@@ -80,6 +88,9 @@ public final class AnimaniaCowRenderer extends MobRenderer<AnimaniaCow, LegacyAn
             case JERSEY -> cow.role() == com.animania.farm.livestock.FarmAnimalRole.YOUNG ? 0x7C632D : 0x3B2603;
             case MOOSHROOM -> 0xAB0F0F;
             case SIMMENTAL -> 0xE8E0C6;
+            case UMBRA -> 0x403744; case WOOLY -> 0x966038; case WARM -> 0x985739;
+            case PINTO -> 0xD8CBA7; case ALBINO -> 0xEAE5DB;
+            case NORWEGIAN_RED -> 0x6B5142; case CREAM -> 0xD9B56D; case COOKIE -> 0x56616C;
         };
     }
 

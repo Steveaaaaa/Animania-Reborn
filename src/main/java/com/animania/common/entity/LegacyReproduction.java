@@ -14,6 +14,7 @@ public final class LegacyReproduction {
                 || animal instanceof com.animania.farm.chicken.AnimaniaChicken
                 || animal instanceof com.animania.extra.peafowl.AnimaniaPeafowl) return;
         int dryTimer = animal.getData(ModAttachments.DRY_TIMER);
+        if (animal.getData(ModAttachments.RECOVERY) > 0) { animal.setData(ModAttachments.FERTILE, false); return; }
         if (!animal.getData(ModAttachments.FERTILE) && dryTimer > -1) {
             animal.setData(ModAttachments.DRY_TIMER, dryTimer - 1);
         } else {
@@ -27,14 +28,17 @@ public final class LegacyReproduction {
     public static void tickMateReset(Animal animal) {
         if (animal.level().isClientSide() || animal.getRandom().nextInt(200) != 0
                 || AnimalInformation.gender(animal) == AnimalInformation.Gender.YOUNG) return;
+        if (!AnimalInformation.formsPairBond(animal)) {
+            if (!animal.getData(ModAttachments.LAST_MATE).isEmpty()) animal.setData(ModAttachments.LAST_MATE, "");
+            return;
+        }
         String mateId = animal.getData(ModAttachments.LAST_MATE);
         if (mateId.isEmpty()) return;
-        boolean present = animal.level().getEntitiesOfClass(Animal.class,
-                        animal.getBoundingBox().inflate(30.0D), other -> other != animal
-                                && other.getClass() == animal.getClass() && other.isAlive()
-                                && other.getUUID().toString().equals(mateId))
-                .stream().findAny().isPresent();
-        if (!present) animal.setData(ModAttachments.LAST_MATE, "");
+        if (!(animal.level() instanceof net.minecraft.server.level.ServerLevel level)) return;
+        try {
+            var mate = level.getEntity(java.util.UUID.fromString(mateId));
+            if (mate != null && !mate.isAlive()) animal.setData(ModAttachments.LAST_MATE, "");
+        } catch (IllegalArgumentException ex) { animal.setData(ModAttachments.LAST_MATE, ""); }
     }
 
     public static void conceived(Animal female) {
@@ -42,6 +46,7 @@ public final class LegacyReproduction {
     }
 
     public static void completedPregnancy(Animal female) {
+        female.setData(ModAttachments.RECOVERY, FamilyLifecycle.recoveryTicks(female));
         female.setData(ModAttachments.FERTILE, false);
     }
 

@@ -154,7 +154,7 @@ public final class AnimaniaGoat extends Goat {
             setJumping(initialJump || timer > 0.10F && timer <= 0.20F);
             if (timer == 0.0F) { setJumping(false); setNoAi(false); }
         }
-        if (!level().isClientSide() && woolRegrowth > 0 && --woolRegrowth == 0) {
+        if (!level().isClientSide() && woolRegrowth > 0 && (woolRegrowth = Math.max(0, woolRegrowth - com.animania.common.entity.HusbandryMood.work(this))) == 0) {
             entityData.set(ANGORA_SHEARED, false);
         }
         if (!level().isClientSide() && role() == FarmAnimalRole.YOUNG && !isBaby()) {
@@ -268,12 +268,11 @@ public final class AnimaniaGoat extends Goat {
             return InteractionResult.sidedSuccess(level().isClientSide());
         }
         if (stack.is(Items.BUCKET)) {
-            if (role() == FarmAnimalRole.FEMALE && milkable && wellCaredFor() && !isBaby()) {
+            if (role() == FarmAnimalRole.FEMALE && milkable && wellCaredFor() && !isBaby() && com.animania.common.entity.HusbandryMood.milkReady(this)) {
                 if (!level().isClientSide()) {
                     player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player,
                             new ItemStack(ModItems.milkBucket(MilkType.GOAT).get())));
-                    com.animania.common.entity.LegacyAnimalNeeds.setWatered(this, false);
-                    milkable = false;
+                    com.animania.common.entity.HusbandryMood.afterMilking(this);
                 }
                 player.playSound(getMilkingSound(), 1.0F, 1.0F);
                 return InteractionResult.sidedSuccess(level().isClientSide());

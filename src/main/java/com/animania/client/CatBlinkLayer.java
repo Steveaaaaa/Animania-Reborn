@@ -26,7 +26,8 @@ public final class CatBlinkLayer extends RenderLayer<AnimaniaCat, LegacyAnimalMo
         if (!cat.getData(ModAttachments.SLEEPING) && !cat.isBlinking()) return;
         String mask = cat.breed() == CatBreed.RAGDOLL || cat.breed() == CatBreed.NORWEGIAN
                 ? "blink_2" : "blink_1";
-        int color = 0xFF000000 | eyelidColor(cat.breed());
+        if (cat.breed().isVanillaAddition()) mask = cat.breed().getSerializedName() + "_blink";
+        int color = cat.breed().isVanillaAddition() ? 0xFFFFFFFF : 0xFF000000 | eyelidColor(cat.breed());
         renderMask(poseStack, buffers, packedLight, mask + "_left.png", color);
         renderMask(poseStack, buffers, packedLight, mask + "_right.png", color);
     }
@@ -49,6 +50,10 @@ public final class CatBlinkLayer extends RenderLayer<AnimaniaCat, LegacyAnimalMo
             case OCELOT -> 0xA47947;
             case SIAMESE -> 0x271D1B;
             case TABBY -> 0x594336;
+            case ALL_BLACK, TUXEDO -> 0x24232B;
+            case RED_TABBY -> 0xD79A43; case BRITISH_SHORTHAIR -> 0x939A97;
+            case CALICO -> 0xE5DCCE; case PERSIAN -> 0xE8C594;
+            case WHITE -> 0xECEAE5; case JELLIE -> 0x96938C;
         };
     }
 }

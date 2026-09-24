@@ -107,7 +107,7 @@ public final class AnimaniaSheep extends Sheep {
         super.aiStep();
         if (!level().isClientSide() && woolRegrowth > 0) {
             if (!isSheared()) setSheared(true);
-            if (--woolRegrowth == 0) setSheared(false);
+            if ((woolRegrowth = Math.max(0, woolRegrowth - com.animania.common.entity.HusbandryMood.work(this))) == 0) setSheared(false);
         }
         if (!level().isClientSide() && role() == FarmAnimalRole.YOUNG && !isBaby()) growIntoAdult();
         else if (!level().isClientSide() && role() == FarmAnimalRole.FEMALE && pregnant) {
@@ -153,7 +153,7 @@ public final class AnimaniaSheep extends Sheep {
                 com.animania.common.entity.LegacyAnimalNeeds.setInteracted(lamb,
                         com.animania.common.entity.LegacyAnimalNeeds.isInteracted(this));
                 lamb.moveTo(getX(), getY() + 0.2, getZ(), getYRot(), 0.0F);
-                lamb.setColor(getColor());
+                lamb.setColor(childBreed.isEarthBreed() ? DyeColor.WHITE : getColor());
                 server.addFreshEntity(lamb);
             }
         }
@@ -224,7 +224,7 @@ public final class AnimaniaSheep extends Sheep {
         setSheared(true);
         woolRegrowth = com.animania.common.config.LegacyConfig.WOOL_REGROWTH_TIMER.get();
         ItemStack wool = breedWool();
-        int count = 1 + random.nextInt(3);
+        int count = breed() == SheepBreed.FUZZY ? 4 + random.nextInt(3) : 1 + random.nextInt(3);
         for (int i = 0; i < count; i++) {
             ItemEntity drop = spawnAtLocation(wool.getItem(), 1);
             if (drop != null) drop.setDeltaMovement(drop.getDeltaMovement().add(
@@ -242,7 +242,9 @@ public final class AnimaniaSheep extends Sheep {
             case JACOB -> "jacob";
             case MERINO -> getColor() == DyeColor.BROWN ? "merino_brown" : "merino_white";
             case SUFFOLK -> getColor() == DyeColor.BROWN ? "suffolk_brown" : null;
-            case DORPER -> null;
+            case DORPER, FUZZY, PATCHED -> null;
+            case FLECKED -> "flecked"; case INKY -> "inky";
+            case LONG_NOSED -> "tan"; case ROCKY -> "rocky";
         };
         return type == null ? new ItemStack(Items.WHITE_WOOL) : new ItemStack(ModItems.animaniaWool(type).get());
     }
@@ -250,12 +252,11 @@ public final class AnimaniaSheep extends Sheep {
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (stack.is(Items.BUCKET) && role() == FarmAnimalRole.FEMALE && milkable && wellCaredFor() && !isBaby()) {
+        if (stack.is(Items.BUCKET) && role() == FarmAnimalRole.FEMALE && milkable && wellCaredFor() && !isBaby() && com.animania.common.entity.HusbandryMood.milkReady(this)) {
             if (!level().isClientSide()) {
                 player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player,
                         new ItemStack(ModItems.milkBucket(MilkType.SHEEP).get())));
-                com.animania.common.entity.LegacyAnimalNeeds.setWatered(this, false);
-                milkable = false;
+                com.animania.common.entity.HusbandryMood.afterMilking(this);
             }
             player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
             return InteractionResult.sidedSuccess(level().isClientSide());
@@ -280,6 +281,8 @@ public final class AnimaniaSheep extends Sheep {
     @Override
     public ResourceKey<LootTable> getDefaultLootTable() {
         if (role() == FarmAnimalRole.YOUNG) return BuiltInLootTables.EMPTY;
+        if (breed().isEarthBreed()) return ResourceKey.create(Registries.LOOT_TABLE,
+                ResourceLocation.fromNamespaceAndPath("animania", "entities/sheep_" + breed().getSerializedName()));
         return breed().isPrime()
                 ? ResourceKey.create(Registries.LOOT_TABLE,
                 ResourceLocation.fromNamespaceAndPath("animania", "entities/sheep_prime"))
@@ -293,6 +296,7 @@ public final class AnimaniaSheep extends Sheep {
         tag.putBoolean("HasKids", milkable);
         tag.putInt("Gestation", gestation);
         tag.putInt("WoolRegrowth", woolRegrowth);
+        tag.putString("WoolDrop", BuiltInRegistries.ITEM.getKey(breedWool().getItem()).toString());
         if (mateBreed != null) tag.putString("MateBreed", mateBreed.getSerializedName());
     }
 

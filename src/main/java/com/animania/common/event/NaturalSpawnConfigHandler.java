@@ -22,8 +22,10 @@ public final class NaturalSpawnConfigHandler {
 
     @SubscribeEvent
     public static void replaceStructureAnimal(net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent event) {
+        if (!AnimaniaConfig.REPLACE_VANILLA_ANIMALS.get()) return;
+        if (replaceModernAnimal(event)) return;
         EntityType<?> original = event.getEntity().getType();
-        boolean villageCat = original == EntityType.CAT && LegacyConfig.REPLACE_VANILLA_OCELOTS.get();
+        boolean villageCat = original == EntityType.CAT && AnimaniaConfig.REPLACE_VANILLA_CATS.get();
         if (event.getSpawnType() != MobSpawnType.STRUCTURE
                 && !(villageCat && (event.getSpawnType() == MobSpawnType.EVENT
                 || event.getSpawnType() == MobSpawnType.NATURAL))) return;
@@ -48,7 +50,12 @@ public final class NaturalSpawnConfigHandler {
                 if (!path.startsWith("queen_") || path.equals("queen_ocelot")) continue;
             } else {
                 if (key == null) continue;
-                if (original == EntityType.WOLF && !path.equals("female_wolf")) continue;
+                if (original == EntityType.WOLF) {
+                    var wolfBreed = com.animania.catsdogs.dog.DogBreed.fromPath(path);
+                    if (!path.startsWith("female_") || !wolfBreed.isWolf()) continue;
+                    if (wolfBreed.isNewWolf() && !wolfBreed.matchesWolfHabitat(biome)) continue;
+                    if (!wolfBreed.isNewWolf() && com.animania.catsdogs.dog.DogBreed.hasNewWolfHabitat(biome)) continue;
+                }
                 if (original == EntityType.OCELOT && !path.equals("queen_ocelot")) continue;
                 var filter = LegacyConfig.BIOME_TYPES.get(key);
                 if (filter != null && !LegacyBiomeMatcher.matches(biome, filter.get())) continue;
@@ -78,6 +85,13 @@ public final class NaturalSpawnConfigHandler {
     public static void checkPlacement(MobSpawnEvent.SpawnPlacementCheck event) {
         if (event.getSpawnType() != MobSpawnType.NATURAL && event.getSpawnType() != MobSpawnType.CHUNK_GENERATION) return;
         EntityType<?> type = event.getEntityType();
+        if (AnimaniaConfig.REPLACE_VANILLA_ANIMALS.get() && AnimaniaConfig.REPLACE_MODERN_FOXES.get()
+                && AnimaniaConfig.ENABLE_PET_WILDLIFE_SPAWNS.get()
+                && type == ModEntities.dog(com.animania.catsdogs.dog.DogRole.FEMALE,
+                        com.animania.catsdogs.dog.DogBreed.FOX)) {
+            event.setResult(MobSpawnEvent.SpawnPlacementCheck.Result.FAIL);
+            return;
+        }
         if (type == EntityType.SQUID && !LegacyConfig.SPAWN_FRESH_WATER_SQUIDS.get()
                 && !event.getLevel().getBiome(event.getPos()).is(BiomeTags.IS_OCEAN)) {
             event.setResult(MobSpawnEvent.SpawnPlacementCheck.Result.FAIL);
@@ -99,7 +113,67 @@ public final class NaturalSpawnConfigHandler {
         }
     }
 
+
+    @SubscribeEvent
+    public static void replaceNewNestBees(net.neoforged.neoforge.event.level.ChunkEvent.Load event) {
+        if (!event.isNewChunk() || !(event.getLevel() instanceof ServerLevel level)) return;
+        var chunk = event.getChunk();
+        level.getServer().tell(new net.minecraft.server.TickTask(level.getServer().getTickCount() + 1, () -> {
+            if (!AnimaniaConfig.REPLACE_VANILLA_ANIMALS.get() || !AnimaniaConfig.REPLACE_BEES.get()) return;
+            for (var pos : chunk.getBlockEntitiesPos()) {
+                if (!(chunk.getBlockEntity(pos) instanceof net.minecraft.world.level.block.entity.BeehiveBlockEntity hive)) continue;
+                var tag = hive.saveWithFullMetadata(level.registryAccess());
+                var bees = tag.getList("bees", 10);
+                boolean changed = false;
+                for (int i = 0; i < bees.size(); i++) {
+                    var data = bees.getCompound(i).getCompound("entity_data");
+                    if (!data.getString("id").equals("minecraft:bee")) continue;
+                    int roll = level.random.nextInt(10);
+                    data.putString("id", "animania:" + (roll < 6 ? "amber" : roll < 9 ? "dark" : "pale") + "_bee");
+                    changed = true;
+                }
+                if (changed) { hive.loadWithComponents(tag, level.registryAccess()); hive.setChanged(); }
+            }
+        }));
+    }
+
+    private static boolean replaceModernAnimal(net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent event) {
+        if (event.getSpawnType() != MobSpawnType.NATURAL
+                && event.getSpawnType() != MobSpawnType.CHUNK_GENERATION
+                && event.getSpawnType() != MobSpawnType.STRUCTURE) return false;
+        var original = event.getEntity();
+        if (original.hasCustomName() || original instanceof net.minecraft.world.entity.TamableAnimal pet && pet.isTame()) return false;
+        boolean fox = original.getType() == EntityType.FOX
+                || original instanceof com.animania.catsdogs.dog.AnimaniaDog dog
+                && dog.breed() == com.animania.catsdogs.dog.DogBreed.FOX;
+        int roll = original.getRandom().nextInt(10);
+        boolean snow = net.minecraft.world.entity.animal.Fox.Type.byBiome(
+                event.getLevel().getBiome(original.blockPosition())) == net.minecraft.world.entity.animal.Fox.Type.SNOW;
+        EntityType<? extends net.minecraft.world.entity.animal.Animal> type;
+        if (fox && AnimaniaConfig.REPLACE_MODERN_FOXES.get()
+                && AnimaniaConfig.ENABLE_PET_WILDLIFE_SPAWNS.get()) type = ModEntities.modernFox(snow ? "snow" : roll < 6 ? "red" : roll < 9 ? "cross" : "silver");
+        else if (original.getType() == EntityType.GOAT && AnimaniaConfig.REPLACE_MOUNTAIN_GOATS.get()
+                && AnimaniaConfig.ENABLE_EXTRA_SPAWNS.get()) type = ModEntities.mountainGoat(roll < 6 ? "white" : roll < 9 ? "cream" : "slate");
+        else if (original.getType() == EntityType.BEE && AnimaniaConfig.REPLACE_BEES.get())
+            type = ModEntities.BEE_BREEDS.get(roll < 6 ? "amber" : roll < 9 ? "dark" : "pale").get();
+        else if (original.getType() == EntityType.AXOLOTL && AnimaniaConfig.REPLACE_AXOLOTLS.get())
+            type = ModEntities.AXOLOTL_BREEDS.get(new String[]{"lucy", "wild", "gold", "cyan"}[original.getRandom().nextInt(4)]).get();
+        else return false;
+        var replacement = type.create(event.getLevel().getLevel());
+        if (replacement == null) return false;
+        replacement.moveTo(event.getX(), event.getY(), event.getZ(), original.getYRot(), original.getXRot());
+        var data = replacement.finalizeSpawn(event.getLevel(), event.getDifficulty(), MobSpawnType.CONVERSION,
+                event.getSpawnData());
+        if (event.getSpawnType() == MobSpawnType.STRUCTURE) replacement.setPersistenceRequired();
+        if (!event.getLevel().addFreshEntity(replacement)) return false;
+        event.setSpawnData(data);
+        event.setSpawnCancelled(true);
+        event.setCanceled(true);
+        return true;
+    }
+
     private static boolean replacedVanillaType(EntityType<?> type) {
+        if (!AnimaniaConfig.REPLACE_VANILLA_ANIMALS.get()) return false;
         return (type == EntityType.COW || type == EntityType.MOOSHROOM) && LegacyConfig.REPLACE_VANILLA_COWS.get()
                 || type == EntityType.PIG && LegacyConfig.REPLACE_VANILLA_PIGS.get()
                 || type == EntityType.CHICKEN && LegacyConfig.REPLACE_VANILLA_CHICKENS.get()
@@ -170,6 +244,8 @@ public final class NaturalSpawnConfigHandler {
         if (path.equals("hamster")) return "hamster";
         if (path.equals("ferret_grey")) return "ferretGray";
         if (path.equals("ferret_white")) return "ferretWhite";
+        if (path.equals("ferret_cinnamon")) return "ferretCinnamon";
+        if (path.equals("ferret_sable")) return "ferretSable";
         if (path.equals("hedgehog")) return "hedgehog";
         if (path.equals("hedgehog_albino")) return "hedgehogAlbino";
         if (path.startsWith("doe_")) return "rabbit" + camel(breed);
@@ -177,6 +253,7 @@ public final class NaturalSpawnConfigHandler {
             return "peafowl" + camel(breed);
         }
         if (path.equals("female_wolf")) return "wolf";
+        if (path.startsWith("female_wolf_")) return "wolf" + camel(path.substring("female_wolf_".length()));
         if (path.equals("female_fox")) return "fox";
         if (path.equals("queen_ocelot")) return "ocelot";
         return null;

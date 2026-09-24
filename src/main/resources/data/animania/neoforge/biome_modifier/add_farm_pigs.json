@@ -5,11 +5,59 @@
   "default_probability": 9,
   "family_group": "pigs",
   "spawners": [
-    { "type": "animania:sow_duroc", "weight": 9, "minCount": 2, "maxCount": 2 },
-    { "type": "animania:sow_hampshire", "weight": 9, "minCount": 2, "maxCount": 2 },
-    { "type": "animania:sow_large_black", "weight": 9, "minCount": 2, "maxCount": 2 },
-    { "type": "animania:sow_large_white", "weight": 9, "minCount": 2, "maxCount": 2 },
-    { "type": "animania:sow_old_spot", "weight": 9, "minCount": 2, "maxCount": 2 },
-    { "type": "animania:sow_yorkshire", "weight": 4, "minCount": 2, "maxCount": 2 }
+    {
+      "type": "animania:sow_duroc",
+      "weight": 6,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:sow_hampshire",
+      "weight": 6,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:sow_large_black",
+      "weight": 6,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:sow_large_white",
+      "weight": 6,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:sow_old_spot",
+      "weight": 6,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:sow_yorkshire",
+      "weight": 3,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:sow_mottled",
+      "weight": 6,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:sow_piebald",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:sow_pink_footed",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 2
+    }
   ]
 }

@@ -18,7 +18,12 @@ public final class LegacyNearestAttackableTargetGoal<T extends LivingEntity> ext
                                              boolean nearby, Predicate<LivingEntity> predicate) {
         super(mob, type, chance, sight, nearby, predicate); this.predicate = predicate;
     }
-    private boolean available() { return !mob.getData(ModAttachments.SLEEPING)
+    private boolean available() {
+        if (mob instanceof net.minecraft.world.entity.animal.Animal animal
+                && LegacySleepGoal.nocturnalWildCatOrFox(animal)
+                && LegacySleepGoal.shouldSleepNow(animal)
+                && com.animania.common.entity.LegacyAnimalNeeds.isFed(animal)) return false;
+        return !mob.getData(ModAttachments.SLEEPING)
             && (!(mob instanceof TamableAnimal tame) || !tame.isInSittingPose()); }
     @Override public boolean canUse() { return available() && super.canUse(); }
     @Override public boolean canContinueToUse() {

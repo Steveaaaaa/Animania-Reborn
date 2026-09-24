@@ -1,9 +1,51 @@
 {
-  "type": "animania:legacy_add_spawns", "biomes": "#animania:rabbit_forest_habitats",
-  "probability_group": "rabbits", "default_probability": 8, "family_group": "rabbits",
+  "type": "animania:legacy_add_spawns",
+  "biomes": "#animania:rabbit_forest_habitats",
+  "probability_group": "rabbits",
+  "default_probability": 8,
+  "family_group": "rabbits",
   "spawners": [
-    { "type": "animania:doe_cottontail", "weight": 8, "minCount": 2, "maxCount": 2 },
-    { "type": "animania:doe_new_zealand", "weight": 8, "minCount": 2, "maxCount": 2 },
-    { "type": "animania:doe_lop", "weight": 4, "minCount": 2, "maxCount": 2 }
+    {
+      "type": "animania:doe_cottontail",
+      "weight": 4,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:doe_new_zealand",
+      "weight": 4,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:doe_lop",
+      "weight": 2,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:doe_bold_striped",
+      "weight": 3,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:doe_freckled",
+      "weight": 3,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:doe_harelequin",
+      "weight": 2,
+      "minCount": 2,
+      "maxCount": 2
+    },
+    {
+      "type": "animania:doe_muddy_foot",
+      "weight": 2,
+      "minCount": 2,
+      "maxCount": 2
+    }
   ]
 }

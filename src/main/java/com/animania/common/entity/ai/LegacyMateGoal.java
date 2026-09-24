@@ -14,7 +14,7 @@ import net.minecraft.world.entity.animal.Animal;
 import java.util.Comparator;
 import java.util.EnumSet;
 
-/** 200-tick courtship and persistent pairing behavior from Animania 1.12's GenericAIMate. */
+/** Courtship with species-specific pair bonds and rechecked breeding readiness. */
 public final class LegacyMateGoal extends Goal {
     private final PathfinderMob mover;
     private final Animal male;
@@ -22,6 +22,7 @@ public final class LegacyMateGoal extends Goal {
     private Animal targetMate;
     private int courtshipTimer = 20;
     private int delayCounter;
+    private int closeTicks;
 
     public LegacyMateGoal(PathfinderMob mover, Animal male, double speed) {
         this.mover = mover;
@@ -33,7 +34,7 @@ public final class LegacyMateGoal extends Goal {
     @Override
     public boolean canUse() {
         if (++delayCounter <= LegacyConfig.TICKS_BETWEEN_AI_FIRINGS.get()) return false;
-        if (AnimalInformation.isSterilized(male) || male.getData(ModAttachments.SLEEPING)
+        if (LegacySleepGoal.shouldSleepNow(male) || AnimalInformation.isSterilized(male) || male.getData(ModAttachments.SLEEPING)
                 || male.isInWater() || AnimalInformation.gender(male) != AnimalInformation.Gender.MALE
                 || LegacyConfig.REQUIRE_ANIMAL_INTERACTION_FOR_AI.get() && !LegacyAnimalNeeds.isInteracted(male)
                 || LegacyConfig.FEED_TO_BREED.get() && !male.getData(ModAttachments.HAND_FED)
@@ -52,17 +53,25 @@ public final class LegacyMateGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return targetMate != null && targetMate.isAlive();
+        return targetMate != null && targetMate.isAlive() && male.isAlive()
+                && !male.getData(ModAttachments.SLEEPING) && !targetMate.getData(ModAttachments.SLEEPING)
+                && male.getTarget() == null && targetMate.getTarget() == null
+                && male.hurtTime == 0 && targetMate.hurtTime == 0 && !LegacySleepGoal.shouldSleepNow(male)
+                && !male.isLeashed() && !targetMate.isLeashed() && !male.isVehicle() && !targetMate.isVehicle()
+                && !male.isOnFire() && !targetMate.isOnFire() && courtshipTimer >= 0
+                && (com.animania.common.entity.FamilyLifecycle.bird(targetMate) || targetMate.getData(ModAttachments.FERTILE)) && LegacyBreedingRules.canMate(male, targetMate)
+                && (com.animania.common.entity.FamilyLifecycle.bird(male) || male.canMate(targetMate));
     }
 
     @Override
     public void start() {
-        courtshipTimer = 200;
+        courtshipTimer = 400;
+        closeTicks = 0;
     }
 
     @Override
     public void stop() {
-        if (targetMate != null) targetMate.getNavigation().stop();
+        com.animania.common.entity.FamilyAnimationState.clear(male, com.animania.common.entity.FamilyAnimationState.COURT);
         mover.getNavigation().stop();
         targetMate = null;
     }
@@ -71,8 +80,8 @@ public final class LegacyMateGoal extends Goal {
     public void tick() {
         if (targetMate == null) return;
         String assigned = targetMate.getData(ModAttachments.LAST_MATE);
-        if ((!assigned.isEmpty() && !assigned.equals(male.getUUID().toString()))
-                || !targetMate.getData(ModAttachments.FERTILE)) {
+        if ((AnimalInformation.formsPairBond(targetMate) && !assigned.isEmpty() && !assigned.equals(male.getUUID().toString()))
+                || !(com.animania.common.entity.FamilyLifecycle.bird(targetMate) || targetMate.getData(ModAttachments.FERTILE))) {
             stop();
             courtshipTimer = 200;
             return;
@@ -81,12 +90,21 @@ public final class LegacyMateGoal extends Goal {
             if (courtshipTimer % 20 == 0) {
                 mover.getLookControl().setLookAt(targetMate, 10.0F, mover.getMaxHeadXRot());
                 mover.getNavigation().moveTo(targetMate, speed);
-                targetMate.getLookControl().setLookAt(male, 10.0F, targetMate.getMaxHeadXRot());
-                targetMate.getNavigation().moveTo(male, speed);
             }
-            if (male.distanceTo(targetMate) <= 1.8F && male.level() instanceof ServerLevel server) {
-                targetMate.spawnChildFromBreeding(server, male);
-                LegacyReproduction.conceived(targetMate);
+            if (male.distanceTo(targetMate) <= 1.8F && male.hasLineOfSight(targetMate)) closeTicks++;
+            else closeTicks = 0;
+            com.animania.common.entity.FamilyAnimationState.set(male, closeTicks > 0
+                    ? com.animania.common.entity.FamilyAnimationState.COURT : 0);
+            if (closeTicks >= com.animania.common.entity.FamilyLifecycle.courtshipTicks(male)
+                    && male.level() instanceof ServerLevel server) {
+                if (com.animania.common.entity.FamilyLifecycle.bird(male)) {
+                    AnimalInformation.recordMating(targetMate, male);
+                    targetMate.setAge(6000); male.setAge(6000);
+                    server.broadcastEntityEvent(targetMate, (byte) 18);
+                } else {
+                    targetMate.spawnChildFromBreeding(server, male);
+                    LegacyReproduction.conceived(targetMate);
+                }
                 courtshipTimer = 200;
                 stop();
             }
@@ -99,18 +117,18 @@ public final class LegacyMateGoal extends Goal {
 
     private Animal findNearbyMate() {
         String mateId = male.getData(ModAttachments.LAST_MATE);
-        if (LegacyConfig.MALES_MATE_MULTIPLE_FEMALES.get()) mateId = "";
+        if (!AnimalInformation.formsPairBond(male)) mateId = "";
         final String requiredMate = mateId;
         double radius = requiredMate.isEmpty() ? 8.0D : 5.0D;
         return male.level().getEntitiesOfClass(Animal.class, male.getBoundingBox().inflate(radius), female ->
                         female != male && female.getClass() == male.getClass()
                                 && AnimalInformation.gender(female) == AnimalInformation.Gender.FEMALE
                                 && (requiredMate.isEmpty() || female.getUUID().toString().equals(requiredMate))
-                                && female.getData(ModAttachments.FERTILE)
+                                && (com.animania.common.entity.FamilyLifecycle.bird(female) || female.getData(ModAttachments.FERTILE))
                                 && !female.getData(ModAttachments.SLEEPING)
                                 && male.hasLineOfSight(female)
                                 && LegacyBreedingRules.canMate(male, female)
-                                && male.canMate(female))
+                                && (com.animania.common.entity.FamilyLifecycle.bird(male) || male.canMate(female)))
                 .stream().min(Comparator.comparingDouble(male::distanceToSqr)).orElse(null);
     }
     @Override

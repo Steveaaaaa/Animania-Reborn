@@ -17,7 +17,7 @@ public final class LegacyGrowth {
         }
 
         int step = animal.getData(ModAttachments.CHILD_GROWTH);
-        int timer = Math.min(20_000_000, animal.getData(ModAttachments.CHILD_GROWTH_TIMER) + 1);
+        int timer = Math.min(20_000_000, animal.getData(ModAttachments.CHILD_GROWTH_TIMER) + HusbandryMood.work(animal));
         int stepTicks = LegacyConfig.CHILD_GROWTH_TICK.get();
         if (timer >= stepTicks && LegacyAnimalNeeds.isFed(animal)
                 && LegacyAnimalNeeds.isWatered(animal)
@@ -25,7 +25,7 @@ public final class LegacyGrowth {
             timer = 0;
             step = Math.min(ADULT_STEP, step + 1);
             animal.setData(ModAttachments.CHILD_GROWTH, step);
-            if (step == ADULT_STEP) notifyMother(animal);
+            if (step == FamilyLifecycle.weaningStage(animal)) FamilyLifecycle.weaned(animal);
         }
         animal.setData(ModAttachments.CHILD_GROWTH_TIMER, timer);
 
@@ -34,15 +34,4 @@ public final class LegacyGrowth {
         animal.setAge(step >= ADULT_STEP ? 0 : -(ADULT_STEP - step) * stepTicks);
     }
 
-    private static void notifyMother(Animal child) {
-        String parentId = child.getData(ModAttachments.PARENT);
-        if (parentId.isEmpty()) return;
-        child.level().getEntitiesOfClass(Animal.class, child.getBoundingBox().inflate(15.0D),
-                possible -> possible.getClass() == child.getClass()
-                        && possible.getUUID().toString().equals(parentId)).stream().findFirst().ifPresent(mother -> {
-            if (mother instanceof com.animania.farm.livestock.AnimaniaCow cow) cow.childMatured();
-            else if (mother instanceof com.animania.farm.livestock.AnimaniaGoat goat) goat.childMatured();
-            else if (mother instanceof com.animania.farm.livestock.AnimaniaSheep sheep) sheep.childMatured();
-        });
-    }
 }

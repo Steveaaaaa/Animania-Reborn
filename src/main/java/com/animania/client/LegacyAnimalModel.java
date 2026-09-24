@@ -81,11 +81,21 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
                 ignored -> loadFresh("craftstudio_models", key));
     }
 
+    @SuppressWarnings("unchecked")
+    public static <T extends Entity> LegacyAnimalModel<T> loadVariant(String base, String variant) {
+        return (LegacyAnimalModel<T>) CACHE.computeIfAbsent(base + "#" + variant,
+                ignored -> loadFresh("legacy_models", variant, base));
+    }
+
     private static LegacyAnimalModel<?> loadFresh(String key) {
         return loadFresh("legacy_models", key);
     }
 
     private static LegacyAnimalModel<?> loadFresh(String directory, String key) {
+        return loadFresh(directory, key, key);
+    }
+
+    private static LegacyAnimalModel<?> loadFresh(String directory, String key, String animationKey) {
         String resource = "/assets/animania/" + directory + "/" + key + ".json";
         try (InputStream stream = LegacyAnimalModel.class.getResourceAsStream(resource)) {
             if (stream == null) throw new IllegalStateException("Missing converted legacy model " + resource);
@@ -93,7 +103,7 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
             if (data == null || data.nodes == null || data.roots == null) {
                 throw new IllegalStateException("Invalid converted legacy model " + resource);
             }
-            return new LegacyAnimalModel<>(key, data);
+            return new LegacyAnimalModel<>(animationKey, data);
         } catch (Exception exception) {
             throw new IllegalStateException("Could not load converted legacy model " + resource, exception);
         }
@@ -164,7 +174,20 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
         root.getAllParts().forEach(ModelPart::resetPose);
         applyModestySetting();
         animate(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        FarmActivityAnimation.apply(entity, key, parts, rootNames, partialTick);
+        FamilyBehaviorAnimation.apply(entity, key, parts, rootNames, partialTick);
         restorePetRotationOrder();
+        if (entity instanceof com.animania.farm.livestock.AnimaniaSheep sheep && sheep.breed().isEarthBreed()) {
+            for (String name : woolParts) {
+                ModelPart part = parts.get(name);
+                if (part != null) part.visible = !sheep.isSheared();
+            }
+        }
+        if (entity instanceof com.animania.farm.livestock.AnimaniaCow cow && cow.breed().hasWoolCoat()) {
+            for (var entry : parts.entrySet()) {
+                if (entry.getKey().startsWith("Coat")) entry.getValue().visible = !cow.isCoatSheared();
+            }
+        }
         if (entity instanceof com.animania.farm.livestock.AnimaniaHorse horse) {
             setVisible(horse.isSaddled(), "Footstrap", "Footstrap2", "Saddle", "Saddle2", "Saddle3", "Saddle4", "Saddle5", "Saddle6", "Saddle7", "SaddleBase", "SaddleBase2", "SaddleBase3", "SaddleHump", "SaddleHump2", "Strap1", "Strap2", "Strap3", "foot1", "foot1a", "foot2", "foot2a", "foot3", "foot3a", "foot4", "foot4a");
         }

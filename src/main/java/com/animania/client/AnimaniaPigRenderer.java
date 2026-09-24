@@ -44,11 +44,11 @@ public final class AnimaniaPigRenderer extends MobRenderer<AnimaniaPig, LegacyAn
             case LARGE_BLACK -> pig.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.20F : 1.14F;
             case LARGE_WHITE -> pig.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.16F : 1.08F;
             case OLD_SPOT -> pig.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.19F : 1.12F;
-            case YORKSHIRE -> pig.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.10F : 1.0F;
+            case MOTTLED, PIEBALD, PINK_FOOTED, YORKSHIRE -> pig.role() == com.animania.farm.livestock.FarmAnimalRole.MALE ? 1.10F : 1.0F;
         };
         if (pig.role() == com.animania.farm.livestock.FarmAnimalRole.YOUNG) {
             scale = switch (pig.breed()) {
-                case DUROC, YORKSHIRE -> 1.0F;
+                case DUROC, YORKSHIRE, MOTTLED, PIEBALD, PINK_FOOTED -> 1.0F;
                 case HAMPSHIRE, LARGE_WHITE -> 1.12F;
                 case LARGE_BLACK -> 1.20F;
                 case OLD_SPOT -> 1.10F;
@@ -60,8 +60,10 @@ public final class AnimaniaPigRenderer extends MobRenderer<AnimaniaPig, LegacyAn
             double y = pig.role() == com.animania.farm.livestock.FarmAnimalRole.YOUNG
                     ? pig.getBbHeight() - (mudPose ? 0.80D : 0.70D) + pig.getData(ModAttachments.CHILD_GROWTH) * 0.001D
                     : pig.getBbHeight() - (mudPose ? 1.45D : 1.25D);
-            poseStack.translate(0.0D, y, 0.0D);
-            poseStack.mulPose(Axis.ZP.rotationDegrees(86.0F));
+            float blend = mudPose ? FarmActivityAnimation.blend(pig, partialTick) : 1;
+            poseStack.translate(0.0D, y * blend, 0.0D);
+            float roll = mudPose ? 75.0F + 10.0F * net.minecraft.util.Mth.sin(FarmActivityAnimation.elapsed(pig, partialTick) * 0.16F) : 86.0F;
+            poseStack.mulPose(Axis.ZP.rotationDegrees(roll * blend));
         }
     }
 
@@ -78,6 +80,7 @@ public final class AnimaniaPigRenderer extends MobRenderer<AnimaniaPig, LegacyAn
 
     private static int eyelidColor(AnimaniaPig pig) {
         return switch (pig.breed()) {
+            case MOTTLED -> 0x59402F; case PIEBALD -> 0xD7CDB0; case PINK_FOOTED -> 0x353130;
             case DUROC -> 0x421006; case HAMPSHIRE, LARGE_BLACK -> 0x3A3333;
             case LARGE_WHITE -> 0xC4A8A8; case OLD_SPOT -> 0x514B4B; case YORKSHIRE -> 0xE07F7D;
         };

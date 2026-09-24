@@ -1,0 +1,172 @@
+{
+  "sources": {
+    "bark": {
+      "file": "dog-barking.wav",
+      "author": "Brandon Morris (HaelDB)",
+      "title": "Dog barking mono",
+      "page": "https://opengameart.org/content/dog-barking-mono",
+      "download": "https://opengameart.org/sites/default/files/dog_barking_mono.wav",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "bbd0f908b3514dd3bd7d2bc04dcf64f8d360a161e7f43cac5d6761e7add79451"
+    },
+    "growl": {
+      "file": "dog-growl.ogg",
+      "author": "bonebrah",
+      "title": "Dog Growl",
+      "page": "https://opengameart.org/content/dog-growl",
+      "download": "https://opengameart.org/sites/default/files/dog-growl.ogg",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "75655fe1bb7415dcd5af93fee82224544bdb03580e710b35e7547388281ab3d5"
+    },
+    "meow": {
+      "file": "meow.ogg",
+      "author": "IgnasD",
+      "title": "Meow",
+      "page": "https://opengameart.org/content/meow",
+      "download": "https://opengameart.org/sites/default/files/Meow.ogg",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "ae35c578eb7e7bc33d1dc7b2532cf4cdc8dac27f8cf28c6d574fb3027be83d5f"
+    },
+    "cat_food": {
+      "file": "cat-food.mp3",
+      "author": "Sadiquecat",
+      "title": "Cat meowing for food 1",
+      "page": "https://freesound.org/people/Sadiquecat/sounds/730098/",
+      "download": "https://cdn.freesound.org/previews/730/730098_5287430-hq.mp3",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "3f84998181dc53f07c5332a383f663a135683079b2d2702e87416c0ab990a2a9"
+    },
+    "purr": {
+      "file": "purr.mp3",
+      "author": "esperri",
+      "title": "Cat Purring.wav",
+      "page": "https://freesound.org/people/esperri/sounds/118959/",
+      "download": "https://cdn.freesound.org/previews/118/118959_1990695-hq.mp3",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "327cef8abb4c1d3d66452c72d124c6a4a5364a6b5ba9cf4ebe3f00b0a3e6bc10"
+    },
+    "whine": {
+      "file": "whine.mp3",
+      "author": "jedg",
+      "title": "dog whine 2.wav",
+      "page": "https://freesound.org/people/jedg/sounds/505828/",
+      "download": "https://cdn.freesound.org/previews/505/505828_4024739-hq.mp3",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "c1feb8bca1e875ae102e79b82d99c2f2cfa2032d66efd8383e0c505f2653383d"
+    },
+    "howl": {
+      "file": "wolf.mp3",
+      "author": "betchkal",
+      "title": "Cooper Creek 20160313_014852 solitary wolf howl very clear.wav",
+      "page": "https://freesound.org/people/betchkal/sounds/500646/",
+      "download": "https://cdn.freesound.org/previews/500/500646_339183-hq.mp3",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "e2d2eb3f8d16d2b34b8beb8a66ca14bdd5cde9c4fa039d0924578346fddd0c19"
+    }
+  },
+  "clips": [
+    {
+      "name": "dogs/bark1",
+      "source": "bark",
+      "start": 0,
+      "end": 0.45,
+      "highpass": 90,
+      "lufs": -23
+    },
+    {
+      "name": "dogs/bark2",
+      "source": "bark",
+      "start": 0.47,
+      "end": 0.99,
+      "highpass": 90,
+      "lufs": -23
+    },
+    {
+      "name": "dogs/bark3",
+      "source": "bark",
+      "start": 1.09,
+      "end": 1.51,
+      "highpass": 90,
+      "lufs": -23
+    },
+    {
+      "name": "dogs/bark4",
+      "source": "bark",
+      "start": 1.63,
+      "end": 2.038,
+      "highpass": 90,
+      "lufs": -23
+    },
+    {
+      "name": "dogs/growl1",
+      "source": "growl",
+      "start": 0,
+      "end": 0.608,
+      "highpass": 75,
+      "lufs": -23
+    },
+    {
+      "name": "dogs/whine1",
+      "source": "whine",
+      "start": 4.4,
+      "end": 6.6,
+      "highpass": 140,
+      "lufs": -23
+    },
+    {
+      "name": "cats/meow1",
+      "source": "meow",
+      "start": 0,
+      "end": 0.51,
+      "highpass": 110,
+      "lufs": -23
+    },
+    {
+      "name": "cats/meow2",
+      "source": "cat_food",
+      "start": 0,
+      "end": 1.184,
+      "highpass": 110,
+      "lufs": -23
+    },
+    {
+      "name": "cats/purr1",
+      "source": "purr",
+      "start": 0.25,
+      "end": 2.65,
+      "highpass": 35,
+      "lufs": -27
+    },
+    {
+      "name": "cats/purr2",
+      "source": "purr",
+      "start": 3.5,
+      "end": 5.9,
+      "highpass": 35,
+      "lufs": -27
+    },
+    {
+      "name": "wolves/howl1",
+      "source": "howl",
+      "start": 28.9,
+      "end": 38.8,
+      "highpass": 130,
+      "lufs": -25
+    },
+    {
+      "name": "wolves/howl2",
+      "source": "howl",
+      "start": 40.1,
+      "end": 49.2,
+      "highpass": 130,
+      "lufs": -25
+    }
+  ]
+}

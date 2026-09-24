@@ -22,6 +22,7 @@ public final class AnimaniaRabbitRenderer extends MobRenderer<AnimaniaRabbit, Le
                        net.minecraft.client.renderer.MultiBufferSource buffers, int light) {
         String name = switch (rabbit.breed()) {
             case NEW_ZEALAND -> "newzealand";
+            case DESERT, BLACK_AND_WHITE, SALT_AND_PEPPER, VESTED, BOLD_STRIPED, FRECKLED, HARELEQUIN, MUDDY_FOOT -> "cottontail";
             default -> rabbit.breed().getSerializedName();
         };
         String key = "model" + name;
@@ -36,15 +37,18 @@ public final class AnimaniaRabbitRenderer extends MobRenderer<AnimaniaRabbit, Le
             case BUCK -> switch (rabbit.breed()) {
                 case CHINCHILLA, NEW_ZEALAND -> 0.57F; case COTTONTAIL, DUTCH, HAVANA -> 0.52F;
                 case JACK -> 0.56F; case LOP -> 0.47F; case REX -> 0.54F;
+                default -> 0.52F;
             };
             case DOE -> switch (rabbit.breed()) {
                 case CHINCHILLA -> 0.59F; case COTTONTAIL, HAVANA -> 0.56F;
                 case DUTCH -> 0.53F; case JACK -> 0.57F; case LOP -> 0.51F;
                 case NEW_ZEALAND, REX -> 0.58F;
+                default -> 0.56F;
             };
             case KIT -> switch (rabbit.breed()) {
                 case CHINCHILLA -> 0.33F; case COTTONTAIL, DUTCH, HAVANA -> 0.26F;
                 case JACK, NEW_ZEALAND -> 0.32F; case LOP -> 0.23F; case REX -> 0.28F;
+                default -> 0.26F;
             };
         };
         poseStack.scale(breed, breed, breed);
@@ -60,6 +64,9 @@ public final class AnimaniaRabbitRenderer extends MobRenderer<AnimaniaRabbit, Le
 
     private static int eyelidColor(AnimaniaRabbit rabbit) {
         return switch (rabbit.breed()) {
+            case DESERT -> 0xD5C28B; case BLACK_AND_WHITE, FRECKLED, MUDDY_FOOT -> 0xDEDCD1;
+            case SALT_AND_PEPPER -> 0x8D8271; case VESTED -> 0x81858A;
+            case BOLD_STRIPED, HARELEQUIN -> 0x39312D;
             case CHINCHILLA -> 0x9E9E9E; case COTTONTAIL -> 0x896E58; case DUTCH, HAVANA -> 0x404040;
             case JACK -> 0x938375; case NEW_ZEALAND -> 0xF4F2F2; case REX -> 0x574133;
             case LOP -> switch (rabbit.textureName()) {

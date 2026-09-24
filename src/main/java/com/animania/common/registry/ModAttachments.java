@@ -16,6 +16,46 @@ public final class ModAttachments {
     private static final DeferredRegister<AttachmentType<?>> ATTACHMENTS =
             DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, Animania.MOD_ID);
 
+    public static final Supplier<AttachmentType<Integer>> MOOD_ENROLLED = ATTACHMENTS.register("mood_enrolled",
+            () -> AttachmentType.builder(() -> 0).serialize(Codec.INT).build());
+    public static final Supplier<AttachmentType<Integer>> CARE_LEASE = ATTACHMENTS.register("care_lease",
+            () -> AttachmentType.builder(() -> 0).serialize(Codec.INT).build());
+    public static final Supplier<AttachmentType<Integer>> MOOD_SCORE = ATTACHMENTS.register("mood_score",
+            () -> AttachmentType.builder(() -> 50).serialize(Codec.INT).build());
+    public static final Supplier<AttachmentType<Long>> MOOD_CALENDAR = ATTACHMENTS.register("mood_calendar",
+            () -> AttachmentType.builder(() -> -1L).serialize(Codec.LONG).build());
+    public static final Supplier<AttachmentType<Integer>> MOOD_GRACE = ATTACHMENTS.register("mood_grace",
+            () -> AttachmentType.builder(() -> 0).serialize(Codec.INT).build());
+    public static final Supplier<AttachmentType<Integer>> MOOD_MISSING = ATTACHMENTS.register("mood_missing",
+            () -> AttachmentType.builder(() -> 0).serialize(Codec.INT).build());
+    public static final Supplier<AttachmentType<Integer>> MILK_REST = ATTACHMENTS.register("milk_rest",
+            () -> AttachmentType.builder(() -> 0).serialize(Codec.INT).build());
+
+    public static final Supplier<AttachmentType<String>> NURSING_ID = ATTACHMENTS.register("nursing_id",
+            () -> AttachmentType.builder(() -> "").serialize(Codec.STRING).build());
+    public static final Supplier<AttachmentType<String>> NURSING_YOUNG = ATTACHMENTS.register("nursing_young",
+            () -> AttachmentType.builder(() -> "").serialize(Codec.STRING).build());
+    public static final Supplier<AttachmentType<Integer>> RECOVERY = ATTACHMENTS.register("recovery",
+            () -> AttachmentType.builder(() -> 0).serialize(Codec.INT).build());
+    public static final Supplier<AttachmentType<Integer>> CARE_COOLDOWN = ATTACHMENTS.register("care_cooldown",
+            () -> AttachmentType.builder(() -> 0).serialize(Codec.INT).build());
+    public static final Supplier<AttachmentType<Integer>> FERTILIZED_TIMER = ATTACHMENTS.register("fertilized_timer",
+            () -> AttachmentType.builder(() -> 0).serialize(Codec.INT).build());
+    public static final Supplier<AttachmentType<String>> LAST_SIRE = ATTACHMENTS.register("last_sire",
+            () -> AttachmentType.builder(() -> "").serialize(Codec.STRING).build());
+    public static final Supplier<AttachmentType<String>> FATHER = ATTACHMENTS.register("father",
+            () -> AttachmentType.builder(() -> "").serialize(Codec.STRING).build());
+
+    public static final Supplier<AttachmentType<Integer>> FAMILY_POSE_TTL = ATTACHMENTS.register(
+            "family_pose_ttl", () -> AttachmentType.builder(() -> 0).build());
+    public static final Supplier<AttachmentType<Integer>> FAMILY_POSE = ATTACHMENTS.register(
+            "family_pose", () -> AttachmentType.builder(() -> 0).sync(ByteBufCodecs.VAR_INT).build());
+
+    public static final Supplier<AttachmentType<Integer>> FARM_ACTIVITY = ATTACHMENTS.register(
+            "farm_activity", () -> AttachmentType.builder(() -> 0).sync(ByteBufCodecs.VAR_INT).build());
+    public static final Supplier<AttachmentType<Integer>> FARM_ACTIVITY_START = ATTACHMENTS.register(
+            "farm_activity_start", () -> AttachmentType.builder(() -> 0).sync(ByteBufCodecs.VAR_INT).build());
+
     public static final Supplier<AttachmentType<Integer>> WOOL_DYE = ATTACHMENTS.register(
             "wool_dye", () -> AttachmentType.builder(() -> 0).serialize(Codec.intRange(0, 15)).sync(ByteBufCodecs.VAR_INT).build());
     public static final Supplier<AttachmentType<Boolean>> FIGHTING = ATTACHMENTS.register(

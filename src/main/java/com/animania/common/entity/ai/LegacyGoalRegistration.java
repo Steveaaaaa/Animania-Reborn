@@ -79,7 +79,11 @@ public final class LegacyGoalRegistration {
         double wanderSpeed = pet || ferret ? 1.2D : rabbit ? 1.8D : hamster ? 1.1D : 1.0D;
         animal.goalSelector.addGoal(wanderPriority, new WaterAvoidingRandomStrollGoal(animal, wanderSpeed) {
             private boolean busy() {
-                return animal.isVehicle() || animal.goalSelector.getAvailableGoals().stream().anyMatch(goal ->
+                return com.animania.common.entity.FamilyLifecycle.staysNearBirthplace(animal)
+                        || animal.isVehicle() || animal.getData(ModAttachments.FARM_ACTIVITY) != 0
+                        || ((cow || sheep || chicken || peafowl || pig || goat || horse || pet || rabbit || rodent != null)
+                            && LegacyConfig.ANIMALS_SLEEP.get() && LegacySleepGoal.shouldSleepNow(animal))
+                        || animal.goalSelector.getAvailableGoals().stream().anyMatch(goal ->
                         goal.isRunning() && (goal.getGoal() instanceof LegacyGrazeGoal
                         || goal.getGoal() instanceof LegacyPigSnuffleGoal || goal.getGoal() instanceof LegacyTemptGoal)) || animal.getData(ModAttachments.EATING_TICKS) > 0
                         || animal.level().players().stream().anyMatch(player -> !player.isSpectator()
@@ -122,8 +126,8 @@ public final class LegacyGoalRegistration {
             else if (goal instanceof LegacyFindSaltLickGoal) {
                 if (!(cow || goat || sheep || horse || pig)) { animal.goalSelector.removeGoal(goal); continue; }
                 priority = horse ? 9 : 12;
-            } else if (goal instanceof LegacyFindMudGoal) priority = 1;
-            else if (goal instanceof LegacyHeadButtGoal) priority = 3;
+            } else if (goal instanceof LegacyFindMudGoal || goal instanceof LegacyFollowMateHorseGoal) priority = 1;
+            else if (goal instanceof LegacyHeadButtGoal) priority = 6;
             else if (goal instanceof LegacyFindNestGoal) priority = peafowl ? 1 : 6;
             else if (goal instanceof LegacyRaidNestGoal) priority = ferret ? 2 : 3;
             else if (goal instanceof LegacyFollowOwnerGoal) priority = hedgehog ? 11 : 7;
@@ -136,8 +140,45 @@ public final class LegacyGoalRegistration {
                 animal.goalSelector.removeGoal(goal); animal.goalSelector.addGoal(priority, goal);
             }
         }
+        if (cow || sheep || chicken || peafowl || pig || goat || horse) {
+            for (var wrapped : java.util.List.copyOf(animal.goalSelector.getAvailableGoals())) {
+                Goal goal = wrapped.getGoal();
+                if (goal instanceof LegacyFindMudGoal || goal instanceof LegacyFollowMateHorseGoal) { animal.goalSelector.removeGoal(goal); continue; }
+                int priority = goal instanceof PanicGoal || goal instanceof FloatGoal ? 0
+                        : goal instanceof AvoidEntityGoal ? 1
+                        : goal instanceof LookAtPlayerGoal || goal instanceof LegacyIdleLookGoal ? 14
+                        : goal instanceof LegacyTemptGoal ? 2
+                        : goal instanceof LegacySleepGoal ? 3
+                        : goal instanceof LegacyFindFoodGoal || goal instanceof LegacyFindWaterGoal
+                            || goal instanceof LegacyGrazeGoal || goal instanceof LegacyPigSnuffleGoal ? 4
+                        : goal instanceof WaterAvoidingRandomStrollGoal ? 12 : wrapped.getPriority();
+                if (priority != wrapped.getPriority()) {
+                    animal.goalSelector.removeGoal(goal);
+                    animal.goalSelector.addGoal(priority, goal);
+                }
+            }
+            if (cow || sheep || goat) {
+                animal.goalSelector.addGoal(8, new FarmActivityGoal(animal, FarmActivityGoal.RUMINATE));
+                animal.goalSelector.addGoal(9, new FarmHerdGoal(animal));
+            }
+            if (goat) {
+                animal.goalSelector.addGoal(4, new GoatBrowseGoal((AnimaniaGoat) animal));
+                animal.goalSelector.addGoal(10, new GoatExploreGoal((AnimaniaGoat) animal));
+            }
+            if (horse) {
+                animal.goalSelector.addGoal(1, new HorseAlertGoal((AnimaniaHorse) animal));
+                animal.goalSelector.addGoal(8, new FarmActivityGoal(animal, FarmActivityGoal.STANDING_REST));
+                animal.goalSelector.addGoal(9, new FarmHerdGoal(animal));
+            }
+            if (chicken || peafowl) {
+                animal.goalSelector.addGoal(10, new FarmActivityGoal(animal, FarmActivityGoal.PREEN));
+                animal.goalSelector.addGoal(8, new FarmActivityGoal(animal, FarmActivityGoal.DUST_BATH));
+                if (chicken) animal.goalSelector.addGoal(9, new FarmActivityGoal(animal, FarmActivityGoal.FORAGE));
+            }
+            if (pig) animal.goalSelector.addGoal(8, new FarmActivityGoal(animal, FarmActivityGoal.WALLOW));
+        }
         if (hamster || hedgehog) animal.goalSelector.addGoal(hamster ? 4 : 6, new FleeSunGoal(animal, 1.0D));
-        if (goat || sheep || rabbit) animal.goalSelector.addGoal(9, new AvoidEntityGoal<>(animal, Wolf.class,
+        if (goat || sheep || rabbit) animal.goalSelector.addGoal(rabbit ? 9 : 1, new AvoidEntityGoal<>(animal, Wolf.class,
                 goat ? 20 : 24, goat ? 2.2D : rabbit ? 3.0D : 2.0D, rabbit ? 3.5D : 2.2D));
         if (rabbit) animal.goalSelector.addGoal(9, new AvoidEntityGoal<>(animal, Monster.class, 16, 2.2D, 2.2D));
         if (animal instanceof AnimaniaCat c) animal.goalSelector.addGoal(4,
@@ -153,7 +194,7 @@ public final class LegacyGoalRegistration {
                 animal.goalSelector.addGoal(8, new LeapAtTargetGoal(animal, 0.2F));
                 animal.goalSelector.addGoal(9, new MeleeAttackGoal(animal, 1.0D, true));
             }
-            if (animal instanceof AnimaniaDog d && (d.breed() == DogBreed.FOX || d.breed() == DogBreed.WOLF))
+            if (animal instanceof AnimaniaDog d && (d.breed() == DogBreed.FOX || d.breed().isWolf()))
                 animal.targetSelector.addGoal(4, new com.animania.common.entity.ai.LegacyNearestAttackableTargetGoal<>(animal, Chicken.class,
                         false, prey -> !d.isTame()));
             if (animal instanceof AnimaniaChicken c && c.role() == ChickenRole.ROOSTER) {
@@ -166,5 +207,85 @@ public final class LegacyGoalRegistration {
                         && prey instanceof AnimaniaChicken other && other.role() == ChickenRole.ROOSTER));
             }
         }
+        boolean domesticCat = animal instanceof AnimaniaCat c && c.breed() != com.animania.catsdogs.cat.CatBreed.OCELOT;
+        boolean domesticDog = animal instanceof AnimaniaDog d && !d.breed().isWolf() && d.breed() != DogBreed.FOX;
+        if (domesticCat || domesticDog) {
+            for (var wrapped : java.util.List.copyOf(animal.goalSelector.getAvailableGoals())) {
+                if (wrapped.getGoal() instanceof LegacySleepGoal) {
+                    animal.goalSelector.removeGoal(wrapped.getGoal());
+                    animal.goalSelector.addGoal(8, wrapped.getGoal());
+                }
+            }
+            TamableAnimal tame = (TamableAnimal) animal;
+            if (domesticCat) {
+                animal.goalSelector.addGoal(9, new PetActivityGoal(tame, FarmActivityGoal.GROOM));
+                animal.goalSelector.addGoal(10, new PetActivityGoal(tame, FarmActivityGoal.PET_EXPLORE));
+                animal.goalSelector.addGoal(11, new PetActivityGoal(tame, FarmActivityGoal.PET_REST));
+            } else {
+                animal.goalSelector.addGoal(9, new PetActivityGoal(tame, FarmActivityGoal.GREET));
+                animal.goalSelector.addGoal(10, new PetActivityGoal(tame, FarmActivityGoal.SNIFF));
+            }
+        }
+
+        if (rabbit || rodent != null) {
+            for (var wrapped : java.util.List.copyOf(animal.goalSelector.getAvailableGoals())) {
+                Goal goal = wrapped.getGoal();
+                if (goal instanceof FleeSunGoal) { animal.goalSelector.removeGoal(goal); continue; }
+                int priority = goal instanceof FloatGoal ? 0
+                        : goal instanceof PanicGoal || goal instanceof AvoidEntityGoal ? 1
+                        : goal instanceof SitWhenOrderedToGoal ? 2
+                        : goal instanceof LegacyTemptGoal ? 3
+                        : goal instanceof LegacyFollowParentGoal ? 4
+                        : goal instanceof LegacyFindFoodGoal || goal instanceof LegacyFindWaterGoal
+                            || goal instanceof LegacyGrazeGoal || goal instanceof LegacyRodentGrazeGoal ? 5
+                        : goal instanceof LegacyFollowOwnerGoal ? 6
+                        : goal instanceof LegacySleepGoal ? 7
+                        : goal instanceof LookAtPlayerGoal || goal instanceof LegacyIdleLookGoal ? 14
+                        : goal instanceof WaterAvoidingRandomStrollGoal ? 15 : wrapped.getPriority();
+                if (priority != wrapped.getPriority()) {
+                    animal.goalSelector.removeGoal(goal); animal.goalSelector.addGoal(priority, goal);
+                }
+            }
+            animal.goalSelector.addGoal(6, new SmallAnimalActivityGoal(animal, FarmActivityGoal.SHELTER));
+            animal.goalSelector.addGoal(10, new SmallAnimalActivityGoal(animal, FarmActivityGoal.SMALL_EXPLORE));
+            if (rabbit || hamster)
+                animal.goalSelector.addGoal(9, new SmallAnimalActivityGoal(animal, FarmActivityGoal.SCRATCH));
+        }
+
+        boolean nocturnalHunter = LegacySleepGoal.nocturnalWildCatOrFox(animal);
+        boolean wolf = animal instanceof AnimaniaDog canine && canine.breed().isWolf();
+        if (nocturnalHunter || wolf) {
+            for (var wrapped : java.util.List.copyOf(animal.goalSelector.getAvailableGoals())) {
+                Goal goal = wrapped.getGoal();
+                int priority = goal instanceof FloatGoal ? 0
+                        : goal instanceof PanicGoal ? 1
+                        : goal instanceof SitWhenOrderedToGoal ? 2
+                        : goal instanceof LegacyTemptGoal ? 3
+                        : goal instanceof LegacyFollowParentGoal ? 4
+                        : goal instanceof LegacyFindFoodGoal || goal instanceof LegacyFindWaterGoal
+                            || goal instanceof LegacyGrazeGoal ? 5
+                        : goal instanceof LegacyFollowOwnerGoal ? 7
+                        : goal instanceof LegacySleepGoal ? 9
+                        : goal instanceof LookAtPlayerGoal || goal instanceof LegacyIdleLookGoal ? 14
+                        : goal instanceof WaterAvoidingRandomStrollGoal ? 15 : wrapped.getPriority();
+                if (priority != wrapped.getPriority()) {
+                    animal.goalSelector.removeGoal(goal); animal.goalSelector.addGoal(priority, goal);
+                }
+            }
+            if (nocturnalHunter) {
+                animal.goalSelector.addGoal(8, new SmallAnimalActivityGoal(animal, FarmActivityGoal.SHELTER));
+                if (cat) {
+                    animal.goalSelector.addGoal(10, new PetActivityGoal((TamableAnimal) animal, FarmActivityGoal.GROOM));
+                    animal.goalSelector.addGoal(11, new PetActivityGoal((TamableAnimal) animal, FarmActivityGoal.PET_EXPLORE));
+                } else {
+                    animal.goalSelector.addGoal(11, new PetActivityGoal((TamableAnimal) animal, FarmActivityGoal.SNIFF));
+                }
+            }
+            if (wolf) {
+                animal.goalSelector.addGoal(10, new WolfFamilyGoal((AnimaniaDog) animal));
+                animal.goalSelector.addGoal(11, new PetActivityGoal((TamableAnimal) animal, FarmActivityGoal.SNIFF));
+            }
+        }
+
     }
 }

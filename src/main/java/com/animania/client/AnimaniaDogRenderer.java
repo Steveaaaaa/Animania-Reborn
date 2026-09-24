@@ -25,8 +25,14 @@ public final class AnimaniaDogRenderer extends MobRenderer<AnimaniaDog, LegacyAn
         String breed = dog.breed() == DogBreed.BLOOD_HOUND ? "bloodhound"
                 : dog.breed().getSerializedName().replace("_", "");
         String name = "model" + breed;
-        model = models.computeIfAbsent(name,
-                key -> LegacyAnimalModel.load("catsdogs/client/models/dogs/" + key));
+        if (dog.breed().isNewWolf()) {
+            name = dog.breed().getSerializedName();
+            model = models.computeIfAbsent(name, key -> LegacyAnimalModel.loadVariant(
+                    "catsdogs/client/models/dogs/modelwolf", "dogs/" + key));
+        } else {
+            model = models.computeIfAbsent(name,
+                    key -> LegacyAnimalModel.load("catsdogs/client/models/dogs/" + key));
+        }
         super.render(dog, yaw, partialTick, poseStack, buffers, light);
     }
 
@@ -72,11 +78,13 @@ public final class AnimaniaDogRenderer extends MobRenderer<AnimaniaDog, LegacyAn
     }
 
     private static String blinkMask(AnimaniaDog dog) {
+        if (dog.breed().isNewWolf()) return "dogs/" + dog.breed().getSerializedName() + "_blink";
         String mask = switch (dog.breed()) {
             case BLOOD_HOUND -> "blood_hound"; case CHIHUAHUA -> "chihuahua"; case CORGI -> "corgi";
             case DACHSHUND -> "dachshund"; case FOX -> "fox"; case GREYHOUND -> "greyhound";
             case POMERANIAN -> "pomeranian"; case POODLE -> "poodle"; case PUG -> "pug";
             case COLLIE, GERMAN_SHEPHERD, GREAT_DANE, HUSKY, LABRADOR, WOLF -> "collie";
+            default -> throw new IllegalStateException("Unknown dog eyelid mask: " + dog.breed());
         };
         return "dogs/blink_" + mask;
     }
@@ -88,6 +96,7 @@ public final class AnimaniaDogRenderer extends MobRenderer<AnimaniaDog, LegacyAn
             case GERMAN_SHEPHERD, GREAT_DANE -> 0x815940; case GREYHOUND -> 0x8C5C34;
             case HUSKY -> 0xC4C4C4; case LABRADOR -> 0xC09D77; case POMERANIAN -> 0xFCFCFC;
             case POODLE -> 0xF5F2ED; case PUG -> 0xE8E3DF; case WOLF -> 0xBCB6B0;
+            default -> 0xFFFFFF;
         };
     }
 }

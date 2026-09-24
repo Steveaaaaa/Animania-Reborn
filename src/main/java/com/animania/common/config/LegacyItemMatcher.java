@@ -58,6 +58,7 @@ public final class LegacyItemMatcher {
             return stack.is(Items.BEEF) || stack.is(ModItems.RAW_PRIME_BEEF.get())
                     || stack.is(ModItems.RAW_PRIME_STEAK.get());
         }
+        if (stack.is(ModItems.BLUE_EGG.get()) && entry.equalsIgnoreCase("animania:brown_egg")) return true;
         int metadata = entry.lastIndexOf('#');
         if (metadata > entry.indexOf(':')) entry = entry.substring(0, metadata);
         entry = RENAMED_ANIMANIA_ITEMS.getOrDefault(entry.toLowerCase(java.util.Locale.ROOT), entry);

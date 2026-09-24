@@ -89,6 +89,7 @@ public final class ModBlocks {
     private static final Map<MilkType, DeferredBlock<LiquidBlock>> MILK_BLOCKS = new EnumMap<>(MilkType.class);
     private static final Map<MilkType, DeferredBlock<CheeseWheelBlock>> CHEESE_BLOCKS = new EnumMap<>(MilkType.class);
     private static final Map<String, DeferredBlock<Block>> ANIMANIA_WOOL = new java.util.LinkedHashMap<>();
+    private static final Map<String, DeferredBlock<com.animania.common.world.block.PatternedBedBlock>> PATTERNED_BEDS = new java.util.LinkedHashMap<>();
     public static final DeferredBlock<LiquidBlock> HONEY = BLOCKS.register("animania_honey",
             () -> new LiquidBlock(ModFluids.HONEY.source(), BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_YELLOW).replaceable().noCollission().strength(100.0F).noLootTable().liquid()));
@@ -109,11 +110,25 @@ public final class ModBlocks {
                             .strength(0.6F).sound(SoundType.WOOL).noOcclusion())));
         }
         for (String type : new String[]{"dorset_brown", "friesian_black", "friesian_brown", "jacob",
-                "merino_brown", "merino_white", "suffolk_brown"}) {
+                "merino_brown", "merino_white", "suffolk_brown", "flecked", "inky", "tan", "rocky"}) {
             ANIMANIA_WOOL.put(type, BLOCKS.register("wool_" + type,
                     () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.WOOL)
                             .strength(0.8F).sound(SoundType.WOOL))));
         }
+    }
+
+    static {
+        for (String type : new String[]{"flecked", "inky", "tan", "rocky"}) {
+            net.minecraft.world.item.DyeColor color = type.equals("inky") ? net.minecraft.world.item.DyeColor.BLACK
+                    : type.equals("rocky") ? net.minecraft.world.item.DyeColor.GRAY : net.minecraft.world.item.DyeColor.BROWN;
+            PATTERNED_BEDS.put(type, BLOCKS.register("bed_" + type,
+                    () -> new com.animania.common.world.block.PatternedBedBlock(color,
+                            BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.WHITE_BED))));
+        }
+    }
+
+    public static Map<String, DeferredBlock<com.animania.common.world.block.PatternedBedBlock>> patternedBeds() {
+        return java.util.Collections.unmodifiableMap(PATTERNED_BEDS);
     }
 
     private ModBlocks() {
