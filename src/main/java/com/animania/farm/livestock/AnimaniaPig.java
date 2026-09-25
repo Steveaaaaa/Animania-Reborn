@@ -132,6 +132,11 @@ public final class AnimaniaPig extends Pig {
     }
 
     @Override
+    protected SoundEvent getDeathSound() {
+        return role() == FarmAnimalRole.YOUNG ? ModSounds.PIGLET_DEATH.get() : ModSounds.PIG_DEATH.get();
+    }
+
+    @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return role() == FarmAnimalRole.YOUNG ? ModSounds.PIGLET_HURT.get() : ModSounds.PIG_HURT.get();
     }

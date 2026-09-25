@@ -913,3 +913,21 @@ Jade 显示心情、效果和具体缺失条件。新增 animalMood、moodPenalt
 安置期改为保存世界日历采样时间，区块卸载期间的日历进度也计入；旧存档沿用剩余时间，时间倒退不增加倒计时。五份配置改为 COMMON，在实例 config 下跨存档共用，保留原文件名。旧存档配置不自动合并，以免不同世界的设置互相覆盖；迁移说明见 HUSBANDRY.md。
 
 猫梳毛改为使用原模型的上臂/前臂父子关节，先坐下，再屈肘抬爪、低头舔爪，最后落爪起身。单独适配豹猫 leg_l21 的前臂节点，避免误转对侧肩部。沿用原模型几何和 UV，普通与新增毛色品种共用动作；运行时效果待游戏内确认。
+
+美西螈注册仅枚举已提供资源的五种原版变种，避免其他模组扩展 Axolotl.Variant 后将带命名空间的名称拼进 Animania 实体路径。自然生成替换跳过第三方变种。修复来源：mclo.gs/ITNzPNk 中 animania:mavm:lucia_axolotl 的注册异常。
+
+## Sheep details and livestock death sounds
+
+Restored the original 1.12 death-sound selections for pigs/piglets, sheep/lambs, goats/kids, draft horses and rabbits instead of inherited vanilla events. Reuses the existing upstream recordings.
+
+Connected the extended Long Nosed muzzle to the head using upper/lower jaw bridges. Added the original ram horn geometry and texture islands to this breed; adult ewes have smaller horns and lambs have none. Other Earth-inspired coats retain their hornless silhouettes. Horns remain after shearing and follow HeadNode during animation. The Valais Blacknose reference has horns in both adult sexes: https://www.valaisblacknose.nz/about-valais-blacknose-sheep/nz-breed-standard/ . Visual and audio playback still require in-game confirmation.
+
+## Legacy fox appearance and additional dairy
+
+Modern red, silver, cross and snow foxes now render with the original Animania fox model and UV layout. Coats are adapted on the original pixel grid. Native sitting/sleeping/crouching/pouncing states drive the model; the carried item follows the mouth hierarchy. Existing fox entities, AI and breeding remain in place.
+
+Pinto, Norwegian Red and Cream cows provide separate milk buckets during their existing lactation state. Added their fluids, mold stages, cheese wheels and wedges, eating-state block models, recipes, food/fluid tags and English/Chinese names. Existing aging and nutrition rules apply; JEI/EMI enumerate the new milk types, and Farmer’s Delight cutting/cooking recipes accept them. Item/block art remains 16×16, with brown, red and cream markings and distinct cheese palettes. Runtime appearance and interoperability still require in-game testing.
+
+十字狐毛色修正：移除按整张贴图坐标周期生成的黑色条块，改为按原狐狸身体、后躯和颈部的 UV 面绘制背部纵纹与肩部横纹。闭眼贴图由修正后的毛色生成；其他狐狸毛色不变。
+
+十字狐毛色再次调整：加宽深棕色背毛，肩部横纹向两侧逐渐收窄，用三档毛色和一层过渡边缘替代规整黑线；侧身与脸颊保留暖橙色，口鼻和下肢加深。保留原 UV、像素密度和浅色尾尖，同步闭眼贴图。

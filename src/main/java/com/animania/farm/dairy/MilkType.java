@@ -7,7 +7,10 @@ public enum MilkType implements StringRepresentable {
     FRIESIAN("friesian"),
     JERSEY("jersey"),
     GOAT("goat"),
-    SHEEP("sheep");
+    SHEEP("sheep"),
+    PINTO("pinto"),
+    NORWEGIAN_RED("norwegian_red"),
+    CREAM("cream");
 
     private final String id;
 

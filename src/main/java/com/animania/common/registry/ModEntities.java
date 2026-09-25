@@ -1,6 +1,7 @@
 package com.animania.common.registry;
 
 import com.animania.Animania;
+import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import com.animania.farm.chicken.AnimaniaChicken;
 import com.animania.farm.chicken.ChickenBreed;
 import com.animania.farm.chicken.ChickenRole;
@@ -104,8 +105,13 @@ public final class ModEntities {
     public static final Map<String, RegistryObject<EntityType<com.animania.modern.ModernBee>>> BEE_BREEDS = new LinkedHashMap<>();
 
     public static final Map<String, RegistryObject<EntityType<com.animania.modern.ModernAxolotl>>> AXOLOTL_BREEDS = new LinkedHashMap<>();
+    // Other mods can extend Variant with namespaced names and their own textures.
+    // Register only the five variants for which Animania supplies entities and assets.
+    public static final java.util.List<Axolotl.Variant> SUPPORTED_AXOLOTL_VARIANTS = java.util.List.of(
+            Axolotl.Variant.LUCY, Axolotl.Variant.WILD, Axolotl.Variant.GOLD,
+            Axolotl.Variant.CYAN, Axolotl.Variant.BLUE);
     static {
-        for (var variant : net.minecraft.world.entity.animal.axolotl.Axolotl.Variant.values()) {
+        for (var variant : SUPPORTED_AXOLOTL_VARIANTS) {
             String name = variant.getName() + "_axolotl";
             AXOLOTL_BREEDS.put(variant.getName(), ENTITY_TYPES.register(name,
                     () -> EntityType.Builder.<com.animania.modern.ModernAxolotl>of(

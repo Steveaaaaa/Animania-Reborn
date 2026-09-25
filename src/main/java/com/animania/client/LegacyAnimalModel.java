@@ -178,6 +178,19 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
         FamilyBehaviorAnimation.apply(entity, key, parts, rootNames, partialTick);
         restorePetRotationOrder();
         if (entity instanceof com.animania.farm.livestock.AnimaniaSheep sheep && sheep.breed().isEarthBreed()) {
+            if (sheep.breed() == com.animania.farm.livestock.SheepBreed.LONG_NOSED) {
+                for (var entry : parts.entrySet()) {
+                    if (!entry.getKey().contains("Horn")) continue;
+                    ModelPart horn = entry.getValue();
+                    horn.visible = sheep.role() != com.animania.farm.livestock.FarmAnimalRole.YOUNG;
+                    float size = sheep.role() == com.animania.farm.livestock.FarmAnimalRole.FEMALE ? 0.8F : 1;
+                    horn.xScale = horn.yScale = horn.zScale = size;
+                    float anchorX = entry.getKey().startsWith("Left") ? 1 : -1;
+                    horn.x = anchorX + (horn.x - anchorX) * size;
+                    horn.y = -6.155134F + (horn.y + 6.155134F) * size;
+                    horn.z = -10.29287F + (horn.z + 10.29287F) * size;
+                }
+            }
             for (String name : woolParts) {
                 ModelPart part = parts.get(name);
                 if (part != null) part.visible = !sheep.isSheared();
@@ -239,7 +252,24 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
         super.prepareMobModel(entity, swing, amount, partial);
     }
 
+    public void translateToParts(PoseStack pose, String... names) {
+        for (String name : names) parts.get(name).translateAndRotate(pose);
+    }
+
     private void animate(T entity, float swing, float amount, float age, float yaw, float pitch) {
+        if (entity instanceof com.animania.modern.ModernFox fox) {
+            if (fox.isSleeping()) {
+                LegacyPose.load(key, "sleeping").apply(parts);
+                return;
+            }
+            if (motion != null) motion.apply(new LegacyMotionContext(entity), swing, amount, age, yaw, pitch, partialTick);
+            ModelPart body = parts.get("body");
+            if (body != null) {
+                body.y += fox.getCrouchAmount(partialTick);
+                if (fox.isPouncing() || fox.isFaceplanted()) body.xRot += fox.getXRot() * Mth.DEG_TO_RAD;
+            }
+            return;
+        }
         if (ModAttachments.getData(entity, ModAttachments.SLEEPING)) {
             if ((key.endsWith("/modelhamster") || key.endsWith("/modelpeacock")) && motion != null)
                 motion.apply(new LegacyMotionContext(entity), 0, 0, 1, 0, 0, 0);

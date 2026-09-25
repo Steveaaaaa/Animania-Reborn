@@ -119,6 +119,11 @@ public final class AnimaniaHorse extends Horse {
     }
 
     @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.HORSE_DEATH.get();
+    }
+
+    @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return ModSounds.HORSE_HURT.get();
     }
