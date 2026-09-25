@@ -12,6 +12,15 @@ public final class ModSounds {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
             DeferredRegister.create(Registries.SOUND_EVENT, Animania.MOD_ID);
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> PIG_DEATH = sound("pig_death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> PIGLET_DEATH = sound("piglet_death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> SHEEP_DEATH = sound("sheep_death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> LAMB_DEATH = sound("lamb_death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> GOAT_DEATH = sound("goat_death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> KID_DEATH = sound("kid_death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> HORSE_DEATH = sound("horse_death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> RABBIT_DEATH = sound("rabbit_death");
+
     public static final DeferredHolder<SoundEvent, SoundEvent> CHICKEN_AMBIENT = sound("chicken_ambient");
     public static final DeferredHolder<SoundEvent, SoundEvent> CHICKEN_CROW_1 = sound("chicken_crow_1");
     public static final DeferredHolder<SoundEvent, SoundEvent> CHICKEN_CROW_2 = sound("chicken_crow_2");

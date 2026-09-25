@@ -1107,6 +1107,376 @@
         }
       ],
       "parent": "HeadNode"
+    },
+    {
+      "name": "MuzzleBridge",
+      "parent": "UpperJaw",
+      "u": 32,
+      "v": 39,
+      "mirror": false,
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -2.0,
+            0,
+            -0.5
+          ],
+          "size": [
+            4,
+            3,
+            2
+          ],
+          "deformation": 0
+        }
+      ]
+    },
+    {
+      "name": "LowerMuzzleBridge",
+      "parent": "LowerJaw",
+      "u": 12,
+      "v": 8,
+      "mirror": false,
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "boxes": [
+        {
+          "from": [
+            -1.5,
+            0,
+            -0.5
+          ],
+          "size": [
+            3,
+            1,
+            2
+          ],
+          "deformation": 0
+        }
+      ]
+    },
+    {
+      "name": "LeftHorn1",
+      "u": 108,
+      "v": 118,
+      "mirror": false,
+      "pivot": [
+        1,
+        -6.155132999999999,
+        -10.292870000000002
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.0856002,
+        -0.5243015,
+        -0.699971
+      ],
+      "boxes": [
+        {
+          "from": [
+            0,
+            -1,
+            -1
+          ],
+          "size": [
+            5,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "RightHorn1",
+      "u": 108,
+      "v": 118,
+      "mirror": false,
+      "pivot": [
+        -1,
+        -6.155135,
+        -10.292870000000002
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.0856002,
+        0.5243016,
+        0.699971
+      ],
+      "boxes": [
+        {
+          "from": [
+            -5,
+            -1,
+            -1
+          ],
+          "size": [
+            5,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "RightHorn2",
+      "u": 108,
+      "v": 118,
+      "mirror": false,
+      "pivot": [
+        -3.841148,
+        -9.024431,
+        -8.17394
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.1127634,
+        0.9091169,
+        -0.5917696
+      ],
+      "boxes": [
+        {
+          "from": [
+            -6,
+            -1,
+            -1
+          ],
+          "size": [
+            6,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "RightHorn3",
+      "u": 108,
+      "v": 118,
+      "mirror": false,
+      "pivot": [
+        -7.125732,
+        -8.004583,
+        -3.63134
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.1363656,
+        -0.2,
+        -1.690024
+      ],
+      "boxes": [
+        {
+          "from": [
+            -7,
+            -1,
+            -1
+          ],
+          "size": [
+            6,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "RightHorn4",
+      "u": 108,
+      "v": 118,
+      "mirror": false,
+      "pivot": [
+        -4.833957,
+        -2.544016,
+        -5.2470300000000005
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1,
+        0,
+        -0.5
+      ],
+      "boxes": [
+        {
+          "from": [
+            -5,
+            -1,
+            0
+          ],
+          "size": [
+            4,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "LeftHorn2",
+      "u": 108,
+      "v": 118,
+      "mirror": false,
+      "pivot": [
+        3.841148,
+        -9.024429,
+        -8.17394
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.1127634,
+        -0.9091168,
+        0.5917696
+      ],
+      "boxes": [
+        {
+          "from": [
+            0,
+            -1,
+            -1
+          ],
+          "size": [
+            6,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "LeftHorn3",
+      "u": 108,
+      "v": 118,
+      "mirror": false,
+      "pivot": [
+        7.125732,
+        -8.004581,
+        -3.63134
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.1363656,
+        0.2,
+        1.690024
+      ],
+      "boxes": [
+        {
+          "from": [
+            1,
+            -1,
+            -1
+          ],
+          "size": [
+            6,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "LeftHorn4",
+      "u": 108,
+      "v": 118,
+      "mirror": false,
+      "pivot": [
+        4.833957,
+        -2.5440139999999998,
+        -5.2470300000000005
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -1,
+        0,
+        0.5
+      ],
+      "boxes": [
+        {
+          "from": [
+            1,
+            -1,
+            0
+          ],
+          "size": [
+            4,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
     }
   ],
   "audit": {

@@ -98,6 +98,11 @@ public final class AnimaniaSheep extends Sheep {
     }
 
     @Override
+    protected SoundEvent getDeathSound() {
+        return role() == FarmAnimalRole.YOUNG ? ModSounds.LAMB_DEATH.get() : ModSounds.SHEEP_DEATH.get();
+    }
+
+    @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return ModSounds.SHEEP_HURT.get();
     }

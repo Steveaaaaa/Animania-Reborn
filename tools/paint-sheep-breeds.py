@@ -120,6 +120,10 @@ for wool, palette in {'flecked':('78573e','ac8b64','d7cdb8'),
             out.putpixel((x,y), tuple(max(0,a+delta) for a in c))
     dest = A / f'textures/block/wool_{wool}.png'; out.save(dest); outputs.append(dest)
 
+# Keep muzzle connections and original horn UVs when regenerating the coats.
+import runpy
+runpy.run_path(str(ROOT / "tools/repair-sheep-details.py"))
+
 for dest in outputs:
     target = ROOT / '.worktrees/forge-1.20.1' / dest.relative_to(ROOT)
     target.parent.mkdir(parents=True, exist_ok=True); shutil.copy2(dest, target)

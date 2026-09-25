@@ -22,7 +22,7 @@ final class LegacyMotionContext {
     }
 
     boolean getSleeping() { return entity.getData(ModAttachments.SLEEPING); }
-    boolean isSitting() { return entity instanceof TamableAnimal tame && tame.isInSittingPose(); }
+    boolean isSitting() { return entity instanceof com.animania.modern.ModernFox fox ? fox.isSitting() : entity instanceof TamableAnimal tame && tame.isInSittingPose(); }
     boolean isTamed() { return entity instanceof TamableAnimal tame && tame.isTame(); }
     boolean isBeingRidden() { return entity.isVehicle(); }
     boolean isRiding() { return entity.isPassenger(); }

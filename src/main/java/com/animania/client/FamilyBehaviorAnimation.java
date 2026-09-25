@@ -18,6 +18,7 @@ final class FamilyBehaviorAnimation {
                 || entity instanceof net.minecraft.world.entity.LivingEntity living && living.hurtTime > 0) {
             TRANSITIONS.remove(entity); return;
         }
+        if (entity instanceof com.animania.modern.ModernFox fox && fox.isSleeping()) { TRANSITIONS.remove(entity); return; }
         if (requested == 0 && !TRANSITIONS.containsKey(entity)) return;
         Transition state = TRANSITIONS.computeIfAbsent(entity, ignored -> new Transition());
         double now = entity.level().getGameTime() + partial;

@@ -14,6 +14,12 @@ public enum DairyStage implements StringRepresentable {
     GOAT_CHEESE("goat_cheese", MilkType.GOAT, true),
     SHEEP_MILK("sheep_milk", MilkType.SHEEP, false),
     SHEEP_CHEESE("sheep_cheese", MilkType.SHEEP, true),
+    PINTO_MILK("pinto_milk", MilkType.PINTO, false),
+    PINTO_CHEESE("pinto_cheese", MilkType.PINTO, true),
+    NORWEGIAN_RED_MILK("norwegian_red_milk", MilkType.NORWEGIAN_RED, false),
+    NORWEGIAN_RED_CHEESE("norwegian_red_cheese", MilkType.NORWEGIAN_RED, true),
+    CREAM_MILK("cream_milk", MilkType.CREAM, false),
+    CREAM_CHEESE("cream_cheese", MilkType.CREAM, true),
     WATER("water", null, false),
     SALT("salt", null, true);
 

@@ -614,5 +614,57 @@
         "attenuation_distance": 16
       }
     ]
+  },
+  "pig_death": {
+    "sounds": [
+      "animania:pigs/pighurt1",
+      "animania:pigs/pighurt2",
+      "animania:pigs/pig3"
+    ]
+  },
+  "piglet_death": {
+    "sounds": [
+      "animania:pigs/piglethurt1",
+      "animania:pigs/piglethurt2",
+      "animania:pigs/piglethurt3"
+    ]
+  },
+  "sheep_death": {
+    "sounds": [
+      "animania:sheep/hurt1",
+      "animania:sheep/living7"
+    ]
+  },
+  "lamb_death": {
+    "sounds": [
+      "animania:sheep/hurt1",
+      "animania:sheep/lambliving2"
+    ]
+  },
+  "goat_death": {
+    "sounds": [
+      "animania:goats/hurt1",
+      "animania:goats/hurt2",
+      "animania:goats/living3"
+    ]
+  },
+  "kid_death": {
+    "sounds": [
+      "animania:goats/kidhurt1",
+      "animania:goats/kidhurt2"
+    ]
+  },
+  "horse_death": {
+    "sounds": [
+      "animania:horses/hurthorse1",
+      "animania:horses/hurthorse2",
+      "animania:horses/hurthorse3"
+    ]
+  },
+  "rabbit_death": {
+    "sounds": [
+      "animania:rabbits/rabbithurt1",
+      "animania:rabbits/rabbithurt2"
+    ]
   }
 }

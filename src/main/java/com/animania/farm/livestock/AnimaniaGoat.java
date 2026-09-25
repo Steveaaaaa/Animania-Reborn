@@ -137,6 +137,11 @@ public final class AnimaniaGoat extends Goat {
     }
 
     @Override
+    protected SoundEvent getDeathSound() {
+        return role() == FarmAnimalRole.YOUNG ? ModSounds.KID_DEATH.get() : ModSounds.GOAT_DEATH.get();
+    }
+
+    @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return role() == FarmAnimalRole.YOUNG ? ModSounds.KID_HURT.get() : ModSounds.GOAT_HURT.get();
     }

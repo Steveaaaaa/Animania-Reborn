@@ -241,6 +241,9 @@ public final class AnimaniaCow extends Cow implements net.minecraft.world.entity
                         case HOLSTEIN -> new ItemStack(ModItems.milkBucket(MilkType.HOLSTEIN).get());
                         case FRIESIAN -> new ItemStack(ModItems.milkBucket(MilkType.FRIESIAN).get());
                         case JERSEY -> new ItemStack(ModItems.milkBucket(MilkType.JERSEY).get());
+                        case PINTO -> new ItemStack(ModItems.milkBucket(MilkType.PINTO).get());
+                        case NORWEGIAN_RED -> new ItemStack(ModItems.milkBucket(MilkType.NORWEGIAN_RED).get());
+                        case CREAM -> new ItemStack(ModItems.milkBucket(MilkType.CREAM).get());
                         default -> Items.MILK_BUCKET.getDefaultInstance();
                     };
                     player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, milk));

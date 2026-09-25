@@ -79,6 +79,11 @@ public final class AnimaniaRabbit extends Rabbit {
     }
 
     @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.RABBIT_DEATH.get();
+    }
+
+    @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return ModSounds.RABBIT_HURT.get();
     }

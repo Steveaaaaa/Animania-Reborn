@@ -156,8 +156,11 @@ public final class NaturalSpawnConfigHandler {
                 && AnimaniaConfig.ENABLE_EXTRA_SPAWNS.get()) type = ModEntities.mountainGoat(roll < 6 ? "white" : roll < 9 ? "cream" : "slate");
         else if (original.getType() == EntityType.BEE && AnimaniaConfig.REPLACE_BEES.get())
             type = ModEntities.BEE_BREEDS.get(roll < 6 ? "amber" : roll < 9 ? "dark" : "pale").get();
-        else if (original.getType() == EntityType.AXOLOTL && AnimaniaConfig.REPLACE_AXOLOTLS.get())
+        else if (original.getType() == EntityType.AXOLOTL && AnimaniaConfig.REPLACE_AXOLOTLS.get()) {
+            if (!(original instanceof net.minecraft.world.entity.animal.axolotl.Axolotl axolotl)
+                    || !ModEntities.SUPPORTED_AXOLOTL_VARIANTS.contains(axolotl.getVariant())) return false;
             type = ModEntities.AXOLOTL_BREEDS.get(new String[]{"lucy", "wild", "gold", "cyan"}[original.getRandom().nextInt(4)]).get();
+        }
         else return false;
         var replacement = type.create(event.getLevel().getLevel());
         if (replacement == null) return false;
