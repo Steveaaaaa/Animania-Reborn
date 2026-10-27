@@ -931,3 +931,69 @@ Pinto, Norwegian Red and Cream cows provide separate milk buckets during their e
 十字狐毛色修正：移除按整张贴图坐标周期生成的黑色条块，改为按原狐狸身体、后躯和颈部的 UV 面绘制背部纵纹与肩部横纹。闭眼贴图由修正后的毛色生成；其他狐狸毛色不变。
 
 十字狐毛色再次调整：加宽深棕色背毛，肩部横纹向两侧逐渐收窄，用三档毛色和一层过渡边缘替代规整黑线；侧身与脸颊保留暖橙色，口鼻和下肢加深。保留原 UV、像素密度和浅色尾尖，同步闭眼贴图。
+
+
+## Facilities and social familiarity
+
+Added bounded facility visits and persistent, capped companion familiarity with explicit species eligibility. Separate config switches control new facility interactions and social behavior. Species details, exclusions, time scales and source references are in HUSBANDRY.md. Existing breeding pairs, nursing, hunger and production mechanics are unchanged. New activity IDs 22–27 drive procedural poses and Jade text on both loaders. Runtime alignment and interruption behavior remain subject to game testing.
+
+
+## Breed-specific cattle and sheep horns
+
+Audited all current cattle/sheep breed IDs against breed standards where a real counterpart exists; see HORN_AUDIT.md. Corrected Suffolk and East Friesian sheep to polled in both sexes, added smaller Dorset Horn ewe horns using original ram geometry and UV pixels, and centralized breed/age horn visibility after animation. Retained existing horned cattle lines and fictional variant designs without inventing genotype frequencies. Both loader branches are updated.
+
+
+## Hive defense
+
+Added a resident-backed defensive swarm, smoker, beekeeper clothing, recipes and bilingual manual/Jade guidance. This is a Reborn addition rather than a recreation of 1.12 behavior. It replaces random wild-hive proximity damage with warning, emergence, bounded offender pursuit and return/dispersal. One persisted swarm carries the original residents; hive identity prevents return into a newly placed replacement hive. Both loader branches share the behavior and resources, with loader-specific entity synchronization and armor APIs.
+
+Defensive swarm flight now uses independent, tick-stepped client trajectories with acceleration limits, separation, block collision checks and asynchronous wingbeats. Nearby pursuit follows the responsible entity instead of orbiting a fixed center. Returning uses a narrower distribution and repeated calming no longer cancels return navigation each tick. This remains one server entity; visual bee state is not saved or networked.
+
+Beekeeper clothing textures now use sewn-panel shading, veil openings, edging, fastenings, pockets and leather boot details. Inventory icons remain 16×16 and armor sheets 64×32. Boots leave the upper leg transparent so the leggings remain visible.
+
+## Pet merchant village stalls
+
+Villages now generate a pet stall: a 7×5×6 open-front counter with a rear wall, corner posts, a slab counter, a coloured wool awning and a pet bowl behind the counter, occupied by one pet merchant. The stall is offered as a house element in the plains, savanna, desert, taiga and snowy village pools with weight 2, so it takes roughly one in twenty house slots and a large village can hold more than one.
+
+The stall is injected by overriding the vanilla template pool files: neither NeoForge 21.1 nor Forge 1.20.1 exposes a structure-modification API. `tools/inject_village_pool.py` reads the vanilla `houses.json` from the loader's client jar, inserts one `minecraft:legacy_single_pool_element` entry before the terminating `empty_pool_element`, and writes the result to `data/minecraft/worldgen/template_pool/village/<biome>/houses.json`. It is idempotent and skips pools that already contain a stall. `tools/gen_pet_stall.py` builds the five templates from block names and writes them to `data/animania/structure/` on the NeoForge branch and to `data/animania/structures/` on the Forge branch, because the directory is singular from 1.21 and plural before it.
+
+The merchant is an entity marker in the template whose `VillagerData` names `animania:pet_seller`, with no `Offers` tag. Omitting the offers is deliberate: `AbstractVillager.getOffers()` builds them from the trade event the first time they are requested, so the port's table and any other mod's additions apply. A template that carried offers would freeze one price list into the structure file and bypass that registration. The profession survives `Villager.finalizeSpawn`, which for `MobSpawnType.STRUCTURE` only arms late job-site claiming, and the merchant texture is resolved from the profession id, so no extra client registration is needed.
+
+Every stall template carries one `minecraft:jigsaw` block at the centre of its open front, set up like a vanilla house entrance: `name` and `target` are `minecraft:building_entrance`, `joint` is `aligned`, `orientation` is `south_up`, and the pool is that biome's `streets`. This is mandatory rather than decorative. `JigsawBlock.canAttach` only accepts a child whose jigsaw `name` equals the parent's `target` and whose front opposes the parent's, so a pool entry whose template has no entrance jigsaw is skipped without a log line and the village simply grows around the empty slot. The jigsaw also draws one street piece to the stall afterwards, which keeps the counter from being buried by later buildings.
+
+Re-run both tools after changing the target Minecraft version: the templates embed `DataVersion` (3955 for 1.21.1, 3465 for 1.20.1) and the vanilla pools differ between versions. The generator writes block names as plain strings without a registry check at build time, so a renamed or removed block would only fail in game.
+
+`NaturalSpawnConfigHandler.replaceNewNestBees` no longer keeps a chunk reference across the tick it defers into; it re-resolves the chunk by position, gives up when that chunk is gone, and reports once if a chunk-load event arrives off the server thread. This is hardening against async chunk mods, not a confirmed fix for them.
+
+`VillagerProfessionLayer` resolves the overlay from the entity type it was attached to, at `textures/entity/<type>/profession/<profession>.png`, so the zombie villager needs its own copy. A missing texture is not a silent no-op: the layer draws the cutout model with the missing-texture atlas, which puts the magenta checker over the whole zombie. Vanilla duplicates its own overlays for the same reason -- 11 of its 14 profession textures are byte identical to the zombie copies and the other three differ only in a few recoloured pixels. The zombie overlay is the upstream 1.12 artwork, copied unchanged to `assets/animania/textures/entity/zombie_villager/profession/pet_seller.png`. Upstream registered the profession as `new VillagerProfession("animania:pet_seller", "animania:textures/entity/villager/pet_seller.png", "animania:textures/entity/villager/pet_seller_zombie.png")` (`CatsDogsVillagerProfessions.java:30`): 1.12 kept both skins in one folder and marked the zombie one with a `_zombie` suffix, while the modern layer derives the whole path from the entity type, so the two upstream files map onto `villager/profession/pet_seller.png` and `zombie_villager/profession/pet_seller.png`. Both are 64x64 on the villager UV layout, which modern `ZombieVillagerModel` shares as well, so nothing had to be redrawn. There is no generator: if the living overlay is ever replaced with new art, the zombie copy has to be updated alongside it by hand.
+
+Handing a tamed pet to another player was outside this feature; it is now provided by the pet contract item described in the next section.
+
+## Pet contracts
+
+Upstream Animania has no way to hand a tamed pet to another player. `GenericBehavior.java:393-401` tames
+the first animal that is fed, and `GenericBehavior.java:405-422` only toggles sitting afterwards, with
+sneaking explicitly excluded. The contract is therefore a new feature, not a restored one.
+
+`animania:pet_contract` (shapeless: two paper, one leather, one ink sac) holds one owned tamed pet.
+Recording calls `LivingEntity#saveWithoutId` on the pet, stores that tag in the item and discards the entity;
+releasing rebuilds the entity from the tag and makes the player who released it the new owner. That is what
+makes a transfer possible: the pet keeps its identity, health, hunger, gender and pedigree, but changes hands.
+
+- Only `TamableAnimal` pets can be recorded, which covers the Animania cats, dogs and rodents as well as the
+  vanilla pets. `Player#interactOn` asks the entity first (`Player.java:1098`) and only then falls through to
+  `Item#interactLivingEntity` (`Player.java:1109`), so the contract sees the click even though pets answer it.
+- The stored tag drops `UUID`, `Pos`, `Motion`, `FallDistance` and `Leash`. A fresh identifier stops a
+  duplicated creative contract from cloning one pet, and the release site decides the position instead.
+- Breed and role are encoded in the entity type (`ModEntities.cat(CatRole, CatBreed)` and friends), not in NBT,
+  so the species survives the round trip untouched. The loader-side per-animal state travels inside the same
+  tag: `neoforge:attachments` on 1.21.1 (`AttachmentHolder.ATTACHMENTS_NBT_KEY`) and `ForgeData` ->
+  `AnimaniaState` on 1.20.1 (`ModAttachments`).
+- Storage differs per line. 1.21.1 keeps the payload in `DataComponents.CUSTOM_DATA` (`CustomData`), 1.20.1
+  keeps it in the stack tag (`ItemStack#getOrCreateTag`). Do not copy `PetContractItem` between the branches;
+  the item registration in `ModItems` differs as well (`DeferredItem` versus `RegistryObject`).
+- No mixins or extra event listeners were needed; the item hooks alone are enough.
+
+## Art direction
+
+Follow [ART_STYLE.md](ART_STYLE.md) when creating or revising textures. It records the user-provided pixel-art reference and requirements for silhouettes, shading, material detail and consistent pixel density.

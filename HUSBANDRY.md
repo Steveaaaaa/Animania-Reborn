@@ -75,3 +75,74 @@ The numeric thresholds, block substitutions, mood scale and bonuses are gameplay
 ## Shared configuration
 
 All five Animania TOML files now load from the instance or dedicated server `config` folder and apply across its worlds. Filenames keep their `-server.toml` suffix for continuity. World `serverconfig` files are no longer read. To keep previous settings, close the game/server and copy the five Animania TOML files from your chosen world into `config`, backing up any existing files first. No world is selected automatically, since worlds may have conflicting settings. Restart after editing. In multiplayer, husbandry simulation uses the server configuration; COMMON configs are not automatically synchronized to clients.
+
+
+## Facility use and familiar companions
+
+`facilityInteractions` and `animalSocialBehavior` in `animania-modern-server.toml` independently enable these additions. They do not change mating bonds, hunger or production rates.
+
+| Animals | Facilities and social behavior |
+| --- | --- |
+| Cattle | Rub against a two-block log post; approach familiar cattle for social grooming. Herd regrouping prefers familiar animals. |
+| Horses | Keep existing grazing, bedding and standing rest; approach familiar horses for grooming and prefer them when regrouping. No interaction while ridden or pulling. |
+| Sheep and domestic goats | Keep their grazing/browsing, bedding and climbing routines; rest near familiar animals and prefer them when regrouping. |
+| Mountain goats | Female groups gain familiar-neighbor resting and regrouping. Adult males are not assigned female-herd friendships. |
+| Pigs | Root in dirt, coarse dirt or rooted dirt, with snout movement and soil particles; investigate familiar pigs. Existing mud bathing remains separate. |
+| Chickens and peafowl | Keep dust bathing, preening and night roosting. Familiar adult females can rest together; existing male rivalry is not replaced. |
+| Rabbits | Seek reachable dirt/sand digging patches; approach familiar rabbits for grooming. Existing hiding and parent-following remain. |
+| Domestic cats | Scratch logs/cat towers using shoulder and elbow joints, visit reachable elevated log/tower tops, and rest on cat beds. Social grooming requires longer familiarity and is optional, not a need for a cat group. |
+| Domestic dogs | Rest on dog pillows and greet/sniff familiar dogs. Owner commands and following take priority. |
+| Ferrets | Visit dry spaces below wooden or hay cover, and investigate familiar ferrets. Existing short activity periods and shelter seeking remain. |
+| Wolves and foxes | Keep their recorded-family behavior. They do not acquire unrelated dog/herd friendships. |
+| Ocelots, hamsters and hedgehogs | Keep their species-specific exploration, cover and existing wheel interaction; no companion-grooming or herd goal is added. |
+| Bees, axolotls and amphibians | Keep hive/flower, underwater-shelter and shore/cover routines respectively; no mammal friendship or grooming system is applied. |
+
+Familiarity grows through calm, visible proximity, with at most four saved contacts. Shared breeds can become familiar within a species; pets with different owners cannot. Contact requires reciprocal familiarity: roughly four minutes nearby, or eight for cats, in loaded game time. These are gameplay thresholds, not biological bonding times. Contacts expire after seven game days without encounters; newcomers do not immediately displace recently seen companions. The recipient remains free to leave, and social contact ends if it moves away. Familiarity never claims to guarantee compatibility or remove existing aggression.
+
+Facility searches stay within five blocks horizontally and try at most four paths per attempt. Furniture must be reachable and unoccupied; tower tops need a climbable route such as nearby steps. There is no teleportation into furniture, block destruction, digging of new tunnels, or generation of food. Injury, combat, hunger, thirst, sleep, nursing, leads and player commands interrupt these optional activities. Jade shows each active behavior.
+
+This update adds procedure-driven poses to existing models. Both loader builds compile; pathfinding, furniture alignment and social contact still need in-game observation.
+
+Behavior references:
+- [Cattle social licking](https://www.merckvetmanual.com/behavior/behavior-of-production-animals/behavior-of-cattle)
+- [Horse grooming and grazing partners](https://www.merckvetmanual.com/horse-owners/behavior-of-horses/behavior-problems-in-horses)
+- [Cat scratching and enrichment](https://www.rspca.org.uk/adviceandwelfare/pets/cats/behaviour)
+- [Rabbit companionship](https://www.rspca.org.uk/adviceandwelfare/pets/rabbits/company)
+- [Pig rooting and social behavior](https://www.merckvetmanual.com/behavior/behavior-of-production-animals/behavior-of-swine)
+- [Ferret cover and tunnels](https://www.rspca.org.uk/adviceandwelfare/pets/ferrets/environment)
+
+
+## Beekeeping and defensive swarms
+
+Occupied Animania hives and wild hives can release a defensive swarm. Harvesting honey by hand gives a warning (three seconds by default); retreating more than six blocks during that warning ends it. Breaking the hive skips the warning. A brief emergence precedes pursuit. The swarm follows the responsible player for at most 20 seconds and within 16 blocks of its home. It does not select nearby bystanders or livestock. Animal retaliation is optional and only applies to an animal that directly attacks the swarm.
+
+The swarm temporarily holds the hive's saved adult residents. Juveniles and bees that have already stung do not join. There is only one swarm entity per colony; small bees in its renderer are a visual representation of colony strength, not independently spawned mobs. The hive reserves space for returning residents. A destroyed or replaced hive causes the residents to disperse as ordinary bees. Smoke, retreat, submersion or expiry ends pursuit. Saved swarm and colony records retain ownership across normal unloads; an expired reservation can free capacity without copying the bees.
+
+Craft a bee smoker from iron, charcoal and leather. Right-click a hive or aim smoke at a swarm. The smoker starts with eight puffs and consumes one charcoal from your inventory when refilled. Smoke lasts 30 seconds by default and does not pass through walls. Campfire smoke also suppresses hive defense. Automation has no responsible player and does not provoke a swarm. Fire and non-player destruction evacuate residents without selecting an arbitrary player to attack.
+
+A beekeeper veil reduces swarm damage by 40%; the jacket, trousers and boots each reduce it by 20%. A full intact set blocks swarm stings, but each attempt wears the clothing. Leather repairs it. This is swarm-specific protection, not immunity to all bee mobs or other attacks. The item sprites are 16×16; worn clothing uses the standard 64×32 armor UV layout.
+
+Jade displays smoke and residents away on defense. The in-game manual includes instructions and refreshes older copies when opened. Settings are in the common configuration's `beekeeping` section: defense, warning/pursuit/smoke duration, pursuit radius, damage, clothing protection, animal retaliation and per-breed defensiveness. Amber, dark and pale are coat-based game breeds, so all use neutral default temperament; color alone is not treated as evidence of a real subspecies' aggression. The former random proximity damage from wild hives has been removed.
+
+Smoke and protective equipment are inspired by ordinary beekeeping practice; durations, damage and clothing percentages are gameplay values. References: [University of Minnesota Bee Lab](https://beelab.umn.edu/videos), [NC State: honey bee stocks](https://content.ces.ncsu.edu/the-different-types-of-honey-bees). The swarm feature was suggested by players familiar with [Angry Bees](https://www.curseforge.com/minecraft/mc-mods/angry-bees); no code or assets from that mod are included.
+
+## Pet merchants and village stalls
+
+Villages in plains, savanna, desert, taiga and snowy biomes can contain a pet stall: an open-front counter with a wool awning, a pet bowl behind it and a pet merchant at the counter. The stall occupies a village house slot, so not every village has one.
+
+The merchant sells Animania kittens and puppies. Its stock is drawn the first time you open the trade screen and then follows ordinary villager rules: a fresh merchant shows two offers, and trading with it, or letting it work at its own bowl, raises its level and unlocks the rest. Vanilla villagers keep their profession when their workstation is removed, so breaking the pet bowl costs the merchant its job site but not its trades.
+
+Handing a tamed pet to another player is not supported yet. A pet records the owner it was tamed by, and that record is what makes it refuse food and breeding interaction from everyone else, so feeding a cat to a friend's account would leave it tame but unusable for them. A real handover needs an explicit confirmation step and an ownership rewrite, and is planned for a later update rather than this one.
+## Pet contracts
+
+A pet contract lets you give a tamed pet to somebody else. Craft one from two paper, a leather and an ink sac.
+
+- Right-click a tamed pet you own to record it. The pet disappears into the contract and the item shows its name.
+- Right-click a block (or use the item) to release it. The pet reappears at that spot and belongs to whoever
+  released it, so handing the filled contract to another player transfers the animal.
+- Only the owner can record a pet, a contract holds one pet at a time, and the contract is used up on release.
+- Health, hunger, gender and pedigree travel with the pet; it arrives sitting-down-free and is set to stay put
+  until it is told otherwise. Breeding and production state are kept, so a recorded cow is still the same cow.
+
+Pets from the original mod could only ever belong to the player who tamed them; there was no leash, crate or
+hand-over interaction, so this is an addition rather than a restoration.
