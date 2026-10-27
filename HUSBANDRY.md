@@ -132,17 +132,15 @@ Villages in plains, savanna, desert, taiga and snowy biomes can contain a pet st
 
 The merchant sells Animania kittens and puppies. Its stock is drawn the first time you open the trade screen and then follows ordinary villager rules: a fresh merchant shows two offers, and trading with it, or letting it work at its own bowl, raises its level and unlocks the rest. Vanilla villagers keep their profession when their workstation is removed, so breaking the pet bowl costs the merchant its job site but not its trades.
 
-Handing a tamed pet to another player is not supported yet. A pet records the owner it was tamed by, and that record is what makes it refuse food and breeding interaction from everyone else, so feeding a cat to a friend's account would leave it tame but unusable for them. A real handover needs an explicit confirmation step and an ownership rewrite, and is planned for a later update rather than this one.
+Handing a tamed pet to another player works through the pet contract described below. A pet records the owner it was tamed by, and that record is what makes it refuse food and breeding interaction from everyone else, so the contract rewrites the owner instead: the player who releases the pet becomes its owner.
+
 ## Pet contracts
 
 A pet contract lets you give a tamed pet to somebody else. Craft one from two paper, a leather and an ink sac.
 
 - Right-click a tamed pet you own to record it. The pet disappears into the contract and the item shows its name.
-- Right-click a block (or use the item) to release it. The pet reappears at that spot and belongs to whoever
-  released it, so handing the filled contract to another player transfers the animal.
+- Right-click a block (or use the item) to release it. The pet reappears at that spot and belongs to whoever released it, so handing the filled contract to another player transfers the animal.
 - Only the owner can record a pet, a contract holds one pet at a time, and the contract is used up on release.
-- Health, hunger, gender and pedigree travel with the pet; it arrives sitting-down-free and is set to stay put
-  until it is told otherwise. Breeding and production state are kept, so a recorded cow is still the same cow.
+- Health, hunger, gender and pedigree travel with the pet. It arrives standing, not sitting, and keeps its breeding and production state, so a recorded cow is still the same cow.
 
-Pets from the original mod could only ever belong to the player who tamed them; there was no leash, crate or
-hand-over interaction, so this is an addition rather than a restoration.
+Pets from the original mod could only ever belong to the player who tamed them: there was no leash, crate or hand-over interaction, so this is an addition rather than a restoration.
