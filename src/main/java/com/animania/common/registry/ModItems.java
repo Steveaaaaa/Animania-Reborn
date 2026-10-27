@@ -20,6 +20,7 @@ import com.animania.common.item.AnimaniaSpawnEggItem;
 import com.animania.common.item.BonusFoodItem;
 import com.animania.common.item.CarvingKnifeItem;
 import com.animania.common.item.ContainerFoodItem;
+import com.animania.common.item.PetContractItem;
 import com.animania.common.item.RandomAnimalEggItem;
 import com.animania.farm.item.RidingCropItem;
 import com.animania.farm.item.BrownEggItem;
@@ -38,6 +39,13 @@ import java.util.LinkedHashMap;
 
 public final class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(net.minecraftforge.registries.ForgeRegistries.ITEMS, Animania.MOD_ID);
+
+    public static final RegistryObject<Item> BEE_SMOKER = ITEMS.register("bee_smoker", com.animania.modern.BeeSmokerItem::new);
+    public static final RegistryObject<Item> PET_CONTRACT = ITEMS.register("pet_contract", () -> new PetContractItem(new Item.Properties()));
+    public static final RegistryObject<Item> BEEKEEPER_VEIL = ITEMS.register("beekeeper_veil", () -> new com.animania.modern.BeekeeperArmorItem(net.minecraft.world.item.ArmorItem.Type.HELMET));
+    public static final RegistryObject<Item> BEEKEEPER_JACKET = ITEMS.register("beekeeper_jacket", () -> new com.animania.modern.BeekeeperArmorItem(net.minecraft.world.item.ArmorItem.Type.CHESTPLATE));
+    public static final RegistryObject<Item> BEEKEEPER_TROUSERS = ITEMS.register("beekeeper_trousers", () -> new com.animania.modern.BeekeeperArmorItem(net.minecraft.world.item.ArmorItem.Type.LEGGINGS));
+    public static final RegistryObject<Item> BEEKEEPER_BOOTS = ITEMS.register("beekeeper_boots", () -> new com.animania.modern.BeekeeperArmorItem(net.minecraft.world.item.ArmorItem.Type.BOOTS));
 
     public static final RegistryObject<BlockItem> TROUGH = ITEMS.register(
             "trough",
