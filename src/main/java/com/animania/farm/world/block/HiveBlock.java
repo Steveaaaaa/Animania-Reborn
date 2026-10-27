@@ -53,6 +53,12 @@ public final class HiveBlock extends BaseEntityBlock {
         super.onRemove(state, level, pos, replacement, moving);
     }
 
+    @Override
+    public BlockState playerWillDestroy(net.minecraft.world.level.Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof HiveBlockEntity hive) hive.colony().disturb(player, true);
+        return super.playerWillDestroy(level, pos, state, player);
+    }
+
     public boolean isWild() {
         return wild;
     }
@@ -90,10 +96,12 @@ public final class HiveBlock extends BaseEntityBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, net.minecraft.world.level.Level level,
                                                BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (stack.getItem() instanceof com.animania.modern.BeeSmokerItem) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         if (!(level.getBlockEntity(pos) instanceof HiveBlockEntity hive)) return ItemInteractionResult.FAIL;
         if (stack.is(Items.GLASS_BOTTLE)) {
             if (hive.honeyAmount() < 1000) return ItemInteractionResult.FAIL;
             if (!level.isClientSide()) {
+                hive.colony().disturb(player, false);
                 hive.tank().drain(1000, IFluidHandler.FluidAction.EXECUTE);
                 ItemStack filled = new ItemStack(ModItems.HONEY_BOTTLE.get());
                 if (!player.hasInfiniteMaterials()) {
@@ -106,9 +114,11 @@ public final class HiveBlock extends BaseEntityBlock {
             return ItemInteractionResult.sidedSuccess(level.isClientSide());
         }
         if (FluidUtil.getFluidHandler(stack).isPresent()) {
+            int before = hive.honeyAmount();
             if (!level.isClientSide() && !FluidUtil.interactWithFluidHandler(player, hand, hive.tank())) {
                 return ItemInteractionResult.FAIL;
             }
+            if (!level.isClientSide() && hive.honeyAmount() < before) hive.colony().disturb(player, false);
             return ItemInteractionResult.sidedSuccess(level.isClientSide());
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
@@ -117,6 +127,8 @@ public final class HiveBlock extends BaseEntityBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
                                                 Player player, BlockHitResult hit) {
+        if (player.getMainHandItem().getItem() instanceof com.animania.modern.BeeSmokerItem
+                || player.getOffhandItem().getItem() instanceof com.animania.modern.BeeSmokerItem) return InteractionResult.PASS;
         if (!level.isClientSide() && level.getBlockEntity(pos) instanceof HiveBlockEntity hive) {
             player.displayClientMessage(Component.translatable("message.animania.hive_status",
                     hive.honeyAmount(), HiveBlockEntity.CAPACITY, hive.nextHoney())

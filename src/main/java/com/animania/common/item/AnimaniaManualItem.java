@@ -19,8 +19,7 @@ public final class AnimaniaManualItem extends WrittenBookItem {
     public net.minecraft.world.InteractionResultHolder<ItemStack> use(net.minecraft.world.level.Level level,
             net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!stack.has(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT))
-            stack.set(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT,
+        stack.set(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT,
                     getDefaultInstance().get(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT));
         if (level.isClientSide()) com.animania.client.ManualScreen.open(stack);
         return net.minecraft.world.InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
@@ -32,7 +31,7 @@ public final class AnimaniaManualItem extends WrittenBookItem {
         List<Filterable<Component>> pages = List.of(
                 page("manual.animania.page.welcome"), page("manual.animania.page.needs"),
                 page("manual.animania.page.farm"), page("manual.animania.page.dairy"),
-                page("manual.animania.page.hives"), page("manual.animania.page.extra"),
+                page("manual.animania.page.hives"), page("manual.animania.page.beekeeping"), page("manual.animania.page.smoker"), page("manual.animania.page.bee_protection"), page("manual.animania.page.extra"),
                 page("manual.animania.page.pets"), page("manual.animania.page.vehicles"));
         stack.set(DataComponents.WRITTEN_BOOK_CONTENT, new WrittenBookContent(
                 Filterable.passThrough("Animania Manual"), "Animania", 0, pages, true));

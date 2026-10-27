@@ -177,20 +177,8 @@ public final class LegacyAnimalModel<T extends Entity> extends EntityModel<T> {
         FarmActivityAnimation.apply(entity, key, parts, rootNames, partialTick);
         FamilyBehaviorAnimation.apply(entity, key, parts, rootNames, partialTick);
         restorePetRotationOrder();
+        LivestockHornAppearance.apply(entity, parts);
         if (entity instanceof com.animania.farm.livestock.AnimaniaSheep sheep && sheep.breed().isEarthBreed()) {
-            if (sheep.breed() == com.animania.farm.livestock.SheepBreed.LONG_NOSED) {
-                for (var entry : parts.entrySet()) {
-                    if (!entry.getKey().contains("Horn")) continue;
-                    ModelPart horn = entry.getValue();
-                    horn.visible = sheep.role() != com.animania.farm.livestock.FarmAnimalRole.YOUNG;
-                    float size = sheep.role() == com.animania.farm.livestock.FarmAnimalRole.FEMALE ? 0.8F : 1;
-                    horn.xScale = horn.yScale = horn.zScale = size;
-                    float anchorX = entry.getKey().startsWith("Left") ? 1 : -1;
-                    horn.x = anchorX + (horn.x - anchorX) * size;
-                    horn.y = -6.155134F + (horn.y + 6.155134F) * size;
-                    horn.z = -10.29287F + (horn.z + 10.29287F) * size;
-                }
-            }
             for (String name : woolParts) {
                 ModelPart part = parts.get(name);
                 if (part != null) part.visible = !sheep.isSheared();

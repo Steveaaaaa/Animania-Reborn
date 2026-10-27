@@ -50,6 +50,10 @@ public final class ModEntities {
                     com.animania.farm.chicken.BlueEggProjectile::new, MobCategory.MISC)
                     .sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build("blue_egg"));
 
+    public static final DeferredHolder<EntityType<?>, EntityType<com.animania.modern.DefensiveBeeSwarm>> DEFENSIVE_SWARM = ENTITY_TYPES.register("defensive_bee_swarm",
+            () -> EntityType.Builder.<com.animania.modern.DefensiveBeeSwarm>of(com.animania.modern.DefensiveBeeSwarm::new, MobCategory.MISC)
+                    .sized(.7F, .6F).clientTrackingRange(8).updateInterval(3).build("defensive_bee_swarm"));
+
     private static final Map<ChickenRole, Map<ChickenBreed, DeferredHolder<EntityType<?>, EntityType<AnimaniaChicken>>>> CHICKENS =
             new EnumMap<>(ChickenRole.class);
     public static final Map<String, DeferredHolder<EntityType<?>, EntityType<AnimaniaChicken>>> ALL_CHICKENS =

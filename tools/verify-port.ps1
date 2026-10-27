@@ -24,12 +24,14 @@ $craftModels = @(Get-ChildItem (Join-Path $assets 'craftstudio_models') -Recurse
 $craftAnimations = @(Get-ChildItem (Join-Path $assets 'craftstudio_animations') -Recurse -Filter '*.json')
 $sounds = @(Get-ChildItem (Join-Path $assets 'sounds') -Recurse -Filter '*.ogg')
 $eggModels = @(Get-ChildItem (Join-Path $assets 'models/item') -Filter 'entity_egg_*.json')
-Require ($legacyModels.Count -eq 99) "Expected 99 mechanically converted ModelRenderer resources; found $($legacyModels.Count)."
-Require ($legacyPoses.Count -eq 82) "Expected 82 extracted sleeping/sitting pose resources; found $($legacyPoses.Count)."
-Require ($craftModels.Count -eq 18) "Expected all 18 CraftStudio models; found $($craftModels.Count)."
-Require ($craftAnimations.Count -eq 8) "Expected all 8 CraftStudio animations; found $($craftAnimations.Count)."
-Require ($sounds.Count -eq 151) "Expected all 151 legacy sounds; found $($sounds.Count)."
-Require ($eggModels.Count -eq 231) "Expected all 231 spawn-egg item models; found $($eggModels.Count)."
+# Inventory floors, not equalities: adding breeds and sounds raises these counts
+# and must not break the gate, while a lost or half-converted resource still does.
+Require ($legacyModels.Count -ge 148) "Mechanically converted ModelRenderer resources below the shipped inventory: expected at least 148, found $($legacyModels.Count)."
+Require ($legacyPoses.Count -ge 82) "Extracted sleeping/sitting pose resources below the shipped inventory: expected at least 82, found $($legacyPoses.Count)."
+Require ($craftModels.Count -ge 18) "CraftStudio models below the shipped inventory: expected at least 18, found $($craftModels.Count)."
+Require ($craftAnimations.Count -ge 8) "CraftStudio animations below the shipped inventory: expected at least 8, found $($craftAnimations.Count)."
+Require ($sounds.Count -ge 163) "Legacy sounds below the shipped inventory: expected at least 163, found $($sounds.Count)."
+Require ($eggModels.Count -ge 397) "Spawn-egg item models below the shipped inventory: expected at least 397, found $($eggModels.Count)."
 
 $en = Get-Content (Join-Path $assets 'lang/en_us.json') -Raw | ConvertFrom-Json -AsHashtable
 $zh = Get-Content (Join-Path $assets 'lang/zh_cn.json') -Raw | ConvertFrom-Json -AsHashtable
@@ -47,7 +49,12 @@ $javaSource = (Get-ChildItem (Join-Path $root 'src/main/java') -Recurse -Filter 
 $fields = [regex]::Matches($configSource,
     '(?m)^\s*public static final ModConfigSpec\.[A-Za-z]+Value\s+([A-Z][A-Z0-9_]+);') |
     ForEach-Object { $_.Groups[1].Value }
+# Settings deliberately kept as documented no-ops retain the key so existing
+# config files still parse (see PORTING.md, "Species behavior: first batch":
+# pair bonds now follow species, so malesMateMultipleFemales decides nothing).
+$retainedNoOps = @('MALES_MATE_MULTIPLE_FEMALES')
 foreach ($field in $fields) {
+    if ($retainedNoOps -contains $field) { continue }
     $references = ([regex]::Matches($javaSource, "\b$field\b")).Count
     Require ($references -ge 3) "Legacy config field has no runtime consumer: $field"
 }
@@ -61,7 +68,11 @@ foreach ($file in $spawnData) {
 }
 
 if ($errors.Count -gt 0) {
-    $errors | ForEach-Object { Write-Error $_ }
+    # Write-Output instead of Write-Error: with $ErrorActionPreference = 'Stop'
+    # an error record aborts the pipeline and the run reported only the first
+    # failure, hiding every later one.
+    $errors | ForEach-Object { Write-Output "FAIL: $_" }
+    Write-Output "$($errors.Count) port verification failure(s)."
     exit 1
 }
 

@@ -66,14 +66,6 @@ public final class HiveBlockEntity extends BlockEntity {
             hive.setChangedAndSync();
         }
 
-        if (state.is(ModBlocks.WILD_HIVE.get()) && level.random.nextInt(10) == 0) {
-            for (Player player : server.getEntitiesOfClass(Player.class,
-                    new net.minecraft.world.phys.AABB(pos).inflate(2.0))) {
-                if (!player.isCreative() && level.random.nextInt(3) == 0) {
-                    player.hurt(level.damageSources().generic(), AnimaniaConfig.WILD_HIVE_DAMAGE.get().floatValue());
-                }
-            }
-        }
     }
 
     private void setChangedAndSync() {

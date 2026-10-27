@@ -53,6 +53,8 @@ public final class MountainGoatRenderer extends GoatRenderer {
             rightFrontLeg.xRot = net.minecraft.util.Mth.lerp(blend, rightFrontLeg.xRot, 1.5708F);
             leftHindLeg.xRot = net.minecraft.util.Mth.lerp(blend, leftHindLeg.xRot, -1.5708F);
             rightHindLeg.xRot = net.minecraft.util.Mth.lerp(blend, rightHindLeg.xRot, -1.5708F);
+            if (goat.getData(com.animania.common.registry.ModAttachments.FARM_ACTIVITY) == com.animania.common.entity.ai.FarmActivityGoal.SOCIAL_REST)
+                head.xRot += .06F * FarmActivityAnimation.blend(goat, age - goat.tickCount);
             FamilyBehaviorAnimation.applyNative(goat, root, age - goat.tickCount);
         }
     }

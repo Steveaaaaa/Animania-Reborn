@@ -60,6 +60,7 @@ public final class AnimalNeedsHandler {
         Entity entity = event.getEntity();
         if (!(entity instanceof Animal animal) || animal.level().isClientSide()) return;
         com.animania.common.entity.HusbandryMood.tick(animal);
+        com.animania.common.entity.AnimalSocialMemory.tick(animal);
         if (LegacyAnimalNeeds.profile(animal) == null) return;
         if (animal instanceof com.animania.modern.ModernAxolotl axolotl) { axolotl.tickCare(); return; }
         if (animal instanceof com.animania.modern.ModernFox fox) animal.setData(ModAttachments.SLEEPING, fox.isSleeping());

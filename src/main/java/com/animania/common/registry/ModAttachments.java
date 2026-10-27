@@ -16,6 +16,9 @@ public final class ModAttachments {
     private static final DeferredRegister<AttachmentType<?>> ATTACHMENTS =
             DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, Animania.MOD_ID);
 
+    public static final Supplier<AttachmentType<String>> SOCIAL_CONTACTS = ATTACHMENTS.register("social_contacts",
+            () -> AttachmentType.builder(() -> "").serialize(Codec.STRING).build());
+
     public static final Supplier<AttachmentType<Integer>> MOOD_ENROLLED = ATTACHMENTS.register("mood_enrolled",
             () -> AttachmentType.builder(() -> 0).serialize(Codec.INT).build());
     public static final Supplier<AttachmentType<Integer>> CARE_LEASE = ATTACHMENTS.register("care_lease",

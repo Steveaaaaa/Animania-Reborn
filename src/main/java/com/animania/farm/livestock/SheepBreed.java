@@ -29,6 +29,16 @@ public enum SheepBreed implements StringRepresentable {
         return id;
     }
 
+    /** Dorset represents Dorset Horn; Merino represents the horned-ram line. */
+    public boolean hasAdultHorns(FarmAnimalRole role) {
+        if (role == FarmAnimalRole.YOUNG) return false;
+        return switch (this) {
+            case DORSET, JACOB, LONG_NOSED -> true;
+            case MERINO -> role == FarmAnimalRole.MALE;
+            case DORPER, FRIESIAN, SUFFOLK, FLECKED, FUZZY, INKY, PATCHED, ROCKY -> false;
+        };
+    }
+
     public boolean isEarthBreed() {
         return switch (this) {
             case FLECKED, FUZZY, INKY, LONG_NOSED, PATCHED, ROCKY -> true;
