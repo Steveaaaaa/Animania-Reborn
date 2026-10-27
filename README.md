@@ -6,7 +6,7 @@ Since 1.0.0, Reborn has expanded beyond a direct port, combining the original mo
 
 ## Installation
 
-Current release: **1.0.1**. This branch targets **Minecraft 1.21.1**, **NeoForge 21.1.200+** and **Java 21**.
+Current release: **1.1.0**. This branch targets **Minecraft 1.21.1**, **NeoForge 21.1.200+** and **Java 21**.
 
 Put the matching JAR in your instance's `mods` folder and remove the previous Animania Reborn JAR.
 
@@ -20,6 +20,9 @@ Put the matching JAR in your instance's `mods` folder and remove the previous An
 - Animania-style foxes, mountain goats, bees and axolotls.
 - Troughs, nests, beehives, cheese making, pet furniture and animal-drawn vehicles.
 - Additional coats, patterned wool and beds, and breed-specific dairy products.
+- Beekeeping: smoke a hive, harvest and wear beekeeper's armour, and calm the swarms a threatened hive sends out.
+- Pet merchants: generated village pet stalls where a merchant sells cat and dog eggs by breed, sex and age.
+- Pet contracts: capture one of your own tamed pets on paper and hand it to another player, who becomes its owner.
 - English and Simplified Chinese translations.
 
 ## Compatibility
