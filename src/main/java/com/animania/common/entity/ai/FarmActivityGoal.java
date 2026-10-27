@@ -13,7 +13,7 @@ import java.util.EnumSet;
 
 /** Finite daytime activities; movement and looking belong to one goal throughout each action. */
 public final class FarmActivityGoal extends LegacySearchBlockGoal {
-    public static final int FORAGE = 1, DUST_BATH = 2, RUMINATE = 3, WALLOW = 4, STANDING_REST = 5, ALERT = 6, BROWSE = 7, EXPLORE = 8, SPAR = 9, GROOM = 10, PET_EXPLORE = 11, SNIFF = 12, GREET = 13, PET_REST = 14, SMALL_EXPLORE = 15, SHELTER = 16, SCRATCH = 17, PREEN = 18, FAMILY_REGROUP = 19, AQUATIC_REST = 20, SHORE_REST = 21;
+    public static final int FORAGE = 1, DUST_BATH = 2, RUMINATE = 3, WALLOW = 4, STANDING_REST = 5, ALERT = 6, BROWSE = 7, EXPLORE = 8, SPAR = 9, GROOM = 10, PET_EXPLORE = 11, SNIFF = 12, GREET = 13, PET_REST = 14, SMALL_EXPLORE = 15, SHELTER = 16, SCRATCH = 17, PREEN = 18, FAMILY_REGROUP = 19, AQUATIC_REST = 20, SHORE_REST = 21, POST_SCRATCH = 22, RUB = 23, ROOT = 24, SOCIAL_GROOM = 25, SOCIAL_SNIFF = 26, SOCIAL_REST = 27;
     private final Animal subject;
     private final int activity;
     private int nextAttempt, remaining, travelTicks;
@@ -28,7 +28,9 @@ public final class FarmActivityGoal extends LegacySearchBlockGoal {
     }
 
     public static int duration(int activity) {
-        return switch (activity) { case DUST_BATH -> 160; case RUMINATE -> 400; case WALLOW -> 220; case STANDING_REST -> 300; case EXPLORE -> 180; case SPAR -> 120; case GROOM -> 120; case PET_EXPLORE -> 80; case SNIFF -> 100; case GREET -> 100; case PET_REST -> 300; case SMALL_EXPLORE -> 100; case SHELTER -> 200; case SCRATCH -> 100; case PREEN -> 140; case FAMILY_REGROUP -> 200; case AQUATIC_REST -> 200; case SHORE_REST -> 200; default -> 100; };
+        return switch (activity) {
+            case POST_SCRATCH, RUB, ROOT -> 120;
+            case SOCIAL_GROOM, SOCIAL_SNIFF, SOCIAL_REST -> 140; case DUST_BATH -> 160; case RUMINATE -> 400; case WALLOW -> 220; case STANDING_REST -> 300; case EXPLORE -> 180; case SPAR -> 120; case GROOM -> 120; case PET_EXPLORE -> 80; case SNIFF -> 100; case GREET -> 100; case PET_REST -> 300; case SMALL_EXPLORE -> 100; case SHELTER -> 200; case SCRATCH -> 100; case PREEN -> 140; case FAMILY_REGROUP -> 200; case AQUATIC_REST -> 200; case SHORE_REST -> 200; default -> 100; };
     }
 
     private boolean available() {

@@ -27,6 +27,7 @@ public final class ModAttachments {
     private static <T> Key<T> key(String id, T initial, boolean persistent, boolean sync) {
         Key<T> key = new Key<>(id, initial, persistent, sync); KEYS.add(key); return key;
     }
+    public static final Key<String> SOCIAL_CONTACTS = key("social_contacts", "", true, false);
     public static final Key<String> NURSING_ID = key("nursing_id", "", true, false);
     public static final Key<String> NURSING_YOUNG = key("nursing_young", "", true, false);
     public static final Key<Integer> RECOVERY = key("recovery", 0, true, false);

@@ -32,6 +32,7 @@ public final class ModEntityEvents {
 
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
+        event.put(ModEntities.DEFENSIVE_SWARM.get(), net.minecraft.world.entity.animal.Bee.createAttributes().build());
         ModEntities.AXOLOTL_BREEDS.values().forEach(type -> event.put(type.get(),
                 net.minecraft.world.entity.animal.axolotl.Axolotl.createAttributes().build()));
         ModEntities.BEE_BREEDS.values().forEach(type ->

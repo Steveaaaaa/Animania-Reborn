@@ -287,5 +287,9 @@ public final class LegacyGoalRegistration {
             }
         }
 
+        HusbandryFacilityGoal.install(animal);
+        if (com.animania.common.entity.AnimalSocialMemory.supported(animal))
+            animal.goalSelector.addGoal(9, new AnimalSocialGoal(animal));
+
     }
 }

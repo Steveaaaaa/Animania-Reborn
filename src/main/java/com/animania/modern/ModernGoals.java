@@ -25,6 +25,7 @@ public final class ModernGoals {
             add(animal, 7, new LegacyGrazeGoal(animal));
             add(animal, 9, new FarmActivityGoal(animal, FarmActivityGoal.RUMINATE));
             add(animal, 10, new FarmHerdGoal(animal));
+            add(animal, 10, new AnimalSocialGoal(animal));
             add(animal, 11, new GoatExploreGoal(animal));
             add(animal, 12, new LegacyFindSaltLickGoal(animal, animal));
             add(animal, 13, new LegacySleepGoal(animal, animal));

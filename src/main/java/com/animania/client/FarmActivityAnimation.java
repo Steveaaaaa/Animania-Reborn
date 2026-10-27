@@ -23,7 +23,55 @@ final class FarmActivityAnimation {
         int activity = ModAttachments.getData(entity, ModAttachments.FARM_ACTIVITY);
         if (activity == 0 || ModAttachments.getData(entity, ModAttachments.SLEEPING)) return;
         float time = elapsed(entity, partial), blend = blend(entity, partial);
-        if (activity == FarmActivityGoal.PREEN) {
+        if (activity == FarmActivityGoal.POST_SCRATCH) {
+            for (String name : new String[]{"leg_l1", "leg_r1"}) {
+                ModelPart upper = parts.get(name);
+                if (upper == null) continue;
+                float stroke = Mth.sin(time * .22F + (name.equals("leg_l1") ? 0 : Mth.PI));
+                upper.xRot = Mth.lerp(blend, upper.xRot, -.9F + .16F * stroke);
+                String lowerName = name.equals("leg_l1") ? "leg_l2" : "leg_r2";
+                if (upper.hasChild(lowerName)) {
+                    ModelPart lower = upper.getChild(lowerName);
+                    lower.xRot = Mth.lerp(blend, lower.xRot, -.45F - .2F * stroke);
+                }
+            }
+            ModelPart neck = first(parts, "neck1", "head_base");
+            if (neck != null) neck.xRot -= .12F * blend;
+        } else if (activity == FarmActivityGoal.RUB) {
+            // A small shoulder roll, not a whole-body oscillation or displaced hitbox.
+            ModelPart body = first(parts, "Body", "body", "BodyNode");
+            if (body != null) body.zRot += .035F * Mth.sin(time * .12F) * blend;
+            ModelPart head = first(parts, "HeadNode", "Head", "head");
+            if (head != null) head.zRot += .09F * Mth.sin(time * .12F) * blend;
+        } else if (activity == FarmActivityGoal.ROOT) {
+            ModelPart head = first(parts, "Head", "head", "HeadNode");
+            if (head != null) {
+                head.xRot += (.32F + .09F * Mth.sin(time * .2F)) * blend;
+                head.yRot += .09F * Mth.sin(time * .1F) * blend;
+            }
+            ModelPart snout = first(parts, "Snout", "snout", "Nose");
+            if (snout != null) snout.z += .12F * Mth.sin(time * .2F) * blend;
+        } else if (activity == FarmActivityGoal.SOCIAL_GROOM) {
+            boolean horse = entity instanceof com.animania.farm.livestock.AnimaniaHorse;
+            boolean rabbit = entity instanceof com.animania.extra.rabbit.AnimaniaRabbit;
+            ModelPart head = first(parts, "HeadNode", "Head", "head", "head_base", "Head1", "Neck1");
+            if (head != null) {
+                head.xRot += ((rabbit ? .16F : .1F) + .035F * Mth.sin(time * (horse ? .12F : .22F))) * blend;
+                head.zRot += .08F * blend;
+            }
+            ModelPart jaw = first(parts, "jaw", "LowerJaw", "Muzzle", "Snout");
+            if (jaw != null) jaw.xRot += .035F * Math.max(0, Mth.sin(time * .22F)) * blend;
+        } else if (activity == FarmActivityGoal.SOCIAL_SNIFF) {
+            ModelPart head = first(parts, "Head", "head_base", "head", "pug_head", "Head1");
+            if (head != null) head.xRot += (.1F + .025F * Mth.sin(time * .17F)) * blend;
+            if (entity instanceof com.animania.catsdogs.dog.AnimaniaDog) {
+                ModelPart tail = first(parts, "tail", "Tail");
+                if (tail != null) tail.yRot += .16F * Mth.sin(time * .22F) * blend;
+            }
+        } else if (activity == FarmActivityGoal.SOCIAL_REST) {
+            ModelPart head = first(parts, "HeadNode", "Head", "head", "Neck");
+            if (head != null) head.xRot += .06F * blend;
+        } else if (activity == FarmActivityGoal.PREEN) {
             float side = (entity.getUUID().getLeastSignificantBits() & 1L) == 0 ? 1 : -1;
             ModelPart neck = first(parts, "Neck", "Head", "head");
             if (neck != null) {

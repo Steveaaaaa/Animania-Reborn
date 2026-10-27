@@ -41,7 +41,9 @@ public final class FarmHerdGoal extends Goal {
                 other -> other != animal && other.getClass() == animal.getClass() && !other.isBaby()
                         && other.isAlive() && (!(other instanceof com.animania.modern.MountainGoat goat) || goat.isFemale())
                         && animal.hasLineOfSight(other))
-                .stream().min(Comparator.comparingDouble(animal::distanceToSqr)).orElse(null);
+                .stream().min(Comparator.<Animal>comparingInt(other -> com.animania.common.config.AnimaniaConfig.ANIMAL_SOCIAL_BEHAVIOR.get()
+                        ? -com.animania.common.entity.AnimalSocialMemory.familiarity(animal, other) : 0)
+                        .thenComparingDouble(animal::distanceToSqr)).orElse(null);
         return neighbour != null && animal.distanceToSqr(neighbour) > 64;
     }
     @Override public boolean canContinueToUse() {

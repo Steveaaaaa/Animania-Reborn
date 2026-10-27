@@ -58,6 +58,7 @@ public final class AnimalNeedsHandler {
     public static void onAnimalTick(Animal animal) {
         if (animal.level().isClientSide()) return;
         com.animania.common.entity.HusbandryMood.tick(animal);
+        com.animania.common.entity.AnimalSocialMemory.tick(animal);
         if (LegacyAnimalNeeds.profile(animal) == null) return;
         if (animal instanceof com.animania.modern.ModernAxolotl axolotl) { axolotl.tickCare(); return; }
         if (animal instanceof com.animania.modern.ModernFox fox) ModAttachments.setData(animal, ModAttachments.SLEEPING, fox.isSleeping());

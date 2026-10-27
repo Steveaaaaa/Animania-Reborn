@@ -22,7 +22,13 @@ public final class AnimaniaConfig {
     public static final ForgeConfigSpec.BooleanValue REPLACE_VANILLA_CATS;
 
     public static final ForgeConfigSpec.BooleanValue ANIMAL_MOOD, MOOD_PENALTIES;
+    public static final ForgeConfigSpec.BooleanValue FACILITY_INTERACTIONS, ANIMAL_SOCIAL_BEHAVIOR;
     public static final ForgeConfigSpec.IntValue MOOD_GRACE_TICKS;
+
+    public static final ForgeConfigSpec.BooleanValue BEE_DEFENSE, BEE_PROTECTION, BEE_ATTACK_ANIMALS;
+    public static final ForgeConfigSpec.IntValue BEE_PURSUIT_TICKS, BEE_WARNING_TICKS, BEE_SMOKE_TICKS;
+    public static final ForgeConfigSpec.DoubleValue BEE_PURSUIT_RADIUS, BEE_SWARM_DAMAGE;
+    public static final ForgeConfigSpec.DoubleValue BEE_AMBER_DEFENSE, BEE_DARK_DEFENSE, BEE_PALE_DEFENSE;
 
     public static final ForgeConfigSpec SPEC;
 
@@ -35,6 +41,8 @@ public final class AnimaniaConfig {
                 .defineListAllowEmpty("hungerBlacklist", java.util.List.<String>of(), value -> value instanceof String text && !text.isBlank());
         THIRST_BLACKLIST = BUILDER.comment("Disable thirst for the same entity IDs, wildcards or groups supported by hungerBlacklist.")
                 .defineListAllowEmpty("thirstBlacklist", java.util.List.<String>of(), value -> value instanceof String text && !text.isBlank());
+        FACILITY_INTERACTIONS = BUILDER.comment("Use species-specific furniture and enrichment surfaces during quiet periods.").define("facilityInteractions", true);
+        ANIMAL_SOCIAL_BEHAVIOR = BUILDER.comment("Remember familiar companions and allow species-specific social contact. Does not create mating bonds.").define("animalSocialBehavior", true);
         ANIMAL_MOOD = BUILDER.comment("Species-specific mood for player-fed, tamed or penned animals. Wild animals are unaffected.")
                 .define("animalMood", true);
         MOOD_PENALTIES = BUILDER.comment("Apply reduced production and breeding readiness when husbandry mood is low.")
@@ -49,7 +57,7 @@ public final class AnimaniaConfig {
                 .push("farm");
         HIVE_HONEY_PER_CYCLE = BUILDER.comment("Honey produced per successful cycle, in millibuckets.")
                 .defineInRange("hiveHoneyPerCycle", 25, 1, 1000);
-        WILD_HIVE_DAMAGE = BUILDER.comment("Damage dealt by a disturbed wild hive.")
+        WILD_HIVE_DAMAGE = BUILDER.comment("Legacy setting retained for old configurations; defensive swarms now use beekeeping.swarmDamage.")
                 .defineInRange("wildHiveDamage", 2.5D, 0.0D, 100.0D);
         BUILDER.pop();
 
@@ -71,6 +79,19 @@ public final class AnimaniaConfig {
                 .define("replaceModernFoxes", true);
         REPLACE_MOUNTAIN_GOATS = BUILDER.comment("Replace newly spawned mountain goats with cared-for mountain goats.")
                 .define("replaceMountainGoats", true);
+        BUILDER.pop();
+        BUILDER.push("beekeeping");
+        BEE_DEFENSE = BUILDER.comment("Occupied Animania hives defend against harvesting and breaking. Empty hives never create bees.").define("defensiveSwarms", true);
+        BEE_PROTECTION = BUILDER.comment("Beekeeper clothing reduces swarm damage; a complete intact suit prevents stings but wears down.").define("protectiveClothing", true);
+        BEE_ATTACK_ANIMALS = BUILDER.comment("Allow a swarm to retaliate against an animal that directly attacks it. Bystanders are never targets.").define("retaliateAgainstAnimals", false);
+        BEE_PURSUIT_TICKS = BUILDER.defineInRange("pursuitTicks", 400, 20, 2400);
+        BEE_WARNING_TICKS = BUILDER.defineInRange("harvestWarningTicks", 60, 20, 400);
+        BEE_SMOKE_TICKS = BUILDER.defineInRange("smokeTicks", 600, 20, 2400);
+        BEE_PURSUIT_RADIUS = BUILDER.defineInRange("pursuitRadius", 16.0, 4.0, 48.0);
+        BEE_SWARM_DAMAGE = BUILDER.comment("Damage per sting attempt, at most once per second, independent of the number of rendered bees.").defineInRange("swarmDamage", 2.0, 0.0, 20.0);
+        BEE_AMBER_DEFENSE = BUILDER.comment("Gameplay temperament multipliers; coat colors are not real bee subspecies. Higher values shorten warning time. All breeds use the same neutral default.").defineInRange("amberDefensiveness", 1.0, 0.25, 4.0);
+        BEE_DARK_DEFENSE = BUILDER.defineInRange("darkDefensiveness", 1.0, 0.25, 4.0);
+        BEE_PALE_DEFENSE = BUILDER.defineInRange("paleDefensiveness", 1.0, 0.25, 4.0);
         BUILDER.pop();
         SPEC = BUILDER.build();
     }

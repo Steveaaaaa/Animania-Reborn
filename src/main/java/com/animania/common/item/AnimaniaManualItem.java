@@ -10,8 +10,10 @@ public final class AnimaniaManualItem extends WrittenBookItem {
     public net.minecraft.world.InteractionResultHolder<ItemStack> use(net.minecraft.world.level.Level level,
             net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!stack.hasTag() || !stack.getTag().contains("pages"))
-            stack.setTag(getDefaultInstance().getTag().copy());
+        stack.getOrCreateTag().put("pages", getDefaultInstance().getTag().getList("pages", 8).copy());
+        stack.getOrCreateTag().putString("title", "Animania Manual");
+        stack.getOrCreateTag().putString("author", "Animania");
+        stack.getOrCreateTag().putBoolean("resolved", true);
         if (level.isClientSide()) com.animania.client.ManualScreen.open(stack);
         return net.minecraft.world.InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
     }
@@ -22,7 +24,7 @@ public final class AnimaniaManualItem extends WrittenBookItem {
         tag.putString("title", "Animania Manual"); tag.putString("author", "Animania");
         tag.putInt("generation", 0); tag.putBoolean("resolved", true);
         ListTag pages = new ListTag();
-        for (String page : new String[]{"welcome", "needs", "farm", "dairy", "hives", "extra", "pets", "vehicles"})
+        for (String page : new String[]{"welcome", "needs", "farm", "dairy", "hives", "beekeeping", "smoker", "bee_protection", "extra", "pets", "vehicles"})
             pages.add(StringTag.valueOf(Component.Serializer.toJson(Component.translatable("manual.animania.page." + page))));
         tag.put("pages", pages); return stack;
     }

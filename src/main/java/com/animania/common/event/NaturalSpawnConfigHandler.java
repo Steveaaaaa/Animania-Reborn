@@ -114,12 +114,28 @@ public final class NaturalSpawnConfigHandler {
     }
 
 
+    private static volatile boolean warnedOffThreadChunkLoad;
+
     @SubscribeEvent
     public static void replaceNewNestBees(net.minecraftforge.event.level.ChunkEvent.Load event) {
         if (!event.isNewChunk() || !(event.getLevel() instanceof ServerLevel level)) return;
-        var chunk = event.getChunk();
+        var chunkPos = event.getChunk().getPos();
+        // Report, once, if a chunk event arrives off the server thread.  Vanilla never does
+        // that, but async chunk mods may, and every level query below (POI manager, block
+        // entities, random) is only safe from the owning thread.
+        if (!level.getServer().isSameThread() && !warnedOffThreadChunkLoad) {
+            warnedOffThreadChunkLoad = true;
+            Animania.LOGGER.warn("ChunkEvent.Load for {} was posted off the server thread ({}); "
+                    + "if you run an async chunk mod, please report this with the full log.",
+                    chunkPos, Thread.currentThread().getName());
+        }
+        // Re-resolve the chunk instead of closing over it: this task runs on the next tick, by
+        // which point an unloaded or replaced chunk would leave us rewriting a detached object
+        // while its real owner keeps the edited one.  Dropping the edit is the safe outcome.
         level.getServer().tell(new net.minecraft.server.TickTask(level.getServer().getTickCount() + 1, () -> {
             if (!AnimaniaConfig.REPLACE_VANILLA_ANIMALS.get() || !AnimaniaConfig.REPLACE_BEES.get()) return;
+            var chunk = level.getChunkSource().getChunkNow(chunkPos.x, chunkPos.z);
+            if (chunk == null) return;
             for (var pos : chunk.getBlockEntitiesPos()) {
                 if (!(chunk.getBlockEntity(pos) instanceof net.minecraft.world.level.block.entity.BeehiveBlockEntity hive)) continue;
                 var tag = hive.saveWithFullMetadata();

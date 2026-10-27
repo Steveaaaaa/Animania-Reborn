@@ -1107,6 +1107,228 @@
         }
       ],
       "parent": "HeadNode"
+    },
+    {
+      "name": "LeftHorn1",
+      "u": 80,
+      "v": 15,
+      "mirror": false,
+      "pivot": [
+        1,
+        -6.155132999999999,
+        -10.292870000000002
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.08560019,
+        -0.5243015,
+        -0.8645296
+      ],
+      "boxes": [
+        {
+          "from": [
+            0,
+            -1,
+            -1
+          ],
+          "size": [
+            5,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "RightHorn1",
+      "u": 80,
+      "v": 15,
+      "mirror": false,
+      "pivot": [
+        -1,
+        -6.155135,
+        -10.292870000000002
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.08560022,
+        0.5243015,
+        0.8645297
+      ],
+      "boxes": [
+        {
+          "from": [
+            -5,
+            -1,
+            -1
+          ],
+          "size": [
+            5,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "LeftHorn2",
+      "u": 80,
+      "v": 15,
+      "mirror": false,
+      "pivot": [
+        3.341148,
+        -9.424429,
+        -8.17394
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.05121709,
+        -0.9075357,
+        0.06658725
+      ],
+      "boxes": [
+        {
+          "from": [
+            0,
+            -1,
+            -1
+          ],
+          "size": [
+            6,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "LeftHorn3",
+      "u": 80,
+      "v": 15,
+      "mirror": false,
+      "pivot": [
+        5.5257320000000005,
+        -10.504580999999998,
+        -4.13134
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2553108,
+        0.15,
+        1.064569
+      ],
+      "boxes": [
+        {
+          "from": [
+            1,
+            -1,
+            -1
+          ],
+          "size": [
+            6,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "RightHorn2",
+      "u": 80,
+      "v": 15,
+      "mirror": false,
+      "pivot": [
+        -3.341148,
+        -9.424431,
+        -8.17394
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0.05121716,
+        0.9075359,
+        -0.06658728
+      ],
+      "boxes": [
+        {
+          "from": [
+            -6,
+            -1,
+            -1
+          ],
+          "size": [
+            6,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
+    },
+    {
+      "name": "RightHorn3",
+      "u": 80,
+      "v": 15,
+      "mirror": false,
+      "pivot": [
+        -5.5257320000000005,
+        -10.504583,
+        -4.13134
+      ],
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        -0.2553108,
+        -0.15,
+        -1.064569
+      ],
+      "boxes": [
+        {
+          "from": [
+            -7,
+            -1,
+            -1
+          ],
+          "size": [
+            6,
+            2,
+            2
+          ],
+          "deformation": 0
+        }
+      ],
+      "parent": "HeadNode"
     }
   ],
   "audit": {

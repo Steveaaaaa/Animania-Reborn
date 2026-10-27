@@ -35,6 +35,15 @@ public enum CowBreed implements StringRepresentable {
         return id;
     }
 
+    /** Adult appearance of the represented line, not a simulation of polled genetics. */
+    public boolean hasAdultHorns() {
+        return switch (this) {
+            case ANGUS, COOKIE -> false;
+            case FRIESIAN, HEREFORD, HOLSTEIN, LONGHORN, HIGHLAND, JERSEY, SIMMENTAL,
+                    NORWEGIAN_RED, FIGHTING, MOOSHROOM, UMBRA, WOOLY, WARM, PINTO, ALBINO, CREAM -> true;
+        };
+    }
+
     public boolean hasWoolCoat() {
         return this == UMBRA || this == WOOLY;
     }

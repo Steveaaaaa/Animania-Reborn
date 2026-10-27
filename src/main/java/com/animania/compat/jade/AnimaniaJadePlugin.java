@@ -235,7 +235,7 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
             if (data.contains("Coat")) tooltip.add(Component.translatable("variant.animania." + data.getString("Coat")));
             if (data.getBoolean("Sleeping")) tooltip.add(Component.translatable("jade.animania.sleeping"));
             int activity = data.getInt("FarmActivity");
-            if (activity >= 1 && activity <= 21)
+            if (activity >= 1 && activity <= 27)
                 tooltip.add(Component.translatable("jade.animania.activity." + activity));
             String gender = data.getString("Gender");
             if (!gender.equals("none")) {
@@ -461,6 +461,8 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
         public void appendServerData(CompoundTag data, BlockAccessor accessor) {
             if (accessor.getBlockEntity() instanceof HiveBlockEntity hive) {
                 data.putInt("Bees", hive.colony().count());
+                data.putInt("Defenders", hive.colony().defenders());
+                data.putBoolean("Smoked", hive.colony().isSmoked());
                 data.putInt("KnownFlowers", hive.colony().knownFlowerCount());
                 data.putInt("Honey", hive.honeyAmount());
                 data.putInt("NextHoney", hive.nextHoney());
@@ -472,6 +474,8 @@ public final class AnimaniaJadePlugin implements IWailaPlugin {
             CompoundTag data = accessor.getServerData();
             if (data.contains("Honey")) tooltip.add(Component.translatable("jade.animania.hive",
                     data.getInt("Honey"), HiveBlockEntity.CAPACITY, data.getInt("NextHoney")));
+            if (data.getBoolean("Smoked")) tooltip.add(Component.translatable("jade.animania.hive_smoked"));
+            if (data.getInt("Defenders") > 0) tooltip.add(Component.translatable("jade.animania.hive_defenders", data.getInt("Defenders")));
             if (data.getInt("KnownFlowers") > 0) tooltip.add(Component.translatable("jade.animania.hive_flowers", data.getInt("KnownFlowers")));
             if (data.contains("Bees")) tooltip.add(Component.translatable("message.animania.hive_bees", data.getInt("Bees")));
         }
